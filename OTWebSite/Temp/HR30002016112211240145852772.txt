@@ -1,0 +1,9 @@
+<meta http-equiv=Content-Type content=text/html charset=utf-8><style>td{font-size:9pt} a{font-size:9pt} tr{page-break-after: always}</style><div>
+	<table cellspacing="0" rules="all" border="1" style="border-collapse:collapse;vnd.ms-excel.numberformat:@">
+		<tr>
+			<th scope="col">生效</th><th scope="col">公司名稱</th><th scope="col">員工編號</th><th scope="col">姓名</th><th scope="col">生效日期</th><th scope="col">異動原因</th><th scope="col">異動後公司名稱</th><th scope="col">事業群</th><th scope="col">部門名稱</th><th scope="col">科/組/課</th><th scope="col">工作地點</th><th scope="col">簽核最小單位</th><th scope="col">職等</th><th scope="col">職稱</th><th scope="col">主管類別</th><th scope="col">主管</th><th scope="col">副主管</th><th scope="col">簽核主管</th><th scope="col">簽核副主管</th><th scope="col">主要職位</th><th scope="col">兼任職位</th><th scope="col">主要工作性質</th><th scope="col">兼任工作性質</th><th scope="col">留停迄日</th><th scope="col">備註</th><th scope="col">離職原因</th><th scope="col">到職日</th><th scope="col">性別</th><th scope="col">計薪註記</th><th scope="col">班別</th><th scope="col">最後異動公司</th><th scope="col">最後異動人員</th><th scope="col">最後異動時間</th>
+		</tr><tr class="tr_evenline">
+			<td>0</td><td>永豐銀行</td><td>777777</td><td>測O試</td><td>2015/04/01</td><td>升等</td><td>永豐銀行</td><td>個金業務</td><td>三重分行</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>04</td><td>四等專員</td><td> </td><td>0</td><td>0</td><td> </td><td>0</td><td></td><td></td><td>分行服務台經辦</td><td></td><td>1900/01/01</td><td>&nbsp;</td><td>   </td><td>2007/06/10</td><td>女</td><td> </td><td>     -    </td><td>&nbsp;</td><td>106363</td><td>2005-03-28 14:58:27</td>
+		</tr>
+	</table>
+</div>

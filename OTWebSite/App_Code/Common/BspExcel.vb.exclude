@@ -1,0 +1,456 @@
+﻿'****************************************************
+'功能說明：產生Excel檔
+'建立人員：Chung
+'建立日期：2010/04/23
+'範例可參考CCD910.aspx.vb
+'****************************************************
+Imports Microsoft.VisualBasic
+Imports System.Data
+Imports System.Data.Common
+'Imports BspPub
+Imports System.Web.UI.Page
+Imports System.Drawing
+Imports Microsoft.Office.Interop
+Imports Excel = Microsoft.Office.Interop.Excel
+
+Public Class BspExcel
+    Private Const xlEdgeBottom As Integer = 9
+    Private Const xlEdgeLeft As Integer = 7
+    Private Const xlEdgeRight As Integer = 10
+    Private Const xlEdgeTop As Integer = 8
+    Private Const xlNone As Integer = -4142
+    Const xlDiagonalDown As Integer = 5
+    Const xlDiagonalUp As Integer = 6
+    Private _DataTable As DataTable = Nothing
+    Private _ConditionHeader As String(,)
+    Private _Header As String(,)
+    Private _Footer As String(,)
+    Private _Format As String()
+    Private _MergeArea As String()
+    Private _FieldList As String()
+    Private _AlignCenter As String()
+    Private _DataAlign As BspExcelAlign()
+    Private _SheetName As String = ""
+
+    ''' <summary>
+    ''' 設定Sheet名稱
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property SheetName() As String
+        Get
+            Return _SheetName
+        End Get
+        Set(ByVal value As String)
+            _SheetName = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 資料來源
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property DataSource() As DataTable
+        Get
+            If _DataTable Is Nothing Then
+                _DataTable = New DataTable()
+            End If
+            Return _DataTable
+        End Get
+        Set(ByVal value As DataTable)
+            _DataTable = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 條件區顯示
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>放於表頭之前</remarks>
+    Property ConditionHeader() As String(,)
+        Get
+            Return _ConditionHeader
+        End Get
+        Set(ByVal value As String(,))
+            _ConditionHeader = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 報表表頭
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>若未傳入則使用DataTable.ColumnName</remarks>
+    Property Header() As String(,)
+        Get
+            Return _Header
+        End Get
+        Set(ByVal value As String(,))
+            _Header = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 表尾顯示
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property Footer() As String(,)
+        Get
+            Return _Footer
+        End Get
+        Set(ByVal value As String(,))
+            _Footer = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 設定數字的Format
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property Format() As String()
+        Get
+            Return _Format
+        End Get
+        Set(ByVal value As String())
+            _Format = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 設定資料內容的Align
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks></remarks>
+    Property DataAlign() As BspExcelAlign()
+        Get
+            Return _DataAlign
+        End Get
+        Set(ByVal value As BspExcelAlign())
+            _DataAlign = value
+        End Set
+    End Property
+
+    Enum BspExcelAlign
+        Left
+        Right
+        Center
+    End Enum
+
+    ''' <summary>
+    ''' 設定某個Area的Align為Center
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>格式請用Row:Column-Row:Column</remarks>
+    Property AlignCenter() As String()
+        Get
+            Return _AlignCenter
+        End Get
+        Set(ByVal value As String())
+            _AlignCenter = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 合併區域
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>格式請用Row:Column-Row:Column</remarks>
+    Property MergeArea() As String()
+        Get
+            Return _MergeArea
+        End Get
+        Set(ByVal value As String())
+            _MergeArea = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' 顯示欄位列表
+    ''' </summary>
+    ''' <value></value>
+    ''' <returns></returns>
+    ''' <remarks>包含於資料表內所要顯示於Excel內的資料欄位名稱。若未傳入則顯示所有欄位。</remarks>
+    Property FieldList() As String()
+        Get
+            Return _FieldList
+        End Get
+        Set(ByVal value As String())
+            _FieldList = value
+        End Set
+    End Property
+
+    Public Sub New(ByVal DT As DataTable)
+        _DataTable = DT
+        Array.Resize(_FieldList, DT.Columns.Count)
+        ReDim _Header(0, DT.Columns.Count - 1)
+        For intLoop As Integer = 0 To DT.Columns.Count - 1
+            _FieldList(intLoop) = DT.Columns(intLoop).ColumnName
+            _Header(0, intLoop) = DT.Columns(intLoop).ColumnName
+        Next
+    End Sub
+
+    Public Sub Dispose()
+        If _DataTable IsNot Nothing Then _DataTable.Dispose()
+    End Sub
+   
+    ''' <summary>
+    ''' 建立Excel檔
+    ''' </summary>
+    ''' <param name="WebFileName">Web path的File name</param>
+    ''' <returns>回傳一個Web path</returns>
+    ''' <remarks></remarks>
+    Public Function Create(Optional ByVal WebFileName As String = "") As String
+        Dim appExcel As Excel.Application
+        'appExcel.Visible = False
+        Dim xlBook As Excel.Workbook = Nothing
+        Dim xlSheet As Excel.Worksheet = Nothing
+        Dim intCurrentRow As Integer = 1
+        Dim cstDetailStartRow As Integer = 1
+        Dim strFileName As String = Bsp.Utility.GetNewFileName("BV") & ".xls"
+        Dim strTempFile As String = HttpContext.Current.Server.MapPath(Bsp.MySettings.TempPath) & "\" & strFileName
+        Dim strWebPath As String = Bsp.MySettings.TempPath & "/" & strFileName
+        Dim ConditionHeaderLength As Integer = 0
+        Dim strCurrentStep As String = "0.0"
+
+        appExcel = New Excel.ApplicationClass
+        appExcel.Visible = False
+        appExcel.DisplayAlerts = False
+        Dim misValue As Object = System.Reflection.Missing.Value
+
+        Try
+            If WebFileName = "" Then
+                xlBook = appExcel.Workbooks.Add(misValue)
+                xlSheet = xlBook.Worksheets(1)
+            Else
+                strFileName = HttpContext.Current.Server.MapPath(WebFileName)
+                strWebPath = WebFileName
+                xlBook = appExcel.Workbooks.Open(strFileName)
+                xlSheet = xlBook.Worksheets.Add()
+            End If
+            If SheetName <> "" Then xlSheet.Name = SheetName
+        Catch ex As Exception
+            Throw
+        End Try
+
+        Try
+            strCurrentStep = "1.0"
+            '寫出Condition Header
+            If ConditionHeader IsNot Nothing Then
+                ConditionHeaderLength = ConditionHeader.GetLength(0)
+                For intX As Integer = 0 To ConditionHeader.GetUpperBound(0)
+                    For intY As Integer = 0 To ConditionHeader.GetUpperBound(1)
+                        xlSheet.Cells(intCurrentRow, intY + 1) = ConditionHeader(intX, intY)
+                    Next
+
+                    intCurrentRow += 1
+                    cstDetailStartRow += 1
+                Next
+            End If
+
+            strCurrentStep = "2.0"
+            '寫入Header
+            For intX As Integer = 0 To Header.GetUpperBound(0)
+                For intY As Integer = 0 To Header.GetUpperBound(1)
+                    Dim xaCell As Excel.Range = xlSheet.Cells(intCurrentRow, intY + 1)
+                    xaCell.NumberFormatLocal = "@"
+                    xlSheet.Cells(intCurrentRow, intY + 1) = Header(intX, intY).Replace("<br>", vbCrLf)
+                Next
+                intCurrentRow += 1
+                cstDetailStartRow += 1
+            Next
+
+            strCurrentStep = "3.0"
+            For intLoop As Integer = 0 To FieldList.Length - 1
+                If DataSource.Columns.Contains(FieldList(intLoop)) Then
+                    Dim xaCol As Excel.Range = xlSheet.Columns(intLoop + 1)
+                    If DataSource.Columns(FieldList(intLoop)).DataType Is System.Type.GetType("System.String") Then
+                        xaCol.NumberFormatLocal = "@"
+                        xaCol.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+                    ElseIf DataSource.Columns(FieldList(intLoop)).DataType Is System.Type.GetType("System.Decimal") OrElse _
+                           DataSource.Columns(FieldList(intLoop)).DataType Is System.Type.GetType("System.Double") Then
+                        xaCol.NumberFormatLocal = "#,##0.00;[紅色]-#,##0.00"
+                        xaCol.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight
+                    End If
+                End If
+            Next
+
+            strCurrentStep = "3.1"
+            If _Format IsNot Nothing Then
+                For intLoop As Integer = 0 To _Format.GetUpperBound(0)
+                    If _Format(intLoop) <> "" Then
+                        Dim xaCol As Excel.Range = xlSheet.Columns(intLoop + 1)
+                        xaCol.NumberFormatLocal = _Format(intLoop)
+                    End If
+                Next
+            End If
+
+            strCurrentStep = "4.0"
+            '設定標題的Align、底色和字的顏色
+            Dim xa As Excel.Range
+            xa = xlSheet.Range(xlSheet.Cells(ConditionHeaderLength + 1, 1), xlSheet.Cells(intCurrentRow - 1, Header.GetLength(1)))
+            xa.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+            xa.Interior.Color = RGB(160, 169, 210)
+            xa.Font.ColorIndex = 2
+
+            strCurrentStep = "5.0"
+            '寫入資料
+            Dim aryData(DataSource.Rows.Count - 1, FieldList.Length) As Object
+
+            For Each dr As DataRow In DataSource.Rows
+                For intLoop As Integer = 0 To FieldList.Length - 1
+                    If DataSource.Columns.Contains(FieldList(intLoop)) Then
+                        Dim dc As DataColumn = DataSource.Columns(FieldList(intLoop))
+                        aryData(intCurrentRow - cstDetailStartRow, intLoop) = dr.Item(dc.ColumnName).ToString().Trim()
+                    Else
+                        aryData(intCurrentRow - cstDetailStartRow, intLoop) = ""
+                    End If
+                Next
+                intCurrentRow += 1
+            Next
+
+            Dim xaData As Excel.Range = xlSheet.Range(xlSheet.Cells(cstDetailStartRow, 1), xlSheet.Cells(DataSource.Rows.Count + cstDetailStartRow - 1, FieldList.Length))
+            xaData.Value = aryData
+
+            strCurrentStep = "5.5"
+            If _DataAlign IsNot Nothing Then
+                For intLoop As Integer = 0 To _DataAlign.GetUpperBound(0)
+                    Dim xaCol As Excel.Range = xlSheet.Range(xlSheet.Cells(cstDetailStartRow, intLoop + 1), xlSheet.Cells(DataSource.Rows.Count + cstDetailStartRow - 1, intLoop + 1)) 'xlSheet.Columns(intLoop + 1)
+                    Select Case _DataAlign(intLoop)
+                        Case BspExcelAlign.Center
+                            xaCol.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                        Case BspExcelAlign.Right
+                            xaCol.HorizontalAlignment = Excel.XlHAlign.xlHAlignRight
+                        Case BspExcelAlign.Left
+                            xaCol.HorizontalAlignment = Excel.XlHAlign.xlHAlignLeft
+                    End Select
+                Next
+            End If
+
+            strCurrentStep = "6.0"
+            '設定合併區域
+            If _MergeArea IsNot Nothing Then
+                For intLoop As Integer = 0 To _MergeArea.GetUpperBound(0)
+                    Dim aryArea() As String = _MergeArea(intLoop).Split("-")
+                    If aryArea.Length = 2 Then
+                        Dim aryBeginCell() As String = aryArea(0).Split(":")
+                        Dim aryEndCell() As String = aryArea(1).Split(":")
+
+                        If aryBeginCell.Length = 2 AndAlso aryEndCell.Length = 2 AndAlso _
+                           IsNumeric(aryBeginCell(0)) AndAlso IsNumeric(aryBeginCell(1)) AndAlso _
+                           IsNumeric(aryEndCell(0)) AndAlso IsNumeric(aryEndCell(1)) Then
+                            xa = xlSheet.Range(xlSheet.Cells(CInt(aryBeginCell(0)), CInt(aryBeginCell(1))), xlSheet.Cells(CInt(aryEndCell(0)), CInt(aryEndCell(1))))
+                            xa.MergeCells = True
+                        End If
+                    End If
+                Next
+            End If
+
+            strCurrentStep = "6.5"
+            '將欄位設定為置中
+            If _AlignCenter IsNot Nothing Then
+                For intLoop As Integer = 0 To _AlignCenter.GetUpperBound(0)
+                    Dim aryArea() As String = _AlignCenter(intLoop).Split("-")
+                    If aryArea.Length = 2 Then
+                        Dim aryBeginCell() As String = aryArea(0).Split(":")
+                        Dim aryEndCell() As String = aryArea(1).Split(":")
+
+                        If aryBeginCell.Length = 2 AndAlso aryEndCell.Length = 2 AndAlso _
+                           IsNumeric(aryBeginCell(0)) AndAlso IsNumeric(aryBeginCell(1)) AndAlso _
+                           IsNumeric(aryEndCell(0)) AndAlso IsNumeric(aryEndCell(1)) Then
+                            xa = xlSheet.Range(xlSheet.Cells(CInt(aryBeginCell(0)), CInt(aryBeginCell(1))), xlSheet.Cells(CInt(aryEndCell(0)), CInt(aryEndCell(1))))
+                            xa.HorizontalAlignment = Excel.XlHAlign.xlHAlignCenter
+                        End If
+                    End If
+                Next
+            End If
+
+            strCurrentStep = "7.0"
+            '設定格線
+            Dim xaPage As Excel.Range
+            xaPage = xlSheet.Range(xlSheet.Cells(ConditionHeaderLength + 1, 1), xlSheet.Cells(intCurrentRow - 1, FieldList.Length))
+            xaPage.VerticalAlignment = Excel.XlVAlign.xlVAlignCenter
+
+            strCurrentStep = "8.0"
+            xaPage.Borders(xlDiagonalDown).LineStyle = xlNone
+            xaPage.Borders(xlDiagonalUp).LineStyle = xlNone
+            With xaPage.Borders(xlEdgeLeft)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+            With xaPage.Borders(xlEdgeTop)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+            With xaPage.Borders(xlEdgeBottom)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+            With xaPage.Borders(xlEdgeRight)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+            With xaPage.Borders(Excel.XlBordersIndex.xlInsideVertical)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+            With xaPage.Borders(Excel.XlBordersIndex.xlInsideHorizontal)
+                .LineStyle = Excel.XlLineStyle.xlContinuous
+                .Weight = Excel.XlBorderWeight.xlThin
+                .ColorIndex = Excel.XlColorIndex.xlColorIndexAutomatic
+            End With
+
+            strCurrentStep = "9.0"
+            '寫出Footer
+            If Footer IsNot Nothing Then
+                For intX As Integer = 0 To Footer.GetUpperBound(0)
+                    For intY As Integer = 0 To Footer.GetUpperBound(1)
+                        xlSheet.Cells(intCurrentRow, intY + 1) = Footer(intX, intY)
+                    Next
+
+                    intCurrentRow += 1
+                Next
+            End If
+
+            xlSheet.Cells.Columns.AutoFit()
+
+            strCurrentStep = "9.0"
+            If WebFileName = "" Then
+                xlBook.SaveAs(strTempFile)
+            Else
+                xlBook.Save()
+            End If
+
+            Return strWebPath
+        Catch ex As Exception
+            Throw New Exception(ex.ToString() & vbCrLf & "Step=" & strCurrentStep)
+        Finally
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlSheet)
+            xlSheet = Nothing
+
+            xlBook.Close(0, strTempFile, System.Reflection.Missing.Value)
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(xlBook)
+            xlBook = Nothing
+
+            appExcel.Quit()
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(appExcel)
+            appExcel = Nothing
+        End Try
+    End Function
+End Class

@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="E_00000" xml:space="preserve">
+    <value>儲存失敗！</value>
+  </data>
+  <data name="E_00010" xml:space="preserve">
+    <value>無系統許可權！</value>
+  </data>
+  <data name="E_00020" xml:space="preserve">
+    <value>使用者禁用中！</value>
+  </data>
+  <data name="E_00030" xml:space="preserve">
+    <value>上傳檔類型只允許TXT、DOC、XLS、PPT、壓縮檔及圖檔格式...等</value>
+  </data>
+  <data name="E_00040" xml:space="preserve">
+    <value>上傳檔案最大不可超過{0}KBytes！</value>
+  </data>
+  <data name="E_00050" xml:space="preserve">
+    <value>{0}作業失敗！</value>
+  </data>
+  <data name="E_00060" xml:space="preserve">
+    <value>數據錯誤！</value>
+  </data>
+  <data name="E_40010" xml:space="preserve">
+    <value>無法取得財報編號！</value>
+  </data>
+  <data name="H_00000" xml:space="preserve">
+    <value>{0}！</value>
+  </data>
+  <data name="I_00000" xml:space="preserve">
+    <value>儲存成功！</value>
+  </data>
+  <data name="I_00010" xml:space="preserve">
+    <value>密碼重設成功！</value>
+  </data>
+  <data name="I_00020" xml:space="preserve">
+    <value>{0}上傳成功！</value>
+  </data>
+  <data name="I_00030" xml:space="preserve">
+    <value>{0}作業完成！</value>
+  </data>
+  <data name="I_04110" xml:space="preserve">
+    <value>謝謝您，我們會儘快回復！</value>
+  </data>
+  <data name="I_20000" xml:space="preserve">
+    <value>基本資料修改完成!</value>
+  </data>
+  <data name="I_20010" xml:space="preserve">
+    <value>客戶資料新增成功!</value>
+  </data>
+  <data name="I_20020" xml:space="preserve">
+    <value>董監事/股東其他轉投資事業資料新增成功!</value>
+  </data>
+  <data name="I_20030" xml:space="preserve">
+    <value>董監事/股東其他轉投資事業資料修改成功!</value>
+  </data>
+  <data name="I_20040" xml:space="preserve">
+    <value>轉投資事業及長/短期投資資料新增成功!</value>
+  </data>
+  <data name="I_20050" xml:space="preserve">
+    <value>轉投資事業及長/短期投資資料修改成功!</value>
+  </data>
+  <data name="I_20060" xml:space="preserve">
+    <value>經營團隊訊息資料新增成功!</value>
+  </data>
+  <data name="I_20070" xml:space="preserve">
+    <value>經營團隊訊息資料修改成功!</value>
+  </data>
+  <data name="I_20080" xml:space="preserve">
+    <value>董監事/股東資料新增成功!</value>
+  </data>
+  <data name="I_20090" xml:space="preserve">
+    <value>董監事/股東資料修改成功!</value>
+  </data>
+  <data name="I_20100" xml:space="preserve">
+    <value>不動產清單新增成功!</value>
+  </data>
+  <data name="I_20110" xml:space="preserve">
+    <value>不動產清單修改成功!</value>
+  </data>
+  <data name="I_21000" xml:space="preserve">
+    <value>利害關係人狀態更新完畢！</value>
+  </data>
+  <data name="Q_00010" xml:space="preserve">
+    <value>是否確定刪除？</value>
+  </data>
+  <data name="Q_12000" xml:space="preserve">
+    <value>是否確定申請臨變？</value>
+  </data>
+  <data name="S_00001" xml:space="preserve">
+    <value>[{0}]未輸入N個月！</value>
+  </data>
+  <data name="W_00000" xml:space="preserve">
+    <value>尚未選取資料列！</value>
+  </data>
+  <data name="W_00010" xml:space="preserve">
+    <value>{0}資料已存在！</value>
+  </data>
+  <data name="W_00020" xml:space="preserve">
+    <value>{0}資料不存在！</value>
+  </data>
+  <data name="W_00030" xml:space="preserve">
+    <value>欄位[{0}]未輸入！</value>
+  </data>
+  <data name="W_00031" xml:space="preserve">
+    <value>欄位[{0}]！</value>
+  </data>
+  <data name="W_00035" xml:space="preserve">
+    <value>欄位[{0}]未選取！</value>
+  </data>
+  <data name="W_00040" xml:space="preserve">
+    <value>欄位[{0}]最大長度為{1}！</value>
+  </data>
+  <data name="W_00041" xml:space="preserve">
+    <value>欄位[{0}]請輸入Y或N！</value>
+  </data>
+  <data name="W_00045" xml:space="preserve">
+    <value>欄位[{0}]最大輸入位數為{1}！</value>
+  </data>
+  <data name="W_00050" xml:space="preserve">
+    <value>欄位[{0}]請輸入數字型態！</value>
+  </data>
+  <data name="W_00060" xml:space="preserve">
+    <value>欄位[{0}]請輸入日期型態！</value>
+  </data>
+  <data name="W_00065" xml:space="preserve">
+    <value>欄位[{0}]請輸入時間型態！</value>
+  </data>
+  <data name="W_00070" xml:space="preserve">
+    <value>欄位[{0}]需為日期型態！\n\r(正確格式請輸入yyyy/mm/dd或yyyymmdd)</value>
+  </data>
+  <data name="W_00075" xml:space="preserve">
+    <value>欄位{0}請輸入{1}型態！</value>
+  </data>
+  <data name="W_00080" xml:space="preserve">
+    <value>{0}不允許修改！</value>
+  </data>
+  <data name="W_00090" xml:space="preserve">
+    <value>無資料可新增！</value>
+  </data>
+  <data name="W_00091" xml:space="preserve">
+    <value>請先輸入進件作業資料！</value>
+  </data>
+  <data name="W_00092" xml:space="preserve">
+    <value>請先輸入核薪作業資料！</value>
+  </data>
+  <data name="W_00100" xml:space="preserve">
+    <value>{0}未設定！</value>
+  </data>
+  <data name="W_00110" xml:space="preserve">
+    <value>參數資料未傳入！</value>
+  </data>
+  <data name="W_00111" xml:space="preserve">
+    <value>參數資料({0})未傳入！</value>
+  </data>
+  <data name="W_00120" xml:space="preserve">
+    <value>未選取上傳檔案！</value>
+  </data>
+  <data name="W_00130" xml:space="preserve">
+    <value>起日不可晚於迄日！</value>
+  </data>
+  <data name="W_00140" xml:space="preserve">
+    <value>參數傳遞錯誤！</value>
+  </data>
+  <data name="W_01501" xml:space="preserve">
+    <value>請輸入面談結果！</value>
+  </data>
+  <data name="W_01502" xml:space="preserve">
+    <value>請輸入面試日期！</value>
+  </data>
+  <data name="W_01503" xml:space="preserve">
+    <value>面談結果輸入不正確！</value>
+  </data>
+  <data name="W_01504" xml:space="preserve">
+    <value>面談主管空白，但有面談結果！</value>
+  </data>
+  <data name="W_01505" xml:space="preserve">
+    <value>面談主管空白，但有面試日期！</value>
+  </data>
+  <data name="W_01506" xml:space="preserve">
+    <value>複試主管空白，但有複試結果！</value>
+  </data>
+  <data name="W_01507" xml:space="preserve">
+    <value>複試主管空白，但有複試日期！</value>
+  </data>
+  <data name="W_01508" xml:space="preserve">
+    <value>人事單位主管空白，但有面談結果！</value>
+  </data>
+  <data name="W_01509" xml:space="preserve">
+    <value>人事單位主管空白，但有面試日期！</value>
+  </data>
+  <data name="W_01511" xml:space="preserve">
+    <value>請輸入複試結果！</value>
+  </data>
+  <data name="W_01512" xml:space="preserve">
+    <value>請輸入複試日期！</value>
+  </data>
+  <data name="W_01513" xml:space="preserve">
+    <value>面談主管1查無資料</value>
+  </data>
+  <data name="W_01514" xml:space="preserve">
+    <value>面談主管2查無資料</value>
+  </data>
+  <data name="W_01515" xml:space="preserve">
+    <value>面談主管3查無資料</value>
+  </data>
+  <data name="W_01516" xml:space="preserve">
+    <value>複試主管1查無資料</value>
+  </data>
+  <data name="W_01517" xml:space="preserve">
+    <value>複試主管2查無資料</value>
+  </data>
+  <data name="W_01518" xml:space="preserve">
+    <value>複試主管3查無資料</value>
+  </data>
+  <data name="W_01519" xml:space="preserve">
+    <value>人事單位主管1查無資料</value>
+  </data>
+  <data name="W_01520" xml:space="preserve">
+    <value>人事單位主管2查無資料</value>
+  </data>
+  <data name="W_01521" xml:space="preserve">
+    <value>人事單位主管3查無資料</value>
+  </data>
+  <data name="W_01600" xml:space="preserve">
+    <value>初核薪資建議起，空白</value>
+  </data>
+  <data name="W_01601" xml:space="preserve">
+    <value>初核薪資建議(迄)不得小於初核薪資建議(起)</value>
+  </data>
+  <data name="W_02000" xml:space="preserve">
+    <value>業務注記勾選時，需選擇業務單位</value>
+  </data>
+  <data name="W_02300" xml:space="preserve">
+    <value>個人群組不允許修改</value>
+  </data>
+  <data name="W_02310" xml:space="preserve">
+    <value>未選取個人群組人員</value>
+  </data>
+  <data name="W_02400" xml:space="preserve">
+    <value>未選取功能許可權</value>
+  </data>
+  <data name="W_02800" xml:space="preserve">
+    <value>必要輸入至少一種額度金額！</value>
+  </data>
+  <data name="W_02B00" xml:space="preserve">
+    <value>無可代理之人員！</value>
+  </data>
+  <data name="W_03100" xml:space="preserve">
+    <value>上傳資料年度與所選年度不符！</value>
+  </data>
+  <data name="W_03300" xml:space="preserve">
+    <value>此代碼類別尚在使用中，無法刪除！\n\r若要刪除，請先刪除代碼資料！</value>
+  </data>
+  <data name="W_04100" xml:space="preserve">
+    <value>意見物件選[其他]時，必須輸入說明！</value>
+  </data>
+  <data name="W_04200" xml:space="preserve">
+    <value>部門、科組課及工作性質至少需輸入一項條件！</value>
+  </data>
+  <data name="W_16000" xml:space="preserve">
+    <value>尚未選取答案！</value>
+  </data>
+  <data name="W_18000" xml:space="preserve">
+    <value>未選取銷戶客戶！</value>
+  </data>
+  <data name="W_20710" xml:space="preserve">
+    <value>{0}的值需介於{1}～{2}！</value>
+  </data>
+  <data name="W_20720" xml:space="preserve">
+    <value>{0}的值需大於{1}！</value>
+  </data>
+  <data name="W_20800" xml:space="preserve">
+    <value>財產設備名稱若選取其他必要輸入說明！</value>
+  </data>
+  <data name="W_31000" xml:space="preserve">
+    <value>Excel導出資料過大(限制為65535筆)，請再加條件減少匯出筆數！</value>
+  </data>
+  <data name="W_90000" xml:space="preserve">
+    <value>無法取得鏈結新絲路的資訊！</value>
+  </data>
+  <data name="W_A0800" xml:space="preserve">
+    <value>符合條件的筆數過多，請再加入條件！</value>
+  </data>
+  <data name="W_A3100" xml:space="preserve">
+    <value>同意比率過大(應介於0~1)！</value>
+  </data>
+  <data name="W_C1200" xml:space="preserve">
+    <value>範本檔案不存在！{0}</value>
+  </data>
+  <data name="W_C1210" xml:space="preserve">
+    <value>沒有安裝Excel！</value>
+  </data>
+  <data name="W_C1900" xml:space="preserve">
+    <value>未選取條件！</value>
+  </data>
+  <data name="W_C1910" xml:space="preserve">
+    <value>查無資料！</value>
+  </data>
+  <data name="W_C1A00" xml:space="preserve">
+    <value>必須輸入至少一個條件！</value>
+  </data>
+  <data name="W_C1A10" xml:space="preserve">
+    <value>撈取筆數過多(超過1000筆)，請再加入篩選條件！</value>
+  </data>
+  <data name="W_C1A20" xml:space="preserve">
+    <value>請輸入年月(yyyymm)！</value>
+  </data>
+</root>

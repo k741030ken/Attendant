@@ -1,0 +1,933 @@
+﻿/* 
+LastUpd:Andrew Sun 2017.02.13
+*/
+html, body {
+    font-family: "微軟正黑體", "微软雅黑", "Microsoft JhengHei", Arial, sans-serif;
+}
+
+table {
+    border-color: #C0C0C0;
+}
+
+    table th, td {
+        border-color: #C0C0C0;
+    }
+
+.Util_Wrapper {
+    position: relative;
+}
+
+.Util_Clear {
+    clear: both;
+}
+
+/* 常用輔助樣式 2016.03.14 */
+.Util_Left {
+    text-align: left;
+}
+
+.Util_Center {
+    text-align: center;
+}
+
+.Util_Right {
+    text-align: right;
+}
+
+.Util_Top {
+    vertical-align: top;
+}
+
+.Util_Middle {
+    vertical-align: middle;
+}
+
+.Util_Bottom {
+    vertical-align: bottom;
+}
+
+.Util_Pointer {
+    cursor: pointer;
+}
+
+
+/* 網頁 [主版面]，自動置中 */
+.Util_Container {
+    width: 1018px;
+    padding: 0px 2px 0px 2px;
+    margin: 0 auto;
+}
+
+/* 網頁 [子版面]，自動置中 */
+.Util_CenterBody {
+    width: 80%; /* 寬度需比父階物件小，才會有作用，預設 80% */
+    margin: auto;
+}
+
+/* 連結 */
+a {
+    text-decoration: none;
+}
+
+    a:hover {
+        text-decoration: none;
+    }
+
+.Util_clsHref {
+    color: #0066CC;
+    text-decoration: none;
+}
+
+    .Util_clsHref:hover {
+        color: #FF0000;
+        text-decoration: underline;
+    }
+
+    .Util_clsHref:visited {
+        color: #0066CC;
+        text-decoration: none;
+    }
+
+/* 抑制 IE10 密碼提示功能*/
+input::-ms-reveal {
+    display: none;
+}
+
+/* 網頁浮水印 2017.03.09 */
+.Util_PageWatermark {
+    width:100%;
+    color: black;
+    opacity: 0.25;
+    filter: alpha(opacity=25);
+    font-size: 28pt;
+    font-style: italic;
+    white-space: nowrap;
+    -ms-transform: rotate(-20deg); /* IE9+ */
+    -moz-transform: rotate(-20deg); /* Firefox */
+    -o-transform: rotate(-20deg); /* Opera */
+    -webkit-transform: rotate(-20deg); /* Safari & Chrome */
+    transform: rotate(-20deg);
+}
+
+/* 強迫分頁 for IE , Chrome */
+.Util_PageBreak {
+    page-break-after: always;
+    page-break-inside: avoid;
+}
+
+/* 折行*/
+.Util_WordBreak {
+    word-break: break-all;
+}
+
+/* 唯讀 */
+.Util_clsReadOnly {
+    color: #333333;
+    background-color: Silver;
+}
+
+/*完成訊息*/
+.Util_txtDone {
+    color: #1C3EAF;
+    font-weight: bold;
+    font-size: 12pt;
+    height: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/*錯誤訊息*/
+.Util_txtErr {
+    color: #C10D0D;
+    font-weight: bold;
+    font-size: 12pt;
+    height: 35px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: left;
+    vertical-align: top;
+}
+
+/*文字陰影*/
+.Util_txtShadow {
+    text-shadow: 2px 2px 2px #333;
+    -moz-text-shadow: 2px 2px 2px #333;
+    -webkit-text-shadow: 2px 2px 2px #333;
+    filter: dropshadow(color=#000000, offx=2, offy=2);
+    display: block; /* that's the important part */
+}
+
+/*區塊陰影(for img / div)*/
+.Util_clsShadow {
+    border: 1px solid #333;
+    box-shadow: 5px 5px 3px #666;
+    -moz-box-shadow: 5px 5px 3px #666;
+    -webkit-box-shadow: 5px 5px 3px #666;
+    -khtml-box-shadow: 5px 5px 3px #666;
+}
+
+/* 水平分隔線 */
+.Util_clsHR {
+    border: 0;
+    height: 1px;
+    color: #808080;
+    background-color: #808080;
+    width: 100%;
+}
+
+/* 等待訊息 */
+.Util_clsWait {
+    text-align: center;
+    margin-top: 10px 20px 10px 20px;
+    padding: 15px 20px 10px 20px;
+    color: #464643;
+    color: #6F6F6C;
+    font-weight: bold;
+    font-size: 14pt;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid gray;
+    border-radius: 8px;
+}
+
+/* 除錯訊息 */
+.Util_clsDebug {
+    background: URL('Icon_Debug.png');
+    background-position: 5pt 5pt;
+    background-repeat: no-repeat;
+    background-color: #863150;
+    color: #FFFFFF;
+    padding-left: 45px;
+    text-align: left;
+    font-size: 10pt;
+    font-family: 細明體;
+}
+
+/* 按鈕 */
+.Util_clsBtn {
+    text-align: center;
+    margin: 0px;
+    padding-top: 2px;
+    color: #FFFFFF;
+    background: #17397C;
+    border: 0px none white;
+    width: 80px;
+    height: 26px;
+}
+
+/* 灰色按鈕 */
+.Util_clsBtnGray {
+    text-align: center;
+    margin-top: 0px;
+    padding-top: 2px;
+    color: black;
+    background: silver;
+    border: 1px solid #333;
+    width: 80px;
+    height: 26px;
+}
+
+/* 關閉按鈕 */
+.Util_clsBtnClose {
+    font-size: 10pt;
+    background: URL('Icon_Close.gif') no-repeat left center;
+    padding-top: 1pt;
+    padding-right: 10px;
+    text-align: right;
+    color: #ccffcc;
+    background-color: #6666ff;
+    height: 20pt;
+    width: 80pt;
+}
+
+/* 附件按鈕 */
+.Util_clsBtnAttach {
+    background: URL('Icon_Attach.gif') no-repeat Left Center;
+    text-align: right;
+    width: 80pt;
+    height: 18pt;
+    background-color: rgb(102,153,255);
+    padding-top: 2pt;
+    color: #ffffff;
+    border: 1px outset Black;
+}
+
+/* 下拉選單 */
+.Util_clsDropDownList {
+    color: #000;
+    background-color: #FFF;
+}
+
+/* 唯讀下拉選單 */
+.Util_clsDropDownListReadOnly {
+    color: #333333;
+    background-color: Silver;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+    .Util_clsDropDownListReadOnly::-ms-expand {
+        display: none;
+    }
+
+.Util_ChkBoxListSelectedItem {
+    background-color: #ccccff;
+    width: 100%;
+}
+
+.Util_WaterMarkedTextBox {
+    padding-left:4px;
+    margin-right:4px;
+    color: gray;
+    border:1px solid #A9A9A9;
+    background: #E7EFF9;
+}
+
+.Util_ValidationSummary {
+    color: Red;
+    background-color: #FFFFE0;
+    border: 1px dashed gray;
+}
+
+.Util_Fieldset {
+    padding: 10px;
+    border: 1px solid #556C98;
+}
+
+.Util_Frame {
+    padding: 2px;
+    border: 1px solid #707070;
+}
+
+.Util_Legend {
+    margin-bottom: 2px;
+    color: #FFFFFF;
+    background: #556C98;
+    padding: 2px 10px 2px 10px;
+}
+
+/* 一般資料列 */
+.Util_clsRow1 {
+    border: none;
+    padding: 3px;
+    background: #D3DFEE;
+    color: #365F91;
+    font-size: 11pt;
+    vertical-align: middle;
+}
+
+.Util_clsRow2 {
+    border: none;
+    padding: 3px;
+    background: #FFFFFF;
+    color: #365F91;
+    font-size: 11pt;
+    vertical-align: middle;
+}
+
+/* ActionBar */
+.Util_ActionBar {
+    padding: 5px 15px 5px 15px;
+    vertical-align: top;
+}
+
+/* MenuBar */
+.Util_MenuBar {
+    text-align: center;
+    vertical-align: middle;
+}
+
+    .Util_MenuBar ul {
+        border-left: 1px solid #E3E3E3;
+    }
+
+        .Util_MenuBar ul li a.level1.static {
+            border-right: 1px solid #E3E3E3;
+        }
+
+/* TreeView */
+.Util_TreeView {
+    font-size: 12pt;
+    margin-top: -20px;
+    vertical-align: top;
+    text-align: left;
+}
+
+    .Util_TreeView td div {
+        height: 100% !important;
+    }
+
+    .Util_TreeView td img {
+        vertical-align: bottom;
+    }
+
+/* GridView */
+.Util_gvHeader {
+    color: #FFFFFF;
+    background-color: #507CD1;
+    font-weight: Bold;
+    vertical-align: middle;
+}
+
+.Util_gvHeaderSortable {
+    color: #FFFFFF;
+    background-color: #507CD1;
+    font-weight: Bold;
+    vertical-align: middle;
+    padding-right: 18px;
+    background-image: url(Icon_Sortable_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gvHeaderAsc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortAsc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gvHeaderDesc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortDesc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gvGroupHeader {
+    color: #FFFFFF;
+    background-color: #555F79;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 2px;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    cursor: pointer;
+}
+
+.Util_gvFooter {
+    color: #FFFFFF;
+    background-color: #7E81D8;
+    vertical-align: middle;
+}
+
+.Util_gvRowNormal {
+    color: #333333;
+    background-color: #EFF3FB;
+}
+
+.Util_gvRowAlternate {
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+    .Util_gvRowNormal:hover, .Util_gvRowAlternate:hover {
+        background-color: #FFFFAD;
+    }
+
+.Util_gvRowNormalPointer {
+    color: #333333;
+    background-color: #EFF3FB;
+}
+
+.Util_gvRowAlternatePointer {
+    color: #333333;
+    background-color: #FFFFFF;
+}
+
+    .Util_gvRowNormalPointer:hover, .Util_gvRowAlternatePointer:hover {
+        background-color: #FFFFAD;
+        cursor: pointer;
+    }
+
+/* GridView 2 */
+.Util_gv2Header {
+    color: #FFFFFF;
+    background-color: #523179;
+    font-weight: Bold;
+    vertical-align: middle;
+}
+
+.Util_gv2HeaderSortable {
+    color: #FFFFFF;
+    background-color: #523179;
+    font-weight: Bold;
+    vertical-align: middle;
+    padding-right: 18px;
+    background-image: url(Icon_Sortable_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv2HeaderAsc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortAsc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv2HeaderDesc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortDesc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv2GroupHeader {
+    color: #FFFFFF;
+    background-color: #6F43A5;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 2px;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    cursor: pointer;
+}
+
+.Util_gv2Footer {
+    color: #FFFFFF;
+    background-color: #484B90;
+    vertical-align: middle;
+}
+
+.Util_gv2RowNormal {
+    color: #5F497A;
+    background-color: #DFD8E8;
+}
+
+.Util_gv2RowAlternate {
+    color: #5F497A;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv2RowNormal:hover, .Util_gv2RowAlternate:hover {
+        background-color: #FFFFAD;
+    }
+
+.Util_gv2RowNormalPointer {
+    color: #5F497A;
+    background-color: #EFF3FB;
+}
+
+.Util_gv2RowAlternatePointer {
+    color: #5F497A;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv2RowNormalPointer:hover, .Util_gv2RowAlternatePointer:hover {
+        background-color: #FFFFAD;
+        cursor: pointer;
+    }
+
+/* GridView 3 */
+.Util_gv3Header {
+    color: #FFFFFF;
+    background-color: #C66F1A;
+    font-weight: Bold;
+    vertical-align: middle;
+}
+
+.Util_gv3HeaderSortable {
+    color: #FFFFFF;
+    background-color: #C66F1A;
+    font-weight: Bold;
+    vertical-align: middle;
+    padding-right: 18px;
+    background-image: url(Icon_Sortable_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv3HeaderAsc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortAsc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv3HeaderDesc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortDesc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv3GroupHeader {
+    color: #FFFFFF;
+    background-color: #8E5217;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 2px;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    cursor: pointer;
+}
+
+.Util_gv3Footer {
+    color: #FFFFFF;
+    background-color: #748929;
+    vertical-align: middle;
+}
+
+.Util_gv3RowNormal {
+    color: #D17E0A;
+    background-color: #FDEFD9;
+}
+
+.Util_gv3RowAlternate {
+    color: #D17E0A;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv3RowNormal:hover, .Util_gv3RowAlternate:hover {
+        background-color: #FAD89B;
+    }
+
+.Util_gv3RowNormalPointer {
+    color: #D17E0A;
+    background-color: #FDEFD9;
+}
+
+.Util_gv3RowAlternatePointer {
+    color: #D17E0A;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv3RowNormalPointer:hover, .Util_gv3RowAlternatePointer:hover {
+        background-color: #FAD89B;
+        cursor: pointer;
+    }
+
+/* GridView 4 */
+.Util_gv4Header {
+    color: #FFFFFF;
+    background-color: #678112;
+    font-weight: Bold;
+    vertical-align: middle;
+}
+
+.Util_gv4HeaderSortable {
+    color: #FFFFFF;
+    background-color: #678112;
+    font-weight: Bold;
+    vertical-align: middle;
+    padding-right: 18px;
+    background-image: url(Icon_Sortable_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv4HeaderAsc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortAsc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv4HeaderDesc {
+    color: #FFFFFF;
+    padding-right: 18px;
+    background-image: url(Icon_SortDesc_White.gif);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.Util_gv4GroupHeader {
+    color: #FFFFFF;
+    background-color: #3B480D;
+    font-weight: bold;
+    vertical-align: middle;
+    padding: 2px;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    cursor: pointer;
+}
+
+.Util_gv4Footer {
+    color: #FFFFFF;
+    background-color: #436CBF;
+    vertical-align: middle;
+}
+
+.Util_gv4RowNormal {
+    color: #506708;
+    background-color: #D9F28C;
+}
+
+.Util_gv4RowAlternate {
+    color: #506708;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv4RowNormal:hover, .Util_gv4RowAlternate:hover {
+        background-color: #A5CB90;
+    }
+
+.Util_gv4RowNormalPointer {
+    color: #506708;
+    background-color: #D9F28C;
+}
+
+.Util_gv4RowAlternatePointer {
+    color: #506708;
+    background-color: #FFFFFF;
+}
+
+    .Util_gv4RowNormalPointer:hover, .Util_gv4RowAlternatePointer:hover {
+        background-color: #A5CB90;
+        cursor: pointer;
+    }
+/* 客製 Tooltip 效果
+   請自行加入 data-hint 屬性以便取用(不用內建的 Title 因為其原始的訊息框仍會發動)
+   譬如：  <a data-hint='xx'>
+   目前測過 a,div,span 可用，input 不行
+*/
+
+.Util_data-hint {
+    position: relative; /*this is the key*/
+    z-index: auto;
+}
+
+    .Util_data-hint:hover:after {
+        border: 1px solid #F0B95A;
+        background-color: #F9EDBD;
+        color: #000000;
+        display: block;
+        top: 1.6em;
+        left: 2.0em;
+        padding: 05px 05px 05px 05px;
+        content: attr(data-hint);
+        position: absolute;
+        white-space: nowrap;
+        text-align: left;
+        font-size: 09pt;
+        z-index: 999;
+        border-radius: 5px;
+    }
+
+/*
+搜尋框
+*/
+.Util_SearchBox_Left {
+    height: 40px;
+    width: 10px;
+    background-image: url(SearchBox_Left.jpg);
+    background-repeat: no-repeat;
+}
+
+.Util_SearchBox_Middle {
+    height: 40px;
+    width: auto;
+    background-image: url(SearchBox_Middle.jpg);
+    background-repeat: repeat-x;
+}
+
+.Util_SearchBox_Right {
+    height: 40px;
+    width: 10px;
+    background-image: url(SearchBox_Right.jpg);
+    background-repeat: no-repeat;
+}
+
+/* for ajax controltoolkit */
+/* Normal theme */
+.Util_ajax__tab_theme .ajax__tab_header {
+    font-family: arial,helvetica,clean,sans-serif;
+    font-size: small;
+    color: #ffffff;
+    border-bottom-width: 0px;
+    margin-left: 15px; /* 使頁籤列前面留白 2014.12.19 */
+}
+
+    .Util_ajax__tab_theme .ajax__tab_header .ajax__tab_outer {
+        background-color: #777;
+        margin: 0px 0.16em 0px 0px;
+        padding: 1px 0px 1px 0px;
+        vertical-align: middle;
+        border: solid 1px #a3a3a3;
+        border-bottom-width: 0px;
+    }
+
+    .Util_ajax__tab_theme .ajax__tab_header .ajax__tab_tab {
+        color: #ffffff;
+        padding: 0.16em 0.75em;
+        margin-right: 0.01em;
+    }
+
+.Util_ajax__tab_theme .ajax__tab_hover .ajax__tab_outer {
+    background-color: #507CD1;
+}
+
+.Util_ajax__tab_theme .ajax__tab_active .ajax__tab_tab {
+    color: #fff;
+    background-color: #3B5998;
+}
+
+.Util_ajax__tab_theme .ajax__tab_active .ajax__tab_outer {
+    background-color: #3B5998;
+}
+
+.Util_ajax__tab_theme .ajax__tab_body {
+    font-family: verdana,tahoma,helvetica;
+    font-size: 10pt;
+    padding: 0.25em 0.5em;
+    background-color: #FFF;
+    border: solid 1px #808080;
+}
+
+/* Vertical theme 2014.09.15 to avoid ajax's [UseVerticalStripPlacement] Bug */
+.Util_ajax__tab_theme_Vertical .ajax__tab_header {
+    float: left;
+}
+
+.Util_ajax__tab_theme_Vertical .ajax__tab_body {
+    /*float:left;*/ /*margin-left:220px;*/
+    margin-left: 150px;
+}
+
+.Util_ajax__tab_theme_Vertical .ajax__tab_outer {
+    display: block !important;
+}
+
+.Util_ajax__tab_theme_Vertical .ajax__tab_tab {
+    /*
+   min-width:200px;
+   height: auto !important;
+   */
+    width: 150px;
+}
+
+/* Lightbox 2016.11.23 */
+.Util_Lightbox_PopOverlay {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 1001;
+    -moz-opacity: 0.8;
+    opacity: .80;
+    filter: alpha(opacity=80);
+}
+
+.Util_Lightbox_PopBody {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 250px;
+    height: 80px;
+    padding: 20px 15px 15px 15px;
+    background: #FFFFFF;
+    text-align: center;
+    border: 1px solid #AAAAAA;
+    z-index: 1002;
+    text-align: center;
+    overflow: hidden;
+    box-shadow: 2px 2px 3px #666;
+    -moz-box-shadow: 2px 2px 3px #666;
+    -webkit-box-shadow: 2px 2px 3px #666;
+}
+
+.Util_Lightbox_PopClose {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 20px;
+    width: 20px;
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+    background: #AF4639;
+    border: 1px solid #431422;
+    cursor: pointer;
+}
+
+/* ModalPopup 2017.01.26*/
+.Util_ModalPopup_PopPanel {
+    background-color: #F2F9FF;
+    overflow: hidden;
+}
+
+.Util_ModalPopup_PopOverlay {
+    background-color: #000000;
+    filter: alpha(opacity=80);
+    opacity: 0.80;
+}
+
+.Util_ModalPopup_PopHeader {
+    width: 100%;
+    padding: 2px 8px 8px 8px;
+    margin-bottom: 3px;
+    position: relative;
+    text-align: center;
+    background-color: #F2F9FF;
+}
+
+.Util_ModalPopup_PopBody {
+    text-align: left;
+    margin: 10px;
+    overflow: auto;
+    background-color: #F2F9FF;
+}
+
+.Util_ModalPopup_PopClose {
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    height: 20px;
+    width: 50px;
+    margin: 0px;
+    padding: 0px;
+    color: #FFFFFF;
+    background: #AF4639;
+    border: 1px solid #431422;
+    cursor: pointer;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+/* MultiSelect 2017.02.09 */
+.Util_MultiSelect_Checkboxlist tr td label {
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.Util_MultiSelect_ReorderContent {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
+    .Util_MultiSelect_ReorderContent input[type=button] {
+        width: 18px;
+        margin-right: 2px;
+        padding: 0 0 0 1px;
+        color: #666;
+        background: #FFF;
+        border: 1px solid #808080;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+
+    .Util_MultiSelect_ReorderContent li {
+        list-style: none;
+        margin: 2px;
+    }

@@ -1,0 +1,12 @@
+﻿==tinyMCE 4.12修改摘要==
+
+[langs]下增加語系檔 en_US,zh_TW,zh_CN
+
+修改[skin]下的content.min.css
+	起頭加上 <p>　樣式為 font-size:12pt
+	修改 <body> 樣式為固定出現捲軸，邊界為0，字體為細明體
+
+修改[plugin]/[table]下的plugin.min.js	
+	修改 <table> <td>的　border 樣式
+
+

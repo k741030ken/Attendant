@@ -1,0 +1,45 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="FlowExpess.master.cs" Inherits="FlowExpress_Admin_FlowExpess" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<!DOCTYPE html >
+<html>
+<head runat="server">
+    <title>FlowExpress</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+        </asp:ToolkitScriptManager>
+        <div id="divError" runat="server">
+            <asp:Label ID="labErrMsg" runat="server"></asp:Label>
+        </div>
+        <div id="divAdminArea" runat="server">
+            <table border="0" style="vertical-align: top; width: 100%;">
+                <tr>
+                    <td style="vertical-align: top; width: 220px; height:100%;">
+                        <div style="width: 100%; height:100%; background-color: #BEC8D8;">
+                            <asp:TreeView ID="TreeView1" runat="server" ImageSet="Simple" ShowLines="false" OnTreeNodePopulate="TreeView1_TreeNodePopulate"
+                                ViewStateMode="Disabled">
+                                <HoverNodeStyle Font-Underline="True" ForeColor="#5555DD" />
+                                <NodeStyle Font-Names="Tahoma" Font-Size="10pt" ForeColor="Black" HorizontalPadding="0px"
+                                    NodeSpacing="0px" VerticalPadding="0px" />
+                                <ParentNodeStyle Font-Bold="False" />
+                                <SelectedNodeStyle Font-Underline="True" HorizontalPadding="0px" VerticalPadding="0px"
+                                    ForeColor="#5555DD" />
+                            </asp:TreeView>
+                        </div>
+                    </td>
+                    <td style="vertical-align: top;">
+                        <div>
+                            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </form>
+</body>
+</html>

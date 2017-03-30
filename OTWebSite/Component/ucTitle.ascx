@@ -1,0 +1,2 @@
+﻿<%@ Control Language="VB" AutoEventWireup="false" CodeFile="ucTitle.ascx.vb" Inherits="Component_ucTitle" %>
+<asp:Label ID="lblTitle" Width="100%" style="text-align:center" Font-Size="15px" Font-Bold="True" Font-Names="Times New Roman" ForeColor="dimgray" runat="server" Text=""></asp:Label>
