@@ -1,0 +1,381 @@
+﻿/* 
+Author :Andrew Sun 2016.07
+LastUpd:Andrew Sun 2016.08.25
+*/
+
+/* Global Setting */
+html, body {
+    font-family: "微軟正黑體", "微软雅黑", "Microsoft JhengHei", Arial, sans-serif;
+    color: #666666;
+}
+
+.Site_Wrapper {
+    position: relative;
+}
+
+.Site_Container {
+    width: 1018px;
+    padding: 0px 2px 0px 2px;
+    margin: 0 auto;
+    border: 0px solid silver;
+}
+
+.Site_Clear {
+    clear: both;
+}
+
+/* Disable Browser default focus style */
+*:focus {
+    outline: none;
+}
+
+/* == Site_Header == */
+.Site_Header {
+    position: relative;
+    _text-align: center; /* for IE8 */
+}
+
+    .Site_Header .Site_Container {
+        padding: 0px;
+        border: 0px solid red;
+    }
+
+    .Site_Header .left-pane {
+        float: left;
+        border: 0px solid blue;
+    }
+
+        .Site_Header .left-pane .logo {
+            float: left;
+        }
+
+    .Site_Header .right-pane {
+        margin-left: 320px;
+        border: 0px solid red;
+    }
+
+        .Site_Header .right-pane .pane1 {
+            padding-top: 15px;
+            height: 20px;
+            text-align: right;
+            padding-right: 16px;
+        }
+
+        .Site_Header .right-pane .pane2 {
+            padding: 20px 25px 5px 10px;
+            text-align: left;
+            border: 0px solid red;
+        }
+
+        .Site_Header .right-pane .pane3 {
+            margin-top: 20px;
+            padding-top: 5px;
+            text-align: right;
+            padding-right: 30px;
+            font-size: 16px;
+        }
+
+    .Site_Header .banner {
+        position: relative;
+        height: 40px;
+        border: 0px solid none;
+        border-top: 6px solid #D00F24;
+    }
+
+/* == Site_Body == */
+.Site_Body {
+    background-color: #F2F9FF;
+    margin: 0 auto 20px auto;
+    /* for IE8 */
+    _text-align: center;
+    _position: relative;
+    _top: -15px;
+}
+
+    .Site_Body .Site_Container {
+        padding-top: 20px;
+        padding-bottom: 100px;
+        /*高度自動延伸*/
+        overflow: hidden;
+        height: 1%;
+    }
+
+/* == Site_Panel == */
+.Site_Panel {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 1px solid #EBEBEB;
+    background-color: #FFF;
+    -moz-box-shadow: 0px 2px 3px 0px rgba(169, 169, 169, 0.5);
+    -webkit-box-shadow: 0px 2px 3px 0px rgba(169, 169, 169, 0.5);
+    box-shadow: 1px 1px 1px 0px rgba(219, 225, 230, 0.5);
+    /*高度自動延伸*/
+    overflow: hidden;
+    height: 1%;
+}
+
+    .Site_Panel .left-head1 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #D00F24; /*紅*/
+    }
+
+    .Site_Panel .left-head2 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #FF6C00; /*橙*/
+    }
+
+    .Site_Panel .left-head3 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #FFCC00; /*黃*/
+    }
+
+    .Site_Panel .left-head4 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #6FB927; /*綠*/
+    }
+
+    .Site_Panel .left-head5 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #03A9F4; /*藍*/
+    }
+
+    .Site_Panel .left-head6 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #407CC9; /*靛*/
+    }
+
+    .Site_Panel .left-head7 {
+        width: 8px;
+        height: 48px;
+        float: left;
+        background-color: #A349A4; /*紫*/
+    }
+
+    .Site_Panel .mid-head {
+        width: 150px;
+        padding-left: 12px;
+        vertical-align: middle;
+        line-height: 48px;
+        float: left;
+    }
+
+    .Site_Panel .right-head {
+        float: right;
+        padding-right: 16px;
+        vertical-align: middle;
+        line-height: 48px;
+        text-align: right;
+    }
+
+        .Site_Panel .right-head input[type=button] {
+            height: 25px;
+            width: 50px;
+            color: #555;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+
+        .Site_Panel .right-head input:active, input:focus {
+            -moz-outline-style: none;
+            outline: none;
+            outline: 0;
+        }
+
+    .Site_Panel .data-container {
+        float: left;
+        width: 100%;
+        border-top: 1px solid #ebebeb;
+    }
+
+    .Site_Panel .data-body {
+        float: left;
+        margin: 0px auto 0px auto;
+        padding: 20px;
+    }
+
+    .Site_Panel .footer-body {
+        float: left;
+        font-size: 13px;
+        margin: 3px 5px 5px 5px;
+        padding-top: 3px;
+        height: 25px;
+        text-align: center;
+        border: 0px solid red;
+    }
+
+/* == Site_Tab == */
+.Site_Tab {
+    width: 78px;
+    height: 33px;
+    border: 1px solid #EBEBEB;
+    border-left-style: none;
+    background-color: #FFF;
+}
+
+    .Site_Tab :hover {
+        color: #D00F24;
+    }
+
+    .Site_Tab a {
+        color: inherit;
+    }
+
+        .Site_Tab a :hover {
+            color: #D00F24;
+            background-color: #E3E3E3;
+        }
+
+    .Site_Tab .tab-color1 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #D00F24; /*紅*/
+    }
+
+    .Site_Tab .tab-color2 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #FF6C00; /*橙*/
+    }
+
+    .Site_Tab .tab-color3 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #FFCC00; /*黃*/
+    }
+
+    .Site_Tab .tab-color4 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #6FB927; /*綠*/
+    }
+
+    .Site_Tab .tab-color5 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #03A9F4; /*藍*/
+    }
+
+    .Site_Tab .tab-color6 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #407CC9; /*靛*/
+    }
+
+    .Site_Tab .tab-color7 {
+        width: 3px;
+        height: 100%;
+        float: left;
+        background-color: #A349A4; /*紫*/
+    }
+
+    .Site_Tab .tab-caption {
+        margin-left: 3px;
+        padding-left: 6px;
+        line-height: 33px;
+        vertical-align: middle;
+        background-color: #E0E0E0;
+    }
+
+    .Site_Tab .tab-caption-active {
+        margin-left: 3px;
+        padding-left: 6px;
+        line-height: 33px;
+        vertical-align: middle;
+        background-color: #FFF;
+    }
+
+
+/* Normal theme */
+.Site_ajax__tab_theme .ajax__tab_header {
+    margin: 0;
+    border-bottom-width: 0px;
+}
+
+    .Site_ajax__tab_theme .ajax__tab_header .ajax__tab_outer {
+        height: 33px;
+        line-height: 33px;
+        vertical-align: middle;
+        border: 1px solid #EBEBEB;
+        border-bottom-style: none;
+        background-color: #E0E0E0;
+    }
+
+        .Site_ajax__tab_theme .ajax__tab_header .ajax__tab_outer .ajax__tab_inner {
+            padding-right: 0.75em;
+            height: 33px;
+            line-height: 33px;
+        }
+
+            .Site_ajax__tab_theme .ajax__tab_header .ajax__tab_outer .ajax__tab_inner a {
+                color: #666666;
+            }
+
+    .Site_ajax__tab_theme .ajax__tab_header .ajax__tab_tab {
+        padding: 0px;
+        margin: 0px;
+    }
+
+.Site_ajax__tab_theme .ajax__tab_hover .ajax__tab_outer {
+    color: #D00F24;
+}
+
+.Site_ajax__tab_theme .ajax__tab_hover .ajax__tab_tab {
+    color: #D00F24;
+}
+
+.Site_ajax__tab_theme .ajax__tab_active .ajax__tab_tab {
+    background-color: #FFF;
+}
+
+.Site_ajax__tab_theme .ajax__tab_active .ajax__tab_outer {
+    background-color: #FFF;
+}
+
+.Site_ajax__tab_theme .ajax__tab_body {
+    padding: 0.25em 0.5em;
+    background-color: #FFF;
+    border: solid 1px #EBEBEB;
+}
+
+/* Vertical theme */
+.Site_ajax__tab_theme_Vertical .ajax__tab_header {
+    float: left;
+}
+
+.Site_ajax__tab_theme_Vertical .ajax__tab_body {
+    /*margin-left: 150px;*/
+}
+
+.Site_ajax__tab_theme_Vertical .ajax__tab_outer {
+    display: block !important;
+}
+
+    .Site_ajax__tab_theme_Vertical .ajax__tab_outer .ajax__tab_inner {
+        border-bottom: 1px solid #EBEBEB;
+    }
+
+.Site_ajax__tab_theme_Vertical .ajax__tab_tab {
+    width: 150px;
+    max-width: 250px;
+}

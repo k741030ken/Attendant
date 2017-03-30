@@ -1,0 +1,239 @@
+/* Flow Schma 範本         2014.11  */
+/* 修正 CaseSenstive 錯誤  2016.03  */
+/* ============ */
+/* 刪除既有物件 */
+/* ============ */
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[(xxx)FlowCase]') AND type in (N'U'))
+DROP TABLE [(xxx)FlowCase]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[(xxx)FlowOpenLog]') AND type in (N'U'))
+DROP TABLE [(xxx)FlowOpenLog]
+GO
+
+IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[(xxx)FlowFullLog]') AND type in (N'U'))
+DROP TABLE [(xxx)FlowFullLog]
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[view(xxx)FlowFullLog]'))
+DROP VIEW [view(xxx)FlowFullLog]
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[view(xxx)FlowOpenLog]'))
+DROP VIEW [view(xxx)FlowOpenLog]
+GO
+
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[view(xxx)FlowToDoQty]'))
+DROP VIEW [view(xxx)FlowToDoQty]
+GO
+
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[(xxx)FlowCase_Delete]'))
+DROP TRIGGER [(xxx)FlowCase_Delete]
+GO
+
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[(xxx)FlowFullLog_Update]'))
+DROP TRIGGER [(xxx)FlowFullLog_Update]
+GO
+
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[(xxx)FlowFullLog_Insert]'))
+DROP TRIGGER [(xxx)FlowFullLog_Insert]
+GO
+
+IF  EXISTS (SELECT * FROM sys.triggers WHERE object_id = OBJECT_ID(N'[(xxx)FlowFullLog_Delete]'))
+DROP TRIGGER [(xxx)FlowFullLog_Delete]
+GO
+
+/* ======== */
+/* 新增物件 */
+/* ======== */
+/* Object:  (xxx)Flowcase */
+CREATE TABLE [(xxx)FlowCase](
+	[FlowCaseID] [varchar](15) NOT NULL,
+	[FlowID] [varchar](20) NOT NULL,
+	[FlowKeyValueList] [varchar](100) NOT NULL,
+	[FlowShowValueList] [nvarchar](300) NOT NULL,
+	[FlowCustVarValueList] [nvarchar](100) NULL,
+	[FlowCaseStatus] [varchar](10) NULL,
+	[FlowCaseIsLock] [char](1) NULL,
+	[FlowCaseHasSubFlow] [char](1) NULL,
+	[FlowCurrStepID] [varchar](10) NULL,
+	[FlowCurrStepName] [nvarchar](30) NULL,
+	[LastLogBatNo] [int] NULL,
+	[LastLogSeqNo] [int] NULL,
+	[CrDept] [varchar](30) NULL,
+	[CrDeptName] [nvarchar](50) NULL,
+	[CrUser] [varchar](30) NULL,
+	[CrUserName] [nvarchar](30) NULL,
+	[CrDateTime] [smalldatetime] NULL,
+	[UpdDateTime] [smalldatetime] NULL,
+ CONSTRAINT [PK_(xxx)FlowCase] PRIMARY KEY CLUSTERED 
+(
+	[FlowCaseID] DESC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX [IX_(xxx)FlowCase] ON [(xxx)FlowCase] 
+(
+	[FlowKeyValueList] DESC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+GO
+
+
+/* Object:  (xxx)FlowOpenLog */
+CREATE TABLE [(xxx)FlowOpenLog](
+	[AssignTo] [varchar](50) NOT NULL,
+	[FlowStepID] [varchar](10) NOT NULL,
+	[LogCrDateTime] [smalldatetime] NOT NULL,
+	[FlowCaseID] [varchar](15) NOT NULL,
+	[FlowLogID] [varchar](20) NOT NULL,
+	[FlowStepName] [nvarchar](30) NULL,
+	[AssignToName] [nvarchar](50) NULL,
+	[FromDept] [varchar](30) NULL,
+	[FromDeptName] [nvarchar](30) NULL,
+	[FromUser] [varchar](30) NULL,
+	[FromUserName] [nvarchar](30) NULL,
+	[FlowStepBatchEnabled] [char](1) NULL,
+	[FlowStepOpinion] [nvarchar](max) NULL,	
+	[FlowStepBtnInfoCultureCode] [varchar](10) NULL,
+	[FlowStepBtnInfoJSON] [nvarchar](max) NULL,
+ CONSTRAINT [PK_(xxx)FlowOpenLog] PRIMARY KEY CLUSTERED 
+(
+	[AssignTo] ASC,
+	[FlowStepID] ASC,
+	[LogCrDateTime] ASC,
+	[FlowCaseID] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/* Object:  (xxx)FlowFullLog */
+CREATE TABLE [(xxx)FlowFullLog](
+	[FlowCaseID] [varchar](15) NOT NULL,
+	[FlowLogBatNo] [int] NOT NULL,
+	[FlowLogID] [varchar](20) NOT NULL,
+	[FlowStepID] [varchar](10) NULL,
+	[FlowStepName] [nvarchar](30) NULL,
+	[FlowStepBtnID] [nvarchar](20) NULL,
+	[FlowStepBtnCaption] [nvarchar](30) NULL,
+	[FlowStepOpinion] [nvarchar](max) NULL,
+	[FlowLogIsClose] [char](1) NULL,
+	[IsProxy] [char](1) NULL,
+	[AttachID] [varchar](50) NULL,
+	[FromDept] [varchar](30) NULL,
+	[FromDeptName] [nvarchar](30) NULL,
+	[FromUser] [varchar](30) NULL,
+	[FromUserName] [nvarchar](30) NULL,
+	[AssignTo] [varchar](50) NULL,
+	[AssignToName] [nvarchar](50) NULL,
+	[ToDept] [varchar](30) NULL,
+	[ToDeptName] [nvarchar](30) NULL,
+	[ToUser] [varchar](30) NULL,
+	[ToUserName] [nvarchar](30) NULL,
+	[LogCrDateTime] [smalldatetime] NULL,
+	[LogUpdDateTime] [smalldatetime] NULL,
+	[LogRemark] [nvarchar](max) NULL,
+ CONSTRAINT [PK_(xxx)FlowFullLog] PRIMARY KEY CLUSTERED 
+(
+	[FlowCaseID] DESC,
+	[FlowLogBatNo] DESC,
+	[FlowLogID] DESC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+
+/* Object:  View(xxx)FlowFullLog */
+CREATE VIEW [view(xxx)FlowFullLog]
+AS
+SELECT    a.FlowCaseID, a.FlowLogBatNo, a.FlowLogID, b.FlowCaseStatus, b.FlowCurrStepID, b.FlowCurrStepName
+		, a.FlowLogIsClose, b.FlowID, b.FlowCaseIsLock, a.FlowStepID, a.FlowStepName, b.FlowKeyValueList, b.FlowShowValueList,b.FlowCustVarValueList
+		, a.FlowStepBtnID, a.FlowStepBtnCaption, a.FlowStepOpinion, a.AssignTo, a.AssignToName, a.IsProxy, a.AttachID 
+		, a.FromDept, a.FromDeptName, a.FromUser, a.FromUserName, a.ToDept, a.ToDeptName, a.ToUser, a.ToUserName, b.CrDept, b.CrDeptName, b.CrUser, b.CrUserName
+		, b.CrDateTime, a.LogCrDateTime, a.LogUpdDateTime, a.LogRemark
+FROM    [(xxx)FlowFullLog] AS a INNER JOIN
+        [(xxx)FlowCase] AS b ON a.FlowCaseID = b.FlowCaseID
+GO
+
+/* Object:  View(xxx)FlowOpenLog */
+CREATE VIEW [view(xxx)FlowOpenLog]
+AS
+Select	a.AssignTo,a.AssignToName,a.FlowStepID,a.FlowStepName,a.LogCrDateTime
+		,b.FlowID,b.FlowCaseID,b.FlowCaseIsLock,a.FlowLogID
+		,b.FlowKeyValueList, b.FlowShowValueList,b.FlowCaseHasSubFlow,b.FlowCustVarValueList
+		,b.CrDept,b.CrUser
+		,a.FromDept ,a.FromDeptName,a.FromUser,a.FromUserName
+        ,a.FlowStepBatchEnabled,a.FlowStepOpinion,a.FlowStepBtnInfoCultureCode,a.FlowStepBtnInfoJSON 
+FROM    [(xxx)FlowOpenLog] AS a INNER JOIN
+        [(xxx)FlowCase] AS b ON a.FlowCaseID = b.FlowCaseID
+GO
+
+/* Object: View(xxx)FlowToDoQty */
+CREATE VIEW [view(xxx)FlowToDoQty]
+as
+	SELECT top 100 percent  AssignTo,count(*) as Qty
+	FROM   [(xxx)FlowOpenLog]
+	Group By AssignTo
+	Order By AssignTo
+GO
+
+/* Object: Trigger (xxx)FlowCase_Delete */
+CREATE TRIGGER [(xxx)FlowCase_Delete]  ON [(xxx)FlowCase]
+FOR DELETE 
+AS
+    Declare  @FlowCaseID varchar(15) 
+    Select   @FlowCaseID=FlowCaseID  From Deleted
+    Delete   [(xxx)FlowOpenLog] where FlowCaseID = @FlowCaseID 
+    Delete   [(xxx)FlowFullLog] where FlowCaseID = @FlowCaseID
+GO
+
+/* Object: Trigger (xxx)FlowFullLog_Update */
+CREATE TRIGGER [(xxx)FlowFullLog_Update]  ON [(xxx)FlowFullLog] 
+FOR UPDATE 
+AS
+    Declare @FlowLogID varchar(20)  , @FlowLogIsClose char(1) 
+    Select @FlowLogID=FlowLogID,@FlowLogIsClose=FlowLogIsClose
+    From deleted
+    If Upper(@FlowLogIsClose) = 'Y' 
+          Delete [(xxx)FlowOpenLog] where FlowLogID = @FlowLogID
+GO
+
+/* Object: Trigger (xxx)FlowFullLog_Insert */
+CREATE TRIGGER [(xxx)FlowFullLog_Insert]  ON [(xxx)FlowFullLog] 
+FOR INSERT 
+AS
+    Declare @FlowLogID varchar(20) , @FlowCaseID varchar(15)
+    Declare @AssignTo varchar(30)  , @AssignToName nvarchar(50), @FlowLogIsClose char(1) 
+    Declare @FlowStepID varchar(10), @FlowStepName nvarchar(20) 
+    Declare @FromDept   varchar(30), @FromDeptName   nvarchar(30)
+    Declare @FromUser varchar(30)  , @FromUserName nvarchar(30)
+    Declare @LogCrDateTime smalldatetime
+     
+    Select @FlowLogID=FlowLogID,@FlowCaseID=FlowCaseID,
+           @FlowLogIsClose=FlowLogIsClose,
+           @FlowStepID=FlowStepID,@FlowStepName=FlowStepName,
+           @AssignTo=AssignTo,@AssignToName=AssignToName,
+           @FromDept=FromDept,@FromDeptName=FromDeptName,
+           @FromUser=FromUser,@FromUserName=FromUserName,
+           @LogCrDateTime=LogCrDateTime  
+    From inserted
+    
+    Update [(xxx)FlowCase] Set FlowCurrStepID=@FlowStepID , FlowCurrStepName=@FlowStepName 
+    Where FlowCaseID=@FlowCaseID
+    
+    If Upper(@FlowLogIsClose) = 'N'
+       Begin
+          Insert [(xxx)FlowOpenLog] ( AssignTo,FlowLogID,FlowCaseID,FlowStepID,FlowStepName,AssignToName,
+                 FromDept,FromDeptName,FromUser,FromUserName,LogCrDateTime)
+          values( @AssignTo,@FlowLogID,@FlowCaseID,@FlowStepID,@FlowStepName,@AssignToName,
+                 @FromDept,@FromDeptName,@FromUser,@FromUserName,@LogCrDateTime )
+       End
+GO
+
+/* Object: Trigger (xxx)FlowFullLog_Delete */
+CREATE TRIGGER [(xxx)FlowFullLog_Delete]  ON [(xxx)FlowFullLog] 
+FOR DELETE 
+AS
+    Declare @FlowLogID varchar(20)
+    Select  @FlowLogID=FlowLogID  From deleted
+    Delete  [(xxx)FlowOpenLog] where FlowLogID = @FlowLogID
+GO

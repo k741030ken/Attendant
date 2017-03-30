@@ -1,0 +1,102 @@
+﻿.tbFormList
+{
+    font-size:10pt;
+    font-family:Verdana;
+}
+.tbFormList TD, .tbFormList TH
+{
+    font-size:10pt;
+    font-family:Verdana;
+}
+.tbFormHeader
+{
+    background:#CCCCCC;
+    color:#000000;
+}
+.tbSeperator
+{
+    border-bottom:1px solid #336699;
+    font-size:10pt;
+    font-family:Verdana;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.tbSeperatorHeadTD
+{
+    text-align:left;
+    color:#FFFFFF;
+    font-weight:bold;
+    background:#336699;
+}
+div.divSepTitle
+{
+    float:left;
+    border-bottom:1px solid #5384e6;
+    font-size:12px;
+    font-family:Verdana;
+    margin-top:5px;
+    margin-bottom:5px;
+    line-height:15pt;
+    width: 100%;
+}
+table.divSepTitle
+{
+    font-size:12px;
+    font-family:Verdana;
+    line-height:15pt;
+    width: 100%;
+}
+.divSepTitle .Head
+{
+    padding:1pt;
+    float:left;
+    text-align:left;
+    color:#FFFFFF;
+    font-weight:bold;
+    padding-left:5pt;
+    padding-right:20pt;
+    background:#5384e6;
+}
+.divSepTitle .Head a:link, .divSepTitle .Head a:visited, .divSepTitle .Head a:active { color: #FFD700; }
+.divSepTitle .HeadTD
+{
+    padding:1pt;
+    color:#FFFFFF;
+    font-weight:bold;
+    background:#5384e6;
+}
+.divSepTitle .Body
+{
+    float:left;
+}
+.divSepTitle .Body > span
+{
+    padding-left: 4pt;
+    padding-right: 4pt;
+}
+.AlertMsg
+{
+	padding:1px;
+	margin:1px;
+    font-size:12px;
+	text-align:left;
+	color:#000000;
+	background:#FFFFE1;
+	border:1px solid #000000;
+}
+.AlertMsgRed
+{
+	padding:1px;
+	margin:1px;
+    font-size:12px;
+	text-align:left;
+	color:Red ;
+	background:#FFFFE1;
+	border:1px solid #000000;
+	font-weight:bold;
+}
+input[type=text][disabled]
+{
+    background: #EEEEEE;
+    border: 1px solid #666666;
+}

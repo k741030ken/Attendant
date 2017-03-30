@@ -1,0 +1,58 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Navi.master.cs" Inherits="Sample_Navi_Navi" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+<%@ Register Assembly="Devarchive.Net" Namespace="Devarchive.Net" TagPrefix="cc1" %>
+<%@ Register Src="~/Util/ucTreeView.ascx" TagPrefix="uc1" TagName="ucTreeView" %>
+<%@ Register Src="~/Util/ucMenuBar.ascx" TagPrefix="uc1" TagName="ucMenuBar" %>
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Navi Master</title>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="margin: 0;">
+    <form id="form1" runat="server">
+        <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+        </asp:ToolkitScriptManager>
+        <div class="Site_Wrapper">
+            <div class="Site_Header" id="DivHeader">
+                <div class='Site_Container'>
+                    <div class='left-pane'>
+                        <asp:Image ID="imgLogo" runat="server" BorderStyle="None" Width="320" Height="112" />
+                    </div>
+                    <div class='right-pane'>
+                        <div class='pane1'></div>
+                        <div class='pane2'>
+                        </div>
+                        <div class='pane3'>
+                            <img id="imgUserInfo" src="/Util/WebClient/People.png" style="vertical-align: bottom; border-style: none;" />
+                            <asp:Label ID="labUserInfo" runat="server" Text="UserInfo"></asp:Label>
+                        </div>
+                    </div>
+                    <div class='Site_Clear'></div>
+                </div>
+                <div class='banner'>
+                    <div class='Site_Container'>
+                        <uc1:ucMenuBar runat="server" ID="ucMenuBar" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="divBody" class="Site_Body">
+                <div id="MainBody" class="Site_Container">
+                    <div style="border: 1px solid silver; width: 180px; height: 550px; padding: 10px; overflow: auto; float: left;">
+                        <uc1:ucTreeView runat="server" ID="ucTreeView1" />
+                    </div>
+                    <div style="margin-left: 220px;">
+                        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                        </asp:ContentPlaceHolder>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

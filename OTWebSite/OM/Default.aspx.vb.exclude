@@ -1,0 +1,18 @@
+﻿
+Partial Class OM_Default
+    Inherits System.Web.UI.Page
+
+
+    Protected Sub Page_Load(sender As Object, e As System.EventArgs) Handles Me.Load
+        ClientScript.RegisterClientScriptBlock(Page.GetType(), "confirm", "confirm('確定查詢嗎？');", True)
+        '⌳單位類別
+        ddlOrgType()
+        '上階部門-OrganID
+        ddlUpOrganID()
+        '所屬一級部門
+        ddlDeptID()
+        '⌳費用分攤部門
+        ddlCostDeptID()
+    End Sub
+ 
+End Class
