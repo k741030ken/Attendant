@@ -134,13 +134,9 @@ public partial class OverTime_Overtime_Detail : SecurePage
             TabDisable();
         }
     }
-    private void TabDisable()
+    private void moreOverTime()
     {
-        DataTable dtOverTimeAdvance = (DataTable)Session["dtOverTimeAdvance"];
-        DataTable dtOverTimeDeclaration = (DataTable)Session["dtOverTimeDeclaration"];
-        if (!(dtOverTimeAdvance == null && dtOverTimeDeclaration == null))
-        {
-            string strTabInitJS = @"dom.Ready(function(){ 
+        string strTabInitJS = @"dom.Ready(function(){ 
                 var oTabHead1 = window.parent.document.getElementById('TabMainContainer_tabCustForm_tab');
                 var oTabHead2 = window.parent.document.getElementById('TabMainContainer_tabFlowVerify_tab');
                 var oTabBody1 = window.parent.document.getElementById('TabMainContainer_tabCustForm');
@@ -167,11 +163,11 @@ public partial class OverTime_Overtime_Detail : SecurePage
 //                        oTabBody4.style.display='none';
                 }
         });";
-            Util.setJSContent(strTabInitJS, "Parent_TabMainContainer_Init");
-        }
-        else
-        {
-            string strTabInitJS = @"dom.Ready(function(){ 
+        Util.setJSContent(strTabInitJS, "Parent_TabMainContainer_Init");
+    }
+    private void oneOverTime()
+    {
+        string strTabInitJS = @"dom.Ready(function(){ 
                 var oBtn1 = window.parent.document.getElementById('TabMainContainer_tabFlowVerify_ucCommUserAdminButton_btnLaunch');
 //                var oTabHead4 = window.parent.document.getElementById('TabMainContainer_tabFlowVerify_labPrevStepOpinion');
 //                var oTabBody4 = window.parent.document.getElementById('TabMainContainer_tabFlowVerify_gvFlowPrevStepLog_divGridview');
@@ -182,7 +178,23 @@ public partial class OverTime_Overtime_Detail : SecurePage
 //                oTabBody4.style.visibility='visible';
 //                oTabBody4.style.display='none';
         });";
-            Util.setJSContent(strTabInitJS, "Parent_TabMainContainer_Init");
+        Util.setJSContent(strTabInitJS, "Parent_TabMainContainer_Init");
+    }
+    private void TabDisable()
+    {
+        DataTable dtOverTimeAdvance = (DataTable)Session["dtOverTimeAdvance"];
+        DataTable dtOverTimeDeclaration = (DataTable)Session["dtOverTimeDeclaration"];
+        if (dtOverTimeAdvance == null||dtOverTimeDeclaration == null)
+        {
+            oneOverTime();
+        }
+        else if (dtOverTimeAdvance.Rows.Count > 0||dtOverTimeDeclaration.Rows.Count > 0)
+        {
+            moreOverTime();
+        }
+        else
+        {
+            oneOverTime();
         }
     }
     public void subGetData()

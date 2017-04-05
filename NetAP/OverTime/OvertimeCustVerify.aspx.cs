@@ -75,20 +75,20 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
     /// <param name="AssignTo"></param>
     private void ClearBtn(string AssignTo)
     {
-        FlowExpress tbFlow = new FlowExpress(_CurrFlowID);
-        DbHelper db = new DbHelper(Aattendant._AattendantDBName);
-        CommandHelper sb = db.CreateCommandHelper();
-        sb.Append(" update " + tbFlow.FlowCustDB + "FlowOpenLog ");
-        sb.Append(" set FlowStepBatchEnabled=null ");
-        sb.Append(" ,FlowStepOpinion=null ");
-        sb.Append(" ,FlowStepBtnInfoCultureCode=null ");
-        sb.Append(" ,FlowStepBtnInfoJSON=null ");
-        sb.Append(" where AssignTo='" + AssignTo + "' ");
-        db.ExecuteNonQuery(sb.BuildCommand());
-        //Session["btnVisible"] 1：(顯示核准，隱藏覆核) , 2：(顯示覆核，隱藏核准) , 12：(都不隱藏)
-        Session["btnVisible"] = "12";
-        FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, AssignTo, _DBName.Split(','), null, false, "", "");
-        Session["btnVisible"] = "1";
+        //FlowExpress tbFlow = new FlowExpress(_CurrFlowID);
+        //DbHelper db = new DbHelper(Aattendant._AattendantDBName);
+        //CommandHelper sb = db.CreateCommandHelper();
+        //sb.Append(" update " + tbFlow.FlowCustDB + "FlowOpenLog ");
+        //sb.Append(" set FlowStepBatchEnabled=null ");
+        //sb.Append(" ,FlowStepOpinion=null ");
+        //sb.Append(" ,FlowStepBtnInfoCultureCode=null ");
+        //sb.Append(" ,FlowStepBtnInfoJSON=null ");
+        //sb.Append(" where AssignTo=").AppendParameter("AssignTo", AssignTo); 
+        //db.ExecuteNonQuery(sb.BuildCommand());
+        ////Session["btnVisible"] 1：(顯示核准，隱藏覆核) , 2：(顯示覆核，隱藏核准) , 12：(都不隱藏)
+        //Session["btnVisible"] = "12";
+        //FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, AssignTo, _DBName.Split(','), null, false, "", "");
+        //Session["btnVisible"] = "12";
     }
     /// <summary>
     /// RankID19，因為不是登入者而是要各筆加班人的資料，所以獨立出一個Function，方便多筆審核時使用。
@@ -104,9 +104,10 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         CommandHelper sb = db.CreateCommandHelper();
         DataTable dt;
         string MapEmpRankID, OTEmpID;
-        sb.Append(" SELECT Top 1 isnull(P.CompID,'') as CompID,isnull(P.RankID,'')as RankID FROM " + ADTable(AD) + " OT ");
+        sb.Append(" SELECT Top 1 isnull(P.CompID,'') as CompID,isnull(P.RankID,'')as RankID FROM "+ ADTable(AD)+" OT ");
         sb.Append(" LEFT JOIN " + _eHRMSDB + ".[dbo].[Personal] P ON OT.OTEmpID=P.EmpID and OT.OTCompID=P.CompID");
-        sb.Append(" WHERE OT.FlowCaseID='" + FlowCaseID + "' and OTSeqNo='1'");
+        sb.Append(" WHERE OT.FlowCaseID=").AppendParameter("FlowCaseID", FlowCaseID);
+        sb.Append(" and OTSeqNo=").AppendParameter("OTSeqNo", "1");
         dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
         if (dt.Rows.Count == 0) return false;
         MapEmpRankID = RankIDMapping(UserInfo.getUserInfo().CompID, UpEmpRankID);
@@ -126,7 +127,8 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         CommandHelper sb = db.CreateCommandHelper();
         sb.Append("SELECT Top 1 [RankIDMap]");
         sb.Append("FROM " + _eHRMSDB + ".[dbo].[RankMapping]");
-        sb.Append("where CompID='" + CompID + "' and RankID='" + RankID + "' ;");
+        sb.Append("where CompID=").AppendParameter("CompID", CompID);
+        sb.Append(" and RankID=").AppendParameter("RankID", RankID);
         DataTable dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
         return dt.Rows.Count > 0 ? dt.Rows[0]["RankIDMap"].ToString() : "";
         //return db.ExecuteScalar(CommandType.Text, sb.ToString()).ToString();
@@ -203,9 +205,9 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         CommandHelper sb = db.CreateCommandHelper();
         sb.AppendStatement(" SELECT top 1 AL.FlowLogID,* FROM " + AD + " OT  ");
         sb.Append("  LEFT JOIN " + tbFlow.FlowCustDB + "FlowFullLog AL ON OT.FlowCaseID=AL.FlowCaseID  ");
-        sb.Append(" WHERE OT.FlowCaseID ='" + FlowCaseID + "' ");
+        sb.Append(" WHERE OT.FlowCaseID =").AppendParameter("FlowCaseID", FlowCaseID);
         sb.Append(" Order by AL.FlowLogID desc ");
-        return db.ExecuteScalar(CommandType.Text, sb.ToString()).ToString();
+        return db.ExecuteScalar(sb.BuildCommand()).ToString();
     }
 
     /// <summary>
@@ -222,8 +224,9 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         sb.Append(" SELECT DISTINCT P.EmpID,O.OrganName+'-'+P.Name as Name ");
         sb.Append(" FROM " + _eHRMSDB + ".dbo. Personal P ");
         sb.Append(" left join " + _eHRMSDB + ".dbo. Organization O on O.CompID=P.CompID and O.OrganID=P.DeptID");
-        sb.Append(" WHERE P.EmpID='" + EmpID + "' and P.CompID='" + CompID + "' ");
-        dt = db.ExecuteDataSet(CommandType.Text, sb.ToString()).Tables[0];
+        sb.Append(" WHERE P.EmpID=").AppendParameter("EmpID", EmpID);
+        sb.Append(" and P.CompID=").AppendParameter("CompID", CompID);
+        dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
         Dictionary<string, string> _dic = new Dictionary<string, string>();
         _dic = Util.getDictionary(dt, 0, 1);
         return _dic;
@@ -232,7 +235,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
     /// <summary>
     /// 用FlowCase撈取A或D的資料
     /// </summary>
-    private DataTable FlowCaseToAD(string FlowCase, string AD)
+    private DataTable OverTime_find_by_FlowCaseID(string FlowCase, string AD)
     {
         DbHelper db = new DbHelper(Aattendant._AattendantDBName);
         CommandHelper sb = db.CreateCommandHelper();
@@ -244,9 +247,9 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         sb.Append("  FROM " + Table + " O1");
         sb.Append("  left join " + Table + " O2   on  O1.OTTxnID=O2.OTTxnID and O2.OTSeqNo='2'  ");
         sb.Append("  left join " + _eHRMSDB + ".dbo.Personal P on P.EmpID=O1.OTEmpID and P.CompID=O1.OTCompID");
-        sb.Append("  where O1.OTSeqNo='1'and O1.FlowCaseID='" + FlowCase + "' ");
+        sb.Append("  where O1.OTSeqNo='1'and O1.FlowCaseID=").AppendParameter("FlowCase", FlowCase);
 
-        return db.ExecuteDataSet(CommandType.Text, sb.ToString()).Tables[0];
+        return db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
     }
     //
     /// <summary>
@@ -256,7 +259,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
     /// <param name="OTStatus">狀態</param>
     /// <param name="FlowCaseID">FlowCaseID</param>
     /// <param name="sb">回傳SQL語法</param>
-    private void UpdateAorD(string AD, string OTStatus, string FlowCaseID, ref CommandHelper sb)
+    private void UpdateOverTime(string AD, string OTStatus, string FlowCaseID, ref CommandHelper sb)
     {
         AD = ADTable(AD);
         sb.Append(" UPDATE " + AD + " SET OTStatus='" + OTStatus + "',");
@@ -268,7 +271,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         //sb.Append(" LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',");
         //sb.Append(" LastChgID='" + UserInfo.getUserInfo().UserID + "', ");
         //sb.Append(" LastChgComp='" + UserInfo.getUserInfo().CompID + "' ");
-        sb.Append(" WHERE FlowCaseID='" + FlowCaseID + "' ; ");
+        sb.Append(" WHERE FlowCaseID=").AppendParameter("FlowCaseID", FlowCaseID);
     }
 
     /// <summary>
@@ -291,7 +294,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         sb.Append(" select distinct isnull(C.EMail,'') as EMail,P.Name from " + _eHRMSDB + ".[dbo].Personal P ");
         sb.Append(" left join " + _eHRMSDB + ".[dbo].[Communication] C on C.IDNo=P.IDNo ");
         sb.Append(" where P.CompID='" + CompID + "' and P.EmpID='" + EmpID + "' ");
-        return db.ExecuteDataSet(CommandType.Text, sb.ToString()).Tables[0];
+        return db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
     }
 
     /// <summary>
@@ -317,7 +320,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         sb.Append("left join " + _eHRMSDB + ".[dbo].Personal P on P.EmpID=UG.UserID and P.CompID=UG.CompID ");
         sb.Append("left join " + _eHRMSDB + ".[dbo].Communication C on C.IDNo=P.IDNo ");
         sb.Append("where UG.CompID='SPHBK1' and UG.GroupID='Adm-OT'");
-        dt = db.ExecuteDataSet(CommandType.Text, sb.ToString()).Tables[0];
+        dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
         if (dt.Rows.Count == 0) return true;
         sb.Reset();
         DataRow[] dr = dt.Select();
@@ -353,13 +356,13 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
     private bool MailLogContent(string FlowCase, string OTStatus, string AD, string nextAssignID, string nextAssignCompID, bool isLastFlow)
     {
         //DataTable ADBatchdt = FlowCaseToAD(FlowCase, AD);
-        DataTable LastAssigndt = HROverTimeLogAD(FlowCase, AD);
-        DataTable OTdt = FlowCaseToAD(FlowCase, AD);
-        DataTable Maildt;
-        string OTEmpID = OTdt.Rows[0]["OTEmpID"].ToString();
-        string OTCompID = OTdt.Rows[0]["OTCompID"].ToString();
-        string AssignID = LastAssigndt.Rows[0]["SignID"].ToString();
-        string AssignCompID = LastAssigndt.Rows[0]["SignIDComp"].ToString();
+        DataTable dtLastAssign = HROverTimeLogAD(FlowCase, AD);
+        DataTable dtOverTime = OverTime_find_by_FlowCaseID(FlowCase, AD);
+        DataTable dtMail;
+        string OTEmpID = dtOverTime.Rows[0]["OTEmpID"].ToString();
+        string OTCompID = dtOverTime.Rows[0]["OTCompID"].ToString();
+        string AssignID = dtLastAssign.Rows[0]["SignID"].ToString();
+        string AssignCompID = dtLastAssign.Rows[0]["SignIDComp"].ToString();
         string FromDT = "";
         string Subject1 = "", Subject2 = "", Subject3 = "";
         string Content1 = "", Content2 = "", Content3 = "";
@@ -387,18 +390,18 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
             {
                 Subject1 = "加班單流程案件結案通知"; //(主管)
                 Title1 = "您簽核的加班單已經完成『結案』!";
-                Maildt = getMailInfo(AssignCompID, AssignID);
-                if (Maildt.Rows.Count > 0)
+                dtMail = getMailInfo(AssignCompID, AssignID);
+                if (dtMail.Rows.Count > 0)
                 {
-                    Mail1 = Maildt.Rows[0]["EMail"].ToString();
+                    Mail1 = dtMail.Rows[0]["EMail"].ToString();
                     //Name1 = Maildt.Rows[0]["Name"].ToString();
                 }
                 Subject2 = "加班單流程案件核准通知";//(申請人)
                 Title2 = "您" + FromDT + "的加班單已『核准』!";
-                Maildt = getMailInfo(OTCompID, OTEmpID);
-                if (Maildt.Rows.Count > 0)
+                dtMail = getMailInfo(OTCompID, OTEmpID);
+                if (dtMail.Rows.Count > 0)
                 {
-                    Mail2 = Maildt.Rows[0]["EMail"].ToString();
+                    Mail2 = dtMail.Rows[0]["EMail"].ToString();
                     //Name2 = Maildt.Rows[0]["Name"].ToString();
                 }
             }
@@ -406,29 +409,29 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
             {
                 Subject1 = "加班單流程案件簽核通知";//(主管)
                 Title1 = "您簽核的加班單已送簽至下一關主管簽核";
-                Maildt = getMailInfo(AssignCompID, AssignID);
-                if (Maildt.Rows.Count > 0)
+                dtMail = getMailInfo(AssignCompID, AssignID);
+                if (dtMail.Rows.Count > 0)
                 {
-                    Mail1 = Maildt.Rows[0]["EMail"].ToString();
+                    Mail1 = dtMail.Rows[0]["EMail"].ToString();
                     //Name1 = Maildt.Rows[0]["Name"].ToString();
                 }
 
                 Subject2 = "加班單流程案件核准通知";//(申請人)
                 Title2 = "您" + FromDT + "的加班單已送簽下一關主管簽核";
-                Maildt = getMailInfo(OTCompID, OTEmpID);
-                if (Maildt.Rows.Count > 0)
+                dtMail = getMailInfo(OTCompID, OTEmpID);
+                if (dtMail.Rows.Count > 0)
                 {
-                    Mail2 = Maildt.Rows[0]["EMail"].ToString();
+                    Mail2 = dtMail.Rows[0]["EMail"].ToString();
                     //Name2 = Maildt.Rows[0]["Name"].ToString();
                 }
 
                 Subject3 = "加班單流程待辦案件通知"; //(主管)
-                Maildt = getMailInfo(nextAssignCompID, nextAssignID);
-                if (Maildt.Rows.Count > 0)
+                dtMail = getMailInfo(nextAssignCompID, nextAssignID);
+                if (dtMail.Rows.Count > 0)
                 {
-                    Mail3 = Maildt.Rows[0]["EMail"].ToString();
+                    Mail3 = dtMail.Rows[0]["EMail"].ToString();
                     //Name3 = Maildt.Rows[0]["Name"].ToString();
-                    Title3 = Maildt.Rows[0]["Name"].ToString(); //代辦第一個欄位直接放BossName
+                    Title3 = dtMail.Rows[0]["Name"].ToString(); //代辦第一個欄位直接放BossName
                 }
             }
         }
@@ -436,19 +439,19 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         {
             Subject1 = "加班單流程案件駁回通知";//(主管)
             Title1 = "您簽核的加班單已完成『駁回』!";
-            Maildt = getMailInfo(AssignCompID, AssignID);
-            if (Maildt.Rows.Count > 0)
+            dtMail = getMailInfo(AssignCompID, AssignID);
+            if (dtMail.Rows.Count > 0)
             {
-                Mail1 = Maildt.Rows[0]["EMail"].ToString();
+                Mail1 = dtMail.Rows[0]["EMail"].ToString();
                 //Name1 = Maildt.Rows[0]["Name"].ToString();
             }
 
             Subject2 = "加班單流程案件駁回通知";//(申請人)
             Title2 = "您" + FromDT + "的加班單已被『駁回』!";
-            Maildt = getMailInfo(OTCompID, OTEmpID);
-            if (Maildt.Rows.Count > 0)
+            dtMail = getMailInfo(OTCompID, OTEmpID);
+            if (dtMail.Rows.Count > 0)
             {
-                Mail2 = Maildt.Rows[0]["EMail"].ToString();
+                Mail2 = dtMail.Rows[0]["EMail"].ToString();
                 //Name2 = Maildt.Rows[0]["Name"].ToString();
             }
         }
@@ -470,21 +473,21 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         //Subject2 = "(leo)" + Subject2;
         //Subject3 = "(leo)" + Subject3;
 
-        if (OTdt.Rows.Count > 0)
+        if (dtOverTime.Rows.Count > 0)
         {
             //主管
             Content1 =
                     "NoticeOverTime" +
                     "||BM@QuitMailContent1||" + Title1 +
-                    "||BM@QuitMailContent2||" + OTdt.Rows[0]["OTFormNo"].ToString() +
-                    "||BM@QuitMailContent3||" + OTdt.Rows[0]["OTEmpID"].ToString() +
-                    "||BM@QuitMailContent4||" + OTdt.Rows[0]["Name"].ToString() +
-                    "||BM@QuitMailContent5||" + OTdt.Rows[0]["OTDate"].ToString() +
-                    "||BM@QuitMailContent6||" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
-                    "||BM@QuitMailContent7||" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(2, 2);
+                    "||BM@QuitMailContent2||" + dtOverTime.Rows[0]["OTFormNo"].ToString() +
+                    "||BM@QuitMailContent3||" + dtOverTime.Rows[0]["OTEmpID"].ToString() +
+                    "||BM@QuitMailContent4||" + dtOverTime.Rows[0]["Name"].ToString() +
+                    "||BM@QuitMailContent5||" + dtOverTime.Rows[0]["OTDate"].ToString() +
+                    "||BM@QuitMailContent6||" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
+                    "||BM@QuitMailContent7||" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(2, 2);
             if (Mail1 != "")
             {
-                InsertMailLogCommand("人力資源處", OTdt.Rows[0]["OTCompID"].ToString(), OTdt.Rows[0]["OTEmpID"].ToString(), Mail1, Subject1, Content1, false, ref sb2);
+                InsertMailLogCommand("人力資源處", dtOverTime.Rows[0]["OTCompID"].ToString(), dtOverTime.Rows[0]["OTEmpID"].ToString(), Mail1, Subject1, Content1, false, ref sb2);
                 try
                 {
                     db.ExecuteNonQuery(sb2.BuildCommand());
@@ -505,15 +508,15 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
             Content2 =
                     "NoticeOverTime" +
                     "||BM@QuitMailContent1||" + Title2 +
-                    "||BM@QuitMailContent2||" + OTdt.Rows[0]["OTFormNo"].ToString() +
-                    "||BM@QuitMailContent3||" + OTdt.Rows[0]["OTEmpID"].ToString() +
-                    "||BM@QuitMailContent4||" + OTdt.Rows[0]["Name"].ToString() +
-                    "||BM@QuitMailContent5||" + OTdt.Rows[0]["OTDate"].ToString() +
-                    "||BM@QuitMailContent6||" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
-                    "||BM@QuitMailContent7||" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(2, 2);
+                    "||BM@QuitMailContent2||" + dtOverTime.Rows[0]["OTFormNo"].ToString() +
+                    "||BM@QuitMailContent3||" + dtOverTime.Rows[0]["OTEmpID"].ToString() +
+                    "||BM@QuitMailContent4||" + dtOverTime.Rows[0]["Name"].ToString() +
+                    "||BM@QuitMailContent5||" + dtOverTime.Rows[0]["OTDate"].ToString() +
+                    "||BM@QuitMailContent6||" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
+                    "||BM@QuitMailContent7||" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(2, 2);
             if (Mail2 != "")
             {
-                InsertMailLogCommand("人力資源處", OTdt.Rows[0]["OTCompID"].ToString(), OTdt.Rows[0]["OTEmpID"].ToString(), Mail2, Subject2, Content2, false, ref sb2);
+                InsertMailLogCommand("人力資源處", dtOverTime.Rows[0]["OTCompID"].ToString(), dtOverTime.Rows[0]["OTEmpID"].ToString(), Mail2, Subject2, Content2, false, ref sb2);
                 try
                 {
                     db.ExecuteNonQuery(sb2.BuildCommand());
@@ -537,16 +540,16 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                     Content3 =
                             "OverTimeTodoList" +
                             "||BM@QuitMailContent1||" + Title3 +
-                            "||BM@QuitMailContent2||" + OTdt.Rows[0]["OTFormNo"].ToString() +
-                            "||BM@QuitMailContent3||" + OTdt.Rows[0]["OTEmpID"].ToString() +
-                            "||BM@QuitMailContent4||" + OTdt.Rows[0]["Name"].ToString() +
-                            "||BM@QuitMailContent5||" + OTdt.Rows[0]["OTDate"].ToString() +
-                            "||BM@QuitMailContent6||" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + OTdt.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
-                            "||BM@QuitMailContent7||" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + OTdt.Rows[0]["OTEndTime"].ToString().Substring(2, 2) +
+                            "||BM@QuitMailContent2||" + dtOverTime.Rows[0]["OTFormNo"].ToString() +
+                            "||BM@QuitMailContent3||" + dtOverTime.Rows[0]["OTEmpID"].ToString() +
+                            "||BM@QuitMailContent4||" + dtOverTime.Rows[0]["Name"].ToString() +
+                            "||BM@QuitMailContent5||" + dtOverTime.Rows[0]["OTDate"].ToString() +
+                            "||BM@QuitMailContent6||" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(0, 2) + " ：" + dtOverTime.Rows[0]["OTStartTime"].ToString().Substring(2, 2) +
+                            "||BM@QuitMailContent7||" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(0, 2) + "：" + dtOverTime.Rows[0]["OTEndTime"].ToString().Substring(2, 2) +
                             "||BM@QuitMailContent8||" + "Total";
                     if (Mail3 != "")
                     {
-                        InsertMailLogCommand("人力資源處", OTdt.Rows[0]["OTCompID"].ToString(), OTdt.Rows[0]["OTEmpID"].ToString(), Mail3, Subject3, Content3, false, ref sb2);
+                        InsertMailLogCommand("人力資源處", dtOverTime.Rows[0]["OTCompID"].ToString(), dtOverTime.Rows[0]["OTEmpID"].ToString(), Mail3, Subject3, Content3, false, ref sb2);
                         try
                         {
                             db.ExecuteNonQuery(sb2.BuildCommand());
@@ -737,14 +740,14 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
             if (Session["FlowVerifyInfo"] != null)
             {
                 #region"變數"
-                //DB使用
+                //TrtCatchIsFlowVerify()使用
                 DbHelper db = new DbHelper(Aattendant._AattendantDBName);
                 CommandHelper sb = db.CreateCommandHelper();
                 DbConnection cn = db.OpenConnection();
                 DbTransaction tx = cn.BeginTransaction();
 
                 //該筆加班單永豐流程資料(單筆)
-                FlowExpress tbFlow = new FlowExpress(_CurrFlowID, _CurrFlowLogID, false);
+                FlowExpress oneFlow = new FlowExpress(_CurrFlowID, _CurrFlowLogID, false);
 
                 //預設下關待辦人(會變，沒變代表沒找到相關資料)
                 Dictionary<string, string> oVerifyInfo = (Dictionary<string, string>)Session["FlowVerifyInfo"];
@@ -752,10 +755,10 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                 Dictionary<string, string> oAssDic = Util.getDictionary(oVerifyInfo["FlowStepAssignToList"]);
 
                 //共用檔
-                Aattendant a = new Aattendant();
+                Aattendant _Aattendant = new Aattendant();
 
                 //撈取該筆加班單相關資料
-                DataTable ADdt = FlowCaseToAD(oFlow.FlowCaseID, otModel);
+                DataTable dtOverTime = OverTime_find_by_FlowCaseID(oFlow.FlowCaseID, otModel);
 
                 //RankID判斷
                 string ValidRankID = "",
@@ -766,10 +769,10 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                 string UserRankID = RankIDMapping(UserInfo.getUserInfo().CompID, UserInfo.getUserInfo().RankID);
 
                 //Para撈取參數設定
-                DataTable Paradt = db.ExecuteDataSet(CommandType.Text, string.Format("SELECT DISTINCT CompID,Para FROM OverTimePara ")).Tables[0];
+                DataTable dtOverTimePara_All = db.ExecuteDataSet(CommandType.Text, string.Format("SELECT DISTINCT CompID,Para FROM OverTimePara ")).Tables[0];
 
                 //16        //Jason提取所需字串
-                ValidRankID = RankPara(Paradt, UserInfo.getUserInfo().CompID, "ValidRankID");
+                ValidRankID = RankPara(dtOverTimePara_All, UserInfo.getUserInfo().CompID, "ValidRankID");
                 //RankMapping
                 ValidRankID = RankIDMapping(UserInfo.getUserInfo().CompID, ValidRankID);
                 //若無資料弄成負數
@@ -780,7 +783,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                 IsUpValidRankID = Convert.ToInt32(UserRankID) >= int.Parse(ValidRankID) ? true : false;
 
                 //19
-                EmpRankID = RankPara(Paradt, ADdt.Rows[0]["OTCompID"].ToString(), "EmpRankID");
+                EmpRankID = RankPara(dtOverTimePara_All, dtOverTime.Rows[0]["OTCompID"].ToString(), "EmpRankID");
                 //若無資料弄成最大數100?
                 if (EmpRankID == "") EmpRankID = "100";
                 //因為多筆審核時，每筆加班人與加班公司都不同，要多次找尋EmpRankID，省麻煩所以包成一個Function
@@ -789,8 +792,8 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                 #endregion"變數"
                 switch (oVerifyInfo["FlowStepBtnID"].ToString())
                 {
-                    //應急用，其實代辦畫面已經把檢核動作處裡的差不多了，可以直接依按鈕做審核，
-                    //以防萬一還是都用btnApprove進去再做一次檢核。
+                    /*應急用，其實將檢核前移到代辦畫，已經把檢核動作處裡的差不多了，可以直接依按鈕做審核，
+                    以防萬一還是都用btnApprove進去再做一次檢核。*/
                     case "btnClose":
                         oVerifyInfo["FlowStepBtnID"] = "btnApprove";
                         goto case "btnApprove";
@@ -809,26 +812,26 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
                            
                             #region"前置資料"
                             //讀取現在關卡與下一關相關資料，因為不論回傳是否，我還是要資料，所以沒檢核回傳值與錯誤訊息
-                            FlowUtility.QueryFlowDataAndToUserData(ADdt.Rows[0]["OTCompID"].ToString(), oFlow.FlowCurrLogAssignTo, ADdt.Rows[0]["OTStartDate"].ToString(), oFlow.FlowCaseID, flowCodeFlag,
+                            FlowUtility.QueryFlowDataAndToUserData(dtOverTime.Rows[0]["OTCompID"].ToString(), oFlow.FlowCurrLogAssignTo, dtOverTime.Rows[0]["OTStartDate"].ToString(), oFlow.FlowCaseID, flowCodeFlag,
 out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow, out  nextIsLastFlow, out  meassge);
 
                             #region"下一關主管，如果行政功能線互轉主管剛好一樣再向上送一層"
 
                             //若是後台HR送簽依照填單人公司，否則用加班人公司
                             string HRLogCompID = signLineDefine == "4" || flowCode.Trim() == "" ?
-                                                ADdt.Rows[0]["OTRegisterComp"].ToString() :
-                                                ADdt.Rows[0]["OTCompID"].ToString();
+                                                dtOverTime.Rows[0]["OTRegisterComp"].ToString() :
+                                                dtOverTime.Rows[0]["OTCompID"].ToString();
 
                             //如果沒有下一關資料，則用現在關卡資料取代
                             if (toUserData.Count == 0)
                             {
                                 //取[最近的行政or功能]資料 取代 [現在關卡]資料
-                                DataTable toUDdt = HROverTimeLog(oFlow.FlowCaseID, true);
-                                toUserData.Add("SignLine", toUDdt.Rows[0]["SignLine"].ToString());
-                                toUserData.Add("SignIDComp", toUDdt.Rows[0]["SignIDComp"].ToString());
+                                DataTable dtHROverTimeLog_toUD = HROverTimeLog(oFlow.FlowCaseID, true);
+                                toUserData.Add("SignLine", dtHROverTimeLog_toUD.Rows[0]["SignLine"].ToString());
+                                toUserData.Add("SignIDComp", dtHROverTimeLog_toUD.Rows[0]["SignIDComp"].ToString());
                                 toUserData.Add("SignID", oFlow.FlowCurrLogAssignTo);
-                                toUserData.Add("SignOrganID", toUDdt.Rows[0]["SignOrganID"].ToString());
-                                toUserData.Add("SignFlowOrganID", toUDdt.Rows[0]["SignFlowOrganID"].ToString());
+                                toUserData.Add("SignOrganID", dtHROverTimeLog_toUD.Rows[0]["SignOrganID"].ToString());
+                                toUserData.Add("SignFlowOrganID", dtHROverTimeLog_toUD.Rows[0]["SignFlowOrganID"].ToString());
                             }
 
                             //如果下一關主管與現在主管相同，則再往上階找下一關主管資料
@@ -839,7 +842,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         //HR線 或 行政線
                                     case "4":
                                     case "1":
-                                        if (EmpInfo.QueryOrganData(HRLogCompID, toUserData["SignOrganID"], ADdt.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
+                                        if (EmpInfo.QueryOrganData(HRLogCompID, toUserData["SignOrganID"], dtOverTime.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
                                         {
                                             toUserData["SignID"] = SignID;
                                             toUserData["SignIDComp"] = SignIDComp;
@@ -849,7 +852,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         break;
 
                                     case "2":
-                                        if (EmpInfo.QueryFlowOrganData(toUserData["SignOrganID"], ADdt.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
+                                        if (EmpInfo.QueryFlowOrganData(toUserData["SignOrganID"], dtOverTime.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
                                         {
                                             toUserData["SignID"] = SignID;
                                             toUserData["SignIDComp"] = SignIDComp;
@@ -863,7 +866,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                     case "3":
                                         if (toUserData["SignLine"] == "2")
                                         {
-                                            if (EmpInfo.QueryFlowOrganData(toUserData["SignOrganID"], ADdt.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
+                                            if (EmpInfo.QueryFlowOrganData(toUserData["SignOrganID"], dtOverTime.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
                                             {
                                                 toUserData["SignID"] = SignID;
                                                 toUserData["SignIDComp"] = SignIDComp;
@@ -873,7 +876,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         }
                                         else
                                         {
-                                            if (EmpInfo.QueryOrganData(HRLogCompID, toUserData["SignOrganID"], ADdt.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
+                                            if (EmpInfo.QueryOrganData(HRLogCompID, toUserData["SignOrganID"], dtOverTime.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
                                             {
                                                 toUserData["SignID"] = SignID;
                                                 toUserData["SignIDComp"] = SignIDComp;
@@ -890,11 +893,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                             {
                                 txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                                 "-------------------------------------" + Environment.NewLine +
-                                "公司：" + ADdt.Rows[0]["OTCompID"].ToString() + Environment.NewLine +
-                                "加班人：" + ADdt.Rows[0]["OTEmpID"].ToString() + Environment.NewLine +
-                                "起迄日期：" + ADdt.Rows[0]["OTDate"].ToString() + Environment.NewLine +
-                                "開始時間：" + ADdt.Rows[0]["OTStartTime"].ToString() + Environment.NewLine +
-                                "結束時間：" + ADdt.Rows[0]["OTEndTime"].ToString() + Environment.NewLine +
+                                "公司：" + dtOverTime.Rows[0]["OTCompID"].ToString() + Environment.NewLine +
+                                "加班人：" + dtOverTime.Rows[0]["OTEmpID"].ToString() + Environment.NewLine +
+                                "起迄日期：" + dtOverTime.Rows[0]["OTDate"].ToString() + Environment.NewLine +
+                                "開始時間：" + dtOverTime.Rows[0]["OTStartTime"].ToString() + Environment.NewLine +
+                                "結束時間：" + dtOverTime.Rows[0]["OTEndTime"].ToString() + Environment.NewLine +
                                 "錯誤原因：查無下一關主管資料。" + Environment.NewLine;
                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, "審核失敗");
                                 break;
@@ -908,11 +911,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                             //if (flowCodeFlag=="0") //猶豫要用哪個判斷式
                             if (oFlow.FlowCurrStepID == "A20" || oFlow.FlowCurrStepID == "OT01")
                             {
-                                isLastFlow = isLastFlowNow(ADdt.Rows[0]["OTCompID"].ToString(), oFlow.FlowCaseID, "A");
+                                isLastFlow = isLastFlowNow(dtOverTime.Rows[0]["OTCompID"].ToString(), oFlow.FlowCaseID, "A");
                             }
                             else
                             {
-                                isLastFlow = isLastFlowNow(ADdt.Rows[0]["OTCompID"].ToString(), oFlow.FlowCaseID, "D");
+                                isLastFlow = isLastFlowNow(dtOverTime.Rows[0]["OTCompID"].ToString(), oFlow.FlowCaseID, "D");
                             }
 
                             #endregion"前置資料"
@@ -927,12 +930,12 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         {
                                             #region"RankID19以上強制結案"
                                             sb.Reset();
-                                            UpdateAorD("A", "3", oFlow.FlowCaseID, ref sb);
+                                            UpdateOverTime("A", "3", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                             CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
 
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "3", "A", "", "", true);
                                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -947,31 +950,31 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         {
                                             #region"A20->A20 Re"
                                             sb.Reset();
-                                            DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
-                                            UpdateAorD("A", "2", oFlow.FlowCaseID, ref sb);
+                                            DataTable dtHROverTimeLog = HROverTimeLog(oFlow.FlowCaseID, false);
+                                            UpdateOverTime("A", "2", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                             FlowUtility.InsertHROverTimeLogCommand(
                                                 oFlow.FlowCaseID,
-                                                addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                                FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                                addone(dtHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString()),
+                                                FlowLogIDadd(dtHROverTimeLog.Rows[0]["FlowLogID"].ToString()),
                                                "A",
-                                               dt.Rows[0]["OTEmpID"].ToString(),
-                                               dt.Rows[0]["EmpOrganID"].ToString(),
-                                               dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["OTEmpID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["EmpOrganID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString(),
                                                UserInfo.getUserInfo().UserID,
                                                flowCode, flowSN,
-                                               addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                               addone(dtHROverTimeLog.Rows[0]["FlowSeq"].ToString()),
                                                toUserData["SignLine"],
                                                toUserData["SignIDComp"],
                                                toUserData["SignID"],
                                                toUserData["SignOrganID"],
                                                toUserData["SignFlowOrganID"],
-                                               "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                               "1", false, ref sb, int.Parse(dtHROverTimeLog.Rows[0]["Seq"].ToString()) + 1
                                                );
 
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "2", "A",
                                                 toUserData["SignID"], toUserData["SignIDComp"], false);
@@ -993,13 +996,13 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         {
                                             #region"A20正常結案"
                                             sb.Reset();
-                                            UpdateAorD("A", "3", oFlow.FlowCaseID, ref sb);
+                                            UpdateOverTime("A", "3", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                             CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
                                             insertData(oFlow.FlowCurrLastLogID, ref sb);
 
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "2", "A", "", "", true);
                                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1017,32 +1020,32 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             #region"A20小於16繼續"
                                             sb.Reset();
 
-                                            DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
+                                            DataTable dtHROverTimeLog = HROverTimeLog(oFlow.FlowCaseID, false);
 
-                                            UpdateAorD("A", "2", oFlow.FlowCaseID, ref sb);
+                                            UpdateOverTime("A", "2", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                             FlowUtility.InsertHROverTimeLogCommand(
                                                 oFlow.FlowCaseID,
-                                                addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                                FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                                addone(dtHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString()),
+                                                FlowLogIDadd(dtHROverTimeLog.Rows[0]["FlowLogID"].ToString()),
                                                "A",
-                                               dt.Rows[0]["OTEmpID"].ToString(),
-                                               dt.Rows[0]["EmpOrganID"].ToString(),
-                                               dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["OTEmpID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["EmpOrganID"].ToString(),
+                                               dtHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString(),
                                                UserInfo.getUserInfo().UserID,
                                                flowCode,
                                                flowSN,
-                                               addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                               addone(dtHROverTimeLog.Rows[0]["FlowSeq"].ToString()),
                                                toUserData["SignLine"],
                                                toUserData["SignIDComp"],
                                                toUserData["SignID"],
                                                toUserData["SignOrganID"],
                                                toUserData["SignFlowOrganID"],
-                                               "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                               "1", false, ref sb, int.Parse(dtHROverTimeLog.Rows[0]["Seq"].ToString()) + 1
                                                );
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "2", "A", toUserData["SignID"], toUserData["SignIDComp"], false);
                                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1066,11 +1069,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         {
                                             #region"HR關正常結案"
                                             sb.Reset();
-                                            UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                            UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                             CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "3", "D", "", "", true);
                                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1086,31 +1089,31 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             //等一下寫
                                             #region"HR關未滿16"
                                             sb.Reset();
-                                            DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
-                                            UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                            DataTable dtHROverTimeLog = HROverTimeLog(oFlow.FlowCaseID, false);
+                                            UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                             UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                             FlowUtility.InsertHROverTimeLogCommand(
                                                 oFlow.FlowCaseID,
-                                                addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                                FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                                addone(dtHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString()),
+                                                FlowLogIDadd(dtHROverTimeLog.Rows[0]["FlowLogID"].ToString()),
                                                 "D",
-                                                dt.Rows[0]["OTEmpID"].ToString(),
-                                                dt.Rows[0]["EmpOrganID"].ToString(),
-                                                dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                                dtHROverTimeLog.Rows[0]["OTEmpID"].ToString(),
+                                                dtHROverTimeLog.Rows[0]["EmpOrganID"].ToString(),
+                                                dtHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString(),
                                                 UserInfo.getUserInfo().UserID,
                                                 flowCode, flowSN,
-                                                addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                                addone(dtHROverTimeLog.Rows[0]["FlowSeq"].ToString()),
                                                 toUserData["SignLine"],
                                                 toUserData["SignIDComp"],
                                                 toUserData["SignID"],
                                                 toUserData["SignOrganID"],
                                                 toUserData["SignFlowOrganID"],
-                                                "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                                "1", false, ref sb, int.Parse(dtHROverTimeLog.Rows[0]["Seq"].ToString()) + 1
                                                 );
 
                                             ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                            if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                             {
                                                 MailLogContent(oFlow.FlowCaseID, "2", "D", "", "", true);
                                                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1132,12 +1135,12 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             {
                                                 #region"RankID19以上強制結案"
                                                 sb.Reset();
-                                                UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
 
                                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                                 {
                                                     MailLogContent(oFlow.FlowCaseID, "3", "D", "", "", true);
                                                     labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1152,31 +1155,31 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             {
                                                 #region"A30->A30Re"
                                                 sb.Reset();
-                                                DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
-                                                UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                                DataTable dtHROverTimeLog = HROverTimeLog(oFlow.FlowCaseID, false);
+                                                UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                                 FlowUtility.InsertHROverTimeLogCommand(
                                                     oFlow.FlowCaseID,
-                                                    addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                                    FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                                    addone(dtHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString()),
+                                                    FlowLogIDadd(dtHROverTimeLog.Rows[0]["FlowLogID"].ToString()),
                                                    "D",
-                                                   dt.Rows[0]["OTEmpID"].ToString(),
-                                                   dt.Rows[0]["EmpOrganID"].ToString(),
-                                                   dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                                   dtHROverTimeLog.Rows[0]["OTEmpID"].ToString(),
+                                                   dtHROverTimeLog.Rows[0]["EmpOrganID"].ToString(),
+                                                   dtHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString(),
                                                    UserInfo.getUserInfo().UserID,
                                                    flowCode, flowSN,
-                                                   addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                                   addone(dtHROverTimeLog.Rows[0]["FlowSeq"].ToString()),
                                                    toUserData["SignLine"],
                                                    toUserData["SignIDComp"],
                                                    toUserData["SignID"],
                                                    toUserData["SignOrganID"],
                                                    toUserData["SignFlowOrganID"],
-                                                   "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                                   "1", false, ref sb, int.Parse(dtHROverTimeLog.Rows[0]["Seq"].ToString()) + 1
                                                    );
 
                                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                                 {
                                                     MailLogContent(oFlow.FlowCaseID, "2", "D",
                                                     toUserData["SignID"], toUserData["SignIDComp"], false);
@@ -1198,11 +1201,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             {
                                                 #region"A30正常結案"
                                                 sb.Reset();
-                                                UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
                                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnClose", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                                 {
                                                     MailLogContent(oFlow.FlowCaseID, "3", "D", "", "", true);
                                                     labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1217,30 +1220,30 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             {
                                                 #region"A30小於16繼續"
                                                 sb.Reset();
-                                                DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
-                                                UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                                DataTable dtHROverTimeLog = HROverTimeLog(oFlow.FlowCaseID, false);
+                                                UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 FlowUtility.InsertHROverTimeLogCommand(
                                             oFlow.FlowCaseID,
-                                            addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                            FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                            addone(dtHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString()),
+                                            FlowLogIDadd(dtHROverTimeLog.Rows[0]["FlowLogID"].ToString()),
                                            "D",
-                                           dt.Rows[0]["OTEmpID"].ToString(),
-                                           dt.Rows[0]["EmpOrganID"].ToString(),
-                                           dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                           dtHROverTimeLog.Rows[0]["OTEmpID"].ToString(),
+                                           dtHROverTimeLog.Rows[0]["EmpOrganID"].ToString(),
+                                           dtHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString(),
                                            UserInfo.getUserInfo().UserID,
                                            flowCode,
                                            flowSN,
-                                           addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                           addone(dtHROverTimeLog.Rows[0]["FlowSeq"].ToString()),
                                            toUserData["SignLine"],
                                            toUserData["SignIDComp"],
                                            toUserData["SignID"],
                                            toUserData["SignOrganID"],
                                            toUserData["SignFlowOrganID"],
-                                           "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                           "1", false, ref sb, int.Parse(dtHROverTimeLog.Rows[0]["Seq"].ToString()) + 1
                                            );
                                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                                 {
                                                     MailLogContent(oFlow.FlowCaseID, "2", "D", toUserData["SignID"], toUserData["SignIDComp"], false);
                                                     labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1281,7 +1284,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                         oFlow = new FlowExpress(Aattendant._AattendantFlowID, getFlowLogID(dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), "A"), true);
 
                                         //加班人RankID是否大於19
-                                        EmpRankID = RankPara(Paradt, dtOverTimeAdvance.Rows[i]["CompID"].ToString(), "EmpRankID");
+                                        EmpRankID = RankPara(dtOverTimePara_All, dtOverTimeAdvance.Rows[i]["CompID"].ToString(), "EmpRankID");
                                         IsUpEmpRankID = boolUpEmpRankID("A", dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), EmpRankID);
 
                                         //關卡資料
@@ -1383,7 +1386,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                 #region"A20正常結案"
 
                                                 sb.Reset();
-                                                UpdateAorD("A", "3", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("A", "3", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
                                                 insertData(oFlow.FlowCurrLastLogID, ref sb);
@@ -1407,7 +1410,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
 
                                                 DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
                                                 //-----
-                                                UpdateAorD("A", "2", dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), ref sb);
+                                                UpdateOverTime("A", "2", dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                                 FlowUtility.InsertHROverTimeLogCommand(
@@ -1450,7 +1453,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                 #region"非最後一關大於19結案"
 
                                                 sb.Reset();
-                                                UpdateAorD("A", "3", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("A", "3", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
                                                 insertData(oFlow.FlowCurrLastLogID, ref sb);
@@ -1474,7 +1477,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
 
                                                 DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
                                                 //-----
-                                                UpdateAorD("A", "2", dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), ref sb);
+                                                UpdateOverTime("A", "2", dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                                 FlowUtility.InsertHROverTimeLogCommand(
@@ -1522,7 +1525,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                 //多筆處理
                                 for (int j = 0; j < dtOverTimeDeclaration.Rows.Count; j++)
                                 {
-                                    EmpRankID = RankPara(Paradt, dtOverTimeDeclaration.Rows[j]["CompID"].ToString(), "EmpRankID");
+                                    EmpRankID = RankPara(dtOverTimePara_All, dtOverTimeDeclaration.Rows[j]["CompID"].ToString(), "EmpRankID");
                                     IsUpEmpRankID = boolUpEmpRankID("D", dtOverTimeDeclaration.Rows[j]["AfterFlowCaseID"].ToString(), EmpRankID);
                                     oFlow = new FlowExpress(Aattendant._AattendantFlowID, getFlowLogID(dtOverTimeDeclaration.Rows[j]["AfterFlowCaseID"].ToString(), "D"), true);
                                     if (dtOverTimeDeclaration.Rows[j]["AfterOTSeqNo"].ToString() == "1")
@@ -1624,7 +1627,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                             {
                                                 #region"HR關"
                                                 sb.Reset();
-                                                UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                 CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
 
@@ -1646,7 +1649,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                 #region"HR關未滿16"
                                                 sb.Reset();
                                                 DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
-                                                UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                                UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                                 FlowUtility.InsertHROverTimeLogCommand(
@@ -1692,7 +1695,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                 {
                                                     #region"RankID19以上強制結案"
                                                     sb.Reset();
-                                                    UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                                    UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                     CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
 
@@ -1715,7 +1718,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                     DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
                                                     //-----
                                                     sb.Reset();
-                                                    UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                                    UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
 
                                                     FlowUtility.InsertHROverTimeLogCommand(
@@ -1762,7 +1765,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                     #region"A30End"
 
                                                     sb.Reset();
-                                                    UpdateAorD("D", "3", oFlow.FlowCaseID, ref sb);
+                                                    UpdateOverTime("D", "3", oFlow.FlowCaseID, ref sb);
                                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                     CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
 
@@ -1785,27 +1788,27 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                                     DataTable dt = HROverTimeLog(oFlow.FlowCaseID, false);
 
                                                     sb.Reset();
-                                                    UpdateAorD("D", "2", oFlow.FlowCaseID, ref sb);
+                                                    UpdateOverTime("D", "2", oFlow.FlowCaseID, ref sb);
                                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "2", ref sb);
                                                     FlowUtility.InsertHROverTimeLogCommand(
-                                                oFlow.FlowCaseID,
-                                                addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
-                                                FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
-                                               "D",
-                                               dt.Rows[0]["OTEmpID"].ToString(),
-                                               dt.Rows[0]["EmpOrganID"].ToString(),
-                                               dt.Rows[0]["EmpFlowOrganID"].ToString(),
-                                               UserInfo.getUserInfo().UserID,
-                                               flowCode,
-                                               flowSN,
-                                               addone(dt.Rows[0]["FlowSeq"].ToString()),
-                                               toUserData["SignLine"],
-                                               toUserData["SignIDComp"],
-                                               toUserData["SignID"],
-                                               toUserData["SignOrganID"],
-                                               toUserData["SignFlowOrganID"],
-                                               "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
-                                               );
+                                                        oFlow.FlowCaseID,
+                                                        addone(dt.Rows[0]["FlowLogBatNo"].ToString()),
+                                                        FlowLogIDadd(dt.Rows[0]["FlowLogID"].ToString()),
+                                                       "D",
+                                                       dt.Rows[0]["OTEmpID"].ToString(),
+                                                       dt.Rows[0]["EmpOrganID"].ToString(),
+                                                       dt.Rows[0]["EmpFlowOrganID"].ToString(),
+                                                       UserInfo.getUserInfo().UserID,
+                                                       flowCode,
+                                                       flowSN,
+                                                       addone(dt.Rows[0]["FlowSeq"].ToString()),
+                                                       toUserData["SignLine"],
+                                                       toUserData["SignIDComp"],
+                                                       toUserData["SignID"],
+                                                       toUserData["SignOrganID"],
+                                                       toUserData["SignFlowOrganID"],
+                                                       "1", false, ref sb, int.Parse(dt.Rows[0]["Seq"].ToString()) + 1
+                                                       );
 
                                                     ClearBtn(oFlow.FlowCurrLogAssignTo);
                                                     if (TryCatchIsFlowVerify(oFlow.FlowCurrLastLogID, "btnReApprove", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTimeDeclaration.Rows[j], "D"))
@@ -1841,11 +1844,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                             {
                                 #region"事先駁回"
                                 sb.Reset();
-                                UpdateAorD("A", "4", oFlow.FlowCaseID, ref sb);
+                                UpdateOverTime("A", "4", oFlow.FlowCaseID, ref sb);
                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "3", ref sb);
                                 CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReject", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReject", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                 {
                                     MailLogContent(oFlow.FlowCaseID, "4", "A", "", "", true);
                                     labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1860,11 +1863,11 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                             {
                                 #region"事後駁回"
                                 sb.Reset();
-                                UpdateAorD("D", "4", oFlow.FlowCaseID, ref sb);
+                                UpdateOverTime("D", "4", oFlow.FlowCaseID, ref sb);
                                 UpdateHROrverTimeLog(oFlow.FlowCaseID, "3", ref sb);
                                 CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
                                 ClearBtn(oFlow.FlowCurrLogAssignTo);
-                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReject", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, ADdt.Rows[0], ""))
+                                if (TryCatchIsFlowVerify(Request["FlowLogID"], "btnReject", oAssDic, oVerifyInfo["FlowStepOpinion"].ToString().Replace("'", "''"), sb, out ErrMsg, dtOverTime.Rows[0], ""))
                                 {
                                     MailLogContent(oFlow.FlowCaseID, "4", "D", "", "", true);
                                     labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, "審核成功!");
@@ -1893,7 +1896,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                     isLastFlow = isLastFlowNow(dtOverTimeAdvance.Rows[i]["CompID"].ToString(), dtOverTimeAdvance.Rows[i]["FlowCaseID"].ToString(), "A");
                                     //---------------
                                     sb.Reset();
-                                    UpdateAorD("A", "4", oFlow.FlowCaseID, ref sb);
+                                    UpdateOverTime("A", "4", oFlow.FlowCaseID, ref sb);
                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "3", ref sb);
                                     CloseHROverTimeLog(oFlow.FlowCaseID, "A", ref sb);
                                     ClearBtn(oFlow.FlowCurrLogAssignTo);
@@ -1921,7 +1924,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                                     isLastFlow = isLastFlowNow(dtOverTimeDeclaration.Rows[j]["CompID"].ToString(), dtOverTimeDeclaration.Rows[j]["AfterFlowCaseID"].ToString(), "D");
                                     //---------------
                                     sb.Reset();
-                                    UpdateAorD("D", "4", oFlow.FlowCaseID, ref sb);
+                                    UpdateOverTime("D", "4", oFlow.FlowCaseID, ref sb);
                                     UpdateHROrverTimeLog(oFlow.FlowCaseID, "3", ref sb);
                                     CloseHROverTimeLog(oFlow.FlowCaseID, "D", ref sb);
                                     ClearBtn(oFlow.FlowCurrLogAssignTo);
@@ -1965,16 +1968,16 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
     /// <param name="FlowStepOpinion">IsFlowVerify用</param>
     /// <param name="sb">全部Table的新刪修SQL</param>
     /// <param name="ErrMsg">回報錯誤(目前沒用)</param>
-    /// <param name="dt">失敗清單，找尋單筆相關資料用</param>
+    /// <param name="drOverTime">失敗清單，找尋單筆相關資料用</param>
     /// <param name="ADType">失敗清單，找尋單筆相關資料用</param>
     /// <returns></returns>
-    private bool TryCatchIsFlowVerify(string FlowLogID, string btn, Dictionary<string, string> oAssDic, string FlowStepOpinion, CommandHelper sb, out string ErrMsg, DataRow dt = null, string ADType = "")
+    private bool TryCatchIsFlowVerify(string FlowLogID, string btn, Dictionary<string, string> oAssDic, string FlowStepOpinion, CommandHelper sb, out string ErrMsg, DataRow drOverTime = null, string ADType = "")
     {
         ErrMsg = "";
 
         //測試用test
         //sb.Append("test我是來製作錯誤的!!");
-
+        //if (btn == "btnClose") btn = "btnApprove";
         DbHelper db = new DbHelper(Aattendant._AattendantDBName);
         DbConnection cn = db.OpenConnection();
         DbTransaction tx = cn.BeginTransaction();
@@ -1988,41 +1991,41 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
             }
             else
             {
-                if (dt != null)
+                if (drOverTime != null)
                 {
                     if (ADType == "A") //多筆A
                     {
                         txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                         "-------------------------------------" + Environment.NewLine +
-                        "公司：" + dt["CompID"].ToString() + Environment.NewLine +
-                        "加班人：" + dt["EmpID"].ToString() + Environment.NewLine +
-                        "起迄日期：" + dt["OTStartDate"].ToString() +
-                        "～" + dt["OTEndDate"].ToString() + Environment.NewLine +
-                        "開始時間：" + dt["OTStartTime"].ToString() + Environment.NewLine +
-                        "結束時間：" + dt["OTEndTime"].ToString() + Environment.NewLine +
+                        "公司：" + drOverTime["CompID"].ToString() + Environment.NewLine +
+                        "加班人：" + drOverTime["EmpID"].ToString() + Environment.NewLine +
+                        "起迄日期：" + drOverTime["OTStartDate"].ToString() +
+                        "～" + drOverTime["OTEndDate"].ToString() + Environment.NewLine +
+                        "開始時間：" + drOverTime["OTStartTime"].ToString() + Environment.NewLine +
+                        "結束時間：" + drOverTime["OTEndTime"].ToString() + Environment.NewLine +
                         "錯誤原因：IsFlowVerify執行出錯。";
                     }
                     else if (ADType == "D") //多筆D
                     {
                         txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                         "-------------------------------------" + Environment.NewLine +
-                        "公司：" + dt["CompID"].ToString() + Environment.NewLine +
-                        "加班人：" + dt["EmpID"].ToString() + Environment.NewLine +
-                        "起迄日期：" + dt["AfterOTStartDate"].ToString() +
-                        "～" + dt["AfterOTEndDate"].ToString() + Environment.NewLine +
-                        "開始時間：" + dt["AfterOTStartTime"].ToString() + Environment.NewLine +
-                        "結束時間：" + dt["AfterOTEndTime"].ToString() + Environment.NewLine +
+                        "公司：" + drOverTime["CompID"].ToString() + Environment.NewLine +
+                        "加班人：" + drOverTime["EmpID"].ToString() + Environment.NewLine +
+                        "起迄日期：" + drOverTime["AfterOTStartDate"].ToString() +
+                        "～" + drOverTime["AfterOTEndDate"].ToString() + Environment.NewLine +
+                        "開始時間：" + drOverTime["AfterOTStartTime"].ToString() + Environment.NewLine +
+                        "結束時間：" + drOverTime["AfterOTEndTime"].ToString() + Environment.NewLine +
                         "錯誤原因：IsFlowVerify執行出錯。";
                     }
                     else //單筆AD
                     {
                         txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                         "-------------------------------------" + Environment.NewLine +
-                        "公司：" + dt["OTCompID"].ToString() + Environment.NewLine +
-                        "加班人：" + dt["OTEmpID"].ToString() + Environment.NewLine +
-                        "起迄日期：" + dt["OTDate"].ToString() + Environment.NewLine +
-                        "開始時間：" + dt["OTStartTime"].ToString() + Environment.NewLine +
-                        "結束時間：" + dt["OTEndTime"].ToString() + Environment.NewLine +
+                        "公司：" + drOverTime["OTCompID"].ToString() + Environment.NewLine +
+                        "加班人：" + drOverTime["OTEmpID"].ToString() + Environment.NewLine +
+                        "起迄日期：" + drOverTime["OTDate"].ToString() + Environment.NewLine +
+                        "開始時間：" + drOverTime["OTStartTime"].ToString() + Environment.NewLine +
+                        "結束時間：" + drOverTime["OTEndTime"].ToString() + Environment.NewLine +
                         "錯誤原因：IsFlowVerify執行出錯。";
                     }
                     //txtErrMsg.Text = txtErrMsg.Text + 
@@ -2035,41 +2038,41 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         catch (Exception ex)
         {
             ErrMsg = ex.ToString();
-            if (dt != null)
+            if (drOverTime != null)
             {
                 if (ADType == "A") //多筆A
                 {
                     txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                     "-------------------------------------" + Environment.NewLine +
-                    "公司：" + dt["CompID"].ToString() + Environment.NewLine +
-                    "加班人：" + dt["EmpID"].ToString() + Environment.NewLine +
-                    "起迄日期：" + dt["OTStartDate"].ToString() +
-                    "～" + dt["OTEndDate"].ToString() + Environment.NewLine +
-                    "開始時間：" + dt["OTStartTime"].ToString() + Environment.NewLine +
-                    "結束時間：" + dt["OTEndTime"].ToString() + Environment.NewLine +
+                    "公司：" + drOverTime["CompID"].ToString() + Environment.NewLine +
+                    "加班人：" + drOverTime["EmpID"].ToString() + Environment.NewLine +
+                    "起迄日期：" + drOverTime["OTStartDate"].ToString() +
+                    "～" + drOverTime["OTEndDate"].ToString() + Environment.NewLine +
+                    "開始時間：" + drOverTime["OTStartTime"].ToString() + Environment.NewLine +
+                    "結束時間：" + drOverTime["OTEndTime"].ToString() + Environment.NewLine +
                     "錯誤原因：加班單相關Table新增、修改出錯。";
                 }
                 else if (ADType == "D") //多筆D
                 {
                     txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                     "-------------------------------------" + Environment.NewLine +
-                    "公司：" + dt["CompID"].ToString() + Environment.NewLine +
-                    "加班人：" + dt["EmpID"].ToString() + Environment.NewLine +
-                    "起迄日期：" + dt["AfterOTStartDate"].ToString() +
-                    "～" + dt["AfterOTEndDate"].ToString() + Environment.NewLine +
-                    "開始時間：" + dt["AfterOTStartTime"].ToString() + Environment.NewLine +
-                    "結束時間：" + dt["AfterOTEndTime"].ToString() + Environment.NewLine +
+                    "公司：" + drOverTime["CompID"].ToString() + Environment.NewLine +
+                    "加班人：" + drOverTime["EmpID"].ToString() + Environment.NewLine +
+                    "起迄日期：" + drOverTime["AfterOTStartDate"].ToString() +
+                    "～" + drOverTime["AfterOTEndDate"].ToString() + Environment.NewLine +
+                    "開始時間：" + drOverTime["AfterOTStartTime"].ToString() + Environment.NewLine +
+                    "結束時間：" + drOverTime["AfterOTEndTime"].ToString() + Environment.NewLine +
                     "錯誤原因：加班單相關Table新增、修改出錯。";
                 }
                 else //單筆AD
                 {
                     txtErrMsg.Text = txtErrMsg.Text + Environment.NewLine +
                     "-------------------------------------" + Environment.NewLine +
-                    "公司：" + dt["OTCompID"].ToString() + Environment.NewLine +
-                    "加班人：" + dt["OTEmpID"].ToString() + Environment.NewLine +
-                    "起迄日期：" + dt["OTDate"].ToString() + Environment.NewLine +
-                    "開始時間：" + dt["OTStartTime"].ToString() + Environment.NewLine +
-                    "結束時間：" + dt["OTEndTime"].ToString() + Environment.NewLine +
+                    "公司：" + drOverTime["OTCompID"].ToString() + Environment.NewLine +
+                    "加班人：" + drOverTime["OTEmpID"].ToString() + Environment.NewLine +
+                    "起迄日期：" + drOverTime["OTDate"].ToString() + Environment.NewLine +
+                    "開始時間：" + drOverTime["OTStartTime"].ToString() + Environment.NewLine +
+                    "結束時間：" + drOverTime["OTEndTime"].ToString() + Environment.NewLine +
                     "錯誤原因：加班單相關Table新增、修改出錯。";
                 }
                 //txtErrMsg.Text = txtErrMsg.Text + 

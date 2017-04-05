@@ -85,9 +85,9 @@ public partial class OverTime_OverTimeCheck : SecurePage
         //接著再把字串丟入DbHelper建立資料庫連接
         //若DB.Config設定的_DBShare沒錯應該就會連過去
 
-        DbHelper db2 = new DbHelper(_DBShare);
+        //DbHelper db2 = new DbHelper(_DBShare);
         CommandHelper sb2 = db.CreateCommandHelper();
-        //若想確認代理人是否有撈取到請檢視sb2的SQL語法，sb是撈取
+        //若想確認代理人是否有撈取到請檢視sb2的SQL語法，sb是撈取待辦清單
 
         sb2.Append("select UserID from PS_UserProxy UP ");
         sb2.Append(" where UP.ProxyUser ='" + UserInfo.getUserInfo().UserID + "' ");
@@ -95,8 +95,8 @@ public partial class OverTime_OverTimeCheck : SecurePage
         sb2.Append(" and '" + string.Format("{0:yyyyMMdd}", DateTime.Now) + 
             "' BETWEEN UP.ProxyStartDate AND UP.ProxyEndDate; ");
         //過版記得換
-        //DataTable dt2 = db.ExecuteDataSet(sb2.BuildCommand()).Tables[0];
-        DataTable dt2 = db2.ExecuteDataSet(sb2.BuildCommand()).Tables[0];
+        //DataTable dt2 = db2.ExecuteDataSet(sb2.BuildCommand()).Tables[0];
+        DataTable dt2 = db.ExecuteDataSet(sb2.BuildCommand()).Tables[0];
 
         string strUserID = "";
         foreach (DataRow row in dt2.Rows)
@@ -623,8 +623,8 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
 
                 //按鈕清單
                 ClearBtn(FlowCustDB, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), gvMain.DataKeys[clickedRow.RowIndex].Values[2].ToString(), gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString(), "A");
-
-                FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), null, false, "", "");
+                
+                FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), "".Split(','), false, "", "");
                 Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}"
                         , _DBName, dtFlowLogIDA.Rows[0]["FlowLogID"], "Self", "N", "N", ""));
 
