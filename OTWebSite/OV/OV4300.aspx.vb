@@ -393,6 +393,9 @@ Partial Class OV_OV4300
 
         '從申報檔取出每一筆，開始計算時段
         Dim throwMsg As New StringBuilder
+        Dim errorList As New StringBuilder
+        ViewState.Item("throwMsg") = ""
+        ViewState.Item("errorList") = ""
         For i As Integer = 0 To data_Declaration.Rows.Count - 1 Step 1
             Dim compID As String = data_Declaration.Rows(i).Item("OTCompID").ToString
             Dim empID As String = data_Declaration.Rows(i).Item("OTEmpID").ToString
@@ -413,16 +416,16 @@ Partial Class OV_OV4300
             Dim overTimeFlag As String = data_Declaration.Rows(i).Item("ToOverTimeFlag").ToString
             Dim time3HR As Double = 0
             Dim holiDay As String = IIf(data_Declaration.Rows(i).Item("HolidayOrNot").ToString = "0", "T", "F")
-            Dim isCount As Boolean = True '檢察使否有重複資料的Flag
+            Dim chkWord As String = "" '檢察使否有重複資料的Flag或是錯誤資料的Flag
             '先檢查舊資料(OverTime)，檢查是否有跨日過來的資料或是先前有的加班(以計薪)
             If checkDate <> startDate Then
                 checkDate = startDate
                 checkEmpID = empID
-                isCount = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
+                chkWord = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
             ElseIf checkDate = startDate Then
                 If checkEmpID <> empID Then
                     checkEmpID = empID
-                    isCount = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
+                    chkWord = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
                 ElseIf checkEmpID = empID Then
                     Dim isExist As Boolean = False
                     If data_Period.Rows.Count > 0 Then
@@ -437,24 +440,29 @@ Partial Class OV_OV4300
                             End If
                         Next
                         If isExist Then
-                            isCount = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
+                            chkWord = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
                         End If
                     Else
-                        isCount = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
+                        chkWord = checkOldData(data_Period, compID, empID, startDate, startTime, endTime)
                     End If
                     
                 End If
             End If
             '計算時段
-            If isCount Then
+            If chkWord = "Correct" Then
                 getTime_Interval(data_Period, compID, empID, startDate, endDate, startTime, endTime, salaryOrAdjust, seq, txnID, seqNo, deptID, organID, deptName, organName, mealFlag, mealTime, overTimeFlag, time3HR, holiDay)
-            Else
+            ElseIf chkWord = "Same" Then
                 throwMsg.AppendLine("員工編號:" & empID & ",加班日期:" & startDate & "時間:" & startTime & "~" & endTime & ",資料已存在於OverTime")
+            ElseIf chkWord = "Error" Then
+                errorList.AppendLine("員工編號:" & empID & ",加班日期:" & startDate & "時間:" & startTime & "~" & endTime & ",資料有誤")
             End If
         Next
-        ViewState.Item("throwMsg") = ""
+
         If throwMsg.ToString <> "" Then
             ViewState.Item("throwMsg") = throwMsg.ToString
+        End If
+        If errorList.ToString <> "" Then
+            ViewState.Item("errorList") = errorList.ToString
         End If
         'Table 查看用的
         ShowTable.Visible = False
@@ -466,6 +474,10 @@ Partial Class OV_OV4300
         Else
             If ViewState.Item("throwMsg").ToString <> "" Then
                 Bsp.Utility.ShowMessage(Me, ViewState.Item("throwMsg"))
+                Return
+            End If
+            If ViewState.Item("errorList").ToString <> "" Then
+                Bsp.Utility.ShowMessage(Me, ViewState.Item("errorList"))
                 Return
             End If
         End If
@@ -1237,8 +1249,8 @@ Partial Class OV_OV4300
     End Function
 #End Region
 #Region "檢查OverTime有無跨月資料"
-    Public Function checkOldData(ByRef Table_Time As DataTable, ByVal compID As String, ByVal empID As String, ByVal sDate As String, ByVal bTime As String, ByVal aTime As String) As Boolean
-        Dim result As Boolean = True
+    Public Function checkOldData(ByRef Table_Time As DataTable, ByVal compID As String, ByVal empID As String, ByVal sDate As String, ByVal bTime As String, ByVal aTime As String) As String
+        Dim result As String = "Correct"
         Dim checkData As DataTable
         Dim checkData_Count As Integer
         Dim strSQL_Check As New StringBuilder()
@@ -1262,53 +1274,58 @@ Partial Class OV_OV4300
                 End If
             Next
 
-            If chkSame Then
-                For i As Integer = 0 To checkData_Count - 1 Step 1
-                    Dim Seq As String = checkData.Rows(i).Item("Seq").ToString
-                    Dim STime As String = checkData.Rows(i).Item("BeginTime").ToString
-                    Dim ETime As String = checkData.Rows(i).Item("EndTime").ToString
-                    Dim dayType As String = checkData.Rows(i).Item("HolidayOrNot").ToString
-                    Dim deptID As String = checkData.Rows(i).Item("DeptID").ToString
-                    Dim organID As String = checkData.Rows(i).Item("OrganID").ToString
-                    Dim deptName As String = checkData.Rows(i).Item("DeptName").ToString
-                    Dim organName As String = checkData.Rows(i).Item("OrganName").ToString
+            Try
+                If chkSame Then
+                    For i As Integer = 0 To checkData_Count - 1 Step 1
+                        Dim Seq As String = checkData.Rows(i).Item("Seq").ToString
+                        Dim STime As String = checkData.Rows(i).Item("BeginTime").ToString
+                        Dim ETime As String = checkData.Rows(i).Item("EndTime").ToString
+                        Dim dayType As String = checkData.Rows(i).Item("HolidayOrNot").ToString
+                        Dim deptID As String = checkData.Rows(i).Item("DeptID").ToString
+                        Dim organID As String = checkData.Rows(i).Item("OrganID").ToString
+                        Dim deptName As String = checkData.Rows(i).Item("DeptName").ToString
+                        Dim organName As String = checkData.Rows(i).Item("OrganName").ToString
 
-                    Dim oriAllthrow As DataTable = getOriAllData()
+                        Dim oriAllthrow As DataTable = getOriAllData()
 
-                    Dim newRowData As DataRow = (From column In oriAllthrow.Rows _
-                    Where column("OTCompID") = compID _
-                    And column("OTEmpID") = empID _
-                    And column("OTStartDate") = sDate _
-                    And column("OTStartTime") = STime _
-                    And column("OTEndTime") = ETime _
-                    Select column).FirstOrDefault()
+                        Dim newRowData As DataRow = (From column In oriAllthrow.Rows _
+                        Where column("OTCompID") = compID _
+                        And column("OTEmpID") = empID _
+                        And column("OTStartDate") = sDate _
+                        And column("OTStartTime") = STime _
+                        And column("OTEndTime") = ETime _
+                        Select column).FirstOrDefault()
 
-                    Dim ThrowcompID As String = newRowData.Item("OTCompID").ToString
-                    Dim ThrowempID As String = newRowData.Item("OTEmpID").ToString
-                    Dim ThrowstartDate As String = newRowData.Item("OTStartDate").ToString
-                    Dim ThrowendDate As String = newRowData.Item("OTEndDate").ToString
-                    Dim Throwseq As String = newRowData.Item("OTSeq").ToString
-                    Dim ThrowstartTime As String = newRowData.Item("OTStartTime").ToString.Insert(2, ":")
-                    Dim ThrowendTime As String = newRowData.Item("OTEndTime").ToString.Insert(2, ":")
-                    Dim ThrowsalaryOrAdjust As String = newRowData.Item("SalaryOrAdjust").ToString
-                    Dim ThrowtxnID As String = newRowData.Item("OTTxnID").ToString
-                    Dim ThrowseqNo As String = newRowData.Item("OTSeqNo").ToString
-                    Dim ThrowdeptID As String = newRowData.Item("DeptID").ToString
-                    Dim ThroworganID As String = newRowData.Item("OrganID").ToString
-                    Dim ThrowdeptName As String = newRowData.Item("DeptName").ToString
-                    Dim ThroworganName As String = newRowData.Item("OrganName").ToString
-                    Dim ThrowmealFlag As String = newRowData.Item("MealFlag").ToString
-                    Dim ThrowmealTime As Double = newRowData.Item("MealTime").ToString
-                    Dim ThrowoverTimeFlag As String = newRowData.Item("ToOverTimeFlag").ToString
-                    Dim Throwtime3HR As Double = CDbl(IIf(newRowData.Item("OTHoliday1").ToString.Equals(""), "0", newRowData.Item("OTHoliday1").ToString))
-                    Dim ThrowholiDay As String = IIf(newRowData.Item("HolidayOrNot").ToString = "0", "T", "F")
+                        Dim ThrowcompID As String = newRowData.Item("OTCompID").ToString
+                        Dim ThrowempID As String = newRowData.Item("OTEmpID").ToString
+                        Dim ThrowstartDate As String = newRowData.Item("OTStartDate").ToString
+                        Dim ThrowendDate As String = newRowData.Item("OTEndDate").ToString
+                        Dim Throwseq As String = newRowData.Item("OTSeq").ToString
+                        Dim ThrowstartTime As String = newRowData.Item("OTStartTime").ToString.Insert(2, ":")
+                        Dim ThrowendTime As String = newRowData.Item("OTEndTime").ToString.Insert(2, ":")
+                        Dim ThrowsalaryOrAdjust As String = newRowData.Item("SalaryOrAdjust").ToString
+                        Dim ThrowtxnID As String = newRowData.Item("OTTxnID").ToString
+                        Dim ThrowseqNo As String = newRowData.Item("OTSeqNo").ToString
+                        Dim ThrowdeptID As String = newRowData.Item("DeptID").ToString
+                        Dim ThroworganID As String = newRowData.Item("OrganID").ToString
+                        Dim ThrowdeptName As String = newRowData.Item("DeptName").ToString
+                        Dim ThroworganName As String = newRowData.Item("OrganName").ToString
+                        Dim ThrowmealFlag As String = newRowData.Item("MealFlag").ToString
+                        Dim ThrowmealTime As Double = newRowData.Item("MealTime").ToString
+                        Dim ThrowoverTimeFlag As String = newRowData.Item("ToOverTimeFlag").ToString
+                        Dim Throwtime3HR As Double = CDbl(IIf(newRowData.Item("OTHoliday1").ToString.Equals(""), "0", newRowData.Item("OTHoliday1").ToString))
+                        Dim ThrowholiDay As String = IIf(newRowData.Item("HolidayOrNot").ToString = "0", "T", "F")
 
-                    getTime_Interval(Table_Time, ThrowcompID, ThrowempID, ThrowstartDate, ThrowendDate, ThrowstartTime, ThrowendTime, ThrowsalaryOrAdjust, Throwseq, ThrowtxnID, ThrowseqNo, ThrowdeptID, ThroworganID, ThrowdeptName, ThroworganName, ThrowmealFlag, ThrowmealTime, ThrowoverTimeFlag, Throwtime3HR, ThrowholiDay)
-                Next
-            Else
-                result = chkSame
-            End If
-            
+                        getTime_Interval(Table_Time, ThrowcompID, ThrowempID, ThrowstartDate, ThrowendDate, ThrowstartTime, ThrowendTime, ThrowsalaryOrAdjust, Throwseq, ThrowtxnID, ThrowseqNo, ThrowdeptID, ThroworganID, ThrowdeptName, ThroworganName, ThrowmealFlag, ThrowmealTime, ThrowoverTimeFlag, Throwtime3HR, ThrowholiDay)
+                    Next
+                Else
+                    result = "Same"
+                End If
+            Catch ex As Exception
+                result = "Error"
+            End Try
+
+
         End If
         Return result
     End Function
@@ -1496,6 +1513,10 @@ Partial Class OV_OV4300
             If ViewState.Item("throwMsg").ToString <> "" Then
                 Bsp.Utility.ShowMessage(Me, ViewState.Item("throwMsg"))
             End If
+            If ViewState.Item("errorList").ToString <> "" Then
+                Bsp.Utility.ShowMessage(Me, ViewState.Item("errorList"))
+            End If
+
             Dim choseType As String = ViewState.Item("ChoseType").ToString '下拉選單選擇的拋轉條件
             If choseType = "PersonBlock" Then
                 resetGrid()
