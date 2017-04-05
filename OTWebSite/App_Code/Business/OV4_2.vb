@@ -1896,6 +1896,7 @@ Public Class OV4_2
         OverTimeDatas = OverTimeDatas.DefaultView.ToTable()
         Dim LastRowTotalTime As Double = 0
         Dim LastRowMinTime As Double = 0
+        Dim SameDayTotalMinTime As Double = 0
         For i = 0 To (OverTimeDatas.Rows.Count - 1)
             Dim Period1 As Double = 0
             Dim Period2 As Double = 0
@@ -1919,6 +1920,7 @@ Public Class OV4_2
                 If RowDate = DateB Then
                     If HolidayOrNot = "0" Then   '起日是平日
                         If LastDate <> DateB Then   '從頭算(重新來過)
+                            SameDayTotalMinTime = RowTotalMinTime
                             If RowTotalTime > 4 Then
                                 Period1 = 2
                                 Period2 = RowTotalTime - 2
@@ -1958,30 +1960,35 @@ Public Class OV4_2
                             '        FlagPeriod1 = False
                             '        FlagPeriod2 = True
                             '    End If
-                            If (LastRowMinTime + RowTotalMinTime) > 240 Then
+                            If (SameDayTotalMinTime + RowTotalMinTime) > 240 Then
                                 Period1 = 2
                                 Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                 FlagPeriod1 = False
                                 FlagPeriod2 = True
-                            ElseIf (LastRowMinTime + RowTotalMinTime) <= 240 AndAlso (LastRowMinTime + RowTotalMinTime) > 120 Then
+                            ElseIf (SameDayTotalMinTime + RowTotalMinTime) <= 240 AndAlso (SameDayTotalMinTime + RowTotalMinTime) > 120 Then
                                 If LastPeriod1 + RowTotalTime < 2 Then
                                     Period1 = LastPeriod1 + RowTotalTime
                                     Period2 = LastPeriod2
+                                    SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                     FlagPeriod1 = True
                                     FlagPeriod2 = False
                                 Else
                                     Period1 = 2
                                     Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                    SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                     FlagPeriod1 = False
                                     FlagPeriod2 = True
                                 End If
-                            ElseIf (LastRowMinTime + RowTotalMinTime) <= 120 Then
+                            ElseIf (SameDayTotalMinTime + RowTotalMinTime) <= 120 Then
                                 Period1 = (LastPeriod1 + RowTotalTime)
                                 If Period1 < 2 Then
                                     Period2 = LastPeriod2
+                                    SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                     FlagPeriod1 = True
                                     FlagPeriod2 = False
                                 Else
+                                    SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                     FlagPeriod1 = False
                                     FlagPeriod2 = True
                                 End If
@@ -2024,6 +2031,7 @@ Public Class OV4_2
                         StartDatePeriod3 = LastPeriod3
                     End If
                 ElseIf LastDate = DateE Then
+                    SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                     If HolidayOrNot = "0" Then      '迄日是平日
                         If LastDate <> DateE Then        '從頭算(重新來過)
                             'If RowTotalTime > 4 Then
@@ -2048,30 +2056,35 @@ Public Class OV4_2
                             'If (LastPeriod1 + LastPeriod2 + RowTotalTime) > 4 Then
                             '    outMsg = "累積時數超過4小時!"
                             '    execResult = False
-                            If (LastRowMinTime + RowTotalMinTime) > 240 Then
+                            If (SameDayTotalMinTime + RowTotalMinTime) > 240 Then
                                 Period1 = 2
                                 Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                                 FlagPeriod1 = False
                                 FlagPeriod2 = True
-                            ElseIf (LastRowMinTime + RowTotalMinTime) <= 240 AndAlso (LastRowMinTime + RowTotalMinTime) > 120 Then
+                            ElseIf (SameDayTotalMinTime + RowTotalMinTime) <= 240 AndAlso (SameDayTotalMinTime + RowTotalMinTime) > 120 Then
                                 If LastPeriod1 + RowTotalTime < 2 Then
                                     Period1 = LastPeriod1 + RowTotalTime
                                     Period2 = LastPeriod2
+                                    SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                                     FlagPeriod1 = True
                                     FlagPeriod2 = False
                                 Else
                                     Period1 = 2
                                     Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                    SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                                     FlagPeriod1 = False
                                     FlagPeriod2 = True
                                 End If
-                            ElseIf (LastRowMinTime + RowTotalMinTime) <= 120 Then
+                            ElseIf (SameDayTotalMinTime + RowTotalMinTime) <= 120 Then
                                 Period1 = (LastPeriod1 + RowTotalTime)
                                 If Period1 < 2 Then
                                     Period2 = LastPeriod2
+                                    SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                                     FlagPeriod1 = True
                                     FlagPeriod2 = False
                                 Else
+                                    SameDayTotalMinTime = LastRowMinTime + RowTotalMinTime
                                     FlagPeriod1 = False
                                     FlagPeriod2 = True
                                 End If
@@ -2116,6 +2129,7 @@ Public Class OV4_2
                 ElseIf RowDate <> DateB AndAlso RowDate <> DateE Then    '一般情況
                     If HolidayOrNot = "0" Then        '平日
                         If LastDate <> RowDate Then     '從頭算(重新來過)
+                            SameDayTotalMinTime = RowTotalMinTime
                             'If RowTotalTime > 4 Then
                             '    outMsg = "累積時數超過4小時!"
                             '    execResult = False
@@ -2138,14 +2152,16 @@ Public Class OV4_2
                             'If (LastPeriod1 + LastPeriod2 + RowTotalTime) > 4 Then
                             '    outMsg = "累積時數超過4小時!"
                             '    execResult = False
-                            If (LastRowMinTime + RowTotalMinTime) > 240 Then
+                            If (SameDayTotalMinTime + RowTotalMinTime) > 240 Then
                                 Period1 = 2
                                 Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                 FlagPeriod1 = False
                                 FlagPeriod2 = True
-                            ElseIf (LastRowMinTime + RowTotalMinTime) <= 240 AndAlso (LastRowMinTime + RowTotalMinTime) > 120 Then
+                            ElseIf (SameDayTotalMinTime + RowTotalMinTime) <= 240 AndAlso (LastRowMinTime + RowTotalMinTime) > 120 Then
                                 Period1 = 2
                                 Period2 = (LastPeriod1 + LastPeriod2 + RowTotalTime) - 2
+                                SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                 FlagPeriod1 = False
                                 FlagPeriod2 = True
                                 'ElseIf (LastPeriod1 + LastPeriod2 + RowTotalTime) <= 4 AndAlso (LastPeriod1 + LastPeriod2 + RowTotalTime) > 2 Then
@@ -2165,6 +2181,7 @@ Public Class OV4_2
                             ElseIf (LastRowMinTime + RowTotalMinTime) <= 120 Then
                                 Period1 = (LastPeriod1 + RowTotalTime)
                                 Period2 = LastPeriod2
+                                SameDayTotalMinTime = SameDayTotalMinTime + RowTotalMinTime
                                 If Period1 < 2 Then
                                     FlagPeriod1 = True
                                     FlagPeriod2 = False
