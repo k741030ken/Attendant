@@ -141,6 +141,15 @@
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
+                                    <asp:Label ID="lblVisitOVBT" runat="server" Text="公出超時下班時間" Font-Names="微軟正黑體"></asp:Label>
+                                </td>
+                                <td class="td_Edit" width="75%">
+                                    <asp:TextBox ID="txtVisitOVBT" runat="server" Width="50px" AutoComplete="off" AutoPostBack="true" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
+                                    <asp:Label ID="lblVisitOVBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
+                                </td>
+                            </tr>
+                            <tr style="height:20px">
+                                <td class="td_Edit" width="25%">
                                     <asp:Label ID="lblLastChgComp"  runat="server" Text="最後異動公司" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" align="left" width="75%">

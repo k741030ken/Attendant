@@ -174,6 +174,19 @@ Partial Class PO_PO1000
             Return False
         End If
 
+        '公出超時下班時間
+        If txtVisitOVBT.Text = "" Then
+            Bsp.Utility.ShowFormatMessage(Me, "W_00030", lblVisitOVBT.Text)
+            txtVisitOVBT.Focus()
+            Return False
+        End If
+
+        If IsNumeric(txtVisitOVBT.Text) = False Then
+            Bsp.Utility.ShowFormatMessage(Me, "W_00050", lblVisitOVBT.Text)
+            txtVisitOVBT.Focus()
+            Return False
+        End If
+
         Return True
     End Function
 #End Region
@@ -214,6 +227,7 @@ Partial Class PO_PO1000
                     txtAffairSelf.Enabled = False
                     txtOVTenSelf.Enabled = False
                     txtFemaleSelf.Enabled = False
+                    txtVisitOVBT.Text = "30"
                 Else    'DB有資料，各欄位值由DB帶入
                     ViewState.Item("hasData") = True
                     bePunchPara = New bePunchPara.Row(dt.Rows(0))
@@ -235,6 +249,8 @@ Partial Class PO_PO1000
                     txtPunchInBT.Text = getRealValue(ParajsStr, ParaoriData, "PunchInBT") : ViewState.Item("PunchInBT") = txtPunchInBT.Text
                     '退勤打卡提示時間
                     txtPunchOutBT.Text = getRealValue(ParajsStr, ParaoriData, "PunchOutBT") : ViewState.Item("PunchOutBT") = txtPunchOutBT.Text
+                    '公出超時下班時間
+                    txtVisitOVBT.Text = getRealValue(ParajsStr, ParaoriData, "VisitOVBT") : ViewState.Item("VisitOVBT") = txtVisitOVBT.Text
 
                     Dim MsgParajsStr As String = GetParaStr(bePunchPara.MsgPara.Value)
                     Dim MsgParaoriData As JArray = GetParaData(MsgParajsStr)
@@ -341,6 +357,7 @@ Partial Class PO_PO1000
         ParajsObj.Add("DutyOutBT", txtDutyOutBT.Text)
         ParajsObj.Add("PunchInBT", txtPunchInBT.Text)
         ParajsObj.Add("PunchOutBT", txtPunchOutBT.Text)
+        ParajsObj.Add("VisitOVBT", txtVisitOVBT.Text)
 
         Dim strPunchInMsgFlag As String = IIf(rbnDefaultPunchInMsg.Checked = True, "0", "1")
         MsgParajsObj.Add("PunchInMsgFlag", strPunchInMsgFlag)
