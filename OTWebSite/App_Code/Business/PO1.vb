@@ -9,6 +9,13 @@ Imports System.Data.Common
 
 Public Class PO1
 #Region "PO1000 打卡參數設定-新增"
+
+    ''' <summary>
+    ''' 新增
+    ''' </summary>
+    ''' <param name="bePunchPara">畫面資料</param>
+    ''' <returns>True or False</returns>
+    ''' <remarks></remarks>
     Public Function AddPunchParaSetting(ByVal bePunchPara As bePunchPara.Row) As Boolean
         Dim bsPunchPara As New bePunchPara.Service()
         Dim strSQL As New StringBuilder()
@@ -32,6 +39,13 @@ Public Class PO1
 #End Region
 
 #Region "PO1000 打卡參數設定-修改"
+
+    ''' <summary>
+    ''' 修改
+    ''' </summary>
+    ''' <param name="bePunchPara">畫面資料</param>
+    ''' <returns>True or False</returns>
+    ''' <remarks></remarks>
     Public Function UpdateWorkSiteSetting(ByVal bePunchPara As bePunchPara.Row) As Boolean
         Dim bsPunchPara As New bePunchPara.Service()
         Dim strSQL As New StringBuilder()
