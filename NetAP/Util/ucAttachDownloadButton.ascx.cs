@@ -16,15 +16,31 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.Attach_btnDownloadLaunch; ;
+                PageViewState["_PopupHeader"] = RS.Resources.Attach_btnDownloadLaunch; ;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnLaunch.Enabled;
+        }
+        set
+        {
+            btnLaunch.Enabled = value;
         }
     }
 
@@ -35,15 +51,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = RS.Resources.Attach_btnDownloadLaunch; ;
+                PageViewState["_BtnCaption"] = RS.Resources.Attach_btnDownloadLaunch; ;
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -54,15 +70,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnStyle"] == null)
+            if (PageViewState["_BtnStyle"] == null)
             {
-                ViewState["_BtnStyle"] = "Util_clsBtn";
+                PageViewState["_BtnStyle"] = "Util_clsBtn";
             }
-            return (string)(ViewState["_BtnStyle"]);
+            return (string)(PageViewState["_BtnStyle"]);
         }
         set
         {
-            ViewState["_BtnStyle"] = value;
+            PageViewState["_BtnStyle"] = value;
         }
     }
 
@@ -73,15 +89,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 80;
+                PageViewState["_BtnWidth"] = 80;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -93,15 +109,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
         //2016.09.22 新增
         get
         {
-            if (ViewState["_BtnClientJS"] == null)
+            if (PageViewState["_BtnClientJS"] == null)
             {
-                ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;"; 
+                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;"; 
             }
-            return (string)(ViewState["_BtnClientJS"]);
+            return (string)(PageViewState["_BtnClientJS"]);
         }
         set
         {
-            ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
         }
     }
     #endregion
@@ -114,15 +130,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachDB"] == null)
+            if (PageViewState["_AttachDB"] == null)
             {
-                ViewState["_AttachDB"] = "";
+                PageViewState["_AttachDB"] = "";
             }
-            return (string)(ViewState["_AttachDB"]);
+            return (string)(PageViewState["_AttachDB"]);
         }
         set
         {
-            ViewState["_AttachDB"] = value;
+            PageViewState["_AttachDB"] = value;
         }
     }
 
@@ -133,15 +149,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachID"] == null)
+            if (PageViewState["_AttachID"] == null)
             {
-                ViewState["_AttachID"] = "";
+                PageViewState["_AttachID"] = "";
             }
-            return (string)(ViewState["_AttachID"]);
+            return (string)(PageViewState["_AttachID"]);
         }
         set
         {
-            ViewState["_AttachID"] = value;
+            PageViewState["_AttachID"] = value;
         }
     }
     #endregion
@@ -180,15 +196,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupWidth"] == null)
+            if (PageViewState["_PopupWidth"] == null)
             {
-                ViewState["_PopupWidth"] = 650;
+                PageViewState["_PopupWidth"] = 650;
             }
-            return (int)(ViewState["_PopupWidth"]);
+            return (int)(PageViewState["_PopupWidth"]);
         }
         set
         {
-            ViewState["_PopupWidth"] = value;
+            PageViewState["_PopupWidth"] = value;
         }
     }
 
@@ -199,15 +215,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeight"] == null)
+            if (PageViewState["_PopupHeight"] == null)
             {
-                ViewState["_PopupHeight"] = 380;
+                PageViewState["_PopupHeight"] = 380;
             }
-            return (int)(ViewState["_PopupHeight"]);
+            return (int)(PageViewState["_PopupHeight"]);
         }
         set
         {
-            ViewState["_PopupHeight"] = value;
+            PageViewState["_PopupHeight"] = value;
         }
     }
 
@@ -219,15 +235,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
         //2015.06.24 新增
         get
         {
-            if (ViewState["_IsPopNewWindow"] == null)
+            if (PageViewState["_IsPopNewWindow"] == null)
             {
-                ViewState["_IsPopNewWindow"] = false;
+                PageViewState["_IsPopNewWindow"] = false;
             }
-            return (bool)(ViewState["_IsPopNewWindow"]);
+            return (bool)(PageViewState["_IsPopNewWindow"]);
         }
         set
         {
-            ViewState["_IsPopNewWindow"] = value;
+            PageViewState["_IsPopNewWindow"] = value;
         }
     }
 
@@ -239,15 +255,15 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
         //2015.06.24 新增
         get
         {
-            if (ViewState["_IsPopNewWindowCloseEvent"] == null)
+            if (PageViewState["_IsPopNewWindowCloseEvent"] == null)
             {
-                ViewState["_IsPopNewWindowCloseEvent"] = false;
+                PageViewState["_IsPopNewWindowCloseEvent"] = false;
             }
-            return (bool)(ViewState["_IsPopNewWindowCloseEvent"]);
+            return (bool)(PageViewState["_IsPopNewWindowCloseEvent"]);
         }
         set
         {
-            ViewState["_IsPopNewWindowCloseEvent"] = value;
+            PageViewState["_IsPopNewWindowCloseEvent"] = value;
         }
     }
 

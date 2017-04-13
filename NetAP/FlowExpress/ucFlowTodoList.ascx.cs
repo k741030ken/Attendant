@@ -7,9 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
-using SinoPac.WebExpress.DAO;
 using SinoPac.WebExpress.Work;
-using SinoPac.WebExpress.Work.Properties;
 using WorkRS = SinoPac.WebExpress.Work.Properties;
 
 /// <summary>

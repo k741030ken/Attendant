@@ -31,15 +31,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -54,8 +54,8 @@ public partial class Util_ucMenuBar : BaseUserControl
         {
             if (value != null)
             {
-                ViewState["_NodeInfoDataStatus"] = "W"; //For 程式內部辨識  [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
-                ViewState["_NodeInfoData"] = value;
+                PageViewState["_NodeInfoDataStatus"] = "W"; //For 程式內部辨識  [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
+                PageViewState["_NodeInfoData"] = value;
             }
         }
     }
@@ -67,15 +67,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataNotFoundMsg"] == null)
+            if (PageViewState["_DataNotFoundMsg"] == null)
             {
-                ViewState["_DataNotFoundMsg"] = RS.Resources.Msg_DataNotFound;
+                PageViewState["_DataNotFoundMsg"] = RS.Resources.Msg_DataNotFound;
             }
-            return (string)(ViewState["_DataNotFoundMsg"]);
+            return (string)(PageViewState["_DataNotFoundMsg"]);
         }
         set
         {
-            ViewState["_DataNotFoundMsg"] = value;
+            PageViewState["_DataNotFoundMsg"] = value;
         }
     }
 
@@ -86,15 +86,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_RootNodeID"] == null)
+            if (PageViewState["_RootNodeID"] == null)
             {
-                ViewState["_RootNodeID"] = Util.getRequestQueryStringKey("RootNodeID");
+                PageViewState["_RootNodeID"] = Util.getRequestQueryStringKey("RootNodeID");
             }
-            return (string)(ViewState["_RootNodeID"]);
+            return (string)(PageViewState["_RootNodeID"]);
         }
         set
         {
-            ViewState["_RootNodeID"] = value;
+            PageViewState["_RootNodeID"] = value;
         }
     }
 
@@ -105,15 +105,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChkGrantIDList"] == null)
+            if (PageViewState["_ChkGrantIDList"] == null)
             {
                 return null;
             }
-            return (string[])(ViewState["_ChkGrantIDList"]);
+            return (string[])(PageViewState["_ChkGrantIDList"]);
         }
         set
         {
-            ViewState["_ChkGrantIDList"] = value;
+            PageViewState["_ChkGrantIDList"] = value;
         }
     }
 
@@ -124,15 +124,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsPopup"] == null)
+            if (PageViewState["_IsPopup"] == null)
             {
-                ViewState["_IsPopup"] = false;
+                PageViewState["_IsPopup"] = false;
             }
-            return (bool)(ViewState["_IsPopup"]);
+            return (bool)(PageViewState["_IsPopup"]);
         }
         set
         {
-            ViewState["_IsPopup"] = value;
+            PageViewState["_IsPopup"] = value;
         }
     }
 
@@ -143,15 +143,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_TargetFrame"] == null)
+            if (PageViewState["_TargetFrame"] == null)
             {
-                ViewState["_TargetFrame"] = "";
+                PageViewState["_TargetFrame"] = "";
             }
-            return (string)(ViewState["_TargetFrame"]);
+            return (string)(PageViewState["_TargetFrame"]);
         }
         set
         {
-            ViewState["_TargetFrame"] = value;
+            PageViewState["_TargetFrame"] = value;
         }
     }
 
@@ -162,15 +162,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupCfgSetting"] == null)
+            if (PageViewState["_PopupCfgSetting"] == null)
             {
-                ViewState["_PopupCfgSetting"] = "app://CfgPopupSpecs/";
+                PageViewState["_PopupCfgSetting"] = "app://CfgPopupSpecs/";
             }
-            return (string)(ViewState["_PopupCfgSetting"]);
+            return (string)(PageViewState["_PopupCfgSetting"]);
         }
         set
         {
-            ViewState["_PopupCfgSetting"] = value;
+            PageViewState["_PopupCfgSetting"] = value;
         }
     }
 
@@ -181,15 +181,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "Util_MenuBar";
+                PageViewState["_CssClass"] = "Util_MenuBar";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
         }
     }
 
@@ -200,15 +200,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MenuItemHorizontalPadding"] == null)
+            if (PageViewState["_MenuItemHorizontalPadding"] == null)
             {
-                ViewState["_MenuItemHorizontalPadding"] = 5;
+                PageViewState["_MenuItemHorizontalPadding"] = 5;
             }
-            return (int)(ViewState["_MenuItemHorizontalPadding"]);
+            return (int)(PageViewState["_MenuItemHorizontalPadding"]);
         }
         set
         {
-            ViewState["_MenuItemHorizontalPadding"] = value;
+            PageViewState["_MenuItemHorizontalPadding"] = value;
         }
     }
 
@@ -219,15 +219,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MenuItemVerticalPadding"] == null)
+            if (PageViewState["_MenuItemVerticalPadding"] == null)
             {
-                ViewState["_MenuItemVerticalPadding"] = 5;
+                PageViewState["_MenuItemVerticalPadding"] = 5;
             }
-            return (int)(ViewState["_MenuItemVerticalPadding"]);
+            return (int)(PageViewState["_MenuItemVerticalPadding"]);
         }
         set
         {
-            ViewState["_MenuItemVerticalPadding"] = value;
+            PageViewState["_MenuItemVerticalPadding"] = value;
         }
     }
 
@@ -240,15 +240,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuCssClass"] == null)
+            if (PageViewState["_MainMenuCssClass"] == null)
             {
-                ViewState["_MainMenuCssClass"] = "Util_Center";
+                PageViewState["_MainMenuCssClass"] = "Util_Center";
             }
-            return (string)(ViewState["_MainMenuCssClass"]);
+            return (string)(PageViewState["_MainMenuCssClass"]);
         }
         set
         {
-            ViewState["_MainMenuCssClass"] = value;
+            PageViewState["_MainMenuCssClass"] = value;
         }
     }
 
@@ -259,15 +259,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuMoreImageEnabled"] == null)
+            if (PageViewState["_MainMenuMoreImageEnabled"] == null)
             {
-                ViewState["_MainMenuMoreImageEnabled"] = false;
+                PageViewState["_MainMenuMoreImageEnabled"] = false;
             }
-            return (bool)(ViewState["_MainMenuMoreImageEnabled"]);
+            return (bool)(PageViewState["_MainMenuMoreImageEnabled"]);
         }
         set
         {
-            ViewState["_MainMenuMoreImageEnabled"] = value;
+            PageViewState["_MainMenuMoreImageEnabled"] = value;
         }
     }
 
@@ -279,15 +279,15 @@ public partial class Util_ucMenuBar : BaseUserControl
         //2016.07.19 新增
         get
         {
-            if (ViewState["_ShowMainMenuWhenChildEmpty"] == null)
+            if (PageViewState["_ShowMainMenuWhenChildEmpty"] == null)
             {
-                ViewState["_ShowMainMenuWhenChildEmpty"] = true;
+                PageViewState["_ShowMainMenuWhenChildEmpty"] = true;
             }
-            return (bool)(ViewState["_ShowMainMenuWhenChildEmpty"]);
+            return (bool)(PageViewState["_ShowMainMenuWhenChildEmpty"]);
         }
         set
         {
-            ViewState["_ShowMainMenuWhenChildEmpty"] = value;
+            PageViewState["_ShowMainMenuWhenChildEmpty"] = value;
         }
     }
 
@@ -298,15 +298,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuQty"] == null)
+            if (PageViewState["_MainMenuQty"] == null)
             {
-                ViewState["_MainMenuQty"] = 0;
+                PageViewState["_MainMenuQty"] = 0;
             }
-            return (int)(ViewState["_MainMenuQty"]);
+            return (int)(PageViewState["_MainMenuQty"]);
         }
         set
         {
-            ViewState["_MainMenuQty"] = value;
+            PageViewState["_MainMenuQty"] = value;
         }
     }
 
@@ -317,15 +317,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuWidth"] == null)
+            if (PageViewState["_MainMenuWidth"] == null)
             {
-                ViewState["_MainMenuWidth"] = 115;
+                PageViewState["_MainMenuWidth"] = 115;
             }
-            return (int)(ViewState["_MainMenuWidth"]);
+            return (int)(PageViewState["_MainMenuWidth"]);
         }
         set
         {
-            ViewState["_MainMenuWidth"] = value;
+            PageViewState["_MainMenuWidth"] = value;
         }
     }
 
@@ -336,15 +336,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuHeight"] == null)
+            if (PageViewState["_MainMenuHeight"] == null)
             {
-                ViewState["_MainMenuHeight"] = 30;
+                PageViewState["_MainMenuHeight"] = 30;
             }
-            return (int)(ViewState["_MainMenuHeight"]);
+            return (int)(PageViewState["_MainMenuHeight"]);
         }
         set
         {
-            ViewState["_MainMenuHeight"] = value;
+            PageViewState["_MainMenuHeight"] = value;
         }
     }
 
@@ -355,15 +355,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuBorderWidth"] == null)
+            if (PageViewState["_MainMenuBorderWidth"] == null)
             {
-                ViewState["_MainMenuBorderWidth"] = 0;
+                PageViewState["_MainMenuBorderWidth"] = 0;
             }
-            return (int)(ViewState["_MainMenuBorderWidth"]);
+            return (int)(PageViewState["_MainMenuBorderWidth"]);
         }
         set
         {
-            ViewState["_MainMenuBorderWidth"] = value;
+            PageViewState["_MainMenuBorderWidth"] = value;
         }
     }
 
@@ -374,15 +374,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuFontSize"] == null)
+            if (PageViewState["_MainMenuFontSize"] == null)
             {
-                ViewState["_MainMenuFontSize"] = 16;
+                PageViewState["_MainMenuFontSize"] = 16;
             }
-            return (int)(ViewState["_MainMenuFontSize"]);
+            return (int)(PageViewState["_MainMenuFontSize"]);
         }
         set
         {
-            ViewState["_MainMenuFontSize"] = value;
+            PageViewState["_MainMenuFontSize"] = value;
         }
     }
 
@@ -393,15 +393,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuForeColor"] == null)
+            if (PageViewState["_MainMenuForeColor"] == null)
             {
-                ViewState["_MainMenuForeColor"] = "#000";
+                PageViewState["_MainMenuForeColor"] = "#000";
             }
-            return (string)(ViewState["_MainMenuForeColor"]);
+            return (string)(PageViewState["_MainMenuForeColor"]);
         }
         set
         {
-            ViewState["_MainMenuForeColor"] = value;
+            PageViewState["_MainMenuForeColor"] = value;
         }
     }
 
@@ -412,15 +412,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuBackColor"] == null)
+            if (PageViewState["_MainMenuBackColor"] == null)
             {
-                ViewState["_MainMenuBackColor"] = "#FFF";
+                PageViewState["_MainMenuBackColor"] = "#FFF";
             }
-            return (string)(ViewState["_MainMenuBackColor"]);
+            return (string)(PageViewState["_MainMenuBackColor"]);
         }
         set
         {
-            ViewState["_MainMenuBackColor"] = value;
+            PageViewState["_MainMenuBackColor"] = value;
         }
     }
 
@@ -431,15 +431,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuBorderColor"] == null)
+            if (PageViewState["_MainMenuBorderColor"] == null)
             {
-                ViewState["_MainMenuBorderColor"] = "#E3E3E3";
+                PageViewState["_MainMenuBorderColor"] = "#E3E3E3";
             }
-            return (string)(ViewState["_MainMenuBorderColor"]);
+            return (string)(PageViewState["_MainMenuBorderColor"]);
         }
         set
         {
-            ViewState["_MainMenuBorderColor"] = value;
+            PageViewState["_MainMenuBorderColor"] = value;
         }
     }
 
@@ -450,15 +450,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuHoverForeColor"] == null)
+            if (PageViewState["_MainMenuHoverForeColor"] == null)
             {
-                ViewState["_MainMenuHoverForeColor"] = "#FFF";
+                PageViewState["_MainMenuHoverForeColor"] = "#FFF";
             }
-            return (string)(ViewState["_MainMenuHoverForeColor"]);
+            return (string)(PageViewState["_MainMenuHoverForeColor"]);
         }
         set
         {
-            ViewState["_MainMenuHoverForeColor"] = value;
+            PageViewState["_MainMenuHoverForeColor"] = value;
         }
     }
 
@@ -469,15 +469,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuHoverBackColor"] == null)
+            if (PageViewState["_MainMenuHoverBackColor"] == null)
             {
-                ViewState["_MainMenuHoverBackColor"] = "#D00F24";
+                PageViewState["_MainMenuHoverBackColor"] = "#D00F24";
             }
-            return (string)(ViewState["_MainMenuHoverBackColor"]);
+            return (string)(PageViewState["_MainMenuHoverBackColor"]);
         }
         set
         {
-            ViewState["_MainMenuHoverBackColor"] = value;
+            PageViewState["_MainMenuHoverBackColor"] = value;
         }
     }
 
@@ -488,15 +488,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MainMenuHoverBorderColor"] == null)
+            if (PageViewState["_MainMenuHoverBorderColor"] == null)
             {
-                ViewState["_MainMenuHoverBorderColor"] = "#D00F24";
+                PageViewState["_MainMenuHoverBorderColor"] = "#D00F24";
             }
-            return (string)(ViewState["_MainMenuHoverBorderColor"]);
+            return (string)(PageViewState["_MainMenuHoverBorderColor"]);
         }
         set
         {
-            ViewState["_MainMenuHoverBorderColor"] = value;
+            PageViewState["_MainMenuHoverBorderColor"] = value;
         }
     }
 
@@ -509,15 +509,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuCssClass"] == null)
+            if (PageViewState["_ChildMenuCssClass"] == null)
             {
-                ViewState["_ChildMenuCssClass"] = "Util_Left Util_Frame";
+                PageViewState["_ChildMenuCssClass"] = "Util_Left Util_Frame";
             }
-            return (string)(ViewState["_ChildMenuCssClass"]);
+            return (string)(PageViewState["_ChildMenuCssClass"]);
         }
         set
         {
-            ViewState["_ChildMenuCssClass"] = value;
+            PageViewState["_ChildMenuCssClass"] = value;
         }
     }
 
@@ -528,15 +528,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuMoreImageEnabled"] == null)
+            if (PageViewState["_ChildMenuMoreImageEnabled"] == null)
             {
-                ViewState["_ChildMenuMoreImageEnabled"] = true;
+                PageViewState["_ChildMenuMoreImageEnabled"] = true;
             }
-            return (bool)(ViewState["_ChildMenuMoreImageEnabled"]);
+            return (bool)(PageViewState["_ChildMenuMoreImageEnabled"]);
         }
         set
         {
-            ViewState["_ChildMenuMoreImageEnabled"] = value;
+            PageViewState["_ChildMenuMoreImageEnabled"] = value;
         }
     }
 
@@ -547,15 +547,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuMaxDisplayLevel"] == null)
+            if (PageViewState["_ChildMenuMaxDisplayLevel"] == null)
             {
-                ViewState["_ChildMenuMaxDisplayLevel"] = 5;
+                PageViewState["_ChildMenuMaxDisplayLevel"] = 5;
             }
-            return (int)(ViewState["_ChildMenuMaxDisplayLevel"]);
+            return (int)(PageViewState["_ChildMenuMaxDisplayLevel"]);
         }
         set
         {
-            ViewState["_ChildMenuMaxDisplayLevel"] = value;
+            PageViewState["_ChildMenuMaxDisplayLevel"] = value;
         }
     }
 
@@ -566,15 +566,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuWidth"] == null)
+            if (PageViewState["_ChildMenuWidth"] == null)
             {
-                ViewState["_ChildMenuWidth"] = 170;
+                PageViewState["_ChildMenuWidth"] = 170;
             }
-            return (int)(ViewState["_ChildMenuWidth"]);
+            return (int)(PageViewState["_ChildMenuWidth"]);
         }
         set
         {
-            ViewState["_ChildMenuWidth"] = value;
+            PageViewState["_ChildMenuWidth"] = value;
         }
     }
 
@@ -585,15 +585,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuHeight"] == null)
+            if (PageViewState["_ChildMenuHeight"] == null)
             {
-                ViewState["_ChildMenuHeight"] = 22;
+                PageViewState["_ChildMenuHeight"] = 22;
             }
-            return (int)(ViewState["_ChildMenuHeight"]);
+            return (int)(PageViewState["_ChildMenuHeight"]);
         }
         set
         {
-            ViewState["_ChildMenuHeight"] = value;
+            PageViewState["_ChildMenuHeight"] = value;
         }
     }
 
@@ -604,15 +604,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuBorderWidth"] == null)
+            if (PageViewState["_ChildMenuBorderWidth"] == null)
             {
-                ViewState["_ChildMenuBorderWidth"] = 0;
+                PageViewState["_ChildMenuBorderWidth"] = 0;
             }
-            return (int)(ViewState["_ChildMenuBorderWidth"]);
+            return (int)(PageViewState["_ChildMenuBorderWidth"]);
         }
         set
         {
-            ViewState["_ChildMenuBorderWidth"] = value;
+            PageViewState["_ChildMenuBorderWidth"] = value;
         }
     }
 
@@ -623,15 +623,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuFontSize"] == null)
+            if (PageViewState["_ChildMenuFontSize"] == null)
             {
-                ViewState["_ChildMenuFontSize"] = 12;
+                PageViewState["_ChildMenuFontSize"] = 12;
             }
-            return (int)(ViewState["_ChildMenuFontSize"]);
+            return (int)(PageViewState["_ChildMenuFontSize"]);
         }
         set
         {
-            ViewState["_ChildMenuFontSize"] = value;
+            PageViewState["_ChildMenuFontSize"] = value;
         }
     }
 
@@ -642,15 +642,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuForeColor"] == null)
+            if (PageViewState["_ChildMenuForeColor"] == null)
             {
-                ViewState["_ChildMenuForeColor"] = "#3C3C3C";
+                PageViewState["_ChildMenuForeColor"] = "#3C3C3C";
             }
-            return (string)(ViewState["_ChildMenuForeColor"]);
+            return (string)(PageViewState["_ChildMenuForeColor"]);
         }
         set
         {
-            ViewState["_ChildMenuForeColor"] = value;
+            PageViewState["_ChildMenuForeColor"] = value;
         }
     }
 
@@ -661,15 +661,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuBackColor"] == null)
+            if (PageViewState["_ChildMenuBackColor"] == null)
             {
-                ViewState["_ChildMenuBackColor"] = "#FFF";
+                PageViewState["_ChildMenuBackColor"] = "#FFF";
             }
-            return (string)(ViewState["_ChildMenuBackColor"]);
+            return (string)(PageViewState["_ChildMenuBackColor"]);
         }
         set
         {
-            ViewState["_ChildMenuBackColor"] = value;
+            PageViewState["_ChildMenuBackColor"] = value;
         }
     }
 
@@ -680,15 +680,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuBorderColor"] == null)
+            if (PageViewState["_ChildMenuBorderColor"] == null)
             {
-                ViewState["_ChildMenuBorderColor"] = "#808080";
+                PageViewState["_ChildMenuBorderColor"] = "#808080";
             }
-            return (string)(ViewState["_ChildMenuBorderColor"]);
+            return (string)(PageViewState["_ChildMenuBorderColor"]);
         }
         set
         {
-            ViewState["_ChildMenuBorderColor"] = value;
+            PageViewState["_ChildMenuBorderColor"] = value;
         }
     }
 
@@ -699,15 +699,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuHoverForeColor"] == null)
+            if (PageViewState["_ChildMenuHoverForeColor"] == null)
             {
-                ViewState["_ChildMenuHoverForeColor"] = "#D00F24";
+                PageViewState["_ChildMenuHoverForeColor"] = "#D00F24";
             }
-            return (string)(ViewState["_ChildMenuHoverForeColor"]);
+            return (string)(PageViewState["_ChildMenuHoverForeColor"]);
         }
         set
         {
-            ViewState["_ChildMenuHoverForeColor"] = value;
+            PageViewState["_ChildMenuHoverForeColor"] = value;
         }
     }
 
@@ -718,15 +718,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuHoverBackColor"] == null)
+            if (PageViewState["_ChildMenuHoverBackColor"] == null)
             {
-                ViewState["_ChildMenuHoverBackColor"] = "#E0E0E0";
+                PageViewState["_ChildMenuHoverBackColor"] = "#E0E0E0";
             }
-            return (string)(ViewState["_ChildMenuHoverBackColor"]);
+            return (string)(PageViewState["_ChildMenuHoverBackColor"]);
         }
         set
         {
-            ViewState["_ChildMenuHoverBackColor"] = value;
+            PageViewState["_ChildMenuHoverBackColor"] = value;
         }
     }
 
@@ -737,15 +737,15 @@ public partial class Util_ucMenuBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChildMenuHoverBorderColor"] == null)
+            if (PageViewState["_ChildMenuHoverBorderColor"] == null)
             {
-                ViewState["_ChildMenuHoverBorderColor"] = "#808080";
+                PageViewState["_ChildMenuHoverBorderColor"] = "#808080";
             }
-            return (string)(ViewState["_ChildMenuHoverBorderColor"]);
+            return (string)(PageViewState["_ChildMenuHoverBorderColor"]);
         }
         set
         {
-            ViewState["_ChildMenuHoverBorderColor"] = value;
+            PageViewState["_ChildMenuHoverBorderColor"] = value;
         }
     }
 
@@ -764,7 +764,7 @@ public partial class Util_ucMenuBar : BaseUserControl
     /// </summary>
     public void Reset()
     {
-        this.ViewState.Clear();
+        this.PageViewState.Clear();
     }
 
     /// <summary>
@@ -784,14 +784,14 @@ public partial class Util_ucMenuBar : BaseUserControl
         {
             if (getNodeInfoData() == null)
             {
-                if (ViewState["_NodeInfoDataStatus"] != null)
+                if (PageViewState["_NodeInfoDataStatus"] != null)
                 {
                     //ucNodeInfoData
-                    if (((string)ViewState["_NodeInfoDataStatus"]) == "N")
+                    if (((string)PageViewState["_NodeInfoDataStatus"]) == "N")
                     {
                         labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, "[ucNodeInfoData] 自訂資料表的欄位名稱有錯誤 , 至少需有 [" + Util.getStringJoin(_NodeInfoData_NeedFldList) + "] 等欄位!");
                     }
-                    if (((string)ViewState["_NodeInfoDataStatus"]) == "Y")
+                    if (((string)PageViewState["_NodeInfoDataStatus"]) == "Y")
                     {
                         labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, ucDataNotFoundMsg + "(NodeInfoDataStatus=Y)");
                     }
@@ -1009,7 +1009,7 @@ public partial class Util_ucMenuBar : BaseUserControl
     /// <returns></returns>
     protected DataTable getNodeInfoData()
     {
-        if (ViewState["_NodeInfoData"] == null)
+        if (PageViewState["_NodeInfoData"] == null)
         {
             DbHelper db = new DbHelper(ucDBName);
             string strSQL = string.Format("Select * From viewNodeInfo Where IsEnabled = 'Y'  And CultureCode = '{0}' ", Util.getUICultureCode());
@@ -1021,51 +1021,51 @@ public partial class Util_ucMenuBar : BaseUserControl
             }
 
             DataTable dt = db.ExecuteDataSet(strSQL).Tables[0];
-            ViewState["_NodeInfoData"] = dt;
+            PageViewState["_NodeInfoData"] = dt;
         }
         else
         {
-            //利用 ViewState["_NodeInfoDataStatus"] 進行程式邏輯判斷   [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
-            if (ViewState["_NodeInfoDataStatus"] != null && ((string)ViewState["_NodeInfoDataStatus"]) == "W")
+            //利用 PageViewState["_NodeInfoDataStatus"] 進行程式邏輯判斷   [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
+            if (PageViewState["_NodeInfoDataStatus"] != null && ((string)PageViewState["_NodeInfoDataStatus"]) == "W")
             {
                 //若使用了[ucNodeInfoData]屬性設定了自訂節點資料，則使用前需檢查資料欄位是否合理
-                ViewState["_NodeInfoDataStatus"] = "Y";
-                DataTable dtNode = (DataTable)ViewState["_NodeInfoData"];
+                PageViewState["_NodeInfoDataStatus"] = "Y";
+                DataTable dtNode = (DataTable)PageViewState["_NodeInfoData"];
                 if (dtNode != null && dtNode.Rows.Count > 0)
                 {
-                    //檢查必要欄位(不存在就觸發Error並清空 ViewState["_NodeInfoData"])
+                    //檢查必要欄位(不存在就觸發Error並清空 PageViewState["_NodeInfoData"])
                     for (int i = 0; i < _NodeInfoData_NeedFldList.Count(); i++)
                     {
-                        if ((string)ViewState["_NodeInfoDataStatus"] == "Y")
+                        if ((string)PageViewState["_NodeInfoDataStatus"] == "Y")
                         {
                             if (!dtNode.Columns.Contains(_NodeInfoData_NeedFldList[i]))
                             {
-                                ViewState["_NodeInfoDataStatus"] = "N";
-                                ViewState["_NodeInfoData"] = null;
+                                PageViewState["_NodeInfoDataStatus"] = "N";
+                                PageViewState["_NodeInfoData"] = null;
                             }
                         }
                     }
                     //處理非必要欄位(不存在就自動新增)
-                    if ((string)ViewState["_NodeInfoDataStatus"] == "Y")
+                    if ((string)PageViewState["_NodeInfoDataStatus"] == "Y")
                     {
                         for (int i = 0; i < _NodeInfoData_OptiFldList.Count(); i++)
                         {
                             if (!dtNode.Columns.Contains(_NodeInfoData_OptiFldList[i]))
                             {
                                 dtNode.Columns.Add(_NodeInfoData_OptiFldList[i]);
-                                ViewState["_NodeInfoData"] = dtNode;
+                                PageViewState["_NodeInfoData"] = dtNode;
                             }
                         }
                     }
                 }
                 else
                 {
-                    ViewState["_NodeInfoData"] = null;
+                    PageViewState["_NodeInfoData"] = null;
                 }
             }
         }
 
-        return (DataTable)(ViewState["_NodeInfoData"]);
+        return (DataTable)(PageViewState["_NodeInfoData"]);
     }
 
     /// <summary>

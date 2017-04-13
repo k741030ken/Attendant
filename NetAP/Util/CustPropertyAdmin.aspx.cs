@@ -21,15 +21,15 @@ public partial class Util_CustPropertyAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
     //資料表名稱
@@ -47,12 +47,12 @@ public partial class Util_CustPropertyAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
     //IsPropJSON
@@ -60,18 +60,18 @@ public partial class Util_CustPropertyAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_dicIsPropJSON"] == null)
+            if (PageViewState["_dicIsPropJSON"] == null)
             {
                 Dictionary<string, string> tDic = new Dictionary<string, string>();
                 tDic.Add("Y", "有內容");
                 tDic.Add("N", "無資料");
-                ViewState["_dicIsPropJSON"] = tDic;
+                PageViewState["_dicIsPropJSON"] = tDic;
             }
-            return (Dictionary<string, string>)(ViewState["_dicIsPropJSON"]);
+            return (Dictionary<string, string>)(PageViewState["_dicIsPropJSON"]);
         }
         set
         {
-            ViewState["_dicIsPropJSON"] = value;
+            PageViewState["_dicIsPropJSON"] = value;
         }
     }
     #endregion

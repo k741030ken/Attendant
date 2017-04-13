@@ -17,15 +17,15 @@ public partial class Util_ucLightBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_LightBoxBreakEnabled"] == null)
+            if (PageViewState["_LightBoxBreakEnabled"] == null)
             {
-                ViewState["_LightBoxBreakEnabled"] = false;
+                PageViewState["_LightBoxBreakEnabled"] = false;
             }
-            return (bool)ViewState["_LightBoxBreakEnabled"];
+            return (bool)PageViewState["_LightBoxBreakEnabled"];
         }
         set
         {
-            ViewState["_LightBoxBreakEnabled"] = value;
+            PageViewState["_LightBoxBreakEnabled"] = value;
         }
     }
 

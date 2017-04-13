@@ -15,15 +15,31 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.Attach_btnAdminLaunch; ;
+                PageViewState["_PopupHeader"] = RS.Resources.Attach_btnAdminLaunch; ;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnLaunch.Enabled;
+        }
+        set
+        {
+            btnLaunch.Enabled = value;
         }
     }
 
@@ -34,15 +50,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = RS.Resources.Attach_btnAdminLaunch;
+                PageViewState["_BtnCaption"] = RS.Resources.Attach_btnAdminLaunch;
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -53,15 +69,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCssClass"] == null)
+            if (PageViewState["_BtnCssClass"] == null)
             {
-                ViewState["_BtnCssClass"] = "Util_clsBtn";
+                PageViewState["_BtnCssClass"] = "Util_clsBtn";
             }
-            return (string)(ViewState["_BtnCssClass"]);
+            return (string)(PageViewState["_BtnCssClass"]);
         }
         set
         {
-            ViewState["_BtnCssClass"] = value;
+            PageViewState["_BtnCssClass"] = value;
         }
     }
 
@@ -72,15 +88,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 80;
+                PageViewState["_BtnWidth"] = 80;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -92,15 +108,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
         //2016.09.22 新增
         get
         {
-            if (ViewState["_BtnClientJS"] == null)
+            if (PageViewState["_BtnClientJS"] == null)
             {
-                ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
+                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
             }
-            return (string)(ViewState["_BtnClientJS"]);
+            return (string)(PageViewState["_BtnClientJS"]);
         }
         set
         {
-            ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
         }
     }
     #endregion
@@ -139,15 +155,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachDB"] == null)
+            if (PageViewState["_AttachDB"] == null)
             {
-                ViewState["_AttachDB"] = "";
+                PageViewState["_AttachDB"] = "";
             }
-            return (string)(ViewState["_AttachDB"]);
+            return (string)(PageViewState["_AttachDB"]);
         }
         set
         {
-            ViewState["_AttachDB"] = value;
+            PageViewState["_AttachDB"] = value;
         }
     }
 
@@ -158,15 +174,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachID"] == null)
+            if (PageViewState["_AttachID"] == null)
             {
-                ViewState["_AttachID"] = "";
+                PageViewState["_AttachID"] = "";
             }
-            return (string)(ViewState["_AttachID"]);
+            return (string)(PageViewState["_AttachID"]);
         }
         set
         {
-            ViewState["_AttachID"] = value;
+            PageViewState["_AttachID"] = value;
         }
     }
 
@@ -177,15 +193,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachFileExtList"] == null)
+            if (PageViewState["_AttachFileExtList"] == null)
             {
-                ViewState["_AttachFileExtList"] = "";
+                PageViewState["_AttachFileExtList"] = "";
             }
-            return (string)(ViewState["_AttachFileExtList"]);
+            return (string)(PageViewState["_AttachFileExtList"]);
         }
         set
         {
-            ViewState["_AttachFileExtList"] = value;
+            PageViewState["_AttachFileExtList"] = value;
         }
     }
 
@@ -196,15 +212,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AnonymousYN"] == null)
+            if (PageViewState["_AnonymousYN"] == null)
             {
-                ViewState["AnonymousYN"] = "N";
+                PageViewState["AnonymousYN"] = "N";
             }
-            return (string)(ViewState["AnonymousYN"]);
+            return (string)(PageViewState["AnonymousYN"]);
         }
         set
         {
-            ViewState["AnonymousYN"] = value.ToUpper();
+            PageViewState["AnonymousYN"] = value.ToUpper();
         }
     }
 
@@ -215,15 +231,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachFileMaxQty"] == null)
+            if (PageViewState["_AttachFileMaxQty"] == null)
             {
-                ViewState["_AttachFileMaxQty"] = 1;
+                PageViewState["_AttachFileMaxQty"] = 1;
             }
-            return (int)(ViewState["_AttachFileMaxQty"]);
+            return (int)(PageViewState["_AttachFileMaxQty"]);
         }
         set
         {
-            ViewState["_AttachFileMaxQty"] = value;
+            PageViewState["_AttachFileMaxQty"] = value;
         }
     }
 
@@ -234,15 +250,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachFileMaxKB"] == null)
+            if (PageViewState["_AttachFileMaxKB"] == null)
             {
-                ViewState["_AttachFileMaxKB"] = 1024;
+                PageViewState["_AttachFileMaxKB"] = 1024;
             }
-            return (int)(ViewState["_AttachFileMaxKB"]);
+            return (int)(PageViewState["_AttachFileMaxKB"]);
         }
         set
         {
-            ViewState["_AttachFileMaxKB"] = value;
+            PageViewState["_AttachFileMaxKB"] = value;
         }
     }
 
@@ -253,15 +269,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachFileTotKB"] == null)
+            if (PageViewState["_AttachFileTotKB"] == null)
             {
-                ViewState["_AttachFileTotKB"] = 0;
+                PageViewState["_AttachFileTotKB"] = 0;
             }
-            return (int)(ViewState["_AttachFileTotKB"]);
+            return (int)(PageViewState["_AttachFileTotKB"]);
         }
         set
         {
-            ViewState["_AttachFileTotKB"] = value;
+            PageViewState["_AttachFileTotKB"] = value;
         }
     }
 
@@ -272,15 +288,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupWidth"] == null)
+            if (PageViewState["_PopupWidth"] == null)
             {
-                ViewState["_PopupWidth"] = 650;
+                PageViewState["_PopupWidth"] = 650;
             }
-            return (int)(ViewState["_PopupWidth"]);
+            return (int)(PageViewState["_PopupWidth"]);
         }
         set
         {
-            ViewState["_PopupWidth"] = value;
+            PageViewState["_PopupWidth"] = value;
         }
     }
 
@@ -291,15 +307,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeight"] == null)
+            if (PageViewState["_PopupHeight"] == null)
             {
-                ViewState["_PopupHeight"] = 480;
+                PageViewState["_PopupHeight"] = 480;
             }
-            return (int)(ViewState["_PopupHeight"]);
+            return (int)(PageViewState["_PopupHeight"]);
         }
         set
         {
-            ViewState["_PopupHeight"] = value;
+            PageViewState["_PopupHeight"] = value;
         }
     }
 
@@ -311,15 +327,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
         //2015.06.24 新增
         get
         {
-            if (ViewState["_IsPopNewWindow"] == null)
+            if (PageViewState["_IsPopNewWindow"] == null)
             {
-                ViewState["_IsPopNewWindow"] = false;
+                PageViewState["_IsPopNewWindow"] = false;
             }
-            return (bool)(ViewState["_IsPopNewWindow"]);
+            return (bool)(PageViewState["_IsPopNewWindow"]);
         }
         set
         {
-            ViewState["_IsPopNewWindow"] = value;
+            PageViewState["_IsPopNewWindow"] = value;
         }
     }
 
@@ -331,15 +347,15 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
         //2015.06.24 新增
         get
         {
-            if (ViewState["_IsPopNewWindowCloseEvent"] == null)
+            if (PageViewState["_IsPopNewWindowCloseEvent"] == null)
             {
-                ViewState["_IsPopNewWindowCloseEvent"] = false;
+                PageViewState["_IsPopNewWindowCloseEvent"] = false;
             }
-            return (bool)(ViewState["_IsPopNewWindowCloseEvent"]);
+            return (bool)(PageViewState["_IsPopNewWindowCloseEvent"]);
         }
         set
         {
-            ViewState["_IsPopNewWindowCloseEvent"] = value;
+            PageViewState["_IsPopNewWindowCloseEvent"] = value;
         }
     }
 

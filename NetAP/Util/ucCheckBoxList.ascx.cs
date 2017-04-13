@@ -29,12 +29,12 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsWidthByPixel"] == null) ViewState["_IsWidthByPixel"] = true;
-            return (bool)ViewState["_IsWidthByPixel"];
+            if (PageViewState["_IsWidthByPixel"] == null) PageViewState["_IsWidthByPixel"] = true;
+            return (bool)PageViewState["_IsWidthByPixel"];
         }
         set
         {
-            ViewState["_IsWidthByPixel"] = value;
+            PageViewState["_IsWidthByPixel"] = value;
         }
     }
 
@@ -45,13 +45,13 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null) ViewState["_Width"] = 100;
-            return (int)ViewState["_Width"];
+            if (PageViewState["_Width"] == null) PageViewState["_Width"] = 100;
+            return (int)PageViewState["_Width"];
         }
 
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
         }
     }
 
@@ -62,13 +62,13 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChkBoxListWidth"] == null) ViewState["_ChkBoxListWidth"] = 200;
-            return (int)ViewState["_ChkBoxListWidth"];
+            if (PageViewState["_ChkBoxListWidth"] == null) PageViewState["_ChkBoxListWidth"] = 200;
+            return (int)PageViewState["_ChkBoxListWidth"];
         }
 
         set
         {
-            ViewState["_ChkBoxListWidth"] = value;
+            PageViewState["_ChkBoxListWidth"] = value;
         }
     }
 
@@ -79,13 +79,13 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChkBoxListHeight"] == null) ViewState["_ChkBoxListHeight"] = 175;
-            return (int)ViewState["_ChkBoxListHeight"];
+            if (PageViewState["_ChkBoxListHeight"] == null) PageViewState["_ChkBoxListHeight"] = 175;
+            return (int)PageViewState["_ChkBoxListHeight"];
         }
 
         set
         {
-            ViewState["_ChkBoxListHeight"] = value;
+            PageViewState["_ChkBoxListHeight"] = value;
         }
     }
 
@@ -97,15 +97,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
         //2016.08.19 新增
         get
         {
-            if (ViewState["_ucChkBoxListOffsetX"] == null)
+            if (PageViewState["_ucChkBoxListOffsetX"] == null)
             {
-                ViewState["_ucChkBoxListOffsetX"] = 0;
+                PageViewState["_ucChkBoxListOffsetX"] = 0;
             }
-            return (int)(ViewState["_ucChkBoxListOffsetX"]);
+            return (int)(PageViewState["_ucChkBoxListOffsetX"]);
         }
         set
         {
-            ViewState["_ucChkBoxListOffsetX"] = value;
+            PageViewState["_ucChkBoxListOffsetX"] = value;
         }
     }
 
@@ -117,15 +117,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
         //2016.08.19 新增
         get
         {
-            if (ViewState["_ucChkBoxListOffsetY"] == null)
+            if (PageViewState["_ucChkBoxListOffsetY"] == null)
             {
-                ViewState["_ucChkBoxListOffsetY"] = 0;
+                PageViewState["_ucChkBoxListOffsetY"] = 0;
             }
-            return (int)(ViewState["_ucChkBoxListOffsetY"]);
+            return (int)(PageViewState["_ucChkBoxListOffsetY"]);
         }
         set
         {
-            ViewState["_ucChkBoxListOffsetY"] = value;
+            PageViewState["_ucChkBoxListOffsetY"] = value;
         }
     }
 
@@ -136,12 +136,12 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_Rows"] == null) ViewState["_Rows"] = 1;
-            return (int)ViewState["_Rows"];
+            if (PageViewState["_Rows"] == null) PageViewState["_Rows"] = 1;
+            return (int)PageViewState["_Rows"];
         }
         set
         {
-            ViewState["_Rows"] = value;
+            PageViewState["_Rows"] = value;
         }
     }
 
@@ -152,12 +152,12 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsLineByLineWhenMultiRow"] == null) ViewState["_IsLineByLineWhenMultiRow"] = true;
-            return (bool)ViewState["_IsLineByLineWhenMultiRow"];
+            if (PageViewState["_IsLineByLineWhenMultiRow"] == null) PageViewState["_IsLineByLineWhenMultiRow"] = true;
+            return (bool)PageViewState["_IsLineByLineWhenMultiRow"];
         }
         set
         {
-            ViewState["_IsLineByLineWhenMultiRow"] = value;
+            PageViewState["_IsLineByLineWhenMultiRow"] = value;
         }
     }
 
@@ -168,12 +168,12 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_SourceDictionary"] == null) ViewState["_SourceDictionary"] = null;
-            return (Dictionary<string, string>)ViewState["_SourceDictionary"];
+            if (PageViewState["_SourceDictionary"] == null) PageViewState["_SourceDictionary"] = null;
+            return (Dictionary<string, string>)PageViewState["_SourceDictionary"];
         }
         set
         {
-            ViewState["_SourceDictionary"] = value;
+            PageViewState["_SourceDictionary"] = value;
 
             //設定候選項目
             ChkBoxList1.DataSource = value;
@@ -238,11 +238,11 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_RangeMinQty"] == null) { ViewState["_RangeMinQty"] = 0; } return (int)ViewState["_RangeMinQty"];
+            if (PageViewState["_RangeMinQty"] == null) { PageViewState["_RangeMinQty"] = 0; } return (int)PageViewState["_RangeMinQty"];
         }
         set
         {
-            ViewState["_RangeMinQty"] = value;
+            PageViewState["_RangeMinQty"] = value;
         }
     }
 
@@ -253,11 +253,11 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_RangeMaxQty"] == null) { ViewState["_RangeMaxQty"] = 99; } return (int)ViewState["_RangeMaxQty"];
+            if (PageViewState["_RangeMaxQty"] == null) { PageViewState["_RangeMaxQty"] = 99; } return (int)PageViewState["_RangeMaxQty"];
         }
         set
         {
-            ViewState["_RangeMaxQty"] = value;
+            PageViewState["_RangeMaxQty"] = value;
         }
     }
 
@@ -268,12 +268,12 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_RangeErrMsg"] == null) ViewState["_RangeErrMsg"] = "*";
-            return (string)ViewState["_RangeErrMsg"];
+            if (PageViewState["_RangeErrMsg"] == null) PageViewState["_RangeErrMsg"] = "*";
+            return (string)PageViewState["_RangeErrMsg"];
         }
         set
         {
-            ViewState["_RangeErrMsg"] = value;
+            PageViewState["_RangeErrMsg"] = value;
             txtIDQty_RangeValidator.ErrorMessage = value;
         }
     }
@@ -285,15 +285,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ToolTip"] == null)
+            if (PageViewState["_ToolTip"] == null)
             {
-                ViewState["_ToolTip"] = _ToolTip;
+                PageViewState["_ToolTip"] = _ToolTip;
             }
-            return (string)(ViewState["_ToolTip"]);
+            return (string)(PageViewState["_ToolTip"]);
         }
         set
         {
-            ViewState["_ToolTip"] = value;
+            PageViewState["_ToolTip"] = value;
         }
     }
 
@@ -311,8 +311,8 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     /// </summary>
     public bool ucIsSearchBoxEnabled
     {
-        get { if (ViewState["_IsSearchBoxEnabled"] == null) { ViewState["_IsSearchBoxEnabled"] = true; } return (bool)ViewState["_IsSearchBoxEnabled"]; }
-        set { ViewState["_IsSearchBoxEnabled"] = value; }
+        get { if (PageViewState["_IsSearchBoxEnabled"] == null) { PageViewState["_IsSearchBoxEnabled"] = true; } return (bool)PageViewState["_IsSearchBoxEnabled"]; }
+        set { PageViewState["_IsSearchBoxEnabled"] = value; }
     }
 
     /// <summary>
@@ -320,8 +320,8 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     /// </summary>
     public bool ucIsSelectBoxEnabled
     {
-        get { if (ViewState["_IsSelectBoxEnabled"] == null) { ViewState["_IsSelectBoxEnabled"] = true; } return (bool)ViewState["_IsSelectBoxEnabled"]; }
-        set { ViewState["_IsSelectBoxEnabled"] = value; }
+        get { if (PageViewState["_IsSelectBoxEnabled"] == null) { PageViewState["_IsSelectBoxEnabled"] = true; } return (bool)PageViewState["_IsSelectBoxEnabled"]; }
+        set { PageViewState["_IsSelectBoxEnabled"] = value; }
     }
 
     /// <summary>
@@ -329,8 +329,8 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     /// </summary>
     public bool ucIsExitBoxEnabled
     {
-        get { if (ViewState["_IsExitBoxEnabled"] == null) { ViewState["_IsExitBoxEnabled"] = true; } return (bool)ViewState["_IsExitBoxEnabled"]; }
-        set { ViewState["_IsExitBoxEnabled"] = value; }
+        get { if (PageViewState["_IsExitBoxEnabled"] == null) { PageViewState["_IsExitBoxEnabled"] = true; } return (bool)PageViewState["_IsExitBoxEnabled"]; }
+        set { PageViewState["_IsExitBoxEnabled"] = value; }
     }
 
     /// <summary>
@@ -340,15 +340,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_WaterMarkCSS"] == null)
+            if (PageViewState["_WaterMarkCSS"] == null)
             {
-                ViewState["_WaterMarkCSS"] = _WaterMarkClass;
+                PageViewState["_WaterMarkCSS"] = _WaterMarkClass;
             }
-            return (string)(ViewState["_WaterMarkCSS"]);
+            return (string)(PageViewState["_WaterMarkCSS"]);
         }
         set
         {
-            ViewState["_WaterMarkCSS"] = value;
+            PageViewState["_WaterMarkCSS"] = value;
         }
     }
 
@@ -359,15 +359,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -378,15 +378,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
+                PageViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -397,15 +397,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "";
+                PageViewState["_CssClass"] = "";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
         }
     }
 
@@ -416,15 +416,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -460,15 +460,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsAutoPopWhenNoSelection"] == null)
+            if (PageViewState["_IsAutoPopWhenNoSelection"] == null)
             {
-                ViewState["_IsAutoPopWhenNoSelection"] = false;
+                PageViewState["_IsAutoPopWhenNoSelection"] = false;
             }
-            return (bool)(ViewState["_IsAutoPopWhenNoSelection"]);
+            return (bool)(PageViewState["_IsAutoPopWhenNoSelection"]);
         }
         set
         {
-            ViewState["_IsAutoPopWhenNoSelection"] = value;
+            PageViewState["_IsAutoPopWhenNoSelection"] = value;
         }
     }
 
@@ -479,15 +479,15 @@ public partial class Util_ucCheckBoxList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsAutoRefresh"] == null)
+            if (PageViewState["_IsAutoRefresh"] == null)
             {
-                ViewState["_IsAutoRefresh"] = true;
+                PageViewState["_IsAutoRefresh"] = true;
             }
-            return (bool)(ViewState["_IsAutoRefresh"]);
+            return (bool)(PageViewState["_IsAutoRefresh"]);
         }
         set
         {
-            ViewState["_IsAutoRefresh"] = value;
+            PageViewState["_IsAutoRefresh"] = value;
         }
     }
 

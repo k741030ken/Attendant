@@ -39,7 +39,7 @@
                         OnClick="btnQry_Click" />
                     <asp:Button runat="server" ID="btnClear" CssClass="Util_clsBtnGray" Width="80"
                         Text="清　　除" OnClick="btnClear_Click" />
-                    <uc1:ucProcessButton runat="server" ID="btnOrgExport" ucBtnCaption="組織資料" />
+                    <uc1:ucProcessButton runat="server" ID="btnOrgExport" ucBtnWidth="120" ucBtnCaption="匯出組織資料" />
                 </div>
             </fieldset>
         </div>

@@ -18,13 +18,13 @@ public partial class UserInfoList : SecurePage
     private string _QryResultSQL
     {
         get
-        {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = ""; }
-            return (string)(ViewState["_QryResultSQL"]);
+        { 
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = ""; }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
 
@@ -37,8 +37,9 @@ public partial class UserInfoList : SecurePage
         //PageIsRequestFormLog = true;          //記錄 Request.Form Log
         PageIsLock = true;                      //頁面鎖定(鎖住滑鼠右鍵選單及複製功能)
         PageIsWatermark = true;                 //頁面浮水印
-        PageWatermarkMarginLeft = 150;          //浮水印左方邊界，避免浮水印蓋到按鈕造成無法使用
-        PageWatermarkFirstPosY = 360;           //浮水印首次出現 Y 軸像素
+        PageWatermarkMarginLeft = 120;          //浮水印左邊界，避免浮水印蓋到按鈕
+        PageWatermarkFirstPosY = 420;           //浮水印首次出現 Y 軸像素
+        PageWatermarkContentRepeatTimes = 2;    //浮水印重複次數
 
         base.OnInitComplete(e);
     }
@@ -223,11 +224,19 @@ public partial class UserInfoList : SecurePage
         oPDF.PageSize = PDFHelper.PDFPageSize.A3; //紙張
         oPDF.IsLandscapePage = true;              //橫印
         oPDF.FontName = PDFHelper.PDFFont.Kai;    //字體
+
         //設定 PDF 匯出參數
         ucGridView_Fix.ucExportPdfEnabled = true;
         ucGridView_Fix.ucExportPdfTitle = "員工基本資料";
         ucGridView_Fix.ucExportPdfWaterMark = oUser.DefaultWatermarkText;
         ucGridView_Fix.ucExportPdfWaterMarkTextSize = 72;
+
+        //設定 OpenXml 匯出參數
+        ucGridView_Fix.ucExportOpenXmlEnabled = true;
+        ucGridView_Fix.ucExportOpenXmlPassword = Util.getRandomCode();                      //亂數產生密碼
+        ucGridView_Fix.ucExportOpenXmlHeader = "部門員工資料表";                              //表頭 2017.03.21
+        ucGridView_Fix.ucExportOpenXmlFooter = "　●員工資料有密碼保護\n　●僅供內部使用";  //表尾 2017.03.21
+
 
 
         ucGridView_Fix.ucDBName = _DBName;
@@ -242,10 +251,6 @@ public partial class UserInfoList : SecurePage
         ucGridView_Fix.ucCmdBtnHorizontalAlign = HorizontalAlign.Center; //按鈕水平對齊 2016.07.28 新增
         ucGridView_Fix.ucSelectEnabled = true;
         ucGridView_Fix.ucSelectRowEnabled = true; //可整列選取
-        ucGridView_Fix.ucExportEnabled = true;
-        ucGridView_Fix.ucExportOpenXmlEnabled = true;
-        ucGridView_Fix.ucExportOpenXmlPassword = Util.getRandomCode(); //亂數產生密碼
-        ucGridView_Fix.ucExportWordEnabled = true;
         ucGridView_Fix.ucPageSize = 100; //每頁筆數
         ucGridView_Fix.ucDataGroupKey = "DeptName"; //設定群組
 

@@ -17,13 +17,13 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_dtSource"] == null)
-                ViewState["_dtSource"] = new Dictionary<string, string>();
-            return (Dictionary<string, string>)ViewState["_dtSource"];
+            if (PageViewState["_dtSource"] == null)
+                PageViewState["_dtSource"] = new Dictionary<string, string>();
+            return (Dictionary<string, string>)PageViewState["_dtSource"];
         }
         set
         {
-            ViewState["_dtSource"] = value;
+            PageViewState["_dtSource"] = value;
         }
     }
 
@@ -45,7 +45,7 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
         {
             if (!string.IsNullOrEmpty(idSelectedID.Text))
             {
-                return ((Dictionary<string, string>)ViewState["_dtSource"])[idSelectedID.Text];
+                return ((Dictionary<string, string>)PageViewState["_dtSource"])[idSelectedID.Text];
             }
             else
             {
@@ -77,15 +77,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectedIDToParentObjClientID"] == null)
+            if (PageViewState["_SelectedIDToParentObjClientID"] == null)
             {
-                ViewState["_SelectedIDToParentObjClientID"] = "";
+                PageViewState["_SelectedIDToParentObjClientID"] = "";
             }
-            return (string)(ViewState["_SelectedIDToParentObjClientID"]);
+            return (string)(PageViewState["_SelectedIDToParentObjClientID"]);
         }
         set
         {
-            ViewState["_SelectedIDToParentObjClientID"] = value;
+            PageViewState["_SelectedIDToParentObjClientID"] = value;
         }
     }
 
@@ -96,15 +96,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_SearchBoxWaterMarkText"] == null)
+            if (PageViewState["_SearchBoxWaterMarkText"] == null)
             {
-                ViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommSingleSelect_WaterMarkText; //"請輸入搜尋文字";
+                PageViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommSingleSelect_WaterMarkText; //"請輸入搜尋文字";
             }
-            return (string)(ViewState["_SearchBoxWaterMarkText"]);
+            return (string)(PageViewState["_SearchBoxWaterMarkText"]);
         }
         set
         {
-            ViewState["_SearchBoxWaterMarkText"] = value;
+            PageViewState["_SearchBoxWaterMarkText"] = value;
         }
     }
 
@@ -115,15 +115,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_SearchBoxWidth"] == null)
+            if (PageViewState["_SearchBoxWidth"] == null)
             {
-                ViewState["_SearchBoxWidth"] = 100;
+                PageViewState["_SearchBoxWidth"] = 100;
             }
-            return (int)(ViewState["_SearchBoxWidth"]);
+            return (int)(PageViewState["_SearchBoxWidth"]);
         }
         set
         {
-            ViewState["_SearchBoxWidth"] = value;
+            PageViewState["_SearchBoxWidth"] = value;
         }
     }
 
@@ -134,15 +134,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownSourceListEmptyLabel"] == null)
+            if (PageViewState["_DropDownSourceListEmptyLabel"] == null)
             {
-                ViewState["_DropDownSourceListEmptyLabel"] = RS.Resources.Msg_DDL_EmptyItem; //"--請選擇--";;
+                PageViewState["_DropDownSourceListEmptyLabel"] = RS.Resources.Msg_DDL_EmptyItem; //"--請選擇--";;
             }
-            return (string)(ViewState["_DropDownSourceListEmptyLabel"]);
+            return (string)(PageViewState["_DropDownSourceListEmptyLabel"]);
         }
         set
         {
-            ViewState["_DropDownSourceListEmptyLabel"] = value;
+            PageViewState["_DropDownSourceListEmptyLabel"] = value;
         }
     }
 
@@ -153,15 +153,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownSourceListWidth"] == null)
+            if (PageViewState["_DropDownSourceListWidth"] == null)
             {
-                ViewState["_DropDownSourceListWidth"] = 200;
+                PageViewState["_DropDownSourceListWidth"] = 200;
             }
-            return (int)(ViewState["_DropDownSourceListWidth"]);
+            return (int)(PageViewState["_DropDownSourceListWidth"]);
         }
         set
         {
-            ViewState["_DropDownSourceListWidth"] = value;
+            PageViewState["_DropDownSourceListWidth"] = value;
         }
     }
 
@@ -203,15 +203,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsSearchEnabled"] == null)
+            if (PageViewState["_IsSearchEnabled"] == null)
             {
-                ViewState["_IsSearchEnabled"] = true;
+                PageViewState["_IsSearchEnabled"] = true;
             }
-            return (bool)(ViewState["_IsSearchEnabled"]);
+            return (bool)(PageViewState["_IsSearchEnabled"]);
         }
         set
         {
-            ViewState["_IsSearchEnabled"] = value;
+            PageViewState["_IsSearchEnabled"] = value;
         }
     }
 
@@ -222,15 +222,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     //{
     //    get
     //    {
-    //        if (ViewState["_CssClass"] == null)
+    //        if (PageViewState["_CssClass"] == null)
     //        {
-    //            ViewState["_CssClass"] = "";
+    //            PageViewState["_CssClass"] = "";
     //        }
-    //        return (string)(ViewState["_CssClass"]);
+    //        return (string)(PageViewState["_CssClass"]);
     //    }
     //    set
     //    {
-    //        ViewState["_CssClass"] = value;
+    //        PageViewState["_CssClass"] = value;
     //    }
     //}
 
@@ -241,15 +241,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = "Util_clsReadOnly";
+                PageViewState["_ReadOnlyCSS"] = "Util_clsReadOnly";
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -260,15 +260,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -279,15 +279,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = false;
+                PageViewState["_IsRequire"] = false;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             ddlSourceList.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -300,15 +300,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -344,15 +344,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_Caption"] == null)
+            if (PageViewState["_Caption"] == null)
             {
-                ViewState["_Caption"] = "";
+                PageViewState["_Caption"] = "";
             }
-            return (string)(ViewState["_Caption"]);
+            return (string)(PageViewState["_Caption"]);
         }
         set
         {
-            ViewState["_Caption"] = value;
+            PageViewState["_Caption"] = value;
         }
     }
 
@@ -378,15 +378,15 @@ public partial class Util_ucCommSingleSelect : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsAutoRefresh"] == null)
+            if (PageViewState["_IsAutoRefresh"] == null)
             {
-                ViewState["_IsAutoRefresh"] = true;
+                PageViewState["_IsAutoRefresh"] = true;
             }
-            return (bool)(ViewState["_IsAutoRefresh"]);
+            return (bool)(PageViewState["_IsAutoRefresh"]);
         }
         set
         {
-            ViewState["_IsAutoRefresh"] = value;
+            PageViewState["_IsAutoRefresh"] = value;
         }
     }
 

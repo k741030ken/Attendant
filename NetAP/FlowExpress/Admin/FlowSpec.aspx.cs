@@ -1005,8 +1005,8 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         DbTransaction tx = cn.BeginTransaction();
 
         ucModalPopup1.Reset();
-        ucModalPopup1.ucPopupWidth = 860;
-        ucModalPopup1.ucPopupHeight = 620;
+        ucModalPopup1.ucPopupWidth = 880;
+        ucModalPopup1.ucPopupHeight = 680;
         ucModalPopup1.ucPanelID = pnlCustDataExp.ID;
         //處理自訂命令，AP 可視需要自行增加想要的 CommandName
         switch (e.CommandName)

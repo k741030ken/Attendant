@@ -21,15 +21,15 @@ public partial class Util_NodeInfoAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
     //資料表名稱
@@ -51,12 +51,12 @@ public partial class Util_NodeInfoAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
 
@@ -64,15 +64,15 @@ public partial class Util_NodeInfoAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_Dic_ParentNodeID"] != null)
+            if (PageViewState["_Dic_ParentNodeID"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_Dic_ParentNodeID"];
+                return (Dictionary<string, string>)PageViewState["_Dic_ParentNodeID"];
             }
             else
             {
                 DbHelper db = new DbHelper(_DBName);
-                ViewState["_Dic_ParentNodeID"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select NodeID,NodeName From {0} Where TargetUrl = '' ", _TableName)).Tables[0]);
-                return (Dictionary<string, string>)ViewState["_Dic_ParentNodeID"];
+                PageViewState["_Dic_ParentNodeID"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select NodeID,NodeName From {0} Where TargetUrl = '' ", _TableName)).Tables[0]);
+                return (Dictionary<string, string>)PageViewState["_Dic_ParentNodeID"];
             }
         }
     }
@@ -81,15 +81,15 @@ public partial class Util_NodeInfoAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_Dic_DefaultEnabledNodeID"] != null)
+            if (PageViewState["_Dic_DefaultEnabledNodeID"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_Dic_DefaultEnabledNodeID"];
+                return (Dictionary<string, string>)PageViewState["_Dic_DefaultEnabledNodeID"];
             }
             else
             {
                 DbHelper db = new DbHelper(_DBName);
-                ViewState["_Dic_DefaultEnabledNodeID"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select NodeID,NodeName From {0} Where TargetUrl <> '' ", _TableName)).Tables[0]);
-                return (Dictionary<string, string>)ViewState["_Dic_DefaultEnabledNodeID"];
+                PageViewState["_Dic_DefaultEnabledNodeID"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select NodeID,NodeName From {0} Where TargetUrl <> '' ", _TableName)).Tables[0]);
+                return (Dictionary<string, string>)PageViewState["_Dic_DefaultEnabledNodeID"];
             }
         }
     }
@@ -210,8 +210,8 @@ public partial class Util_NodeInfoAdmin : SecurePage
                 if (db.ExecuteNonQuery(sb.BuildCommand()) > 0)
                 {
                     Util.NotifyMsg(RS.Resources.Msg_DeleteSucceed, Util.NotifyKind.Success); //刪除成功
-                    ViewState["_Dic_DefaultEnabledNodeID"] = null;
-                    ViewState["_Dic_ParentNodeID"] = null;
+                    PageViewState["_Dic_DefaultEnabledNodeID"] = null;
+                    PageViewState["_Dic_ParentNodeID"] = null;
                 }
                 else
                 {
@@ -517,8 +517,8 @@ public partial class Util_NodeInfoAdmin : SecurePage
             if (db.ExecuteNonQuery(sb.BuildCommand()) >= 0)
             {
                 Util.NotifyMsg(RS.Resources.Msg_AddSucceed, Util.NotifyKind.Success); //新增成功
-                ViewState["_Dic_DefaultEnabledNodeID"] = null;
-                ViewState["_Dic_ParentNodeID"] = null;
+                PageViewState["_Dic_DefaultEnabledNodeID"] = null;
+                PageViewState["_Dic_ParentNodeID"] = null;
                 divMainFormView.Visible = false;
                 divMainGridview.Visible = true;
                 ucGridView1.Refresh(true);
@@ -578,8 +578,8 @@ public partial class Util_NodeInfoAdmin : SecurePage
         if (db.ExecuteNonQuery(sb.BuildCommand()) >= 0)
         {
             Util.NotifyMsg(RS.Resources.Msg_EditSucceed, Util.NotifyKind.Success); //更新成功
-            ViewState["_Dic_DefaultEnabledNodeID"] = null;
-            ViewState["_Dic_ParentNodeID"] = null;
+            PageViewState["_Dic_DefaultEnabledNodeID"] = null;
+            PageViewState["_Dic_ParentNodeID"] = null;
         }
         else
         {

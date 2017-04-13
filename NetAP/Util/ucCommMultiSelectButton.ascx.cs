@@ -16,15 +16,31 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header; ;
+                PageViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header; ;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnLaunch.Enabled;
+        }
+        set
+        {
+            btnLaunch.Enabled = value;
         }
     }
 
@@ -35,15 +51,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = RS.Resources.CommMultiSelect_btnLaunch; ;
+                PageViewState["_BtnCaption"] = RS.Resources.CommMultiSelect_btnLaunch; ;
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -54,15 +70,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnStyle"] == null)
+            if (PageViewState["_BtnStyle"] == null)
             {
-                ViewState["_BtnStyle"] = "Util_clsBtn";
+                PageViewState["_BtnStyle"] = "Util_clsBtn";
             }
-            return (string)(ViewState["_BtnStyle"]);
+            return (string)(PageViewState["_BtnStyle"]);
         }
         set
         {
-            ViewState["_BtnStyle"] = value;
+            PageViewState["_BtnStyle"] = value;
         }
     }
 
@@ -73,15 +89,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 80;
+                PageViewState["_BtnWidth"] = 80;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -93,15 +109,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
         //2016.09.22 新增
         get
         {
-            if (ViewState["_BtnClientJS"] == null)
+            if (PageViewState["_BtnClientJS"] == null)
             {
-                ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
+                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
             }
-            return (string)(ViewState["_BtnClientJS"]);
+            return (string)(PageViewState["_BtnClientJS"]);
         }
         set
         {
-            ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
         }
     }
     #endregion
@@ -124,15 +140,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectedIDListToParentObjClientID"] == null)
+            if (PageViewState["_SelectedIDListToParentObjClientID"] == null)
             {
-                ViewState["_SelectedIDListToParentObjClientID"] = "";
+                PageViewState["_SelectedIDListToParentObjClientID"] = "";
             }
-            return (string)(ViewState["_SelectedIDListToParentObjClientID"]);
+            return (string)(PageViewState["_SelectedIDListToParentObjClientID"]);
         }
         set
         {
-            ViewState["_SelectedIDListToParentObjClientID"] = value;
+            PageViewState["_SelectedIDListToParentObjClientID"] = value;
         }
     }
 
@@ -143,15 +159,15 @@ public partial class Util_ucCommMultiSelectButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectedInfoListToParentObjClientID"] == null)
+            if (PageViewState["_SelectedInfoListToParentObjClientID"] == null)
             {
-                ViewState["_SelectedInfoListToParentObjClientID"] = "";
+                PageViewState["_SelectedInfoListToParentObjClientID"] = "";
             }
-            return (string)(ViewState["_SelectedInfoListToParentObjClientID"]);
+            return (string)(PageViewState["_SelectedInfoListToParentObjClientID"]);
         }
         set
         {
-            ViewState["_SelectedInfoListToParentObjClientID"] = value;
+            PageViewState["_SelectedInfoListToParentObjClientID"] = value;
         }
     }
 

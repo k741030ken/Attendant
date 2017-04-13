@@ -30,15 +30,15 @@ public partial class Util_ucTextBox : BaseUserControl
         //2017.01.23 新增
         get
         {
-            if (ViewState["_TextShiftKind"] == null)
+            if (PageViewState["_TextShiftKind"] == null)
             {
-                ViewState["_TextShiftKind"] = Util.TextShiftKind.None;
+                PageViewState["_TextShiftKind"] = Util.TextShiftKind.None;
             }
-            return (Util.TextShiftKind)(ViewState["_TextShiftKind"]);
+            return (Util.TextShiftKind)(PageViewState["_TextShiftKind"]);
         }
         set
         {
-            ViewState["_TextShiftKind"] = value;
+            PageViewState["_TextShiftKind"] = value;
         }
     }
 
@@ -49,15 +49,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsPassword"] == null)
+            if (PageViewState["_IsPassword"] == null)
             {
-                ViewState["_IsPassword"] = false;
+                PageViewState["_IsPassword"] = false;
             }
-            return (bool)(ViewState["_IsPassword"]);
+            return (bool)(PageViewState["_IsPassword"]);
         }
         set
         {
-            ViewState["_IsPassword"] = value;
+            PageViewState["_IsPassword"] = value;
             if (value == true)
             {
                 txtData.TextMode = TextBoxMode.Password;
@@ -73,15 +73,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsActiveIME"] == null)
+            if (PageViewState["_IsActiveIME"] == null)
             {
-                ViewState["_IsActiveIME"] = true;
+                PageViewState["_IsActiveIME"] = true;
             }
-            return (bool)(ViewState["_IsActiveIME"]);
+            return (bool)(PageViewState["_IsActiveIME"]);
         }
         set
         {
-            ViewState["_IsActiveIME"] = value;
+            PageViewState["_IsActiveIME"] = value;
         }
     }
 
@@ -92,15 +92,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -111,15 +111,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "";
+                PageViewState["_CssClass"] = "";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
             txtData.CssClass = value;
         }
     }
@@ -131,15 +131,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
+                PageViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -150,15 +150,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_WaterMarkCSS"] == null)
+            if (PageViewState["_WaterMarkCSS"] == null)
             {
-                ViewState["_WaterMarkCSS"] = _WaterMarkClass;
+                PageViewState["_WaterMarkCSS"] = _WaterMarkClass;
             }
-            return (string)(ViewState["_WaterMarkCSS"]);
+            return (string)(PageViewState["_WaterMarkCSS"]);
         }
         set
         {
-            ViewState["_WaterMarkCSS"] = value;
+            PageViewState["_WaterMarkCSS"] = value;
         }
     }
 
@@ -170,15 +170,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsAutoToUpperCase"] == null)
+            if (PageViewState["_IsAutoToUpperCase"] == null)
             {
-                ViewState["_IsAutoToUpperCase"] = false;
+                PageViewState["_IsAutoToUpperCase"] = false;
             }
-            return (bool)(ViewState["_IsAutoToUpperCase"]);
+            return (bool)(PageViewState["_IsAutoToUpperCase"]);
         }
         set
         {
-            ViewState["_IsAutoToUpperCase"] = value;
+            PageViewState["_IsAutoToUpperCase"] = value;
         }
     }
 
@@ -189,15 +189,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -274,15 +274,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_WaterMark"] == null)
+            if (PageViewState["_WaterMark"] == null)
             {
-                ViewState["_WaterMark"] = "";
+                PageViewState["_WaterMark"] = "";
             }
-            return (string)(ViewState["_WaterMark"]);
+            return (string)(PageViewState["_WaterMark"]);
         }
         set
         {
-            ViewState["_WaterMark"] = value;
+            PageViewState["_WaterMark"] = value;
         }
     }
 
@@ -315,15 +315,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsWidthByPixel"] == null)
+            if (PageViewState["_IsWidthByPixel"] == null)
             {
-                ViewState["_IsWidthByPixel"] = _IsWidthByPixel;
+                PageViewState["_IsWidthByPixel"] = _IsWidthByPixel;
             }
-            return (bool)(ViewState["_IsWidthByPixel"]);
+            return (bool)(PageViewState["_IsWidthByPixel"]);
         }
         set
         {
-            ViewState["_IsWidthByPixel"] = value;
+            PageViewState["_IsWidthByPixel"] = value;
         }
     }
 
@@ -334,9 +334,9 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null)
+            if (PageViewState["_Width"] == null)
             {
-                ViewState["_Width"] = _Width;
+                PageViewState["_Width"] = _Width;
                 if (ucIsWidthByPixel)
                 {
                     txtData.Width = Unit.Pixel(_Width);
@@ -347,11 +347,11 @@ public partial class Util_ucTextBox : BaseUserControl
                 }
             }
             txtTemp.Width = txtData.Width;
-            return (int)(ViewState["_Width"]);
+            return (int)(PageViewState["_Width"]);
         }
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
             if (ucIsWidthByPixel)
             {
                 txtData.Width = Unit.Pixel(value);
@@ -371,9 +371,9 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_Height"] == null)
+            if (PageViewState["_Height"] == null)
             {
-                ViewState["_Height"] = _Height;
+                PageViewState["_Height"] = _Height;
                 if (ucIsWidthByPixel)
                 {
                     txtData.Height = Unit.Pixel(_Height);
@@ -384,11 +384,11 @@ public partial class Util_ucTextBox : BaseUserControl
                 }
             }
             txtTemp.Height = txtData.Height;
-            return (int)(ViewState["_Height"]);
+            return (int)(PageViewState["_Height"]);
         }
         set
         {
-            ViewState["_Height"] = value;
+            PageViewState["_Height"] = value;
             if (ucIsWidthByPixel)
             {
                 txtData.Height = Unit.Pixel(value);
@@ -427,12 +427,12 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDispEnteredWords"] == null) ViewState["_IsDispEnteredWords"] = false;
-            return (bool)ViewState["_IsDispEnteredWords"];
+            if (PageViewState["_IsDispEnteredWords"] == null) PageViewState["_IsDispEnteredWords"] = false;
+            return (bool)PageViewState["_IsDispEnteredWords"];
         }
         set
         {
-            ViewState["_IsDispEnteredWords"] = value;
+            PageViewState["_IsDispEnteredWords"] = value;
         }
     }
 
@@ -443,13 +443,13 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_DispEnteredWordsObjClientID"] == null) ViewState["_DispEnteredWordsObjClientID"] = "";
-            return (string)ViewState["_DispEnteredWordsObjClientID"];
+            if (PageViewState["_DispEnteredWordsObjClientID"] == null) PageViewState["_DispEnteredWordsObjClientID"] = "";
+            return (string)PageViewState["_DispEnteredWordsObjClientID"];
         }
 
         set
         {
-            ViewState["_DispEnteredWordsObjClientID"] = value;
+            PageViewState["_DispEnteredWordsObjClientID"] = value;
         }
     }
 
@@ -464,12 +464,12 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_MaxLength"] == null) ViewState["_MaxLength"] = _MaxLength;
-            return (int)ViewState["_MaxLength"];
+            if (PageViewState["_MaxLength"] == null) PageViewState["_MaxLength"] = _MaxLength;
+            return (int)PageViewState["_MaxLength"];
         }
         set
         {
-            ViewState["_MaxLength"] = value;
+            PageViewState["_MaxLength"] = value;
         }
     }
 
@@ -482,15 +482,15 @@ public partial class Util_ucTextBox : BaseUserControl
         //2016.07.04 新增
         get
         {
-            if (ViewState["_MaxLengthNextFocusClientID"] == null)
+            if (PageViewState["_MaxLengthNextFocusClientID"] == null)
             {
-                ViewState["_MaxLengthNextFocusClientID"] = "";
+                PageViewState["_MaxLengthNextFocusClientID"] = "";
             }
-            return (string)(ViewState["_MaxLengthNextFocusClientID"]);
+            return (string)(PageViewState["_MaxLengthNextFocusClientID"]);
         }
         set
         {
-            ViewState["_MaxLengthNextFocusClientID"] = value;
+            PageViewState["_MaxLengthNextFocusClientID"] = value;
         }
     }
 
@@ -520,15 +520,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRegExp"] == null)
+            if (PageViewState["_IsRegExp"] == null)
             {
-                ViewState["_IsRegExp"] = _IsRegExp;
+                PageViewState["_IsRegExp"] = _IsRegExp;
             }
-            return (bool)(ViewState["_IsRegExp"]);
+            return (bool)(PageViewState["_IsRegExp"]);
         }
         set
         {
-            ViewState["_IsRegExp"] = value;
+            PageViewState["_IsRegExp"] = value;
             RegularExpressionValidator1.Enabled = value;
         }
     }
@@ -540,15 +540,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = _IsRequire;
+                PageViewState["_IsRequire"] = _IsRequire;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             txtData.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -561,15 +561,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsClear"] == null)
+            if (PageViewState["_IsClear"] == null)
             {
-                ViewState["_IsClear"] = _IsClear;
+                PageViewState["_IsClear"] = _IsClear;
             }
-            return (bool)(ViewState["_IsClear"]);
+            return (bool)(PageViewState["_IsClear"]);
         }
         set
         {
-            ViewState["_IsClear"] = value;
+            PageViewState["_IsClear"] = value;
         }
     }
 
@@ -580,15 +580,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsFocus"] == null)
+            if (PageViewState["_IsFocus"] == null)
             {
-                ViewState["_IsFocus"] = false;
+                PageViewState["_IsFocus"] = false;
             }
-            return (bool)(ViewState["_IsFocus"]);
+            return (bool)(PageViewState["_IsFocus"]);
         }
         set
         {
-            ViewState["_IsFocus"] = value;
+            PageViewState["_IsFocus"] = value;
             if (value)
             {
                 txtData.Focus();
@@ -603,15 +603,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsClearWaterMarkWhenFocus"] == null)
+            if (PageViewState["_IsClearWaterMarkWhenFocus"] == null)
             {
-                ViewState["_IsClearWaterMarkWhenFocus"] = true;
+                PageViewState["_IsClearWaterMarkWhenFocus"] = true;
             }
-            return (bool)(ViewState["_IsClearWaterMarkWhenFocus"]);
+            return (bool)(PageViewState["_IsClearWaterMarkWhenFocus"]);
         }
         set
         {
-            ViewState["_IsClearWaterMarkWhenFocus"] = value;
+            PageViewState["_IsClearWaterMarkWhenFocus"] = value;
         }
     }
 
@@ -624,15 +624,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireErrMsg"] == null)
+            if (PageViewState["_RequireErrMsg"] == null)
             {
-                ViewState["_RequireErrMsg"] = _RequireErrMsg;
+                PageViewState["_RequireErrMsg"] = _RequireErrMsg;
             }
-            return (string)(ViewState["_RequireErrMsg"]);
+            return (string)(PageViewState["_RequireErrMsg"]);
         }
         set
         {
-            ViewState["_RequireErrMsg"] = value;
+            PageViewState["_RequireErrMsg"] = value;
             RequiredFieldValidator1.ErrorMessage = value;
         }
     }
@@ -644,15 +644,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_RegExpErrMsg"] == null)
+            if (PageViewState["_RegExpErrMsg"] == null)
             {
-                ViewState["_RegExpErrMsg"] = _RegExpErrMsg;
+                PageViewState["_RegExpErrMsg"] = _RegExpErrMsg;
             }
-            return (string)(ViewState["_RegExpErrMsg"]);
+            return (string)(PageViewState["_RegExpErrMsg"]);
         }
         set
         {
-            ViewState["_RegExpErrMsg"] = value;
+            PageViewState["_RegExpErrMsg"] = value;
             RegularExpressionValidator1.ErrorMessage = value;
         }
     }
@@ -664,15 +664,15 @@ public partial class Util_ucTextBox : BaseUserControl
     {
         get
         {
-            if (ViewState["_ToolTip"] == null)
+            if (PageViewState["_ToolTip"] == null)
             {
-                ViewState["_ToolTip"] = "";
+                PageViewState["_ToolTip"] = "";
             }
-            return (string)(ViewState["_ToolTip"]);
+            return (string)(PageViewState["_ToolTip"]);
         }
         set
         {
-            ViewState["_ToolTip"] = value;
+            PageViewState["_ToolTip"] = value;
         }
     }
 

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using System.Text;
 
@@ -22,15 +18,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getAppSetting("app://CfgDefConnDB/");
+                PageViewState["_DBName"] = Util.getAppSetting("app://CfgDefConnDB/");
             }
-            return ViewState["_DBName"].ToString();
+            return PageViewState["_DBName"].ToString();
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -41,15 +37,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_TableName"] == null)
+            if (PageViewState["_TableName"] == null)
             {
-                ViewState["_TableName"] = "ResourceScheduler";
+                PageViewState["_TableName"] = "ResourceScheduler";
             }
-            return ViewState["_TableName"].ToString();
+            return PageViewState["_TableName"].ToString();
         }
         set
         {
-            ViewState["_TableName"] = value;
+            PageViewState["_TableName"] = value;
         }
     }
 
@@ -60,15 +56,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_Caption"] == null)
+            if (PageViewState["_Caption"] == null)
             {
-                ViewState["_Caption"] = "";
+                PageViewState["_Caption"] = "";
             }
-            return ViewState["_Caption"].ToString();
+            return PageViewState["_Caption"].ToString();
         }
         set
         {
-            ViewState["_Caption"] = value;
+            PageViewState["_Caption"] = value;
         }
     }
     /// <summary>
@@ -79,11 +75,11 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            return (bool?)(ViewState["_IsReadOnly"]);
+            return (bool?)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -95,15 +91,15 @@ public partial class Util_ucScheduler : BaseUserControl
         //2015.11.26
         get
         {
-            if (ViewState["_IsShowReadOnlyForm"] == null)
+            if (PageViewState["_IsShowReadOnlyForm"] == null)
             {
-                ViewState["_IsShowReadOnlyForm"] = true;
+                PageViewState["_IsShowReadOnlyForm"] = true;
             }
-            return (bool)(ViewState["_IsShowReadOnlyForm"]);
+            return (bool)(PageViewState["_IsShowReadOnlyForm"]);
         }
         set
         {
-            ViewState["_IsShowReadOnlyForm"] = value;
+            PageViewState["_IsShowReadOnlyForm"] = value;
         }
     }
     /// <summary>
@@ -113,15 +109,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsOwnerEditOnly"] == null)
+            if (PageViewState["_IsOwnerEditOnly"] == null)
             {
-                ViewState["_IsOwnerEditOnly"] = true;
+                PageViewState["_IsOwnerEditOnly"] = true;
             }
-            return (bool)(ViewState["_IsOwnerEditOnly"]);
+            return (bool)(PageViewState["_IsOwnerEditOnly"]);
         }
         set
         {
-            ViewState["_IsOwnerEditOnly"] = value;
+            PageViewState["_IsOwnerEditOnly"] = value;
         }
     }
 
@@ -132,15 +128,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsConflictEnabled"] == null)
+            if (PageViewState["_IsConflictEnabled"] == null)
             {
-                ViewState["_IsConflictEnabled"] = true;
+                PageViewState["_IsConflictEnabled"] = true;
             }
-            return (bool)(ViewState["_IsConflictEnabled"]);
+            return (bool)(PageViewState["_IsConflictEnabled"]);
         }
         set
         {
-            ViewState["_IsConflictEnabled"] = value;
+            PageViewState["_IsConflictEnabled"] = value;
         }
     }
 
@@ -151,15 +147,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsNavBar"] == null)
+            if (PageViewState["_IsNavBar"] == null)
             {
-                ViewState["_IsNavBar"] = true;
+                PageViewState["_IsNavBar"] = true;
             }
-            return (bool)(ViewState["_IsNavBar"]);
+            return (bool)(PageViewState["_IsNavBar"]);
         }
         set
         {
-            ViewState["_IsNavBar"] = value;
+            PageViewState["_IsNavBar"] = value;
         }
     }
 
@@ -170,15 +166,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsMiniCalEnabled"] == null)
+            if (PageViewState["_IsMiniCalEnabled"] == null)
             {
-                ViewState["_IsMiniCalEnabled"] = true;
+                PageViewState["_IsMiniCalEnabled"] = true;
             }
-            return (bool)(ViewState["_IsMiniCalEnabled"]);
+            return (bool)(PageViewState["_IsMiniCalEnabled"]);
         }
         set
         {
-            ViewState["_IsMiniCalEnabled"] = value;
+            PageViewState["_IsMiniCalEnabled"] = value;
         }
     }
 
@@ -189,15 +185,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsMiniCalOnly"] == null)
+            if (PageViewState["_IsMiniCalOnly"] == null)
             {
-                ViewState["_IsMiniCalOnly"] = false;
+                PageViewState["_IsMiniCalOnly"] = false;
             }
-            return (bool)(ViewState["_IsMiniCalOnly"]);
+            return (bool)(PageViewState["_IsMiniCalOnly"]);
         }
         set
         {
-            ViewState["_IsMiniCalOnly"] = value;
+            PageViewState["_IsMiniCalOnly"] = value;
         }
     }
 
@@ -208,15 +204,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsMiniCalToScheduler"] == null)
+            if (PageViewState["_IsMiniCalToScheduler"] == null)
             {
-                ViewState["_IsMiniCalToScheduler"] = false;
+                PageViewState["_IsMiniCalToScheduler"] = false;
             }
-            return (bool)(ViewState["_IsMiniCalToScheduler"]);
+            return (bool)(PageViewState["_IsMiniCalToScheduler"]);
         }
         set
         {
-            ViewState["_IsMiniCalToScheduler"] = value;
+            PageViewState["_IsMiniCalToScheduler"] = value;
         }
     }
 
@@ -227,15 +223,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_ResourceIDList"] == null)
+            if (PageViewState["_ResourceIDList"] == null)
             {
-                ViewState["_ResourceIDList"] = "";
+                PageViewState["_ResourceIDList"] = "";
             }
-            return (string)(ViewState["_ResourceIDList"]);
+            return (string)(PageViewState["_ResourceIDList"]);
         }
         set
         {
-            ViewState["_ResourceIDList"] = value;
+            PageViewState["_ResourceIDList"] = value;
         }
     }
 
@@ -246,15 +242,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_LoadDate"] == null)
+            if (PageViewState["_LoadDate"] == null)
             {
-                ViewState["_LoadDate"] = string.Format("{0},{1},{2}", DateTime.Today.Year, DateTime.Today.Month - 1, DateTime.Today.Day); //month 需減一
+                PageViewState["_LoadDate"] = string.Format("{0},{1},{2}", DateTime.Today.Year, DateTime.Today.Month - 1, DateTime.Today.Day); //month 需減一
             }
-            return (string)(ViewState["_LoadDate"]);
+            return (string)(PageViewState["_LoadDate"]);
         }
         set
         {
-            ViewState["_LoadDate"] = value;
+            PageViewState["_LoadDate"] = value;
         }
     }
 
@@ -265,15 +261,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_LoadMode"] == null)
+            if (PageViewState["_LoadMode"] == null)
             {
-                ViewState["_LoadMode"] = "month";
+                PageViewState["_LoadMode"] = "month";
             }
-            return (string)(ViewState["_LoadMode"]);
+            return (string)(PageViewState["_LoadMode"]);
         }
         set
         {
-            ViewState["_LoadMode"] = value;
+            PageViewState["_LoadMode"] = value;
         }
     }
 
@@ -284,15 +280,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_UICultureCode"] == null)
+            if (PageViewState["_UICultureCode"] == null)
             {
-                ViewState["_UICultureCode"] = Util.getUICultureCode();
+                PageViewState["_UICultureCode"] = Util.getUICultureCode();
             }
-            return (string)(ViewState["_UICultureCode"]);
+            return (string)(PageViewState["_UICultureCode"]);
         }
         set
         {
-            ViewState["_UICultureCode"] = value;
+            PageViewState["_UICultureCode"] = value;
         }
     }
 
@@ -303,15 +299,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_NewEventTextColor"] == null)
+            if (PageViewState["_NewEventTextColor"] == null)
             {
-                ViewState["_NewEventTextColor"] = "White";
+                PageViewState["_NewEventTextColor"] = "White";
             }
-            return (string)(ViewState["_NewEventTextColor"]);
+            return (string)(PageViewState["_NewEventTextColor"]);
         }
         set
         {
-            ViewState["_NewEventTextColor"] = value;
+            PageViewState["_NewEventTextColor"] = value;
         }
     }
 
@@ -322,15 +318,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_NewEventColor"] == null)
+            if (PageViewState["_NewEventColor"] == null)
             {
-                ViewState["_NewEventColor"] = "DodgerBlue";
+                PageViewState["_NewEventColor"] = "DodgerBlue";
             }
-            return (string)(ViewState["_NewEventColor"]);
+            return (string)(PageViewState["_NewEventColor"]);
         }
         set
         {
-            ViewState["_NewEventColor"] = value;
+            PageViewState["_NewEventColor"] = value;
         }
     }
 
@@ -341,15 +337,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsStartOnMonday"] == null)
+            if (PageViewState["_IsStartOnMonday"] == null)
             {
-                ViewState["_IsStartOnMonday"] = false;
+                PageViewState["_IsStartOnMonday"] = false;
             }
-            return (bool)(ViewState["_IsStartOnMonday"]);
+            return (bool)(PageViewState["_IsStartOnMonday"]);
         }
         set
         {
-            ViewState["_IsStartOnMonday"] = value;
+            PageViewState["_IsStartOnMonday"] = value;
         }
     }
 
@@ -360,15 +356,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsYearView"] == null)
+            if (PageViewState["_IsYearView"] == null)
             {
-                ViewState["_IsYearView"] = false;
+                PageViewState["_IsYearView"] = false;
             }
-            return (bool)(ViewState["_IsYearView"]);
+            return (bool)(PageViewState["_IsYearView"]);
         }
         set
         {
-            ViewState["_IsYearView"] = value;
+            PageViewState["_IsYearView"] = value;
         }
     }
 
@@ -379,15 +375,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToolTip"] == null)
+            if (PageViewState["_IsToolTip"] == null)
             {
-                ViewState["_IsToolTip"] = true;
+                PageViewState["_IsToolTip"] = true;
             }
-            return (bool)(ViewState["_IsToolTip"]);
+            return (bool)(PageViewState["_IsToolTip"]);
         }
         set
         {
-            ViewState["_IsToolTip"] = value;
+            PageViewState["_IsToolTip"] = value;
         }
     }
 
@@ -398,15 +394,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsShowEventID"] == null)
+            if (PageViewState["_IsShowEventID"] == null)
             {
-                ViewState["_IsShowEventID"] = false;
+                PageViewState["_IsShowEventID"] = false;
             }
-            return (bool)(ViewState["_IsShowEventID"]);
+            return (bool)(PageViewState["_IsShowEventID"]);
         }
         set
         {
-            ViewState["_IsShowEventID"] = value;
+            PageViewState["_IsShowEventID"] = value;
         }
     }
 
@@ -417,15 +413,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsShowEventDetail"] == null)
+            if (PageViewState["_IsShowEventDetail"] == null)
             {
-                ViewState["_IsShowEventDetail"] = false;
+                PageViewState["_IsShowEventDetail"] = false;
             }
-            return (bool)(ViewState["_IsShowEventDetail"]);
+            return (bool)(PageViewState["_IsShowEventDetail"]);
         }
         set
         {
-            ViewState["_IsShowEventDetail"] = value;
+            PageViewState["_IsShowEventDetail"] = value;
         }
     }
 
@@ -436,15 +432,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsShowEventTime"] == null)
+            if (PageViewState["_IsShowEventTime"] == null)
             {
-                ViewState["_IsShowEventTime"] = true;
+                PageViewState["_IsShowEventTime"] = true;
             }
-            return (bool)(ViewState["_IsShowEventTime"]);
+            return (bool)(PageViewState["_IsShowEventTime"]);
         }
         set
         {
-            ViewState["_IsShowEventTime"] = value;
+            PageViewState["_IsShowEventTime"] = value;
         }
     }
 
@@ -455,15 +451,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsShowEventUpdInfo"] == null)
+            if (PageViewState["_IsShowEventUpdInfo"] == null)
             {
-                ViewState["_IsShowEventUpdInfo"] = false;
+                PageViewState["_IsShowEventUpdInfo"] = false;
             }
-            return (bool)(ViewState["_IsShowEventUpdInfo"]);
+            return (bool)(PageViewState["_IsShowEventUpdInfo"]);
         }
         set
         {
-            ViewState["_IsShowEventUpdInfo"] = value;
+            PageViewState["_IsShowEventUpdInfo"] = value;
         }
     }
 
@@ -474,15 +470,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null)
+            if (PageViewState["_Width"] == null)
             {
-                ViewState["_Width"] = 800;
+                PageViewState["_Width"] = 800;
             }
-            return (int)(ViewState["_Width"]);
+            return (int)(PageViewState["_Width"]);
         }
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
         }
     }
 
@@ -493,15 +489,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_Height"] == null)
+            if (PageViewState["_Height"] == null)
             {
-                ViewState["_Height"] = 600;
+                PageViewState["_Height"] = 600;
             }
-            return (int)(ViewState["_Height"]);
+            return (int)(PageViewState["_Height"]);
         }
         set
         {
-            ViewState["_Height"] = value;
+            PageViewState["_Height"] = value;
         }
     }
 
@@ -512,15 +508,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_MiniWidth"] == null)
+            if (PageViewState["_MiniWidth"] == null)
             {
-                ViewState["_MiniWidth"] = 200;
+                PageViewState["_MiniWidth"] = 200;
             }
-            return (int)(ViewState["_MiniWidth"]);
+            return (int)(PageViewState["_MiniWidth"]);
         }
         set
         {
-            ViewState["_MiniWidth"] = value;
+            PageViewState["_MiniWidth"] = value;
         }
     }
 
@@ -531,15 +527,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_MiniHeight"] == null)
+            if (PageViewState["_MiniHeight"] == null)
             {
-                ViewState["_MiniHeight"] = 200;
+                PageViewState["_MiniHeight"] = 200;
             }
-            return (int)(ViewState["_MiniHeight"]);
+            return (int)(PageViewState["_MiniHeight"]);
         }
         set
         {
-            ViewState["_MiniHeight"] = value;
+            PageViewState["_MiniHeight"] = value;
         }
     }
 
@@ -550,15 +546,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_FirstHour"] == null)
+            if (PageViewState["_FirstHour"] == null)
             {
-                ViewState["_FirstHour"] = 8;
+                PageViewState["_FirstHour"] = 8;
             }
-            return (int)(ViewState["_FirstHour"]);
+            return (int)(PageViewState["_FirstHour"]);
         }
         set
         {
-            ViewState["_FirstHour"] = Math.Max(0, Math.Min(value, ucLastHour - 1));
+            PageViewState["_FirstHour"] = Math.Max(0, Math.Min(value, ucLastHour - 1));
         }
     }
 
@@ -569,15 +565,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_LastHour"] == null)
+            if (PageViewState["_LastHour"] == null)
             {
-                ViewState["_LastHour"] = 20;
+                PageViewState["_LastHour"] = 20;
             }
-            return (int)(ViewState["_LastHour"]);
+            return (int)(PageViewState["_LastHour"]);
         }
         set
         {
-            ViewState["_LastHour"] = Math.Min(24, Math.Max(value, ucFirstHour + 1));
+            PageViewState["_LastHour"] = Math.Min(24, Math.Max(value, ucFirstHour + 1));
         }
     }
 
@@ -588,11 +584,11 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_TimeStep"] == null)
+            if (PageViewState["_TimeStep"] == null)
             {
-                ViewState["_TimeStep"] = 15;
+                PageViewState["_TimeStep"] = 15;
             }
-            return (int)(ViewState["_TimeStep"]);
+            return (int)(PageViewState["_TimeStep"]);
         }
         set
         {
@@ -600,7 +596,7 @@ public partial class Util_ucScheduler : BaseUserControl
             int timeStep = Math.Max(5, Math.Min(value, 60));
             while (60 % timeStep != 0)
                 timeStep++;
-            ViewState["_TimeStep"] = timeStep;
+            PageViewState["_TimeStep"] = timeStep;
         }
     }
 
@@ -611,15 +607,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_EventDuration"] == null)
+            if (PageViewState["_EventDuration"] == null)
             {
-                ViewState["_EventDuration"] = 60;
+                PageViewState["_EventDuration"] = 60;
             }
-            return (int)(ViewState["_EventDuration"]);
+            return (int)(PageViewState["_EventDuration"]);
         }
         set
         {
-            ViewState["_EventDuration"] = Math.Max(5, value);
+            PageViewState["_EventDuration"] = Math.Max(5, value);
         }
     }
 
@@ -630,15 +626,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_CustStyle"] == null)
+            if (PageViewState["_CustStyle"] == null)
             {
-                ViewState["_CustStyle"] = "margin:auto;border: 1px solid #E0E0E0;";
+                PageViewState["_CustStyle"] = "margin:auto;border: 1px solid #E0E0E0;";
             }
-            return (string)(ViewState["_CustStyle"]);
+            return (string)(PageViewState["_CustStyle"]);
         }
         set
         {
-            ViewState["_CustStyle"] = value;
+            PageViewState["_CustStyle"] = value;
         }
     }
 
@@ -649,15 +645,15 @@ public partial class Util_ucScheduler : BaseUserControl
     {
         get
         {
-            if (ViewState["_MiniCustStyle"] == null)
+            if (PageViewState["_MiniCustStyle"] == null)
             {
-                ViewState["_MiniCustStyle"] = "";
+                PageViewState["_MiniCustStyle"] = "";
             }
-            return (string)(ViewState["_MiniCustStyle"]);
+            return (string)(PageViewState["_MiniCustStyle"]);
         }
         set
         {
-            ViewState["_MiniCustStyle"] = value;
+            PageViewState["_MiniCustStyle"] = value;
         }
     }
     #endregion

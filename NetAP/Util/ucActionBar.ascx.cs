@@ -21,15 +21,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "Util_ActionBar";
+                PageViewState["_CssClass"] = "Util_ActionBar";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
         }
     }
 
@@ -40,15 +40,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CustStyle"] == null)
+            if (PageViewState["_CustStyle"] == null)
             {
-                ViewState["_CustStyle"] = "border: 1px solid #C0C0C0;line-height:28px;";
+                PageViewState["_CustStyle"] = "border: 1px solid #C0C0C0;line-height:28px;";
             }
-            return (string)(ViewState["_CustStyle"]);
+            return (string)(PageViewState["_CustStyle"]);
         }
         set
         {
-            ViewState["_CustStyle"] = value;
+            PageViewState["_CustStyle"] = value;
         }
     }
 
@@ -59,15 +59,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCssClass"] == null)
+            if (PageViewState["_BtnCssClass"] == null)
             {
-                ViewState["_BtnCssClass"] = "Util_clsBtnGray Util_Pointer";
+                PageViewState["_BtnCssClass"] = "Util_clsBtnGray Util_Pointer";
             }
-            return (string)(ViewState["_BtnCssClass"]);
+            return (string)(PageViewState["_BtnCssClass"]);
         }
         set
         {
-            ViewState["_BtnCssClass"] = value;
+            PageViewState["_BtnCssClass"] = value;
         }
     }
 
@@ -78,15 +78,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCausesValidation"] == null)
+            if (PageViewState["_BtnCausesValidation"] == null)
             {
-                ViewState["_BtnCausesValidation"] = false;
+                PageViewState["_BtnCausesValidation"] = false;
             }
-            return (bool)(ViewState["_BtnCausesValidation"]);
+            return (bool)(PageViewState["_BtnCausesValidation"]);
         }
         set
         {
-            ViewState["_BtnCausesValidation"] = value;
+            PageViewState["_BtnCausesValidation"] = value;
         }
     }
 
@@ -97,15 +97,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ButtonWidth"] == null)
+            if (PageViewState["_ButtonWidth"] == null)
             {
-                ViewState["_ButtonWidth"] = 80;
+                PageViewState["_ButtonWidth"] = 80;
             }
-            return (int)(ViewState["_ButtonWidth"]);
+            return (int)(PageViewState["_ButtonWidth"]);
         }
         set
         {
-            ViewState["_ButtonWidth"] = value;
+            PageViewState["_ButtonWidth"] = value;
         }
     }
 
@@ -116,15 +116,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ButtonHeight"] == null)
+            if (PageViewState["_ButtonHeight"] == null)
             {
-                ViewState["_ButtonHeight"] = 26;
+                PageViewState["_ButtonHeight"] = 26;
             }
-            return (int)(ViewState["_ButtonHeight"]);
+            return (int)(PageViewState["_ButtonHeight"]);
         }
         set
         {
-            ViewState["_ButtonHeight"] = value;
+            PageViewState["_ButtonHeight"] = value;
         }
     }
 
@@ -136,19 +136,19 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_AclEnabled"] == null)
+            if (PageViewState["_AclEnabled"] == null)
             {
-                ViewState["_AclEnabled"] = false;
+                PageViewState["_AclEnabled"] = false;
             }
-            return (bool)(ViewState["_AclEnabled"]);
+            return (bool)(PageViewState["_AclEnabled"]);
         }
         set
         {
-            ViewState["_AclEnabled"] = value;
+            PageViewState["_AclEnabled"] = value;
             if ((bool)value == true)
             {
                 //需為 AclPage 才生效
-                ViewState["_AclEnabled"] = AclExpress.IsAclPage();
+                PageViewState["_AclEnabled"] = AclExpress.IsAclPage();
             }
         }
     }
@@ -160,15 +160,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_QueryEnabled"] == null)
+            if (PageViewState["_QueryEnabled"] == null)
             {
-                ViewState["_QueryEnabled"] = false;
+                PageViewState["_QueryEnabled"] = false;
             }
-            return (bool)(ViewState["_QueryEnabled"]);
+            return (bool)(PageViewState["_QueryEnabled"]);
         }
         set
         {
-            ViewState["_QueryEnabled"] = value;
+            PageViewState["_QueryEnabled"] = value;
         }
     }
 
@@ -179,15 +179,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_QueryCaption"] == null)
+            if (PageViewState["_QueryCaption"] == null)
             {
-                ViewState["_QueryCaption"] = RS.Resources.ActionBar_Query;
+                PageViewState["_QueryCaption"] = RS.Resources.ActionBar_Query;
             }
-            return ViewState["_QueryCaption"].ToString();
+            return PageViewState["_QueryCaption"].ToString();
         }
         set
         {
-            ViewState["_QueryCaption"] = value;
+            PageViewState["_QueryCaption"] = value;
         }
     }
 
@@ -198,15 +198,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_QueryToolTip"] == null)
+            if (PageViewState["_QueryToolTip"] == null)
             {
-                ViewState["_QueryToolTip"] = RS.Resources.ActionBar_Query;
+                PageViewState["_QueryToolTip"] = RS.Resources.ActionBar_Query;
             }
-            return ViewState["_QueryToolTip"].ToString();
+            return PageViewState["_QueryToolTip"].ToString();
         }
         set
         {
-            ViewState["_QueryToolTip"] = value;
+            PageViewState["_QueryToolTip"] = value;
         }
     }
 
@@ -218,15 +218,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_AddEnabled"] == null)
+            if (PageViewState["_AddEnabled"] == null)
             {
-                ViewState["_AddEnabled"] = false;
+                PageViewState["_AddEnabled"] = false;
             }
-            return (bool)(ViewState["_AddEnabled"]);
+            return (bool)(PageViewState["_AddEnabled"]);
         }
         set
         {
-            ViewState["_AddEnabled"] = value;
+            PageViewState["_AddEnabled"] = value;
         }
     }
 
@@ -237,15 +237,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_AddCaption"] == null)
+            if (PageViewState["_AddCaption"] == null)
             {
-                ViewState["_AddCaption"] = RS.Resources.ActionBar_Add;
+                PageViewState["_AddCaption"] = RS.Resources.ActionBar_Add;
             }
-            return ViewState["_AddCaption"].ToString();
+            return PageViewState["_AddCaption"].ToString();
         }
         set
         {
-            ViewState["_AddCaption"] = value;
+            PageViewState["_AddCaption"] = value;
         }
     }
 
@@ -256,15 +256,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_AddToolTip"] == null)
+            if (PageViewState["_AddToolTip"] == null)
             {
-                ViewState["_AddToolTip"] = RS.Resources.ActionBar_Add;
+                PageViewState["_AddToolTip"] = RS.Resources.ActionBar_Add;
             }
-            return ViewState["_AddToolTip"].ToString();
+            return PageViewState["_AddToolTip"].ToString();
         }
         set
         {
-            ViewState["_AddToolTip"] = value;
+            PageViewState["_AddToolTip"] = value;
         }
     }
 
@@ -275,15 +275,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_EditEnabled"] == null)
+            if (PageViewState["_EditEnabled"] == null)
             {
-                ViewState["_EditEnabled"] = false;
+                PageViewState["_EditEnabled"] = false;
             }
-            return (bool)(ViewState["_EditEnabled"]);
+            return (bool)(PageViewState["_EditEnabled"]);
         }
         set
         {
-            ViewState["_EditEnabled"] = value;
+            PageViewState["_EditEnabled"] = value;
         }
     }
 
@@ -294,15 +294,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_EditCaption"] == null)
+            if (PageViewState["_EditCaption"] == null)
             {
-                ViewState["_EditCaption"] = RS.Resources.ActionBar_Edit;
+                PageViewState["_EditCaption"] = RS.Resources.ActionBar_Edit;
             }
-            return ViewState["_EditCaption"].ToString();
+            return PageViewState["_EditCaption"].ToString();
         }
         set
         {
-            ViewState["_EditCaption"] = value;
+            PageViewState["_EditCaption"] = value;
         }
     }
 
@@ -313,15 +313,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_EditToolTip"] == null)
+            if (PageViewState["_EditToolTip"] == null)
             {
-                ViewState["_EditToolTip"] = RS.Resources.ActionBar_Edit;
+                PageViewState["_EditToolTip"] = RS.Resources.ActionBar_Edit;
             }
-            return ViewState["_EditToolTip"].ToString();
+            return PageViewState["_EditToolTip"].ToString();
         }
         set
         {
-            ViewState["_EditToolTip"] = value;
+            PageViewState["_EditToolTip"] = value;
         }
     }
 
@@ -332,15 +332,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteEnabled"] == null)
+            if (PageViewState["_DeleteEnabled"] == null)
             {
-                ViewState["_DeleteEnabled"] = false;
+                PageViewState["_DeleteEnabled"] = false;
             }
-            return (bool)(ViewState["_DeleteEnabled"]);
+            return (bool)(PageViewState["_DeleteEnabled"]);
         }
         set
         {
-            ViewState["_DeleteEnabled"] = value;
+            PageViewState["_DeleteEnabled"] = value;
         }
     }
 
@@ -351,15 +351,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteCaption"] == null)
+            if (PageViewState["_DeleteCaption"] == null)
             {
-                ViewState["_DeleteCaption"] = RS.Resources.ActionBar_Delete;
+                PageViewState["_DeleteCaption"] = RS.Resources.ActionBar_Delete;
             }
-            return ViewState["_DeleteCaption"].ToString();
+            return PageViewState["_DeleteCaption"].ToString();
         }
         set
         {
-            ViewState["_DeleteCaption"] = value;
+            PageViewState["_DeleteCaption"] = value;
         }
     }
 
@@ -370,15 +370,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteToolTip"] == null)
+            if (PageViewState["_DeleteToolTip"] == null)
             {
-                ViewState["_DeleteToolTip"] = RS.Resources.ActionBar_Delete;
+                PageViewState["_DeleteToolTip"] = RS.Resources.ActionBar_Delete;
             }
-            return ViewState["_DeleteToolTip"].ToString();
+            return PageViewState["_DeleteToolTip"].ToString();
         }
         set
         {
-            ViewState["_DeleteToolTip"] = value;
+            PageViewState["_DeleteToolTip"] = value;
         }
     }
 
@@ -389,15 +389,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CopyEnabled"] == null)
+            if (PageViewState["_CopyEnabled"] == null)
             {
-                ViewState["_CopyEnabled"] = false;
+                PageViewState["_CopyEnabled"] = false;
             }
-            return (bool)(ViewState["_CopyEnabled"]);
+            return (bool)(PageViewState["_CopyEnabled"]);
         }
         set
         {
-            ViewState["_CopyEnabled"] = value;
+            PageViewState["_CopyEnabled"] = value;
         }
     }
 
@@ -408,15 +408,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CopyCaption"] == null)
+            if (PageViewState["_CopyCaption"] == null)
             {
-                ViewState["_CopyCaption"] = RS.Resources.ActionBar_Copy;
+                PageViewState["_CopyCaption"] = RS.Resources.ActionBar_Copy;
             }
-            return ViewState["_CopyCaption"].ToString();
+            return PageViewState["_CopyCaption"].ToString();
         }
         set
         {
-            ViewState["_CopyCaption"] = value;
+            PageViewState["_CopyCaption"] = value;
         }
     }
 
@@ -427,15 +427,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_CopyToolTip"] == null)
+            if (PageViewState["_CopyToolTip"] == null)
             {
-                ViewState["_CopyToolTip"] = RS.Resources.ActionBar_Copy;
+                PageViewState["_CopyToolTip"] = RS.Resources.ActionBar_Copy;
             }
-            return ViewState["_CopyToolTip"].ToString();
+            return PageViewState["_CopyToolTip"].ToString();
         }
         set
         {
-            ViewState["_CopyToolTip"] = value;
+            PageViewState["_CopyToolTip"] = value;
         }
     }
 
@@ -446,15 +446,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportEnabled"] == null)
+            if (PageViewState["_ExportEnabled"] == null)
             {
-                ViewState["_ExportEnabled"] = false;
+                PageViewState["_ExportEnabled"] = false;
             }
-            return (bool)(ViewState["_ExportEnabled"]);
+            return (bool)(PageViewState["_ExportEnabled"]);
         }
         set
         {
-            ViewState["_ExportEnabled"] = value;
+            PageViewState["_ExportEnabled"] = value;
         }
     }
 
@@ -465,15 +465,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportCaption"] == null)
+            if (PageViewState["_ExportCaption"] == null)
             {
-                ViewState["_ExportCaption"] = RS.Resources.ActionBar_Export;
+                PageViewState["_ExportCaption"] = RS.Resources.ActionBar_Export;
             }
-            return ViewState["_ExportCaption"].ToString();
+            return PageViewState["_ExportCaption"].ToString();
         }
         set
         {
-            ViewState["_ExportCaption"] = value;
+            PageViewState["_ExportCaption"] = value;
         }
     }
 
@@ -484,15 +484,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportToolTip"] == null)
+            if (PageViewState["_ExportToolTip"] == null)
             {
-                ViewState["_ExportToolTip"] = RS.Resources.ActionBar_Export;
+                PageViewState["_ExportToolTip"] = RS.Resources.ActionBar_Export;
             }
-            return ViewState["_ExportToolTip"].ToString();
+            return PageViewState["_ExportToolTip"].ToString();
         }
         set
         {
-            ViewState["_ExportToolTip"] = value;
+            PageViewState["_ExportToolTip"] = value;
         }
     }
 
@@ -503,15 +503,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DownloadEnabled"] == null)
+            if (PageViewState["_DownloadEnabled"] == null)
             {
-                ViewState["_DownloadEnabled"] = false;
+                PageViewState["_DownloadEnabled"] = false;
             }
-            return (bool)(ViewState["_DownloadEnabled"]);
+            return (bool)(PageViewState["_DownloadEnabled"]);
         }
         set
         {
-            ViewState["_DownloadEnabled"] = value;
+            PageViewState["_DownloadEnabled"] = value;
         }
     }
 
@@ -522,15 +522,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DownloadCaption"] == null)
+            if (PageViewState["_DownloadCaption"] == null)
             {
-                ViewState["_DownloadCaption"] = RS.Resources.ActionBar_Download;
+                PageViewState["_DownloadCaption"] = RS.Resources.ActionBar_Download;
             }
-            return ViewState["_DownloadCaption"].ToString();
+            return PageViewState["_DownloadCaption"].ToString();
         }
         set
         {
-            ViewState["_DownloadCaption"] = value;
+            PageViewState["_DownloadCaption"] = value;
         }
     }
 
@@ -541,15 +541,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_DownloadToolTip"] == null)
+            if (PageViewState["_DownloadToolTip"] == null)
             {
-                ViewState["_DownloadToolTip"] = RS.Resources.ActionBar_Download;
+                PageViewState["_DownloadToolTip"] = RS.Resources.ActionBar_Download;
             }
-            return ViewState["_DownloadToolTip"].ToString();
+            return PageViewState["_DownloadToolTip"].ToString();
         }
         set
         {
-            ViewState["_DownloadToolTip"] = value;
+            PageViewState["_DownloadToolTip"] = value;
         }
     }
 
@@ -560,15 +560,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_InformationEnabled"] == null)
+            if (PageViewState["_InformationEnabled"] == null)
             {
-                ViewState["_InformationEnabled"] = false;
+                PageViewState["_InformationEnabled"] = false;
             }
-            return (bool)(ViewState["_InformationEnabled"]);
+            return (bool)(PageViewState["_InformationEnabled"]);
         }
         set
         {
-            ViewState["_InformationEnabled"] = value;
+            PageViewState["_InformationEnabled"] = value;
         }
     }
 
@@ -579,15 +579,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_InformationCaption"] == null)
+            if (PageViewState["_InformationCaption"] == null)
             {
-                ViewState["_InformationCaption"] = RS.Resources.ActionBar_Information;
+                PageViewState["_InformationCaption"] = RS.Resources.ActionBar_Information;
             }
-            return ViewState["_InformationCaption"].ToString();
+            return PageViewState["_InformationCaption"].ToString();
         }
         set
         {
-            ViewState["_InformationCaption"] = value;
+            PageViewState["_InformationCaption"] = value;
         }
     }
 
@@ -598,15 +598,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_InformationToolTip"] == null)
+            if (PageViewState["_InformationToolTip"] == null)
             {
-                ViewState["_InformationToolTip"] = RS.Resources.ActionBar_Information;
+                PageViewState["_InformationToolTip"] = RS.Resources.ActionBar_Information;
             }
-            return ViewState["_InformationToolTip"].ToString();
+            return PageViewState["_InformationToolTip"].ToString();
         }
         set
         {
-            ViewState["_InformationToolTip"] = value;
+            PageViewState["_InformationToolTip"] = value;
         }
     }
 
@@ -617,15 +617,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultilingualEnabled"] == null)
+            if (PageViewState["_MultilingualEnabled"] == null)
             {
-                ViewState["_MultilingualEnabled"] = false;
+                PageViewState["_MultilingualEnabled"] = false;
             }
-            return (bool)(ViewState["_MultilingualEnabled"]);
+            return (bool)(PageViewState["_MultilingualEnabled"]);
         }
         set
         {
-            ViewState["_MultilingualEnabled"] = value;
+            PageViewState["_MultilingualEnabled"] = value;
         }
     }
 
@@ -636,15 +636,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultilingualCaption"] == null)
+            if (PageViewState["_MultilingualCaption"] == null)
             {
-                ViewState["_MultilingualCaption"] = RS.Resources.ActionBar_Multilingual;
+                PageViewState["_MultilingualCaption"] = RS.Resources.ActionBar_Multilingual;
             }
-            return ViewState["_MultilingualCaption"].ToString();
+            return PageViewState["_MultilingualCaption"].ToString();
         }
         set
         {
-            ViewState["_MultilingualCaption"] = value;
+            PageViewState["_MultilingualCaption"] = value;
         }
     }
 
@@ -655,15 +655,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultilingualToolTip"] == null)
+            if (PageViewState["_MultilingualToolTip"] == null)
             {
-                ViewState["_MultilingualToolTip"] = RS.Resources.ActionBar_Multilingual;
+                PageViewState["_MultilingualToolTip"] = RS.Resources.ActionBar_Multilingual;
             }
-            return ViewState["_MultilingualToolTip"].ToString();
+            return PageViewState["_MultilingualToolTip"].ToString();
         }
         set
         {
-            ViewState["_MultilingualToolTip"] = value;
+            PageViewState["_MultilingualToolTip"] = value;
         }
     }
 
@@ -674,15 +674,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_PrintEnabled"] == null)
+            if (PageViewState["_PrintEnabled"] == null)
             {
-                ViewState["_PrintEnabled"] = false;
+                PageViewState["_PrintEnabled"] = false;
             }
-            return (bool)(ViewState["_PrintEnabled"]);
+            return (bool)(PageViewState["_PrintEnabled"]);
         }
         set
         {
-            ViewState["_PrintEnabled"] = value;
+            PageViewState["_PrintEnabled"] = value;
         }
     }
 
@@ -693,15 +693,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_PrintCaption"] == null)
+            if (PageViewState["_PrintCaption"] == null)
             {
-                ViewState["_PrintCaption"] = RS.Resources.ActionBar_Print;
+                PageViewState["_PrintCaption"] = RS.Resources.ActionBar_Print;
             }
-            return ViewState["_PrintCaption"].ToString();
+            return PageViewState["_PrintCaption"].ToString();
         }
         set
         {
-            ViewState["_PrintCaption"] = value;
+            PageViewState["_PrintCaption"] = value;
         }
     }
 
@@ -712,15 +712,15 @@ public partial class Util_ucActionBar : BaseUserControl
     {
         get
         {
-            if (ViewState["_PrintToolTip"] == null)
+            if (PageViewState["_PrintToolTip"] == null)
             {
-                ViewState["_PrintToolTip"] = RS.Resources.ActionBar_Print;
+                PageViewState["_PrintToolTip"] = RS.Resources.ActionBar_Print;
             }
-            return ViewState["_PrintToolTip"].ToString();
+            return PageViewState["_PrintToolTip"].ToString();
         }
         set
         {
-            ViewState["_PrintToolTip"] = value;
+            PageViewState["_PrintToolTip"] = value;
         }
     }
 
@@ -777,7 +777,7 @@ public partial class Util_ucActionBar : BaseUserControl
     /// </summary>
     public void Reset()
     {
-        this.ViewState.Clear();
+        this.PageViewState.Clear();
     }
 
     /// <summary>

@@ -233,9 +233,9 @@ public partial class Util_Test : BasePage
     {
         //產生測試資料表
         DataTable dt = new DataTable();
-        if (ViewState["dtSample"] != null)
+        if (PageViewState["dtSample"] != null)
         {
-            dt = (DataTable)ViewState["dtSample"];
+            dt = (DataTable)PageViewState["dtSample"];
         }
         else
         {
@@ -248,7 +248,7 @@ public partial class Util_Test : BasePage
             dt.Rows.Add("ROLE003", "宇文邕", "陳曉東", "周武帝，冷靜、睿智、善於策略工計，自信以自己的能力足以稱霸北朝。但蘭陵王的不敗戰績，是他唯一攻不破的北齊城牆。");
             dt.Rows.Add("ROLE004", "高延宗", "胡宇威", "安德王，高長恭同父異母的弟弟兼副將。對高長恭永遠兄弟相挺。無法理解高長恭不像其他人那樣早早娶妃納妾，直到雪舞出現，讓他覺得能匹配高長恭的女人終於出現，便拚命地湊合兩人。");
             dt.Rows.Add("ROLE005", "鄭兒", "毛林林", "原為胡皇后的婢女、後為高緯的皇后。一開始被胡皇后和祖珽藉由選妃派去接近蘭陵王，事發後被流放為官奴。對蘭陵王由愛生恨，回宮後冒充為馮小憐便開始在高緯和蘭陵王的身上使了很多心計。");
-            ViewState["dtSample"] = dt;
+            PageViewState["dtSample"] = dt;
         }
         return dt;
     }

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
+using SinoPac.WebExpress.Common;
 
 /// <summary>
 ///  [時間選取] 控制項
 /// </summary>
-public partial class Util_ucTimePicker : System.Web.UI.UserControl
+public partial class Util_ucTimePicker : BaseUserControl
 {
     //private bool _IsRequire = false;
     //private string _ErrorMessage = "*";
@@ -25,15 +22,15 @@ public partial class Util_ucTimePicker : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -44,15 +41,15 @@ public partial class Util_ucTimePicker : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
+                PageViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -63,15 +60,15 @@ public partial class Util_ucTimePicker : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -92,15 +89,15 @@ public partial class Util_ucTimePicker : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_IsSSEnabled"] == null)
+            if (PageViewState["_IsSSEnabled"] == null)
             {
-                ViewState["_IsSSEnabled"] = false;
+                PageViewState["_IsSSEnabled"] = false;
             }
-            return (bool)(ViewState["_IsSSEnabled"]);
+            return (bool)(PageViewState["_IsSSEnabled"]);
         }
         set
         {
-            ViewState["_IsSSEnabled"] = value;
+            PageViewState["_IsSSEnabled"] = value;
         }
     }
 

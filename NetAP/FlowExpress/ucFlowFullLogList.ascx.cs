@@ -482,7 +482,8 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
                         //若為代理人
                         string strOriAssName = dr["AssignToName"].ToString();
                         string strOriAssDeptName = UserInfo.findUser(dr["AssignTo"].ToString()).DeptName;
-                        strAssInfo = string.Format("{0}-{1}<br>／{2}{3}", strOriAssDeptName, strOriAssName, strAssName, WorkRS.Resources.FlowLogMsg_IsProxy); //(代)
+                        //若 AP 自訂的[AssignToName] 值內含 [部門名稱]或[-] ，將代換為空白，以免重複顯示 2017.03.21
+                        strAssInfo = string.Format("{0}-{1}<br>／{2}{3}", strOriAssDeptName, strOriAssName.Replace(strOriAssDeptName,"").Replace("-",""), strAssName, WorkRS.Resources.FlowLogMsg_IsProxy); //(代)
                     }
                     strAssHint = string.Format("ToUser=[{0}-{1}]", dr["ToUser"], strAssName);
                     strDateTime = string.Format("{0:yyyy\\/MM\\/dd HH:mm}", dr["LogUpdDateTime"]);

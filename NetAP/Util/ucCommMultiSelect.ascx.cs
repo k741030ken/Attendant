@@ -9,7 +9,7 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// <summary>
 ///  [常用多重項目選單]控制項
 /// </summary>
-public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
+public partial class Util_ucCommMultiSelect : BaseUserControl
 {
 
     /// <summary>
@@ -19,15 +19,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SourceDictionary"] == null)
+            if (PageViewState["_SourceDictionary"] == null)
             {
                 return null;
             }
-            return (Dictionary<string, string>)(ViewState["_SourceDictionary"]);
+            return (Dictionary<string, string>)(PageViewState["_SourceDictionary"]);
         }
         set
         {
-            ViewState["_SourceDictionary"] = value;
+            PageViewState["_SourceDictionary"] = value;
         }
     }
 
@@ -40,15 +40,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SelectAllConfirmMsg"] == null)
+            if (PageViewState["_SelectAllConfirmMsg"] == null)
             {
-                ViewState["_SelectAllConfirmMsg"] = "";
+                PageViewState["_SelectAllConfirmMsg"] = "";
             }
-            return (string)(ViewState["_SelectAllConfirmMsg"]);
+            return (string)(PageViewState["_SelectAllConfirmMsg"]);
         }
         set
         {
-            ViewState["_SelectAllConfirmMsg"] = value;
+            PageViewState["_SelectAllConfirmMsg"] = value;
         }
     }
 
@@ -97,15 +97,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SelectedIDListToParentObjClientID"] == null)
+            if (PageViewState["_SelectedIDListToParentObjClientID"] == null)
             {
-                ViewState["_SelectedIDListToParentObjClientID"] = "";
+                PageViewState["_SelectedIDListToParentObjClientID"] = "";
             }
-            return (string)(ViewState["_SelectedIDListToParentObjClientID"]);
+            return (string)(PageViewState["_SelectedIDListToParentObjClientID"]);
         }
         set
         {
-            ViewState["_SelectedIDListToParentObjClientID"] = value;
+            PageViewState["_SelectedIDListToParentObjClientID"] = value;
         }
     }
 
@@ -117,15 +117,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SelectedInfoListToParentObjClientID"] == null)
+            if (PageViewState["_SelectedInfoListToParentObjClientID"] == null)
             {
-                ViewState["_SelectedInfoListToParentObjClientID"] = "";
+                PageViewState["_SelectedInfoListToParentObjClientID"] = "";
             }
-            return (string)(ViewState["_SelectedInfoListToParentObjClientID"]);
+            return (string)(PageViewState["_SelectedInfoListToParentObjClientID"]);
         }
         set
         {
-            ViewState["_SelectedInfoListToParentObjClientID"] = value;
+            PageViewState["_SelectedInfoListToParentObjClientID"] = value;
         }
     }
 
@@ -137,15 +137,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_BoxListWidth"] == null)
+            if (PageViewState["_BoxListWidth"] == null)
             {
-                ViewState["_BoxListWidth"] = 240;
+                PageViewState["_BoxListWidth"] = 240;
             }
-            return (int)(ViewState["_BoxListWidth"]);
+            return (int)(PageViewState["_BoxListWidth"]);
         }
         set
         {
-            ViewState["_BoxListWidth"] = value;
+            PageViewState["_BoxListWidth"] = value;
         }
     }
 
@@ -156,15 +156,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_BoxListHeight"] == null)
+            if (PageViewState["_BoxListHeight"] == null)
             {
-                ViewState["_BoxListHeight"] = 130;
+                PageViewState["_BoxListHeight"] = 130;
             }
-            return (int)(ViewState["_BoxListHeight"]);
+            return (int)(PageViewState["_BoxListHeight"]);
         }
         set
         {
-            ViewState["_BoxListHeight"] = value;
+            PageViewState["_BoxListHeight"] = value;
         }
     }
 
@@ -175,15 +175,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_BoxListStyle"] == null)
+            if (PageViewState["_BoxListStyle"] == null)
             {
-                ViewState["_BoxListStyle"] = "font-size:10pt;white-space:nowrap;border: 1px solid silver; overflow:auto;";
+                PageViewState["_BoxListStyle"] = "font-size:10pt;white-space:nowrap;border: 1px solid silver; overflow:auto;";
             }
-            return (string)(ViewState["_BoxListStyle"]);
+            return (string)(PageViewState["_BoxListStyle"]);
         }
         set
         {
-            ViewState["_BoxListStyle"] = value;
+            PageViewState["_BoxListStyle"] = value;
         }
     }
 
@@ -195,15 +195,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_ChkBoxListSelectedItemCssClass"] == null)
+            if (PageViewState["_ChkBoxListSelectedItemCssClass"] == null)
             {
-                ViewState["_ChkBoxListSelectedItemCssClass"] = "Util_ChkBoxListSelectedItem";
+                PageViewState["_ChkBoxListSelectedItemCssClass"] = "Util_ChkBoxListSelectedItem";
             }
-            return (string)(ViewState["_ChkBoxListSelectedItemCssClass"]);
+            return (string)(PageViewState["_ChkBoxListSelectedItemCssClass"]);
         }
         set
         {
-            ViewState["_ChkBoxListSelectedItemCssClass"] = value;
+            PageViewState["_ChkBoxListSelectedItemCssClass"] = value;
         }
     }
 
@@ -215,15 +215,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_ListItemStyle"] == null)
+            if (PageViewState["_ListItemStyle"] == null)
             {
-                ViewState["_ListItemStyle"] = "clear:both;list-style:none;margin:2px;text-align:left;";
+                PageViewState["_ListItemStyle"] = "clear:both;list-style:none;margin:2px;text-align:left;";
             }
-            return (string)(ViewState["_ListItemStyle"]);
+            return (string)(PageViewState["_ListItemStyle"]);
         }
         set
         {
-            ViewState["_ListItemStyle"] = value;
+            PageViewState["_ListItemStyle"] = value;
         }
     }
 
@@ -235,15 +235,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SearchBoxCssClass"] == null)
+            if (PageViewState["_SearchBoxCssClass"] == null)
             {
-                ViewState["_SearchBoxCssClass"] = "Util_WaterMarkedTextBox";
+                PageViewState["_SearchBoxCssClass"] = "Util_WaterMarkedTextBox";
             }
-            return (string)(ViewState["_SearchBoxCssClass"]);
+            return (string)(PageViewState["_SearchBoxCssClass"]);
         }
         set
         {
-            ViewState["_SearchBoxCssClass"] = value;
+            PageViewState["_SearchBoxCssClass"] = value;
         }
     }
 
@@ -254,15 +254,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_SearchBoxWaterMarkText"] == null)
+            if (PageViewState["_SearchBoxWaterMarkText"] == null)
             {
-                ViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommMultiSelect_WaterMarkText; //搜尋內容
+                PageViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommMultiSelect_WaterMarkText; //搜尋內容
             }
-            return (string)(ViewState["_SearchBoxWaterMarkText"]);
+            return (string)(PageViewState["_SearchBoxWaterMarkText"]);
         }
         set
         {
-            ViewState["_SearchBoxWaterMarkText"] = value;
+            PageViewState["_SearchBoxWaterMarkText"] = value;
         }
     }
 
@@ -273,15 +273,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["IsSearchBoxEnabled"] == null)
+            if (PageViewState["IsSearchBoxEnabled"] == null)
             {
-                ViewState["IsSearchBoxEnabled"] = true;
+                PageViewState["IsSearchBoxEnabled"] = true;
             }
-            return (bool)ViewState["IsSearchBoxEnabled"];
+            return (bool)PageViewState["IsSearchBoxEnabled"];
         }
         set
         {
-            ViewState["IsSearchBoxEnabled"] = value;
+            PageViewState["IsSearchBoxEnabled"] = value;
         }
     }
 
@@ -292,15 +292,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -374,15 +374,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = false; ;
+                PageViewState["_IsRequire"] = false; ;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             idSelectedIDList.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -396,15 +396,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
         //2016.09.20 新增
         get
         {
-            if (ViewState["_MultiSelectOffsetX"] == null)
+            if (PageViewState["_MultiSelectOffsetX"] == null)
             {
-                ViewState["_MultiSelectOffsetX"] = 0;
+                PageViewState["_MultiSelectOffsetX"] = 0;
             }
-            return (int)(ViewState["_MultiSelectOffsetX"]);
+            return (int)(PageViewState["_MultiSelectOffsetX"]);
         }
         set
         {
-            ViewState["_MultiSelectOffsetX"] = value;
+            PageViewState["_MultiSelectOffsetX"] = value;
         }
     }
 
@@ -416,15 +416,15 @@ public partial class Util_ucCommMultiSelect : System.Web.UI.UserControl
         //2016.09.20 新增
         get
         {
-            if (ViewState["_MultiSelectOffsetY"] == null)
+            if (PageViewState["_MultiSelectOffsetY"] == null)
             {
-                ViewState["_MultiSelectOffsetY"] = 0;
+                PageViewState["_MultiSelectOffsetY"] = 0;
             }
-            return (int)(ViewState["_MultiSelectOffsetY"]);
+            return (int)(PageViewState["_MultiSelectOffsetY"]);
         }
         set
         {
-            ViewState["_MultiSelectOffsetY"] = value;
+            PageViewState["_MultiSelectOffsetY"] = value;
         }
     }
 
