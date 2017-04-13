@@ -153,7 +153,7 @@ public class OverTimeMultiDataApprovedHandler : IHttpHandler, System.Web.Session
                         string strEndTime = data.OTEndTime.ToString().Substring(0, 2) + "：" + data.OTEndTime.ToString().Substring(2, 2);
                         string FlowKeyValue = "B," + data.OTCompID + "," + data.OTEmpID + "," + data.OTStartDate + "," + data.OTEndDate + "," + data.OTSeq;
                         string FlowShowValue = data.OTEmpID + "," + strName + "," + data.OTStartDate + "," + strStartTime + "," + data.OTEndDate + "," + strEndTime;
-                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnAfter", oAssTo, ""))
+                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnAfterLast", oAssTo, ""))
                         {
 
                             string flowCaseID = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);

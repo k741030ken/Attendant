@@ -3443,7 +3443,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                 strShowValue += ucDateEnd.ucSelectedDate + ",";
                 strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
 
-                if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnBefore", oAssTo, ""))
+                if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                 {
                     //更新AssignToName(部門+員工姓名)
                     string a = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
@@ -3640,7 +3640,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                         string FlowKeyValue = "A," + DT.Rows[i]["OTCompID"] + "," + DT.Rows[i]["EmpID"] + "," + DT.Rows[i]["OTStartDate"] + "," + DT.Rows[i]["OTEndDate"] + "," + OTSeq;
                         strName = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + DT.Rows[i]["EmpID"].ToString() + "' AND CompID='"+DT.Rows[i]["OTCompID"].ToString()+"'");
                         string FlowShowValue = DT.Rows[i]["EmpID"] + "," + strName + "," + DT.Rows[i]["OTStartDate"] + "," + strStartTime + "," + DT.Rows[i]["OTEndDate"] + "," + strEndTime;
-                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnBefore", oAssTo, ""))
+                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                             {
                                 //更新AssignToName(部門+員工姓名)
                                 string a = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);

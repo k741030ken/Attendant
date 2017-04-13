@@ -3308,7 +3308,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                     strShowValue += ucDateEnd.ucSelectedDate + ",";
                     strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
 
-                        if (FlowExpress.IsFlowInsVerify(Util.getAppSetting("app://AattendantDB_OverTime/"), strKeyValue.Split(','), strShowValue.Split(','), "btnBefore", oAssTo, ""))
+                    if (FlowExpress.IsFlowInsVerify(Util.getAppSetting("app://AattendantDB_OverTime/"), strKeyValue.Split(','), strShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                         {
                             string a = FlowExpress.getFlowCaseID(Util.getAppSetting("app://AattendantDB_OverTime/"), strKeyValue);
                             //更新AssignToName(部門+員工姓名)

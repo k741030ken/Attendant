@@ -3416,7 +3416,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     strShowValue += ucDateEnd.ucSelectedDate + ",";
                     strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
 
-                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnAfter", oAssTo, ""))
+                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), nextIsLastFlow ? "btnAfterLast" : "btnAfter", oAssTo, ""))
                     {
                         string a = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
                         //更新AssignToName(部門+員工姓名)

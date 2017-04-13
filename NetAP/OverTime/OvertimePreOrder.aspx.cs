@@ -1023,7 +1023,7 @@ public partial class OverTime_OvertimePreOrder : BasePage
                     string FlowKeyValue = "A," + dt.Rows[i]["OTCompID"] + "," + dt.Rows[i]["EmpID"] + "," + dt.Rows[i]["OTStartDate"] + "," + dt.Rows[i]["OTEndDate"] + "," + OTSeq;
                     string strName = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND CompID='" + dt.Rows[i]["OTCompID"] + "' AND EmpID='" + dt.Rows[i]["EmpID"] + "' ");
                     string FlowShowValue = dt.Rows[i]["EmpID"] + "," + strName + "," + dt.Rows[i]["OTStartDate"] + "," + strStartTime + "," + dt.Rows[i]["OTEndDate"] + "," + strEndTime;
-                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnBefore", oAssTo, ""))
+                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                     {
                         string a = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);
                         //更新AssignToName(部門+員工姓名)
