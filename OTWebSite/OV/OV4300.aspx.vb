@@ -63,7 +63,7 @@ Partial Class OV_OV4300
             Case "btnAdd"       '拋轉
                 doThrow()
             Case "btnQuery"     '查詢
-                doQuery()
+                doQuery("F")
             Case "btnDownload"  '匯出
 
             Case "btnActionX"   '清除
@@ -117,11 +117,14 @@ Partial Class OV_OV4300
     End Sub
 #End Region
 #Region "拋轉設定為人員-查詢"
-    Public Sub doQuery()
+    Public Sub doQuery(ByVal times As String)
         If ddlPersonOrDate.Text = "" Then
             Bsp.Utility.ShowMessage(Me, "請先設定拋轉條件")
             Return
         End If
+
+        pcMain.DataTable = Nothing
+        gvMain.DataBind()
 
         Dim choseType As String = ViewState.Item("ChoseType").ToString
         Dim isQuery As Boolean = False
@@ -175,7 +178,7 @@ Partial Class OV_OV4300
             pcMain.DataTable = data_FixEmp
             gvMain.DataBind()
 
-        ElseIf data_OriEmp_Count = 0 Then
+        ElseIf data_OriEmp_Count = 0 And times = "F" Then
             ViewState.Item("isQuery") = False
             Bsp.Utility.ShowMessage(Me, "該人員尚未有核准過的加班單")
             Return
@@ -1404,6 +1407,7 @@ Partial Class OV_OV4300
         Dim strSQL_Insert As New StringBuilder
         Dim successFlag As Boolean = False
         Dim InsertCount As Integer = 0
+        Dim checkEmp As String = ""
         Dim checkHDate As String = ""
         For i As Integer = 0 To dataTable.Rows.Count - 1 Step 1
             If "0" = dataTable.Rows(i).Item("SalaryPaid").ToString And "1" = dataTable.Rows(i).Item("SalaryOrAdjust").ToString Then
@@ -1414,6 +1418,10 @@ Partial Class OV_OV4300
                 Dim chkdaytype As String = dataTable.Rows(i).Item("HolidayOrNot").ToString
                 Dim chktime3 As Double = dataTable.Rows(i).Item("TimeMin_acc").ToString
                 Dim holidayTime As Double = 0.0
+                If checkEmp <> chkemp Then
+                    checkEmp = chkemp
+                    checkHDate = ""
+                End If
                 If checkHDate <> chkdate And chktime3 <> 0 And chkdaytype = "F" Then
                     InsertCount = 0
                     checkHDate = chkdate
@@ -1570,7 +1578,7 @@ Partial Class OV_OV4300
         'PersonTable.Visible = True
         'pcMain.DataTable = ViewState.Item("data_ResetEmp")
         'gvMain.DataBind()
-        doQuery()
+        doQuery("T")
         For i As Integer = 0 To gvMain.Rows.Count - 1 Step 1
             Dim objChk As CheckBox = gvMain.Rows(i).FindControl("chk_gvMain")
             If objChk.Checked Then
