@@ -701,34 +701,34 @@ public partial class OverTime_OvertimePreOrder : BasePage
                     Util.MsgBox("狀態無法送簽");
                     return false;
                 }
-                if (Convert.ToDateTime(dt.Rows[j]["OTStartDate"].ToString()) > DateTime.Now.Date)
-                {
-                    Util.MsgBox("日期為未來日期，無法送簽");
-                    return false;
-                }
-                else if (Convert.ToDateTime(dt.Rows[j]["OTStartDate"].ToString()) == DateTime.Now.Date)
-                {
-                    if (Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(0, 2)) > Convert.ToInt32(DateTime.Now.Hour))
-                    {
-                        Util.MsgBox("日期為未來日期，無法送簽");
-                        return false;
-                    }
-                    else if (Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(0, 2)) == Convert.ToInt32(DateTime.Now.Hour) && Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(2, 2)) > Convert.ToInt32(DateTime.Now.Minute))
-                    {
-                        Util.MsgBox("日期為未來日期，無法送簽");
-                        return false;
-                    }
-                    if (Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(0, 2)) > Convert.ToInt32(DateTime.Now.Hour))
-                    {
-                        Util.MsgBox("日期為未來日期，無法送簽");
-                        return false;
-                    }
-                    else if (Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(0, 2)) == Convert.ToInt32(DateTime.Now.Hour) && Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(2, 2)) > Convert.ToInt32(DateTime.Now.Minute))
-                    {
-                        Util.MsgBox("日期為未來日期，無法送簽");
-                        return false;
-                    }
-                }
+                //if (Convert.ToDateTime(dt.Rows[j]["OTStartDate"].ToString()) > DateTime.Now.Date)
+                //{
+                //    Util.MsgBox("日期為未來日期，無法送簽");
+                //    return false;
+                //}
+                //else if (Convert.ToDateTime(dt.Rows[j]["OTStartDate"].ToString()) == DateTime.Now.Date)
+                //{
+                //    if (Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(0, 2)) > Convert.ToInt32(DateTime.Now.Hour))
+                //    {
+                //        Util.MsgBox("日期為未來日期，無法送簽");
+                //        return false;
+                //    }
+                //    else if (Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(0, 2)) == Convert.ToInt32(DateTime.Now.Hour) && Convert.ToInt32(dt.Rows[j]["OTStartTime"].ToString().Substring(2, 2)) > Convert.ToInt32(DateTime.Now.Minute))
+                //    {
+                //        Util.MsgBox("日期為未來日期，無法送簽");
+                //        return false;
+                //    }
+                //    if (Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(0, 2)) > Convert.ToInt32(DateTime.Now.Hour))
+                //    {
+                //        Util.MsgBox("日期為未來日期，無法送簽");
+                //        return false;
+                //    }
+                //    else if (Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(0, 2)) == Convert.ToInt32(DateTime.Now.Hour) && Convert.ToInt32(dt.Rows[j]["OTEndTime"].ToString().Substring(2, 2)) > Convert.ToInt32(DateTime.Now.Minute))
+                //    {
+                //        Util.MsgBox("日期為未來日期，無法送簽");
+                //        return false;
+                //    }
+                //}
             }
             //檢查每天的上限
             double dayNLimit = Convert.ToDouble(_dtPara.Rows[0]["DayLimitHourN"].ToString());//平日可申請

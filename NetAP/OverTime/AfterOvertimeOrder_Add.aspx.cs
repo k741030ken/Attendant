@@ -3229,6 +3229,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             }
             string strMsg = at.GetMulitTotal(dt, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), "OverTimeDeclaration");
             string message = "";
+            ViewState["message"] = message;
             double dayNLimit = Convert.ToDouble(_dtPara.Rows[0]["DayLimitHourN"].ToString());//平日可申請
             double dayHLimit = Convert.ToDouble(_dtPara.Rows[0]["DayLimitHourH"].ToString());//假日可申請
             string strcheckOverTimeIsOver = at.GetCheckOverTimeIsOver(dt, dayNLimit, dayHLimit, "OverTimeDeclaration");
@@ -3255,7 +3256,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     }
                 }
             }
-            else if (!Convert.ToBoolean(strMsg.Split(';')[0]))
+            if (!Convert.ToBoolean(strMsg.Split(';')[0]))
             {
                 if (_dtPara == null)
                 {
@@ -3276,7 +3277,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     }
                 }
             }
-            else if (!Convert.ToBoolean(strGetCheckOTLimitDay.Split(';')[0]))
+            if (!Convert.ToBoolean(strGetCheckOTLimitDay.Split(';')[0]))
             {
                 if (_dtPara.Rows[0]["OTLimitFlag"].ToString() == "1")
                 {

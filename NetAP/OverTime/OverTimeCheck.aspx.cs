@@ -48,7 +48,7 @@ public partial class OverTime_OverTimeCheck : SecurePage
     public static string _eHRMSDB = Util.getAppSetting("app://eHRMSDB_OverTime/");
     private string _DBName = Util.getAppSetting("app://AattendantDB_OverTime/");
     //private string _DBName2 = "DB_VacSys";
-    public static string _DBShare = Util.getAppSetting("app://DB_Share_OverTime/");
+    //public static string _DBShare = Util.getAppSetting("app://DB_Share_OverTime/");
     private string FlowCustDB="";
 
     protected void ucModalPopup_btnClose(object sender, Util_ucModalPopup.btnCloseEventArgs e)
@@ -350,6 +350,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         DbHelper db = new DbHelper(_DBName);
         CommandHelper sb = db.CreateCommandHelper();
         DataTable dtFlowCaseID;
+        string SignID_CompID = "";
         if (ViewState["dtOverTimeAdvance"] == null && ViewState["dtOverTimeDeclaration"] == null)
         {
             Util.MsgBox("尚未有資料可以審核");
@@ -420,12 +421,19 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         }
 
         //只有要傳第一筆過去，不要作迴圈了
+        //CustVerify.setFlowSignID_CompID是多筆，由上面組ViewState["dtOverTimeAdvance"]來做
         ClearBtn(dtFlowCaseID.Rows[0]["FlowCaseID"].ToString());
-        //因為多筆判斷是在建立session[OTA與OTD]時就個別判斷按鈕，而多筆畫面上按鈕不具備審核關卡判定依據，可隨意帶入按鈕，故直接使用 Session["btnVisible"] = "0"。
+        SignID_CompID = UserInfo.getUserInfo().UserID.Trim() + "," + UserInfo.getUserInfo().CompID.Trim();
+        CustVerify.setFlowSignID_CompID(SignID_CompID);
         Session["btnVisible"] = "0";
-            FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowCaseID.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), null, false, "", "");
+        //單筆產生按鈕
+        sb.Reset();
+        sb.Append("SELECT top 1 FlowLogID FROM " + FlowCustDB + "FlowFullLog ");
+        sb.Append(" WHERE FlowCaseID='" + dtFlowCaseID.Rows[0]["FlowCaseID"] .ToString()+ "'");
+        string strFlowLogID = db.ExecuteScalar(sb.BuildCommand()).ToString();
+        FlowExpress oFlowReload = new FlowExpress(_DBName, strFlowLogID, true);
+        FlowExpress.setFlowOpenLogVerifyInfo(oFlowReload, true);
 
-            //FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, UserInfo.getUserInfo(), _DBName.Split(','), null, false, "", "");
         Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", _DBName, dtFlowCaseID.Rows[0]["FlowLogID"].ToString(), "Self", "N", "N", ""));
 
 
@@ -453,14 +461,6 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         dtOverTimeAdvance.Columns.Add("SignID");
         dtOverTimeAdvance.Columns.Add("SignOrganID");
         dtOverTimeAdvance.Columns.Add("SignFlowOrganID");
-        //nextHROverTimeLog
-        //dtOverTimeAdvance.Columns.Add("nextFlowLogBatNo");
-        //dtOverTimeAdvance.Columns.Add("nextFlowLogID");
-        //dtOverTimeAdvance.Columns.Add("nextOTEmpID");
-        //dtOverTimeAdvance.Columns.Add("nextEmpOrganID");
-        //dtOverTimeAdvance.Columns.Add("nextEmpFlowOrganID");
-        //dtOverTimeAdvance.Columns.Add("nextFlowSeq");
-        //dtOverTimeAdvance.Columns.Add("nextSeq");
 
         DataTable dtOverTimeDeclaration = new DataTable();
         dtOverTimeDeclaration.Columns.Add("OTRegisterComp");
@@ -482,14 +482,6 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         dtOverTimeDeclaration.Columns.Add("SignID");
         dtOverTimeDeclaration.Columns.Add("SignOrganID");
         dtOverTimeDeclaration.Columns.Add("SignFlowOrganID");
-        //nextHROverTimeLog
-        //dtOverTimeDeclaration.Columns.Add("nextFlowLogBatNo");
-        //dtOverTimeDeclaration.Columns.Add("nextFlowLogID");
-        //dtOverTimeDeclaration.Columns.Add("nextOTEmpID");
-        //dtOverTimeDeclaration.Columns.Add("nextEmpOrganID");
-        //dtOverTimeDeclaration.Columns.Add("nextEmpFlowOrganID");
-        //dtOverTimeDeclaration.Columns.Add("nextFlowSeq");
-        //dtOverTimeDeclaration.Columns.Add("nextSeq");
 
         foreach (GridViewRow row in gvMain.Rows)
         {
@@ -498,8 +490,6 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                 CheckBox chk_chkOverTimeA = (CheckBox)row.Cells[2].FindControl("chkOverTimeA");
                 if (chk_chkOverTimeA.Checked)
                 {
-                    string aaa = gvMain.DataKeys[row.RowIndex].Values["OTDate"].ToString().Split('~')[0];
-                    string bbb=gvMain.DataKeys[row.RowIndex].Values["OTDate"].ToString().Split('~')[1];
                     if (gvMain.DataKeys[row.RowIndex].Values["OTDate"].ToString().Split('~')[0] == gvMain.DataKeys[row.RowIndex].Values["OTDate"].ToString().Split('~')[1])
                     {
                         DataRow drOverTimeAdvance = dtOverTimeAdvance.NewRow();
@@ -581,6 +571,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeDeclaration["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["AfterOTSeq"].ToString();
                         drOverTimeDeclaration["OTSeqNo"] = "1";
                         drOverTimeDeclaration["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["AfterFlowCaseID"].ToString();
+                        nextOverTime("D", ref drOverTimeDeclaration);
                         dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
                         DataRow drOverTimeDeclaration2 = dtOverTimeDeclaration.NewRow();
                         drOverTimeDeclaration2["EmpID"] = gvMain.DataKeys[row.RowIndex].Values["OTEmpID"].ToString();
@@ -600,15 +591,6 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         }
     }
 
-    //protected void gvMain_RowDataBound(Object sender, System.Web.UI.WebControls.GridViewRowEventArgs e) 
-    //{
-    //    DataRowView oRow;
-    //    if (e.Row.RowType == DataControlRowType.DataRow)
-    //    {
-    //        oRow = (DataRowView)e.Row.DataItem;
-    //        e.Row.Cells[6].ToolTip = oRow["AfterOTReasonMemo"] + "" ;
-    //    }
-    //}
     protected void gvMain_RowCommand(object sender, GridViewCommandEventArgs e)
     {
         //FlowExpress oFlow = new FlowExpress(_DBName);
@@ -618,53 +600,65 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         CommandHelper sb = db.CreateCommandHelper();
         string strEmpID=gvMain.Rows[clickedRow.RowIndex].Cells[0].Text;
         Dictionary<string, string> toUserData;
-
+        String gvFlowCaseID="",btnName="";
         switch (e.CommandName)
         {
             case "DetailA":
+                gvFlowCaseID=gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString();
                 sb.Reset();
                 sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeAdvance OT ON OL.FlowCaseID=OT.FlowCaseID");
-                sb.Append(" WHERE OT.FlowCaseID='" + gvMain.DataKeys[clickedRow.RowIndex].Values[8] + "'");
+                sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
 
                 DataTable dtFlowLogIDA = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
+
+                //取得下一關主管相關訊息
                 nextAssignTo(
                     dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), 
                     dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), 
                     dtFlowLogIDA.Rows[0]["OTStartDate"].ToString(), 
-                    gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString(), 
+                    gvFlowCaseID, 
                     "A", 
                     out toUserData);
+
+                //將下一關主管資料丟給共用檔，待之後永豐流程去撈取
+                CustVerify.setFlowSignID_CompID(toUserData["SignID"].ToString() + "," + toUserData["SignIDComp"].ToString());
+                //傳給審核畫面-單筆審核使用
                 Session["toUserData"] = toUserData;
                 //按鈕清單
-                ClearBtn(gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString());
-                
+                ClearBtn(gvFlowCaseID);
+                //下一關邏輯判斷，產生審核按鈕資訊
+                nextFlowBtn(dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "A",ref  btnName);
+                //產生審核按鈕
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), "".Split(','), false, "", "");
+                //跳轉畫面
                 Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}"
                         , _DBName, dtFlowLogIDA.Rows[0]["FlowLogID"], "Self", "N", "N", ""));
 
                 break;
             case "DetailD":
+                gvFlowCaseID = gvMain.DataKeys[clickedRow.RowIndex].Values[9].ToString();
                 sb.Reset();
                 sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate  FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeDeclaration OT ON OL.FlowCaseID=OT.FlowCaseID");
-                sb.Append(" WHERE OT.FlowCaseID='" + gvMain.DataKeys[clickedRow.RowIndex].Values[9] + "'");
+                sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
                 DataTable dtFlowLogIDD = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
                 nextAssignTo(
                     dtFlowLogIDD.Rows[0]["OTCompID"].ToString(),
                     dtFlowLogIDD.Rows[0]["AssignTo"].ToString(),
-                    dtFlowLogIDD.Rows[0]["OTStartDate"].ToString(), 
-                    gvMain.DataKeys[clickedRow.RowIndex].Values[9].ToString(), 
+                    dtFlowLogIDD.Rows[0]["OTStartDate"].ToString(),
+                    gvFlowCaseID, 
                     "D", 
                     out toUserData);
+                CustVerify.setFlowSignID_CompID(toUserData["SignID"].ToString() + "," + toUserData["SignIDComp"].ToString());
                 Session["toUserData"] = toUserData;
                 //ucModalPopup.Reset();
 
                 //按鈕清單
-                ClearBtn(gvMain.DataKeys[clickedRow.RowIndex].Values[9].ToString());
-
+                ClearBtn(gvFlowCaseID);
+                nextFlowBtn(dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), dtFlowLogIDD.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "D", ref  btnName);
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), null, false, "", "");
 
                 Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}"
@@ -675,20 +669,16 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
 
         }
     }
+
+    /// <summary>
+    /// 多筆審核，組DataTable給Session送到審核畫面的資料，
+    /// 在尾端追加btnName審核按鈕、toUserData下一關主管訊息。
+    /// 組合時，順便將按鈕產生出來。
+    /// </summary>
     private void nextOverTime(string AD,ref DataRow OverTimeTable)
     {
         //input
         string OTStartDate, FlowCaseID, btnName="";
-
-        //output
-        //string nextFlowLogBatNo, 
-        //    nextFlowLogID,
-        //    nextOTEmpID,
-        //    nextEmpOrganID,
-        //    nextEmpFlowOrganID,
-        //    nextFlowSeq; 
-
-        //int nextSeq;
 
          Dictionary<string, string> toUserData;
         OTStartDate = OverTimeTable["OTStartDate"].ToString();
@@ -698,8 +688,6 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         nextAssignTo(OverTimeTable["CompID"].ToString(), OverTimeTable["AssignTo"].ToString(), OTStartDate, FlowCaseID, AD, out toUserData);
 
         nextFlowBtn(OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(),AD, ref btnName);
-
-        //nextHROverTimeLog(FlowCaseID, out nextFlowLogBatNo, out nextFlowLogID, out nextOTEmpID, out nextEmpOrganID, out nextEmpFlowOrganID, out  nextFlowSeq, out  nextSeq);
         
         //btnName
         OverTimeTable["btnName"] = btnName;
@@ -709,46 +697,18 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         OverTimeTable["SignID"] = toUserData["SignID"].ToString();
         OverTimeTable["SignOrganID"] = toUserData["SignOrganID"].ToString();
         OverTimeTable["SignFlowOrganID"] = toUserData["SignFlowOrganID"].ToString();
-        ////nextHROverTimeLog
-        //OverTimeTable["nextFlowLogBatNo"]=nextFlowLogBatNo;
-        //OverTimeTable["nextFlowLogID"]=nextFlowLogID;
-        //OverTimeTable["nextOTEmpID"]=nextOTEmpID;
-        //OverTimeTable["nextEmpOrganID"]=nextEmpOrganID;
-        //OverTimeTable["nextEmpFlowOrganID"]=nextEmpFlowOrganID;
-        //OverTimeTable["nextFlowSeq"]=nextFlowSeq;
-        //OverTimeTable["nextSeq"]=nextSeq;
-    }
 
-    private void nextHROverTimeLog(string FlowCaseID, out string nextFlowLogBatNo, out string nextFlowLogID, out string nextOTEmpID, out string nextEmpOrganID, out string nextEmpFlowOrganID, out string nextFlowSeq, out int nextSeq)
-    {
-        DataTable nowHROverTimeLog = CustVerify.HROverTimeLog(FlowCaseID, false);
-        nextFlowLogBatNo = CustVerify.addone(nowHROverTimeLog.Rows[0]["FlowLogBatNo"].ToString());
-        nextFlowLogID = CustVerify.FlowLogIDadd(nowHROverTimeLog.Rows[0]["FlowLogID"].ToString());
-        nextOTEmpID = nowHROverTimeLog.Rows[0]["OTEmpID"].ToString();
-        nextEmpOrganID = nowHROverTimeLog.Rows[0]["EmpOrganID"].ToString();
-        nextEmpFlowOrganID = nowHROverTimeLog.Rows[0]["EmpFlowOrganID"].ToString();
-        nextFlowSeq = CustVerify.addone(nowHROverTimeLog.Rows[0]["FlowSeq"].ToString());
-        nextSeq = int.Parse(nowHROverTimeLog.Rows[0]["Seq"].ToString()) + 1;
     }
 
     /// <summary>
     /// 檢核所有東西，並將下一關相關資訊回傳
     /// </summary>
-    /// <param name="FlowCustDB"></param>
-    /// <param name="CompID"></param>
-    /// <param name="AssignTo"></param>
-    /// <param name="OTStartDate"></param>
-    /// <param name="FlowCaseID"></param>
-    /// <param name="AD"></param>
-    /// <param name="toUserData"></param>
     private void nextAssignTo(string CompID, string AssignTo, string OTStartDate, string FlowCaseID, string AD, out Dictionary<string, string> toUserData)
     {
         //QueryFlowDataAndToUserData用input
         DataTable dtOverTime = CustVerify.OverTime_find_by_FlowCaseID(FlowCaseID, AD);
         String flowCodeFlag = AD == "A" ? "0" : "1";
 
-        //QueryFlowDataAndToUserData用output
-        //Dictionary<string, string> toUserData;
         bool isLastFlow, nextIsLastFlow;
         string flowCode = "", flowSN = "", signLineDefine = "", meassge = "";
 
@@ -792,7 +752,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
                         toUserData["SignFlowOrganID"] = "";
                     }
                     break;
-
+                    //功能線
                 case "2":
                     if (EmpInfo.QueryFlowOrganData(toUserData["SignOrganID"], dtOverTime.Rows[0]["OTStartDate"].ToString(), out SignOrganID, out SignID, out SignIDComp))
                     {
@@ -805,6 +765,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
 
                 //原本switch的是signLineDefine，現在改成toUserData["SignLine"]後，
                 //case "3"裏頭的if基本只會用到else[非功能線一律走行政線]，以防萬一先保留。
+                    //改派
                 case "3":
                     if (toUserData["SignLine"] == "2")
                     {
@@ -830,30 +791,12 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
             }
         }
 
-        //如果找不到下一關主管資料，會等於現在關卡主管，這時候到OverTimeCustVerify就直接拋審核失敗
+        //如果找不到下一關主管資料，會等於現在登入者，這時候到OverTimeCustVerify就直接拋審核失敗
         if (toUserData["SignID"] == "")
         {
-            toUserData["SignID"] = AssignTo;
+            toUserData["SignIDComp"] = UserInfo.getUserInfo().CompID.Trim();
+            toUserData["SignID"] = UserInfo.getUserInfo().UserID.Trim();
         }
-    }
-    /// <summary>
-    /// 用FlowCase撈取A或D的資料
-    /// </summary>
-    private DataTable OverTime_find_by_FlowCaseID(string FlowCase, string AD)
-    {
-        DbHelper db = new DbHelper(Aattendant._AattendantDBName);
-        CommandHelper sb = db.CreateCommandHelper();
-        string Table = ADTable(AD);
-        sb.AppendStatement(" SELECT O1.OTRegisterComp,O1.OTCompID,O1.OTFormNO,O1.OTEmpID,P.Name ");
-        sb.Append(" ,O1.OTStartDate+'~'+isnull(O2.OTEndDate,O1.OTEndDate) as OTDate");
-        sb.Append(" ,O1.OTStartDate,isnull(O2.OTEndDate,O1.OTEndDate) as OTEndDate");
-        sb.Append(" ,O1.OTStartTime,isnull(O2.OTEndTime,O1.OTEndTime) as OTEndTime");
-        sb.Append("  FROM " + Table + " O1");
-        sb.Append("  left join " + Table + " O2   on  O1.OTTxnID=O2.OTTxnID and O2.OTSeqNo='2'  ");
-        sb.Append("  left join " + _eHRMSDB + ".dbo.Personal P on P.EmpID=O1.OTEmpID and P.CompID=O1.OTCompID");
-        sb.Append("  where O1.OTSeqNo='1'and O1.FlowCaseID=").AppendParameter("FlowCase", FlowCase);
-
-        return db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
     }
     private String RankIDMapping(string CompID, string RankID)
     {
@@ -879,26 +822,14 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         }
         return RankID;
     }
-    private string ADTable(string AD)
-    {
-        switch (AD)
-        {
-            case "A":
-            case "1":
-                return "OverTimeAdvance";
-            case "D":
-            case "2":
-                return "OverTimeDeclaration";
-        }
-        return AD;
-    }
+
     private bool boolUpEmpRankID(string AD, string FlowCaseID, string UpEmpRankID)
     {
         DbHelper db = new DbHelper(Aattendant._AattendantDBName);
         CommandHelper sb = db.CreateCommandHelper();
         DataTable dt;
         string MapEmpRankID, OTEmpID;
-        sb.Append(" SELECT Top 1 isnull(P.CompID,'') as CompID,isnull(P.RankID,'')as RankID FROM " + ADTable(AD) + " OT ");
+        sb.Append(" SELECT Top 1 isnull(P.CompID,'') as CompID,isnull(P.RankID,'')as RankID FROM " + CustVerify.ADTable(AD) + " OT ");
         sb.Append(" LEFT JOIN " + _eHRMSDB + ".[dbo].[Personal] P ON OT.OTEmpID=P.EmpID and OT.OTCompID=P.CompID");
         sb.Append(" WHERE OT.FlowCaseID='" + FlowCaseID + "' and OTSeqNo='1'");
         dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
@@ -909,6 +840,15 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         if (OTEmpID == "") return false;
         return int.Parse(MapEmpRankID) <= int.Parse(OTEmpID) ? true : false;
     }
+
+    /// <summary>
+    /// 找ValidRankID、EmpRankID的訊息
+    /// 當找不到資料時，IsUpValidRankID預設True、IsUpEmpRankID預設False
+    /// </summary>
+    /// <param name="CompID"></param>
+    /// <param name="FlowCaseID"></param>
+    /// <param name="IsUpValidRankID">審核人是否大於</param>
+    /// <param name="IsUpEmpRankID">加班人是否大於</param>
     private void RankIDCheck(string CompID, string FlowCaseID, out bool IsUpValidRankID, out bool IsUpEmpRankID)
     {
         DbHelper db = new DbHelper(Aattendant._AattendantDBName);
@@ -923,21 +863,40 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         //Para撈取參數設定
         DataTable Paradt = db.ExecuteDataSet(CommandType.Text, string.Format("SELECT DISTINCT CompID,Para FROM OverTimePara ")).Tables[0];
 
-        //16  //Jason提取所需字串
+        //16 登入者公司
         ValidRankID = RankPara(Paradt, UserInfo.getUserInfo().CompID, "ValidRankID");
         //RankMapping
         ValidRankID = RankIDMapping(UserInfo.getUserInfo().CompID, ValidRankID);
         //若無資料
-        if (ValidRankID == "") ValidRankID = "-1";
-        //若登入者無資料，預設大於等於ValidRankID
-        if (UserRankID == "") UserRankID = ValidRankID;
-        //是否大於
-        IsUpValidRankID = Convert.ToInt32(UserRankID) >= int.Parse(ValidRankID) ? true : false;
+        if (ValidRankID == "")
+        {
+            IsUpValidRankID = true;
+        }
+        else
+        {
+            //若登入者無資料，預設大於等於ValidRankID
+            if (UserRankID == "")
+            {
+                IsUpValidRankID = true;
+            }
+            else
+            {
+                //是否大於
+                IsUpValidRankID = Convert.ToInt32(UserRankID) >= int.Parse(ValidRankID) ? true : false;
+            }
+        }
 
-        //19
+        //19 加班人公司
         EmpRankID = RankPara(Paradt, CompID, "EmpRankID");
-        if (EmpRankID == "") EmpRankID = "100";
-        IsUpEmpRankID = boolUpEmpRankID("D", FlowCaseID, EmpRankID);
+        if (EmpRankID == "")
+        {
+            IsUpEmpRankID = false;
+        }
+        else
+        { 
+            //因為東西偏多，獨立為一個程式
+            IsUpEmpRankID = boolUpEmpRankID("D", FlowCaseID, EmpRankID); 
+        }
 
     }
     private void nextFlowBtn(string AssignTo, string CompID, string FlowCaseID, string AD, ref string btnName)
@@ -954,7 +913,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         FlowStepID = db.ExecuteScalar(sb.BuildCommand()).ToString();
 
         //撈取該筆加班單相關資料
-        DataTable dtOverTime = OverTime_find_by_FlowCaseID(FlowCaseID, AD);
+        DataTable dtOverTime = CustVerify.OverTime_find_by_FlowCaseID(FlowCaseID, AD);
 
         Dictionary<string, string> toUserData;
         bool isLastFlow, nextIsLastFlow;
@@ -988,12 +947,14 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
             //大於Rank16
             if (IsUpValidRankID)
             {
+                //給永豐流程按鈕隱藏判斷
                 Session["btnVisible"] = "2";
+                //回傳按鈕名稱，給多筆審核組進DataTable傳給審核畫面
                 btnName = "btnClose";
             }
             else
             {
-                if (FlowStepID == "A30")
+                if (FlowStepID == "A30") //預防HR送錯關，本來資料上HR關是只有A40的
                 {
                     Session["btnVisible"] = "0";
                     btnName = "btnApprove";
