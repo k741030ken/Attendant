@@ -2552,7 +2552,22 @@ public class Aattendant : System.Web.SessionState.IRequiresSessionState
         }
         return OTSeq;
     }
-
+    public int QuerySeqNoAdd(string strTable, string strCompID, string strEmpID, string date)//Seq
+    {
+        DbHelper db = new DbHelper(_AattendantDBName);
+        CommandHelper sb = db.CreateCommandHelper();
+        int OTSeq = 0;
+        DataTable dt = QueryData("MAX(OTSeq) AS MAXOTSeq", strTable, "AND OTCompID='" + strCompID + "' AND OTEmpID='" + strEmpID + "' AND OTStartDate='" + date + "'");
+        if (dt.Rows.Count == 0)
+        {
+            OTSeq = 0;
+        }
+        else
+        {
+            OTSeq = Convert.ToInt32(dt.Rows[0]["MAXOTSeq"].ToString() == "" ? "0" : dt.Rows[0]["MAXOTSeq"].ToString());
+        }
+        return OTSeq;
+    }
     #region "新增MailLog"
     /// <summary>
     /// 新增MailLog
