@@ -18,15 +18,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
+                PageViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
         }
     }
 
@@ -37,17 +37,17 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = false;
+                PageViewState["_IsRequire"] = false;
                 txtSelectedInfoList.CausesValidation = false;
                 RequiredFieldValidator1.Enabled = false;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             txtSelectedInfoList.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -60,15 +60,31 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = "Util_clsReadOnly";
+                PageViewState["_ReadOnlyCSS"] = "Util_clsReadOnly";
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnLaunch.Enabled;
+        }
+        set
+        {
+            btnLaunch.Enabled = value;
         }
     }
 
@@ -79,15 +95,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnTooltip"] == null)
+            if (PageViewState["_BtnTooltip"] == null)
             {
-                ViewState["_BtnTooltip"] = RS.Resources.MultiPicker_btnLaunch_ToolTip;
+                PageViewState["_BtnTooltip"] = RS.Resources.MultiPicker_btnLaunch_ToolTip;
             }
-            return (string)(ViewState["_BtnTooltip"]);
+            return (string)(PageViewState["_BtnTooltip"]);
         }
         set
         {
-            ViewState["_BtnTooltip"] = value;
+            PageViewState["_BtnTooltip"] = value;
         }
     }
 
@@ -98,15 +114,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null)
+            if (PageViewState["_Width"] == null)
             {
-                ViewState["_Width"] = 350;
+                PageViewState["_Width"] = 350;
             }
-            return (int)(ViewState["_Width"]);
+            return (int)(PageViewState["_Width"]);
         }
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
         }
     }
 
@@ -133,15 +149,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_SourceDictionary"] == null)
+            if (PageViewState["_SourceDictionary"] == null)
             {
                 return null;
             }
-            return (Dictionary<string, string>)(ViewState["_SourceDictionary"]);
+            return (Dictionary<string, string>)(PageViewState["_SourceDictionary"]);
         }
         set
         {
-            ViewState["_SourceDictionary"] = value;
+            PageViewState["_SourceDictionary"] = value;
         }
     }
 
@@ -152,15 +168,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefSelectedIDList"] == null)
+            if (PageViewState["_DefSelectedIDList"] == null)
             {
-                ViewState["_DefSelectedIDList"] = "";
+                PageViewState["_DefSelectedIDList"] = "";
             }
-            return (string)(ViewState["_DefSelectedIDList"]);
+            return (string)(PageViewState["_DefSelectedIDList"]);
         }
         set
         {
-            ViewState["_DefSelectedIDList"] = value;
+            PageViewState["_DefSelectedIDList"] = value;
         }
     }
 
@@ -195,15 +211,15 @@ public partial class Util_ucMultiPicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;

@@ -22,15 +22,15 @@ public partial class Util_ucAttachList : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachDB"] == null)
+            if (PageViewState["_AttachDB"] == null)
             {
-                ViewState["_AttachDB"] = "";
+                PageViewState["_AttachDB"] = "";
             }
-            return (string)(ViewState["_AttachDB"]);
+            return (string)(PageViewState["_AttachDB"]);
         }
         set
         {
-            ViewState["_AttachDB"] = value;
+            PageViewState["_AttachDB"] = value;
         }
     }
 
@@ -41,15 +41,15 @@ public partial class Util_ucAttachList : BaseUserControl
     {
         get
         {
-            if (ViewState["_AttachID"] == null)
+            if (PageViewState["_AttachID"] == null)
             {
-                ViewState["_AttachID"] = "";
+                PageViewState["_AttachID"] = "";
             }
-            return (string)(ViewState["_AttachID"]);
+            return (string)(PageViewState["_AttachID"]);
         }
         set
         {
-            ViewState["_AttachID"] = value;
+            PageViewState["_AttachID"] = value;
         }
     }
 
@@ -60,15 +60,15 @@ public partial class Util_ucAttachList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEditMode"] == null)
+            if (PageViewState["_IsEditMode"] == null)
             {
-                ViewState["_IsEditMode"] = false;
+                PageViewState["_IsEditMode"] = false;
             }
-            return (bool)(ViewState["_IsEditMode"]);
+            return (bool)(PageViewState["_IsEditMode"]);
         }
         set
         {
-            ViewState["_IsEditMode"] = value;
+            PageViewState["_IsEditMode"] = value;
         }
     }
 
@@ -79,15 +79,15 @@ public partial class Util_ucAttachList : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null)
+            if (PageViewState["_Width"] == null)
             {
-                ViewState["_Width"] = 0;
+                PageViewState["_Width"] = 0;
             }
-            return (int)(ViewState["_Width"]);
+            return (int)(PageViewState["_Width"]);
         }
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
         }
     }
 
@@ -98,15 +98,15 @@ public partial class Util_ucAttachList : BaseUserControl
     {
         get
         {
-            if (ViewState["_Height"] == null)
+            if (PageViewState["_Height"] == null)
             {
-                ViewState["_Height"] = 0;
+                PageViewState["_Height"] = 0;
             }
-            return (int)(ViewState["_Height"]);
+            return (int)(PageViewState["_Height"]);
         }
         set
         {
-            ViewState["_Height"] = value;
+            PageViewState["_Height"] = value;
         }
     }
 

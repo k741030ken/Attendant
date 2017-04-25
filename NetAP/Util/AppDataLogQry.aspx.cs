@@ -14,15 +14,15 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -30,15 +30,15 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_LogTable"] == null)
+            if (PageViewState["_LogTable"] == null)
             {
-                ViewState["_LogTable"] = Util.getRequestQueryStringKey("LogTable");
+                PageViewState["_LogTable"] = Util.getRequestQueryStringKey("LogTable");
             }
-            return (string)(ViewState["_LogTable"]);
+            return (string)(PageViewState["_LogTable"]);
         }
         set
         {
-            ViewState["_LogTable"] = value;
+            PageViewState["_LogTable"] = value;
         }
     }
 
@@ -46,15 +46,15 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_LogKey"] == null)
+            if (PageViewState["_LogKey"] == null)
             {
-                ViewState["_LogKey"] = Util.getRequestQueryStringKey("LogKey");
+                PageViewState["_LogKey"] = Util.getRequestQueryStringKey("LogKey");
             }
-            return (string)(ViewState["_LogKey"]);
+            return (string)(PageViewState["_LogKey"]);
         }
         set
         {
-            ViewState["_LogKey"] = value;
+            PageViewState["_LogKey"] = value;
         }
     }
 
@@ -62,15 +62,15 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AllowPurgeYN"] == null)
+            if (PageViewState["_AllowPurgeYN"] == null)
             {
-                ViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN", "N", true);
+                PageViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN", "N", true);
             }
-            return (string)(ViewState["_AllowPurgeYN"]);
+            return (string)(PageViewState["_AllowPurgeYN"]);
         }
         set
         {
-            ViewState["_AllowPurgeYN"] = value.ToUpper();
+            PageViewState["_AllowPurgeYN"] = value.ToUpper();
         }
     }
 
@@ -78,9 +78,9 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AppDataLogType"] != null)
+            if (PageViewState["_AppDataLogType"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_AppDataLogType"];
+                return (Dictionary<string, string>)PageViewState["_AppDataLogType"];
             }
             else
             {
@@ -91,8 +91,8 @@ public partial class Util_AppDataLogQry : SecurePage
                     oDic.Add(pair.Value, pair.Value);
                 }
 
-                ViewState["_AppDataLogType"] = oDic;
-                return (Dictionary<string, string>)ViewState["_AppDataLogType"];
+                PageViewState["_AppDataLogType"] = oDic;
+                return (Dictionary<string, string>)PageViewState["_AppDataLogType"];
             }
         }
     }
@@ -105,12 +105,12 @@ public partial class Util_AppDataLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = ""; }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = ""; }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
     #endregion

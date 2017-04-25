@@ -42,14 +42,14 @@
                                 <td class="td_Edit" width="75%">
                                     <asp:Label ID="Label2" runat="server" Text="加班預先申請日的範圍" Font-Names="微軟正黑體"></asp:Label>
                                     <asp:FilteredTextBoxExtender ID="fttxtAdvaceBegin" runat="server" TargetControlID="txtAdvaceBegin" FilterType="Numbers"></asp:FilteredTextBoxExtender>
-                                    <asp:TextBox ID="txtAdvaceBegin" runat="server" Width="20px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="2"></asp:TextBox>
+                                    <asp:TextBox ID="txtAdvaceBegin" runat="server" Width="30px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="3"></asp:TextBox>
                                     <asp:Label ID="Label4" runat="server" Text="日前、" Font-Names="微軟正黑體"></asp:Label>
                                     <asp:FilteredTextBoxExtender ID="fttxtAdvanceEnd" runat="server" TargetControlID="txtAdvanceEnd" FilterType="Numbers"></asp:FilteredTextBoxExtender>
-                                    <asp:TextBox ID="txtAdvanceEnd" runat="server" Width="20px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="2"></asp:TextBox>
+                                    <asp:TextBox ID="txtAdvanceEnd" runat="server" Width="30px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="3"></asp:TextBox>
                                     <asp:Label ID="Label5" runat="server" Text="日後" Font-Names="微軟正黑體"></asp:Label><br />
                                     <asp:Label ID="Label3" runat="server" Text="事後加班申報日的範圍" Font-Names="微軟正黑體"></asp:Label>
                                     <asp:FilteredTextBoxExtender ID="fttxtDeclarationBegin" runat="server" TargetControlID="txtDeclarationBegin" FilterType="Numbers"></asp:FilteredTextBoxExtender>
-                                    <asp:TextBox ID="txtDeclarationBegin" runat="server" Width="20px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="2"></asp:TextBox>
+                                    <asp:TextBox ID="txtDeclarationBegin" runat="server" Width="30px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="3"></asp:TextBox>
                                     <asp:Label ID="Label6" runat="server" Text="日前" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                             </tr>

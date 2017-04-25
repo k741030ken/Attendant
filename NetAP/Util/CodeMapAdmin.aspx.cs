@@ -19,15 +19,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -36,15 +36,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_LogDBName"] == null)
+            if (PageViewState["_LogDBName"] == null)
             {
-                ViewState["_LogDBName"] = Util.getRequestQueryStringKey("LogDBName");
+                PageViewState["_LogDBName"] = Util.getRequestQueryStringKey("LogDBName");
             }
-            return (string)(ViewState["_LogDBName"]);
+            return (string)(PageViewState["_LogDBName"]);
         }
         set
         {
-            ViewState["_LogDBName"] = value;
+            PageViewState["_LogDBName"] = value;
         }
     }
 
@@ -53,15 +53,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_TableName"] == null)
+            if (PageViewState["_TableName"] == null)
             {
-                ViewState["_TableName"] = Util.getRequestQueryStringKey("TableName");
+                PageViewState["_TableName"] = Util.getRequestQueryStringKey("TableName");
             }
-            return (string)(ViewState["_TableName"]);
+            return (string)(PageViewState["_TableName"]);
         }
         set
         {
-            ViewState["_TableName"] = value;
+            PageViewState["_TableName"] = value;
         }
     }
 
@@ -70,15 +70,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_TabName"] == null)
+            if (PageViewState["_TabName"] == null)
             {
-                ViewState["_TabName"] = Util.getRequestQueryStringKey("TabName");
+                PageViewState["_TabName"] = Util.getRequestQueryStringKey("TabName");
             }
-            return (string)(ViewState["_TabName"]);
+            return (string)(PageViewState["_TabName"]);
         }
         set
         {
-            ViewState["_TabName"] = value;
+            PageViewState["_TabName"] = value;
         }
     }
 
@@ -87,15 +87,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_FldName"] == null)
+            if (PageViewState["_FldName"] == null)
             {
-                ViewState["_FldName"] = Util.getRequestQueryStringKey("FldName");
+                PageViewState["_FldName"] = Util.getRequestQueryStringKey("FldName");
             }
-            return (string)(ViewState["_FldName"]);
+            return (string)(PageViewState["_FldName"]);
         }
         set
         {
-            ViewState["_FldName"] = value;
+            PageViewState["_FldName"] = value;
         }
     }
 
@@ -107,17 +107,17 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null)
+            if (PageViewState["_QryResultSQL"] == null)
             {
-                ViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName)
+                PageViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName)
                     + ((!string.IsNullOrEmpty(_TabName)) ? string.Format(" Where TabName = '{0}' ", _TabName) : "")
                     + ((!string.IsNullOrEmpty(_FldName)) ? string.Format(" And   FldName = '{0}' ", _FldName) : "");
             }
-            return (string)(ViewState["_QryResultSQL"]);
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
 
@@ -125,15 +125,15 @@ public partial class Util_CodeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_Dic_TabList"] != null)
+            if (PageViewState["_Dic_TabList"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_Dic_TabList"];
+                return (Dictionary<string, string>)PageViewState["_Dic_TabList"];
             }
             else
             {
                 DbHelper db = new DbHelper(_DBName);
-                ViewState["_Dic_TabList"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select distinct TabName,TabName as 'Caption' From {0} ", _TableName)).Tables[0]);
-                return (Dictionary<string, string>)ViewState["_Dic_TabList"];
+                PageViewState["_Dic_TabList"] = Util.getDictionary(db.ExecuteDataSet(string.Format("Select distinct TabName,TabName as 'Caption' From {0} ", _TableName)).Tables[0]);
+                return (Dictionary<string, string>)PageViewState["_Dic_TabList"];
             }
         }
     }
@@ -290,7 +290,7 @@ public partial class Util_CodeMapAdmin : SecurePage
                         db.ExecuteNonQuery(sb.BuildCommand());
                         Util.NotifyMsg(RS.Resources.Msg_DeleteSucceed, Util.NotifyKind.Success);
 
-                        ViewState["_Dic_TabList"] = null;
+                        PageViewState["_Dic_TabList"] = null;
                         qryTabName.ucSourceDictionary = _Dic_TabList;
                         qryTabName.ucSelectedID = "";
                         if (!string.IsNullOrEmpty(_TabName))
@@ -519,7 +519,7 @@ public partial class Util_CodeMapAdmin : SecurePage
                 Util.MsgBox(string.Format(RS.Resources.Msg_Undefined1, oContext["Mode"]));
                 break;
         }
-        ViewState["_Dic_TabList"] = null;
+        PageViewState["_Dic_TabList"] = null;
         qryTabName.ucSourceDictionary = _Dic_TabList;
         qryTabName.ucSelectedID = "";
         if (!string.IsNullOrEmpty(_TabName))

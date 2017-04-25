@@ -18,15 +18,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsVisibleWhenNoData"] == null)
+            if (PageViewState["_IsVisibleWhenNoData"] == null)
             {
-                ViewState["_IsVisibleWhenNoData"] = true;
+                PageViewState["_IsVisibleWhenNoData"] = true;
             }
-            return (bool)(ViewState["_IsVisibleWhenNoData"]);
+            return (bool)(PageViewState["_IsVisibleWhenNoData"]);
         }
         set
         {
-            ViewState["_IsVisibleWhenNoData"] = value;
+            PageViewState["_IsVisibleWhenNoData"] = value;
         }
     }
 
@@ -38,15 +38,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = "";
+                PageViewState["_DBName"] = "";
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -57,15 +57,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_PKID"] == null)
+            if (PageViewState["_PKID"] == null)
             {
-                ViewState["_PKID"] = "";
+                PageViewState["_PKID"] = "";
             }
-            return (string)(ViewState["_PKID"]);
+            return (string)(PageViewState["_PKID"]);
         }
         set
         {
-            ViewState["_PKID"] = value;
+            PageViewState["_PKID"] = value;
         }
     }
 
@@ -76,15 +76,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_PKKind"] == null)
+            if (PageViewState["_PKKind"] == null)
             {
-                ViewState["_PKKind"] = "User";
+                PageViewState["_PKKind"] = "User";
             }
-            return (string)(ViewState["_PKKind"]);
+            return (string)(PageViewState["_PKKind"]);
         }
         set
         {
-            ViewState["_PKKind"] = value;
+            PageViewState["_PKKind"] = value;
         }
     }
 
@@ -95,15 +95,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_PropID"] == null)
+            if (PageViewState["_PropID"] == null)
             {
-                ViewState["_PropID"] = "CommPhrase";
+                PageViewState["_PropID"] = "CommPhrase";
             }
-            return (string)(ViewState["_PropID"]);
+            return (string)(PageViewState["_PropID"]);
         }
         set
         {
-            ViewState["_PropID"] = value;
+            PageViewState["_PropID"] = value;
         }
     }
 
@@ -115,15 +115,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsParentTarget"] == null)
+            if (PageViewState["_IsParentTarget"] == null)
             {
-                ViewState["_IsParentTarget"] = false;
+                PageViewState["_IsParentTarget"] = false;
             }
-            return (bool)(ViewState["_IsParentTarget"]);
+            return (bool)(PageViewState["_IsParentTarget"]);
         }
         set
         {
-            ViewState["_IsParentTarget"] = value;
+            PageViewState["_IsParentTarget"] = value;
         }
     }
 
@@ -135,15 +135,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_TargetClientID"] == null)
+            if (PageViewState["_TargetClientID"] == null)
             {
-                ViewState["_TargetClientID"] = "";
+                PageViewState["_TargetClientID"] = "";
             }
-            return (string)(ViewState["_TargetClientID"]);
+            return (string)(PageViewState["_TargetClientID"]);
         }
         set
         {
-            ViewState["_TargetClientID"] = value;
+            PageViewState["_TargetClientID"] = value;
         }
     }
 
@@ -154,15 +154,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownSourceListWidth"] == null)
+            if (PageViewState["_DropDownSourceListWidth"] == null)
             {
-                ViewState["_DropDownSourceListWidth"] = 180;
+                PageViewState["_DropDownSourceListWidth"] = 180;
             }
-            return (int)(ViewState["_DropDownSourceListWidth"]);
+            return (int)(PageViewState["_DropDownSourceListWidth"]);
         }
         set
         {
-            ViewState["_DropDownSourceListWidth"] = value;
+            PageViewState["_DropDownSourceListWidth"] = value;
         }
     }
 
@@ -173,15 +173,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_Caption"] == null)
+            if (PageViewState["_Caption"] == null)
             {
-                ViewState["_Caption"] = "";
+                PageViewState["_Caption"] = "";
             }
-            return (string)(ViewState["_Caption"]);
+            return (string)(PageViewState["_Caption"]);
         }
         set
         {
-            ViewState["_Caption"] = value;
+            PageViewState["_Caption"] = value;
         }
     }
 
@@ -192,15 +192,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_CaptionWidth"] == null)
+            if (PageViewState["_CaptionWidth"] == null)
             {
-                ViewState["_CaptionWidth"] = 80;
+                PageViewState["_CaptionWidth"] = 80;
             }
-            return (int)(ViewState["_CaptionWidth"]);
+            return (int)(PageViewState["_CaptionWidth"]);
         }
         set
         {
-            ViewState["_CaptionWidth"] = value;
+            PageViewState["_CaptionWidth"] = value;
         }
     }
 
@@ -211,15 +211,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 25;
+                PageViewState["_BtnWidth"] = 25;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -230,15 +230,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnHeight"] == null)
+            if (PageViewState["_BtnHeight"] == null)
             {
-                ViewState["_BtnHeight"] = 19;
+                PageViewState["_BtnHeight"] = 19;
             }
-            return (int)(ViewState["_BtnHeight"]);
+            return (int)(PageViewState["_BtnHeight"]);
         }
         set
         {
-            ViewState["_BtnHeight"] = value;
+            PageViewState["_BtnHeight"] = value;
         }
     }
 
@@ -249,15 +249,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = "▼";
+                PageViewState["_BtnCaption"] = "▼";
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -268,15 +268,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnToolTip"] == null)
+            if (PageViewState["_BtnToolTip"] == null)
             {
-                ViewState["_BtnToolTip"] = RS.Resources.CommPhrase_btnAppend; //添加片語
+                PageViewState["_BtnToolTip"] = RS.Resources.CommPhrase_btnAppend; //添加片語
             }
-            return (string)(ViewState["_BtnToolTip"]);
+            return (string)(PageViewState["_BtnToolTip"]);
         }
         set
         {
-            ViewState["_BtnToolTip"] = value;
+            PageViewState["_BtnToolTip"] = value;
         }
     }
 
@@ -287,15 +287,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCssClass"] == null)
+            if (PageViewState["_BtnCssClass"] == null)
             {
-                ViewState["_BtnCssClass"] = "Util_clsBtnGray Util_Pointer";
+                PageViewState["_BtnCssClass"] = "Util_clsBtnGray Util_Pointer";
             }
-            return (string)(ViewState["_BtnCssClass"]);
+            return (string)(PageViewState["_BtnCssClass"]);
         }
         set
         {
-            ViewState["_BtnCssClass"] = value;
+            PageViewState["_BtnCssClass"] = value;
         }
     }
 
@@ -307,15 +307,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsSearchEnabled"] == null)
+            if (PageViewState["_IsSearchEnabled"] == null)
             {
-                ViewState["_IsSearchEnabled"] = true;
+                PageViewState["_IsSearchEnabled"] = true;
             }
-            return (bool)(ViewState["_IsSearchEnabled"]);
+            return (bool)(PageViewState["_IsSearchEnabled"]);
         }
         set
         {
-            ViewState["_IsSearchEnabled"] = value;
+            PageViewState["_IsSearchEnabled"] = value;
         }
     }
 
@@ -326,15 +326,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_SearchBoxWidth"] == null)
+            if (PageViewState["_SearchBoxWidth"] == null)
             {
-                ViewState["_SearchBoxWidth"] = 100;
+                PageViewState["_SearchBoxWidth"] = 100;
             }
-            return (int)(ViewState["_SearchBoxWidth"]);
+            return (int)(PageViewState["_SearchBoxWidth"]);
         }
         set
         {
-            ViewState["_SearchBoxWidth"] = value;
+            PageViewState["_SearchBoxWidth"] = value;
         }
     }
 
@@ -345,15 +345,15 @@ public partial class Util_ucCommPhrase : BaseUserControl
     {
         get
         {
-            if (ViewState["_SearchBoxWaterMarkText"] == null)
+            if (PageViewState["_SearchBoxWaterMarkText"] == null)
             {
-                ViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommPhrase_WaterMarkText; //搜尋片語
+                PageViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommPhrase_WaterMarkText; //搜尋片語
             }
-            return (string)(ViewState["_SearchBoxWaterMarkText"]);
+            return (string)(PageViewState["_SearchBoxWaterMarkText"]);
         }
         set
         {
-            ViewState["_SearchBoxWaterMarkText"] = value;
+            PageViewState["_SearchBoxWaterMarkText"] = value;
         }
     }
 

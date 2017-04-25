@@ -4,10 +4,10 @@
 <script RunAt="server">
     void Application_Start(object sender, EventArgs e)
     {
-        //刪除過時的 ELMAH ErrorLog
+        // === 刪除過時的 ELMAH ErrorLog  === 
         SinoPac.WebExpress.Common.LogHelper.CleanXmlLogFile();
 
-        // === Web API 相關設定 [BEGIN] ===
+        // === Web API 相關設定 ===
         // Andrew.sun 2016.12.14
         //自訂路由
         RouteTable.Routes.MapHttpRoute(
@@ -22,19 +22,17 @@
         {
             Formatting = Newtonsoft.Json.Formatting.Indented
         };
+        //自訂控制處理 2017.03.30
+        GlobalConfiguration.Configuration.MessageHandlers.Add(new ApiValidController());
         //自訂回傳處理
         GlobalConfiguration.Configuration.Filters.Add(new ApiResultAttribute());
         //自訂例外處理
         GlobalConfiguration.Configuration.Filters.Add(new ApiErrorHandleAttribute());
-        // === Web API 相關設定 [END] ===
     }
 
     void Application_BeginRequest(object sender, EventArgs e)
     {
-         // Fix for the Flash Player Cookie bug in Non-IE browsers.
-         // Since Flash Player always sends the IE cookies even in FireFox
-         // we have to bypass the cookies by sending the values as part of the POST or GET
-         // and overwrite the cookies with the passed in values.
+        // === 修正 Flash Player Cookie Bug ===
         try
         {
             string session_param_name = "ASPSESSID";
@@ -76,7 +74,7 @@
             Response.Write("Error Initializing Forms Authentication");
         }
     }
-    
+
     void UpdateCookie(string cookie_name, string cookie_value)
     {
         HttpCookie cookie = HttpContext.Current.Request.Cookies.Get(cookie_name);

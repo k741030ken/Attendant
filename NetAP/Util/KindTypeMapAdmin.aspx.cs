@@ -16,15 +16,15 @@ public partial class Util_KindTypeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -33,15 +33,15 @@ public partial class Util_KindTypeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_KindID"] == null)
+            if (PageViewState["_KindID"] == null)
             {
-                ViewState["_KindID"] = Util.getRequestQueryStringKey("KindID");
+                PageViewState["_KindID"] = Util.getRequestQueryStringKey("KindID");
             }
-            return (string)(ViewState["_KindID"]);
+            return (string)(PageViewState["_KindID"]);
         }
         set
         {
-            ViewState["_KindID"] = value;
+            PageViewState["_KindID"] = value;
         }
     }
 
@@ -50,15 +50,15 @@ public partial class Util_KindTypeMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_TypeID"] == null)
+            if (PageViewState["_TypeID"] == null)
             {
-                ViewState["_TypeID"] = Util.getRequestQueryStringKey("TypeID");
+                PageViewState["_TypeID"] = Util.getRequestQueryStringKey("TypeID");
             }
-            return (string)(ViewState["_TypeID"]);
+            return (string)(PageViewState["_TypeID"]);
         }
         set
         {
-            ViewState["_TypeID"] = value;
+            PageViewState["_TypeID"] = value;
         }
     } 
     #endregion

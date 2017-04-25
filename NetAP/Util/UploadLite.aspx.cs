@@ -15,15 +15,15 @@ public partial class Util_UploadLite : BasePage
     {
         get
         {
-            if (ViewState["_GUID"] == null)
+            if (PageViewState["_GUID"] == null)
             {
-                ViewState["_GUID"] = "";
+                PageViewState["_GUID"] = "";
             }
-            return (string)(ViewState["_GUID"]);
+            return (string)(PageViewState["_GUID"]);
         }
         set
         {
-            ViewState["_GUID"] = value;
+            PageViewState["_GUID"] = value;
         }
     }
 
@@ -34,15 +34,15 @@ public partial class Util_UploadLite : BasePage
     {
         get
         {
-            if (ViewState["_UploadFileMaxQty"] == null)
+            if (PageViewState["_UploadFileMaxQty"] == null)
             {
-                ViewState["_UploadFileMaxQty"] = 1;
+                PageViewState["_UploadFileMaxQty"] = 1;
             }
-            return (int)(ViewState["_UploadFileMaxQty"]);
+            return (int)(PageViewState["_UploadFileMaxQty"]);
         }
         set
         {
-            ViewState["_UploadFileMaxQty"] = value;
+            PageViewState["_UploadFileMaxQty"] = value;
         }
     }
 
@@ -53,15 +53,15 @@ public partial class Util_UploadLite : BasePage
     {
         get
         {
-            if (ViewState["_UploadFileMaxKB"] == null)
+            if (PageViewState["_UploadFileMaxKB"] == null)
             {
-                ViewState["_UploadFileMaxKB"] = 1024;
+                PageViewState["_UploadFileMaxKB"] = 1024;
             }
-            return (int)(ViewState["_UploadFileMaxKB"]);
+            return (int)(PageViewState["_UploadFileMaxKB"]);
         }
         set
         {
-            ViewState["_UploadFileMaxKB"] = value;
+            PageViewState["_UploadFileMaxKB"] = value;
         }
     }
 
@@ -72,18 +72,17 @@ public partial class Util_UploadLite : BasePage
     {
         get
         {
-            if (ViewState["_UploadFileExtList"] == null)
+            if (PageViewState["_UploadFileExtList"] == null)
             {
-                ViewState["_UploadFileExtList"] = "";
+                PageViewState["_UploadFileExtList"] = "";
             }
-            return (string)(ViewState["_UploadFileExtList"]);
+            return (string)(PageViewState["_UploadFileExtList"]);
         }
         set
         {
-            ViewState["_UploadFileExtList"] = value;
+            PageViewState["_UploadFileExtList"] = value;
         }
     }
-
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -102,7 +101,7 @@ public partial class Util_UploadLite : BasePage
                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, Session["FileError_" + _GUID].ToString());
                 Session["FileError_" + _GUID] = null;
             }
-            else 
+            else
             {
                 labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, strIsDoneMsg);
             }
@@ -123,7 +122,7 @@ public partial class Util_UploadLite : BasePage
     /// <summary>
     /// 初始上傳物件
     /// </summary>
-    protected void RefreshUploadInfo() 
+    protected void RefreshUploadInfo()
     {
         File1.ToolTip = RS.Resources.Attach_buttonText;
         imgUpload.Style["padding-left"] = "20px;";
@@ -190,7 +189,7 @@ public partial class Util_UploadLite : BasePage
             Session["FileName_" + _GUID] = File1.FileName;
             Session["FileBody_" + _GUID] = File1.FileBytes;
         }
-        else 
+        else
         {
             Session["FileError_" + _GUID] = RS.Resources.Msg_AttachNotFound;
         }

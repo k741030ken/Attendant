@@ -234,6 +234,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
 
     protected void btnSaveTempOpinion_Click(object sender, EventArgs e)
     {
+        gvFlowPrevStepLog.Refresh();
         FlowExpress oFlow = new FlowExpress();
         DbHelper dblog = new DbHelper(oFlow.FlowLogDB);
         string strUpdSQL = string.Format("Update {0}FlowOpenLog Set FlowStepOpinion = N'{2}' Where FlowLogID = '{1}'", oFlow.FlowID, oFlow.FlowLogID, txtFlowOpinion.ucTextData);

@@ -19,15 +19,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2015.08.12新增
         get
         {
-            if (ViewState["_IsSearchEnabled"] == null)
+            if (PageViewState["_IsSearchEnabled"] == null)
             {
-                ViewState["_IsSearchEnabled"] = false;
+                PageViewState["_IsSearchEnabled"] = false;
             }
-            return (bool)(ViewState["_IsSearchEnabled"]);
+            return (bool)(PageViewState["_IsSearchEnabled"]);
         }
         set
         {
-            ViewState["_IsSearchEnabled"] = value;
+            PageViewState["_IsSearchEnabled"] = value;
         }
     }
 
@@ -39,15 +39,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2015.08.12新增
         get
         {
-            if (ViewState["_SearchBoxWidth"] == null)
+            if (PageViewState["_SearchBoxWidth"] == null)
             {
-                ViewState["_SearchBoxWidth"] = 100;
+                PageViewState["_SearchBoxWidth"] = 100;
             }
-            return (int)(ViewState["_SearchBoxWidth"]);
+            return (int)(PageViewState["_SearchBoxWidth"]);
         }
         set
         {
-            ViewState["_SearchBoxWidth"] = value;
+            PageViewState["_SearchBoxWidth"] = value;
         }
     }
 
@@ -59,15 +59,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2015.08.12新增
         get
         {
-            if (ViewState["_SearchBoxWaterMarkText"] == null)
+            if (PageViewState["_SearchBoxWaterMarkText"] == null)
             {
-                ViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommSingleSelect_WaterMarkText; //"請輸入搜尋文字"
+                PageViewState["_SearchBoxWaterMarkText"] = RS.Resources.CommSingleSelect_WaterMarkText; //"請輸入搜尋文字"
             }
-            return (string)(ViewState["_SearchBoxWaterMarkText"]);
+            return (string)(PageViewState["_SearchBoxWaterMarkText"]);
         }
         set
         {
-            ViewState["_SearchBoxWaterMarkText"] = value;
+            PageViewState["_SearchBoxWaterMarkText"] = value;
         }
     }
 
@@ -78,15 +78,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsVerticalLayout"] == null)
+            if (PageViewState["_IsVerticalLayout"] == null)
             {
-                ViewState["_IsVerticalLayout"] = false;
+                PageViewState["_IsVerticalLayout"] = false;
             }
-            return (bool)(ViewState["_IsVerticalLayout"]);
+            return (bool)(PageViewState["_IsVerticalLayout"]);
         }
         set
         {
-            ViewState["_IsVerticalLayout"] = value;
+            PageViewState["_IsVerticalLayout"] = value;
         }
     }
 
@@ -97,15 +97,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_VerticalStyleHtmlTag"] == null)
+            if (PageViewState["_VerticalStyleHtmlTag"] == null)
             {
-                ViewState["_VerticalStyleHtmlTag"] = "<br />"; //垂直排列時的Html標籤
+                PageViewState["_VerticalStyleHtmlTag"] = "<br />"; //垂直排列時的Html標籤
             }
-            return (string)(ViewState["_VerticalStyleHtmlTag"]);
+            return (string)(PageViewState["_VerticalStyleHtmlTag"]);
         }
         set
         {
-            ViewState["_VerticalStyleHtmlTag"] = value;
+            PageViewState["_VerticalStyleHtmlTag"] = value;
         }
     }
 
@@ -116,15 +116,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultiSelectIndicator"] == null)
+            if (PageViewState["_MultiSelectIndicator"] == null)
             {
-                ViewState["_MultiSelectIndicator"] = "…";  //偵測是否變成多選的辨識字串 2014.07.07
+                PageViewState["_MultiSelectIndicator"] = "…";  //偵測是否變成多選的辨識字串 2014.07.07
             }
-            return (string)(ViewState["_MultiSelectIndicator"]);
+            return (string)(PageViewState["_MultiSelectIndicator"]);
         }
         set
         {
-            ViewState["_MultiSelectIndicator"] = value;
+            PageViewState["_MultiSelectIndicator"] = value;
         }
     }
 
@@ -135,15 +135,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultiSelectRowSize"] == null)
+            if (PageViewState["_MultiSelectRowSize"] == null)
             {
-                ViewState["_MultiSelectRowSize"] = "5";
+                PageViewState["_MultiSelectRowSize"] = "5";
             }
-            return (string)(ViewState["_MultiSelectRowSize"]);
+            return (string)(PageViewState["_MultiSelectRowSize"]);
         }
         set
         {
-            ViewState["_MultiSelectRowSize"] = value;
+            PageViewState["_MultiSelectRowSize"] = value;
         }
     }
 
@@ -154,15 +154,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_CascadingWidth"] == null)
+            if (PageViewState["_CascadingWidth"] == null)
             {
-                ViewState["_CascadingWidth"] = -1;
+                PageViewState["_CascadingWidth"] = -1;
             }
-            return (int)(ViewState["_CascadingWidth"]);
+            return (int)(PageViewState["_CascadingWidth"]);
         }
         set
         {
-            ViewState["_CascadingWidth"] = value;
+            PageViewState["_CascadingWidth"] = value;
         }
     }
 
@@ -173,15 +173,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownListWidth"] == null)
+            if (PageViewState["_DropDownListWidth"] == null)
             {
-                ViewState["_DropDownListWidth"] = 195;
+                PageViewState["_DropDownListWidth"] = 195;
             }
-            return (int)(ViewState["_DropDownListWidth"]);
+            return (int)(PageViewState["_DropDownListWidth"]);
         }
         set
         {
-            ViewState["_DropDownListWidth"] = value;
+            PageViewState["_DropDownListWidth"] = value;
         }
     }
 
@@ -192,15 +192,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ServicePath"] == null)
+            if (PageViewState["_ServicePath"] == null)
             {
-                ViewState["_ServicePath"] = Util._CommCascadeServicePath;
+                PageViewState["_ServicePath"] = Util._CommCascadeServicePath;
             }
-            return ViewState["_ServicePath"].ToString();
+            return PageViewState["_ServicePath"].ToString();
         }
         set
         {
-            ViewState["_ServicePath"] = value;
+            PageViewState["_ServicePath"] = value;
         }
     }
 
@@ -211,15 +211,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ServiceMethod"] == null)
+            if (PageViewState["_ServiceMethod"] == null)
             {
-                ViewState["_ServiceMethod"] = Util._CommCascadeServiceMethod;
+                PageViewState["_ServiceMethod"] = Util._CommCascadeServiceMethod;
             }
-            return ViewState["_ServiceMethod"].ToString();
+            return PageViewState["_ServiceMethod"].ToString();
         }
         set
         {
-            ViewState["_ServiceMethod"] = value;
+            PageViewState["_ServiceMethod"] = value;
         }
     }
 
@@ -230,15 +230,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_LoadingText"] == null)
+            if (PageViewState["_LoadingText"] == null)
             {
-                ViewState["_LoadingText"] = RS.Resources.Msg_Waiting;
+                PageViewState["_LoadingText"] = RS.Resources.Msg_Waiting;
             }
-            return ViewState["_LoadingText"].ToString();
+            return PageViewState["_LoadingText"].ToString();
         }
         set
         {
-            ViewState["_LoadingText"] = value;
+            PageViewState["_LoadingText"] = value;
         }
     }
 
@@ -249,15 +249,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_CascadingCssClass"] == null)
+            if (PageViewState["_CascadingCssClass"] == null)
             {
-                ViewState["_CascadingCssClass"] = "";
+                PageViewState["_CascadingCssClass"] = "";
             }
-            return ViewState["_CascadingCssClass"].ToString();
+            return PageViewState["_CascadingCssClass"].ToString();
         }
         set
         {
-            ViewState["_CascadingCssClass"] = value;
+            PageViewState["_CascadingCssClass"] = value;
         }
     }
 
@@ -268,15 +268,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownListCssClass"] == null)
+            if (PageViewState["_DropDownListCssClass"] == null)
             {
-                ViewState["_DropDownListCssClass"] = "";
+                PageViewState["_DropDownListCssClass"] = "";
             }
-            return ViewState["_DropDownListCssClass"].ToString();
+            return PageViewState["_DropDownListCssClass"].ToString();
         }
         set
         {
-            ViewState["_DropDownListCssClass"] = value;
+            PageViewState["_DropDownListCssClass"] = value;
         }
     }
 
@@ -287,15 +287,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DropDownListReadOnlyCssClass"] == null)
+            if (PageViewState["_DropDownListReadOnlyCssClass"] == null)
             {
-                ViewState["_DropDownListReadOnlyCssClass"] = "Util_clsDropDownListReadOnly";
+                PageViewState["_DropDownListReadOnlyCssClass"] = "Util_clsDropDownListReadOnly";
             }
-            return ViewState["_DropDownListReadOnlyCssClass"].ToString();
+            return PageViewState["_DropDownListReadOnlyCssClass"].ToString();
         }
         set
         {
-            ViewState["_DropDownListReadOnlyCssClass"] = value;
+            PageViewState["_DropDownListReadOnlyCssClass"] = value;
         }
     }
 
@@ -306,15 +306,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDropDownListEnabled01"] == null)
+            if (PageViewState["_IsDropDownListEnabled01"] == null)
             {
-                ViewState["_IsDropDownListEnabled01"] = true;
+                PageViewState["_IsDropDownListEnabled01"] = true;
             }
-            return (bool)(ViewState["_IsDropDownListEnabled01"]);
+            return (bool)(PageViewState["_IsDropDownListEnabled01"]);
         }
         set
         {
-            ViewState["_IsDropDownListEnabled01"] = value;
+            PageViewState["_IsDropDownListEnabled01"] = value;
         }
     }
 
@@ -325,15 +325,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDropDownListEnabled02"] == null)
+            if (PageViewState["_IsDropDownListEnabled02"] == null)
             {
-                ViewState["_IsDropDownListEnabled02"] = true;
+                PageViewState["_IsDropDownListEnabled02"] = true;
             }
-            return (bool)(ViewState["_IsDropDownListEnabled02"]);
+            return (bool)(PageViewState["_IsDropDownListEnabled02"]);
         }
         set
         {
-            ViewState["_IsDropDownListEnabled02"] = value;
+            PageViewState["_IsDropDownListEnabled02"] = value;
         }
     }
 
@@ -344,15 +344,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDropDownListEnabled03"] == null)
+            if (PageViewState["_IsDropDownListEnabled03"] == null)
             {
-                ViewState["_IsDropDownListEnabled03"] = true;
+                PageViewState["_IsDropDownListEnabled03"] = true;
             }
-            return (bool)(ViewState["_IsDropDownListEnabled03"]);
+            return (bool)(PageViewState["_IsDropDownListEnabled03"]);
         }
         set
         {
-            ViewState["_IsDropDownListEnabled03"] = value;
+            PageViewState["_IsDropDownListEnabled03"] = value;
         }
     }
 
@@ -363,15 +363,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDropDownListEnabled04"] == null)
+            if (PageViewState["_IsDropDownListEnabled04"] == null)
             {
-                ViewState["_IsDropDownListEnabled04"] = false;
+                PageViewState["_IsDropDownListEnabled04"] = false;
             }
-            return (bool)(ViewState["_IsDropDownListEnabled04"]);
+            return (bool)(PageViewState["_IsDropDownListEnabled04"]);
         }
         set
         {
-            ViewState["_IsDropDownListEnabled04"] = value;
+            PageViewState["_IsDropDownListEnabled04"] = value;
         }
     }
 
@@ -382,15 +382,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDropDownListEnabled05"] == null)
+            if (PageViewState["_IsDropDownListEnabled05"] == null)
             {
-                ViewState["_IsDropDownListEnabled05"] = false;
+                PageViewState["_IsDropDownListEnabled05"] = false;
             }
-            return (bool)(ViewState["_IsDropDownListEnabled05"]);
+            return (bool)(PageViewState["_IsDropDownListEnabled05"]);
         }
         set
         {
-            ViewState["_IsDropDownListEnabled05"] = value;
+            PageViewState["_IsDropDownListEnabled05"] = value;
         }
     }
 
@@ -401,15 +401,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_PromptText01"] == null)
+            if (PageViewState["_PromptText01"] == null)
             {
-                ViewState["_PromptText01"] = RS.Resources.Msg_DDL_EmptyItem; 
+                PageViewState["_PromptText01"] = RS.Resources.Msg_DDL_EmptyItem; 
             }
-            return ViewState["_PromptText01"].ToString();
+            return PageViewState["_PromptText01"].ToString();
         }
         set
         {
-            ViewState["_PromptText01"] = value;
+            PageViewState["_PromptText01"] = value;
         }
     }
 
@@ -420,15 +420,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_PromptText02"] == null)
+            if (PageViewState["_PromptText02"] == null)
             {
-                ViewState["_PromptText02"] = RS.Resources.Msg_DDL_EmptyItem;
+                PageViewState["_PromptText02"] = RS.Resources.Msg_DDL_EmptyItem;
             }
-            return ViewState["_PromptText02"].ToString();
+            return PageViewState["_PromptText02"].ToString();
         }
         set
         {
-            ViewState["_PromptText02"] = value;
+            PageViewState["_PromptText02"] = value;
         }
     }
 
@@ -439,15 +439,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_PromptText03"] == null)
+            if (PageViewState["_PromptText03"] == null)
             {
-                ViewState["_PromptText03"] = RS.Resources.Msg_DDL_EmptyItem;
+                PageViewState["_PromptText03"] = RS.Resources.Msg_DDL_EmptyItem;
             }
-            return ViewState["_PromptText03"].ToString();
+            return PageViewState["_PromptText03"].ToString();
         }
         set
         {
-            ViewState["_PromptText03"] = value;
+            PageViewState["_PromptText03"] = value;
         }
     }
 
@@ -458,15 +458,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_PromptText04"] == null)
+            if (PageViewState["_PromptText04"] == null)
             {
-                ViewState["_PromptText04"] = RS.Resources.Msg_DDL_EmptyItem;
+                PageViewState["_PromptText04"] = RS.Resources.Msg_DDL_EmptyItem;
             }
-            return ViewState["_PromptText04"].ToString();
+            return PageViewState["_PromptText04"].ToString();
         }
         set
         {
-            ViewState["_PromptText04"] = value;
+            PageViewState["_PromptText04"] = value;
         }
     }
 
@@ -477,15 +477,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_PromptText05"] == null)
+            if (PageViewState["_PromptText05"] == null)
             {
-                ViewState["_PromptText05"] = RS.Resources.Msg_DDL_EmptyItem;
+                PageViewState["_PromptText05"] = RS.Resources.Msg_DDL_EmptyItem;
             }
-            return ViewState["_PromptText05"].ToString();
+            return PageViewState["_PromptText05"].ToString();
         }
         set
         {
-            ViewState["_PromptText05"] = value;
+            PageViewState["_PromptText05"] = value;
         }
     }
 
@@ -496,15 +496,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_Category01"] == null)
+            if (PageViewState["_Category01"] == null)
             {
-                ViewState["_Category01"] = "Category01";
+                PageViewState["_Category01"] = "Category01";
             }
-            return ViewState["_Category01"].ToString();
+            return PageViewState["_Category01"].ToString();
         }
         set
         {
-            ViewState["_Category01"] = value;
+            PageViewState["_Category01"] = value;
         }
     }
 
@@ -515,15 +515,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_Category02"] == null)
+            if (PageViewState["_Category02"] == null)
             {
-                ViewState["_Category02"] = "Category02";
+                PageViewState["_Category02"] = "Category02";
             }
-            return ViewState["_Category02"].ToString();
+            return PageViewState["_Category02"].ToString();
         }
         set
         {
-            ViewState["_Category02"] = value;
+            PageViewState["_Category02"] = value;
         }
     }
 
@@ -534,15 +534,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_Category03"] == null)
+            if (PageViewState["_Category03"] == null)
             {
-                ViewState["_Category03"] = "Category03";
+                PageViewState["_Category03"] = "Category03";
             }
-            return ViewState["_Category03"].ToString();
+            return PageViewState["_Category03"].ToString();
         }
         set
         {
-            ViewState["_Category03"] = value;
+            PageViewState["_Category03"] = value;
         }
     }
 
@@ -553,15 +553,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_Category04"] == null)
+            if (PageViewState["_Category04"] == null)
             {
-                ViewState["_Category04"] = "Category04";
+                PageViewState["_Category04"] = "Category04";
             }
-            return ViewState["_Category04"].ToString();
+            return PageViewState["_Category04"].ToString();
         }
         set
         {
-            ViewState["_Category04"] = value;
+            PageViewState["_Category04"] = value;
         }
     }
 
@@ -572,15 +572,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_Category05"] == null)
+            if (PageViewState["_Category05"] == null)
             {
-                ViewState["_Category05"] = "Category05";
+                PageViewState["_Category05"] = "Category05";
             }
-            return ViewState["_Category05"].ToString();
+            return PageViewState["_Category05"].ToString();
         }
         set
         {
-            ViewState["_Category05"] = value;
+            PageViewState["_Category05"] = value;
         }
     }
 
@@ -701,15 +701,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultSelectedValue01"] == null)
+            if (PageViewState["_DefaultSelectedValue01"] == null)
             {
-                ViewState["_DefaultSelectedValue01"] = "";
+                PageViewState["_DefaultSelectedValue01"] = "";
             }
-            return (string)(ViewState["_DefaultSelectedValue01"]);
+            return (string)(PageViewState["_DefaultSelectedValue01"]);
         }
         set
         {
-            ViewState["_DefaultSelectedValue01"] = value;
+            PageViewState["_DefaultSelectedValue01"] = value;
             CascadingDropDown1.SelectedValue = value;
         }
     }
@@ -721,15 +721,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultSelectedValue02"] == null)
+            if (PageViewState["_DefaultSelectedValue02"] == null)
             {
-                ViewState["_DefaultSelectedValue02"] = "";
+                PageViewState["_DefaultSelectedValue02"] = "";
             }
-            return (string)(ViewState["_DefaultSelectedValue02"]);
+            return (string)(PageViewState["_DefaultSelectedValue02"]);
         }
         set
         {
-            ViewState["_DefaultSelectedValue02"] = value;
+            PageViewState["_DefaultSelectedValue02"] = value;
             CascadingDropDown2.SelectedValue = value;
         }
     }
@@ -741,15 +741,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultSelectedValue03"] == null)
+            if (PageViewState["_DefaultSelectedValue03"] == null)
             {
-                ViewState["_DefaultSelectedValue03"] = "";
+                PageViewState["_DefaultSelectedValue03"] = "";
             }
-            return (string)(ViewState["_DefaultSelectedValue03"]);
+            return (string)(PageViewState["_DefaultSelectedValue03"]);
         }
         set
         {
-            ViewState["_DefaultSelectedValue03"] = value;
+            PageViewState["_DefaultSelectedValue03"] = value;
             CascadingDropDown3.SelectedValue = value;
         }
     }
@@ -761,15 +761,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultSelectedValue04"] == null)
+            if (PageViewState["_DefaultSelectedValue04"] == null)
             {
-                ViewState["_DefaultSelectedValue04"] = "";
+                PageViewState["_DefaultSelectedValue04"] = "";
             }
-            return (string)(ViewState["_DefaultSelectedValue04"]);
+            return (string)(PageViewState["_DefaultSelectedValue04"]);
         }
         set
         {
-            ViewState["_DefaultSelectedValue04"] = value;
+            PageViewState["_DefaultSelectedValue04"] = value;
             CascadingDropDown4.SelectedValue = value;
         }
     }
@@ -781,15 +781,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultSelectedValue05"] == null)
+            if (PageViewState["_DefaultSelectedValue05"] == null)
             {
-                ViewState["_DefaultSelectedValue05"] = "";
+                PageViewState["_DefaultSelectedValue05"] = "";
             }
-            return (string)(ViewState["_DefaultSelectedValue05"]);
+            return (string)(PageViewState["_DefaultSelectedValue05"]);
         }
         set
         {
-            ViewState["_DefaultSelectedValue05"] = value;
+            PageViewState["_DefaultSelectedValue05"] = value;
             CascadingDropDown5.SelectedValue = value;
         }
     }
@@ -801,15 +801,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire01"] == null)
+            if (PageViewState["_IsRequire01"] == null)
             {
-                ViewState["_IsRequire01"] = false;
+                PageViewState["_IsRequire01"] = false;
             }
-            return (bool)ViewState["_IsRequire01"];
+            return (bool)PageViewState["_IsRequire01"];
         }
         set
         {
-            ViewState["_IsRequire01"] = value;
+            PageViewState["_IsRequire01"] = value;
         }
     }
 
@@ -820,15 +820,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire02"] == null)
+            if (PageViewState["_IsRequire02"] == null)
             {
-                ViewState["_IsRequire02"] = false;
+                PageViewState["_IsRequire02"] = false;
             }
-            return (bool)ViewState["_IsRequire02"];
+            return (bool)PageViewState["_IsRequire02"];
         }
         set
         {
-            ViewState["_IsRequire02"] = value;
+            PageViewState["_IsRequire02"] = value;
         }
     }
 
@@ -839,15 +839,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire03"] == null)
+            if (PageViewState["_IsRequire03"] == null)
             {
-                ViewState["_IsRequire03"] = false;
+                PageViewState["_IsRequire03"] = false;
             }
-            return (bool)ViewState["_IsRequire03"];
+            return (bool)PageViewState["_IsRequire03"];
         }
         set
         {
-            ViewState["_IsRequire03"] = value;
+            PageViewState["_IsRequire03"] = value;
         }
     }
 
@@ -858,15 +858,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire04"] == null)
+            if (PageViewState["_IsRequire04"] == null)
             {
-                ViewState["_IsRequire04"] = false;
+                PageViewState["_IsRequire04"] = false;
             }
-            return (bool)ViewState["_IsRequire04"];
+            return (bool)PageViewState["_IsRequire04"];
         }
         set
         {
-            ViewState["_IsRequire04"] = value;
+            PageViewState["_IsRequire04"] = value;
         }
     }
 
@@ -877,15 +877,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire05"] == null)
+            if (PageViewState["_IsRequire05"] == null)
             {
-                ViewState["_IsRequire05"] = false;
+                PageViewState["_IsRequire05"] = false;
             }
-            return (bool)ViewState["_IsRequire05"];
+            return (bool)PageViewState["_IsRequire05"];
         }
         set
         {
-            ViewState["_IsRequire05"] = value;
+            PageViewState["_IsRequire05"] = value;
         }
     }
 
@@ -896,15 +896,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireMsg01"] == null)
+            if (PageViewState["_RequireMsg01"] == null)
             {
-                ViewState["_RequireMsg01"] = RS.Resources.Msg_RequireInput;
+                PageViewState["_RequireMsg01"] = RS.Resources.Msg_RequireInput;
             }
-            return (string)ViewState["_RequireMsg01"];
+            return (string)PageViewState["_RequireMsg01"];
         }
         set
         {
-            ViewState["_RequireMsg01"] = value;
+            PageViewState["_RequireMsg01"] = value;
         }
     }
 
@@ -915,15 +915,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireMsg02"] == null)
+            if (PageViewState["_RequireMsg02"] == null)
             {
-                ViewState["_RequireMsg02"] = RS.Resources.Msg_RequireInput;
+                PageViewState["_RequireMsg02"] = RS.Resources.Msg_RequireInput;
             }
-            return (string)ViewState["_RequireMsg02"];
+            return (string)PageViewState["_RequireMsg02"];
         }
         set
         {
-            ViewState["_RequireMsg02"] = value;
+            PageViewState["_RequireMsg02"] = value;
         }
     }
 
@@ -934,15 +934,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireMsg03"] == null)
+            if (PageViewState["_RequireMsg03"] == null)
             {
-                ViewState["_RequireMsg03"] = RS.Resources.Msg_RequireInput;
+                PageViewState["_RequireMsg03"] = RS.Resources.Msg_RequireInput;
             }
-            return (string)ViewState["_RequireMsg03"];
+            return (string)PageViewState["_RequireMsg03"];
         }
         set
         {
-            ViewState["_RequireMsg03"] = value;
+            PageViewState["_RequireMsg03"] = value;
         }
     }
 
@@ -953,15 +953,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireMsg04"] == null)
+            if (PageViewState["_RequireMsg04"] == null)
             {
-                ViewState["_RequireMsg04"] = RS.Resources.Msg_RequireInput;
+                PageViewState["_RequireMsg04"] = RS.Resources.Msg_RequireInput;
             }
-            return (string)ViewState["_RequireMsg04"];
+            return (string)PageViewState["_RequireMsg04"];
         }
         set
         {
-            ViewState["_RequireMsg04"] = value;
+            PageViewState["_RequireMsg04"] = value;
         }
     }
 
@@ -972,15 +972,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_RequireMsg05"] == null)
+            if (PageViewState["_RequireMsg05"] == null)
             {
-                ViewState["_RequireMsg05"] = RS.Resources.Msg_RequireInput;
+                PageViewState["_RequireMsg05"] = RS.Resources.Msg_RequireInput;
             }
-            return (string)ViewState["_RequireMsg05"];
+            return (string)PageViewState["_RequireMsg05"];
         }
         set
         {
-            ViewState["_RequireMsg05"] = value;
+            PageViewState["_RequireMsg05"] = value;
         }
     }
 
@@ -991,15 +991,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly01"] == null)
+            if (PageViewState["_IsReadOnly01"] == null)
             {
-                ViewState["_IsReadOnly01"] = false;
+                PageViewState["_IsReadOnly01"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly01"]);
+            return (bool)(PageViewState["_IsReadOnly01"]);
         }
         set
         {
-            ViewState["_IsReadOnly01"] = value;
+            PageViewState["_IsReadOnly01"] = value;
         }
     }
 
@@ -1010,15 +1010,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly02"] == null)
+            if (PageViewState["_IsReadOnly02"] == null)
             {
-                ViewState["_IsReadOnly02"] = false;
+                PageViewState["_IsReadOnly02"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly02"]);
+            return (bool)(PageViewState["_IsReadOnly02"]);
         }
         set
         {
-            ViewState["_IsReadOnly02"] = value;
+            PageViewState["_IsReadOnly02"] = value;
         }
     }
 
@@ -1029,15 +1029,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly03"] == null)
+            if (PageViewState["_IsReadOnly03"] == null)
             {
-                ViewState["_IsReadOnly03"] = false;
+                PageViewState["_IsReadOnly03"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly03"]);
+            return (bool)(PageViewState["_IsReadOnly03"]);
         }
         set
         {
-            ViewState["_IsReadOnly03"] = value;
+            PageViewState["_IsReadOnly03"] = value;
         }
     }
 
@@ -1048,15 +1048,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly04"] == null)
+            if (PageViewState["_IsReadOnly04"] == null)
             {
-                ViewState["_IsReadOnly04"] = false;
+                PageViewState["_IsReadOnly04"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly04"]);
+            return (bool)(PageViewState["_IsReadOnly04"]);
         }
         set
         {
-            ViewState["_IsReadOnly04"] = value;
+            PageViewState["_IsReadOnly04"] = value;
         }
     }
 
@@ -1067,15 +1067,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly05"] == null)
+            if (PageViewState["_IsReadOnly05"] == null)
             {
-                ViewState["_IsReadOnly05"] = false;
+                PageViewState["_IsReadOnly05"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly05"]);
+            return (bool)(PageViewState["_IsReadOnly05"]);
         }
         set
         {
-            ViewState["_IsReadOnly05"] = value;
+            PageViewState["_IsReadOnly05"] = value;
         }
     }
 
@@ -1086,15 +1086,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsChkValid01"] == null)
+            if (PageViewState["_IsChkValid01"] == null)
             {
-                ViewState["_IsChkValid01"] = true;
+                PageViewState["_IsChkValid01"] = true;
             }
-            return (bool)ViewState["_IsChkValid01"];
+            return (bool)PageViewState["_IsChkValid01"];
         }
         set
         {
-            ViewState["_IsChkValid01"] = value;
+            PageViewState["_IsChkValid01"] = value;
         }
     }
 
@@ -1105,15 +1105,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsChkValid02"] == null)
+            if (PageViewState["_IsChkValid02"] == null)
             {
-                ViewState["_IsChkValid02"] = true;
+                PageViewState["_IsChkValid02"] = true;
             }
-            return (bool)ViewState["_IsChkValid02"];
+            return (bool)PageViewState["_IsChkValid02"];
         }
         set
         {
-            ViewState["_IsChkValid02"] = value;
+            PageViewState["_IsChkValid02"] = value;
         }
     }
 
@@ -1124,15 +1124,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsChkValid03"] == null)
+            if (PageViewState["_IsChkValid03"] == null)
             {
-                ViewState["_IsChkValid03"] = true;
+                PageViewState["_IsChkValid03"] = true;
             }
-            return (bool)ViewState["_IsChkValid03"];
+            return (bool)PageViewState["_IsChkValid03"];
         }
         set
         {
-            ViewState["_IsChkValid03"] = value;
+            PageViewState["_IsChkValid03"] = value;
         }
     }
 
@@ -1143,15 +1143,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsChkValid04"] == null)
+            if (PageViewState["_IsChkValid04"] == null)
             {
-                ViewState["_IsChkValid04"] = true;
+                PageViewState["_IsChkValid04"] = true;
             }
-            return (bool)ViewState["_IsChkValid04"];
+            return (bool)PageViewState["_IsChkValid04"];
         }
         set
         {
-            ViewState["_IsChkValid04"] = value;
+            PageViewState["_IsChkValid04"] = value;
         }
     }
 
@@ -1162,15 +1162,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsChkValid05"] == null)
+            if (PageViewState["_IsChkValid05"] == null)
             {
-                ViewState["_IsChkValid05"] = true;
+                PageViewState["_IsChkValid05"] = true;
             }
-            return (bool)ViewState["_IsChkValid05"];
+            return (bool)PageViewState["_IsChkValid05"];
         }
         set
         {
-            ViewState["_IsChkValid05"] = value;
+            PageViewState["_IsChkValid05"] = value;
         }
     }
 
@@ -1182,15 +1182,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2016.08.16 新增
         get
         {
-            if (ViewState["_ValidKeyList01"] == null)
+            if (PageViewState["_ValidKeyList01"] == null)
             {
-                ViewState["_ValidKeyList01"] = "";
+                PageViewState["_ValidKeyList01"] = "";
             }
-            return (string)ViewState["_ValidKeyList01"];
+            return (string)PageViewState["_ValidKeyList01"];
         }
         set
         {
-            ViewState["_ValidKeyList01"] = value;
+            PageViewState["_ValidKeyList01"] = value;
         }
     }
 
@@ -1202,15 +1202,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2016.08.16 新增
         get
         {
-            if (ViewState["_ValidKeyList02"] == null)
+            if (PageViewState["_ValidKeyList02"] == null)
             {
-                ViewState["_ValidKeyList02"] = "";
+                PageViewState["_ValidKeyList02"] = "";
             }
-            return (string)ViewState["_ValidKeyList02"];
+            return (string)PageViewState["_ValidKeyList02"];
         }
         set
         {
-            ViewState["_ValidKeyList02"] = value;
+            PageViewState["_ValidKeyList02"] = value;
         }
     }
 
@@ -1222,15 +1222,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2016.08.16 新增
         get
         {
-            if (ViewState["_ValidKeyList03"] == null)
+            if (PageViewState["_ValidKeyList03"] == null)
             {
-                ViewState["_ValidKeyList03"] = "";
+                PageViewState["_ValidKeyList03"] = "";
             }
-            return (string)ViewState["_ValidKeyList03"];
+            return (string)PageViewState["_ValidKeyList03"];
         }
         set
         {
-            ViewState["_ValidKeyList03"] = value;
+            PageViewState["_ValidKeyList03"] = value;
         }
     }
 
@@ -1242,15 +1242,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2016.08.16 新增
         get
         {
-            if (ViewState["_ValidKeyList04"] == null)
+            if (PageViewState["_ValidKeyList04"] == null)
             {
-                ViewState["_ValidKeyList04"] = "";
+                PageViewState["_ValidKeyList04"] = "";
             }
-            return (string)ViewState["_ValidKeyList04"];
+            return (string)PageViewState["_ValidKeyList04"];
         }
         set
         {
-            ViewState["_ValidKeyList04"] = value;
+            PageViewState["_ValidKeyList04"] = value;
         }
     }
 
@@ -1262,15 +1262,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         //2016.08.16 新增
         get
         {
-            if (ViewState["_ValidKeyList05"] == null)
+            if (PageViewState["_ValidKeyList05"] == null)
             {
-                ViewState["_ValidKeyList05"] = "";
+                PageViewState["_ValidKeyList05"] = "";
             }
-            return (string)ViewState["_ValidKeyList05"];
+            return (string)PageViewState["_ValidKeyList05"];
         }
         set
         {
-            ViewState["_ValidKeyList05"] = value;
+            PageViewState["_ValidKeyList05"] = value;
         }
     }
 
@@ -1281,15 +1281,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData01"] == null)
+            if (PageViewState["_ContextData01"] == null)
             {
-                ViewState["_ContextData01"] = "";
+                PageViewState["_ContextData01"] = "";
             }
-            return (string)(ViewState["_ContextData01"]);
+            return (string)(PageViewState["_ContextData01"]);
         }
         set
         {
-            ViewState["_ContextData01"] = value;
+            PageViewState["_ContextData01"] = value;
         }
     }
 
@@ -1300,15 +1300,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData02"] == null)
+            if (PageViewState["_ContextData02"] == null)
             {
-                ViewState["_ContextData02"] = "";
+                PageViewState["_ContextData02"] = "";
             }
-            return (string)(ViewState["_ContextData02"]);
+            return (string)(PageViewState["_ContextData02"]);
         }
         set
         {
-            ViewState["_ContextData02"] = value;
+            PageViewState["_ContextData02"] = value;
         }
     }
 
@@ -1319,15 +1319,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData03"] == null)
+            if (PageViewState["_ContextData03"] == null)
             {
-                ViewState["_ContextData03"] = "";
+                PageViewState["_ContextData03"] = "";
             }
-            return (string)(ViewState["_ContextData03"]);
+            return (string)(PageViewState["_ContextData03"]);
         }
         set
         {
-            ViewState["_ContextData03"] = value;
+            PageViewState["_ContextData03"] = value;
         }
     }
 
@@ -1338,15 +1338,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData04"] == null)
+            if (PageViewState["_ContextData04"] == null)
             {
-                ViewState["_ContextData04"] = "";
+                PageViewState["_ContextData04"] = "";
             }
-            return (string)(ViewState["_ContextData04"]);
+            return (string)(PageViewState["_ContextData04"]);
         }
         set
         {
-            ViewState["_ContextData04"] = value;
+            PageViewState["_ContextData04"] = value;
         }
     }
 
@@ -1357,15 +1357,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData05"] == null)
+            if (PageViewState["_ContextData05"] == null)
             {
-                ViewState["_ContextData05"] = "";
+                PageViewState["_ContextData05"] = "";
             }
-            return (string)(ViewState["_ContextData05"]);
+            return (string)(PageViewState["_ContextData05"]);
         }
         set
         {
-            ViewState["_ContextData05"] = value;
+            PageViewState["_ContextData05"] = value;
         }
     }
 
@@ -1377,15 +1377,15 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;
@@ -1457,7 +1457,7 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        bool IsInit = (ViewState["_IsInit"] != null) ? (bool)ViewState["_IsInit"] : false;
+        bool IsInit = (PageViewState["_IsInit"] != null) ? (bool)PageViewState["_IsInit"] : false;
         if (!IsInit)
         {
             Refresh();
@@ -1624,7 +1624,7 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         labErrMsg.Visible = false;
         if (!string.IsNullOrEmpty(ucServicePath) && !string.IsNullOrEmpty(ucServiceMethod))
         {
-            ViewState["_IsInit"] = true;
+            PageViewState["_IsInit"] = true;
             if (!string.IsNullOrEmpty(ucCascadingCssClass)) divDataArea.Attributes.Add("Class", ucCascadingCssClass);
             if (ucCascadingWidth > 0) divDataArea.Style.Add("Width", ucCascadingWidth.ToString() + "px");
 

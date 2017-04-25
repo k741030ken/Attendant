@@ -24,7 +24,7 @@
             <legend class="Util_Legend">
                 <asp:Literal ID="labQryTitle" runat="server" Text="案件查詢" meta:resourcekey="labQryTitleResource1" />
             </legend>
-            <table class="Util_Frame" cellspacing="2" style="width: 500px;">
+            <table class="Util_Frame" cellspacing="2" style="width: 650px;">
                 <tr class="Util_clsRow1">
                     <td style="width: 80px;">
                         <asp:Literal ID="Literal1" runat="server" Text="案件編號：" meta:resourcekey="Literal1Resource1" />

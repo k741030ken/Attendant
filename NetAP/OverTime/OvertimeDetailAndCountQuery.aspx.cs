@@ -561,13 +561,12 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
             sb.AppendLine("LEFT JOIN OverTimeDeclaration D ON AOL.FlowCaseID=D.FlowCaseID");
             sb.AppendLine("LEFT JOIN OverTimeDeclaration D2 ON D.OTTxnID=D2.OTTxnID AND D2.OTSeqNo='2'");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal PD ON D.OTCompID=PD.CompID AND D.OTEmpID=PD.EmpID");
-            sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow ED ON D.OTCompID=ED.CompID AND D.OTEmpID=ED.EmpID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..RankMapping AS RM ON PD.CompID=RM.CompID AND PD.RankID=RM.RankID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Title AS TD ON PD.CompID=TD.CompID AND PD.RankID=TD.RankID AND PD.TitleID=TD.TitleID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpPosition EmpPosD ON D.OTCompID=EmpPosD.CompID AND D.OTEmpID=EmpPosD.EmpID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Position PosD ON D.OTCompID=PosD.CompID AND EmpPosD.CompID = PosD.CompID AND PosD.PositionID = EmpPosD.PositionID AND PosD.InValidFlag='0'");
             sb.AppendLine("LEFT JOIN AT_CodeMap AS AT ON AT.TabName='OverTime' and AT.FldName='OverTimeType' AND AT.Code=D.OTTypeID");
-            sb.AppendLine("WHERE D.OTSeqNo<>'2' AND (AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "' OR AOL.ToUser = '" + UserInfo.getUserInfo().UserID + "') AND AOL.FlowStepID IN ('A20','A30','A40') AND AOL.FlowStepBtnID NOT IN ('btnCancel', 'FlowReassign')");
+            sb.AppendLine("WHERE D.OTSeqNo<>'2' AND (AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "' OR AOL.ToUser = '" + UserInfo.getUserInfo().UserID + "') AND AOL.FlowStepID IN ('A10', 'A20','A30','A40') AND AOL.FlowStepBtnID NOT IN ('btnCancel', 'FlowReassign')");
             //D.OTFromAdvanceTxnId='' AND 
             //公司
             if (ddlCompID.SelectedValue != "")
@@ -681,14 +680,13 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
             sb.AppendLine("LEFT JOIN OverTimeDeclaration DD ON AA.OTTxnID=DD.OTFromAdvanceTxnId AND AA.OTSeqNo=DD.OTSeqNo");
             sb.AppendLine("LEFT JOIN OverTimeDeclaration DD2 ON DD.OTTxnID=DD2.OTTxnID AND DD2.OTSeqNo='2'");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal PA ON AA.OTCompID=PA.CompID AND AA.OTEmpID=PA.EmpID");
-            sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow EA ON AA.OTCompID=EA.CompID AND AA.OTEmpID=EA.EmpID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..RankMapping AS RM ON PA.CompID=RM.CompID AND PA.RankID=RM.RankID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Title AS TA ON PA.CompID=TA.CompID AND PA.RankID=TA.RankID AND PA.TitleID=TA.TitleID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpPosition EmpPosA ON AA.OTCompID=EmpPosA.CompID AND AA.OTEmpID=EmpPosA.EmpID");
             sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Position PosA ON AA.OTCompID=PosA.CompID AND EmpPosA.CompID = PosA.CompID AND PosA.PositionID = EmpPosA.PositionID AND PosA.InValidFlag='0'");
             sb.AppendLine("LEFT JOIN AT_CodeMap AS AT ON AT.TabName='OverTime' AND AT.FldName='OverTimeType' AND AT.Code=AA.OTTypeID");
             sb.AppendLine("LEFT JOIN AT_CodeMap AS ATD ON ATD.TabName='OverTime' AND ATD.FldName='OverTimeType' AND ATD.Code=DD.OTTypeID");
-            sb.AppendLine("WHERE AA.OTSeqNo<>'2' AND (AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "' OR AOL.ToUser = '" + UserInfo.getUserInfo().UserID + "') AND AOL.FlowStepID IN ('A20','A30','A40') AND AOL.FlowStepBtnID NOT IN ('btnCancel', 'FlowReassign')");
+            sb.AppendLine("WHERE AA.OTSeqNo<>'2' AND (AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "' OR AOL.ToUser = '" + UserInfo.getUserInfo().UserID + "') AND AOL.FlowStepID IN ('A10', 'A20','A30','A40') AND AOL.FlowStepBtnID NOT IN ('btnCancel', 'FlowReassign')");
             //公司
             if (ddlCompID.SelectedValue != "")
             {
@@ -944,7 +942,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("FROM OverTimeDeclaration D");
                 sb.AppendLine("LEFT JOIN OverTimeDeclaration D2 ON D.OTTxnID = D2.OTTxnID AND D2.OTSeqNo = '2'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal PD ON D.OTCompID = PD.CompID AND D.OTEmpID = PD.EmpID");
-                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow ED ON D.OTCompID = ED.CompID AND D.OTEmpID = ED.EmpID");
+                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow ED ON PD.CompID = ED.CompID AND PD.EmpID = ED.EmpID AND ED.ActionID='01'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..RankMapping RM ON PD.CompID = RM.CompID AND PD.RankID = RM.RankID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Title TD ON PD.CompID = TD.CompID AND PD.RankID = TD.RankID AND PD.TitleID = TD.TitleID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpPosition EmpPosD ON D.OTCompID = EmpPosD.CompID AND D.OTEmpID = EmpPosD.EmpID");
@@ -952,8 +950,21 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("LEFT JOIN AT_CodeMap AT ON AT.TabName = 'OverTime' and AT.FldName = 'OverTimeType' AND AT.Code = D.OTTypeID");
                 sb.AppendLine("WHERE D.OTFromAdvanceTxnId = '' AND D.OTSeqNo <> '2'");
                 sb.AppendLine("AND D.OTCompID = '" + ddlCompID.SelectedValue + "'");
-                sb.AppendLine("AND (PD.OrganID IN ('" + orgWhere + "') OR ED.OrganID IN ('" + orgFlowWhere + "')) ");
-
+                if (AllSearch)
+                {
+                    sb.AppendLine("AND (PD.OrganID IN ('" + orgWhere + "') OR ED.OrganID IN ('" + orgFlowWhere + "')) ");
+                }
+                else
+                {
+                    if (orgWhere != "")
+                    {
+                        sb.AppendLine("AND PD.OrganID IN ('" + orgWhere + "') ");
+                    }
+                    if (orgFlowWhere != "")
+                    {
+                        sb.AppendLine("AND ED.OrganID IN ('" + orgFlowWhere + "') ");
+                    }
+                }
                 //員編
                 if (txtEmpID.Text != "")
                 {
@@ -1094,7 +1105,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("LEFT JOIN OverTimeDeclaration DD ON AA.OTTxnID = DD.OTFromAdvanceTxnId AND AA.OTSeqNo = DD.OTSeqNo");
                 sb.AppendLine("LEFT JOIN OverTimeDeclaration DD2 ON DD.OTTxnID = DD2.OTTxnID AND DD2.OTSeqNo = '2'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal PA ON AA.OTCompID = PA.CompID AND AA.OTEmpID = PA.EmpID");
-                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow EA ON AA.OTCompID = EA.CompID AND AA.OTEmpID = EA.EmpID");
+                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow EA ON PA.CompID = EA.CompID AND PA.EmpID = EA.EmpID AND EA.ActionID='01'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..RankMapping RM ON PA.CompID = RM.CompID AND PA.RankID = RM.RankID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Title TA ON PA.CompID = TA.CompID AND PA.RankID = TA.RankID AND PA.TitleID = TA.TitleID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpPosition EmpPosA ON AA.OTCompID = EmpPosA.CompID AND AA.OTEmpID = EmpPosA.EmpID");
@@ -1103,8 +1114,21 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("LEFT JOIN AT_CodeMap AS ATD ON ATD.TabName = 'OverTime' and ATD.FldName = 'OverTimeType' AND ATD.Code = DD.OTTypeID");
                 sb.AppendLine("WHERE AA.OTSeqNo <> '2'");
                 sb.AppendLine(" AND AA.OTCompID = '" + ddlCompID.SelectedValue + "' ");
-                sb.AppendLine(" AND (PA.OrganID IN ('" + orgWhere + "') OR EA.OrganID IN ('" + orgFlowWhere + "'))");
-
+                if (AllSearch)
+                {
+                    sb.AppendLine("AND (PA.OrganID IN ('" + orgWhere + "') OR EA.OrganID IN ('" + orgFlowWhere + "')) ");
+                }
+                else
+                {
+                    if (orgWhere != "")
+                    {
+                        sb.AppendLine("AND PA.OrganID IN ('" + orgWhere + "') ");
+                    }
+                    if (orgFlowWhere != "")
+                    {
+                        sb.AppendLine("AND EA.OrganID IN ('" + orgFlowWhere + "') ");
+                    }
+                }
                 if (txtEmpID.Text != "")
                 {
                     sb.AppendLine(" AND AA.OTEmpID='" + txtEmpID.Text + "'");
@@ -1357,10 +1381,23 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("CAST(ROUND(CAST(SUM(CASE Before.OTStatus WHEN '4' THEN CAST(Before.OTTotalTime-Before.MealTime AS FLOAT)/60 ELSE 0 END) AS Decimal(10,2)),1) AS Decimal(10,1)) Reject ");
                 sb.AppendLine("FROM OverTimeAdvance AS Before");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal AS PA on PA.CompID=Before.OTCompID AND PA.EmpID=Before.OTEmpID ");
-                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow AS EA on EA.CompID=Before.OTCompID AND EA.EmpID=Before.OTEmpID ");
+                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow AS EA on EA.CompID=PA.CompID AND EA.EmpID=PA.EmpID AND EA.ActionID='01' ");
                 sb.AppendLine("WHERE Before.OTCompID = '" + ddlCompID.SelectedValue + "'");
-                sb.AppendLine("AND (PA.OrganID IN ('" + orgWhere + "') OR EA.OrganID IN ('" + orgFlowWhere + "') )");
-
+                if (AllSearch)
+                {
+                    sb.AppendLine("AND (PA.OrganID IN ('" + orgWhere + "') OR EA.OrganID IN ('" + orgFlowWhere + "') )");
+                }
+                else
+                {
+                    if (orgWhere != "")
+                    {
+                        sb.AppendLine("AND PA.OrganID IN ('" + orgWhere + "') ");
+                    }
+                    if (orgFlowWhere != "")
+                    {
+                        sb.AppendLine("AND EA.OrganID IN ('" + orgFlowWhere + "') ");
+                    }
+                }
                 if (txtOTDateBeginCount.ucSelectedDate != "")
                 {
                     sb.AppendLine("AND Before.OTStartDate >= '" + txtOTDateBeginCount.ucSelectedDate + "'");
@@ -1380,10 +1417,23 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("CAST(ROUND(CAST(SUM(CASE AfterOT.OTStatus WHEN '4' THEN CAST(AfterOT.OTTotalTime-AfterOT.MealTime AS FLOAT)/60 ELSE 0 END) AS Decimal(10,2)),1) AS Decimal(10,1)) Reject ");
                 sb.AppendLine("FROM OverTimeDeclaration AS AfterOT");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal AS PD on PD.CompID=AfterOT.OTCompID AND PD.EmpID=AfterOT.OTEmpID ");
-                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow AS ED on ED.CompID=AfterOT.OTCompID AND ED.EmpID=AfterOT.OTEmpID ");
+                sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..EmpFlow AS ED on ED.CompID=PD.CompID AND ED.EmpID=PD.EmpID AND ED.ActionID='01' ");
                 sb.AppendLine("WHERE AfterOT.OTCompID = '" + ddlCompID.SelectedValue + "'");
-                sb.AppendLine("AND (PD.OrganID IN ('" + orgWhere + "') OR ED.OrganID IN ('" + orgFlowWhere + "'))");
-
+                if (AllSearch)
+                {
+                    sb.AppendLine("AND (PD.OrganID IN ('" + orgWhere + "') OR ED.OrganID IN ('" + orgFlowWhere + "')) ");
+                }
+                else
+                {
+                    if (orgWhere != "")
+                    {
+                        sb.AppendLine("AND PD.OrganID IN ('" + orgWhere + "') ");
+                    }
+                    if (orgFlowWhere != "")
+                    {
+                        sb.AppendLine("AND ED.OrganID IN ('" + orgFlowWhere + "') ");
+                    }
+                }
                 if (txtOTDateBeginCount.ucSelectedDate != "")
                 {
                     sb.AppendLine("AND AfterOT.OTStartDate >= '" + txtOTDateBeginCount.ucSelectedDate + "'");
@@ -1398,7 +1448,6 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine(") AfterOT ON Before.OTEmpID = AfterOT.OTEmpID");
                 sb.AppendLine(") TOTAL");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + ".[dbo].[Personal] AS P ON TOTAL.OTEmpID=P.EmpID AND P.CompID = '" + ddlCompID.SelectedValue + "'");
-                sb.AppendLine("LEFT JOIN " + _eHRMSDB + ".[dbo].[EmpFlow] AS E ON TOTAL.OTEmpID=E.EmpID AND E.CompID = '" + ddlCompID.SelectedValue + "'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + ".[dbo].[RankMapping] AS RM ON P.CompID=RM.CompID AND P.RankID=RM.RankID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + ".[dbo].[Title] AS T ON P.CompID=T.CompID AND P.RankID=T.RankID AND P.TitleID=T.TitleID");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + ".[dbo].[EmpPosition] AS EmpP ON P.CompID=EmpP.CompID AND P.EmpID=EmpP.EmpID");

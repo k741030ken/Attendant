@@ -28,12 +28,12 @@ public partial class Util_AppKeyMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = string.Format(_QryBaseSQL, _TableName); }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
 
@@ -41,15 +41,15 @@ public partial class Util_AppKeyMapAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 

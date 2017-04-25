@@ -14,15 +14,31 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
+                PageViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnLaunch.Enabled;
+        }
+        set
+        {
+            btnLaunch.Enabled = value;
         }
     }
 
@@ -33,15 +49,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = RS.Resources.MuiAdmin_btnLaunch; ;
+                PageViewState["_BtnCaption"] = RS.Resources.MuiAdmin_btnLaunch; ;
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -52,15 +68,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnStyle"] == null)
+            if (PageViewState["_BtnStyle"] == null)
             {
-                ViewState["_BtnStyle"] = "Util_clsBtn";
+                PageViewState["_BtnStyle"] = "Util_clsBtn";
             }
-            return (string)(ViewState["_BtnStyle"]);
+            return (string)(PageViewState["_BtnStyle"]);
         }
         set
         {
-            ViewState["_BtnStyle"] = value;
+            PageViewState["_BtnStyle"] = value;
         }
     }
 
@@ -71,15 +87,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 80;
+                PageViewState["_BtnWidth"] = 80;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -91,15 +107,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
         //2016.09.22 新增
         get
         {
-            if (ViewState["_BtnClientJS"] == null)
+            if (PageViewState["_BtnClientJS"] == null)
             {
-                ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
+                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
             }
-            return (string)(ViewState["_BtnClientJS"]);
+            return (string)(PageViewState["_BtnClientJS"]);
         }
         set
         {
-            ViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
         }
     }
     #endregion
@@ -138,15 +154,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = "";
+                PageViewState["_DBName"] = "";
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -157,15 +173,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_TableName"] == null)
+            if (PageViewState["_TableName"] == null)
             {
-                ViewState["_TableName"] = "";
+                PageViewState["_TableName"] = "";
             }
-            return (string)(ViewState["_TableName"]);
+            return (string)(PageViewState["_TableName"]);
         }
         set
         {
-            ViewState["_TableName"] = value;
+            PageViewState["_TableName"] = value;
         }
     }
 
@@ -176,15 +192,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PKFieldList"] == null)
+            if (PageViewState["_PKFieldList"] == null)
             {
-                ViewState["_PKFieldList"] = "".Split(',');
+                PageViewState["_PKFieldList"] = "".Split(',');
             }
-            return (string[])(ViewState["_PKFieldList"]);
+            return (string[])(PageViewState["_PKFieldList"]);
         }
         set
         {
-            ViewState["_PKFieldList"] = value;
+            PageViewState["_PKFieldList"] = value;
         }
     }
 
@@ -195,15 +211,15 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_PKValueList"] == null)
+            if (PageViewState["_PKValueList"] == null)
             {
-                ViewState["_PKValueList"] = "".Split(',');
+                PageViewState["_PKValueList"] = "".Split(',');
             }
-            return (string[])(ViewState["_PKValueList"]);
+            return (string[])(PageViewState["_PKValueList"]);
         }
         set
         {
-            ViewState["_PKValueList"] = value;
+            PageViewState["_PKValueList"] = value;
         }
     }
 

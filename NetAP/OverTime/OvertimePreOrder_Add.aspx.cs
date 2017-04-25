@@ -259,7 +259,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
         ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
         txtMealTime.Text = "0";
 
-        if (txtOTEmpID.Text != "" && ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate !="")
+        if (txtOTEmpID.Text != "" && Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
         {
             SignData();//加班人當月送簽核准駁回的時數
         }
@@ -339,7 +339,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
                 string msg = "";
@@ -371,7 +371,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                         return;
                     }
                 }
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     if (txtOTEmpID.Text != "")
                     {
@@ -406,7 +406,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 string msg = "";
                 TimeSpan total = (Convert.ToDateTime(ucDateEnd.ucSelectedDate)).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -611,7 +611,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -719,7 +719,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -972,7 +972,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1077,7 +1077,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -3047,6 +3047,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
             }
             string strMsg = at.GetMulitTotal(dt, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), "OverTimeAdvance");
             string message = "";
+            ViewState["message"] = message;
             double dayNLimit = Convert.ToDouble(_dtPara.Rows[0]["DayLimitHourN"].ToString());//平日可申請
             double dayHLimit = Convert.ToDouble(_dtPara.Rows[0]["DayLimitHourH"].ToString());//假日可申請
             string strcheckOverTimeIsOver = at.GetCheckOverTimeIsOver(dt, dayNLimit, dayHLimit, "OverTimeAdvance");
@@ -3071,7 +3072,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                     }
                 }
             }
-            else if (!Convert.ToBoolean(strMsg.Split(';')[0]))
+            if (!Convert.ToBoolean(strMsg.Split(';')[0]))
             {
                 if (_dtPara == null)
                 {
@@ -3092,7 +3093,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                     }
                 }
             }
-            else if (!Convert.ToBoolean(strGetCheckOTLimitDay.Split(';')[0]))
+            if (!Convert.ToBoolean(strGetCheckOTLimitDay.Split(';')[0]))
             {
                 
                 if (_dtPara.Rows[0]["OTLimitFlag"].ToString() == "1")
@@ -3443,7 +3444,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                 strShowValue += ucDateEnd.ucSelectedDate + ",";
                 strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
 
-                if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnBefore", oAssTo, ""))
+                if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                 {
                     //更新AssignToName(部門+員工姓名)
                     string a = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
@@ -3640,7 +3641,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
                         string FlowKeyValue = "A," + DT.Rows[i]["OTCompID"] + "," + DT.Rows[i]["EmpID"] + "," + DT.Rows[i]["OTStartDate"] + "," + DT.Rows[i]["OTEndDate"] + "," + OTSeq;
                         strName = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + DT.Rows[i]["EmpID"].ToString() + "' AND CompID='"+DT.Rows[i]["OTCompID"].ToString()+"'");
                         string FlowShowValue = DT.Rows[i]["EmpID"] + "," + strName + "," + DT.Rows[i]["OTStartDate"] + "," + strStartTime + "," + DT.Rows[i]["OTEndDate"] + "," + strEndTime;
-                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnBefore", oAssTo, ""))
+                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), nextIsLastFlow ? "btnBeforeLast" : "btnBefore", oAssTo, ""))
                             {
                                 //更新AssignToName(部門+員工姓名)
                                 string a = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);
@@ -4087,7 +4088,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
         {
             EndTime_SelectedIndexChanged(null, null);
         }
-        if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "" && txtOTEmpID.Text != "")
+        if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate) && txtOTEmpID.Text != "")
         {
             SignData();
         }
@@ -4213,7 +4214,7 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
         {
             EndTime_SelectedIndexChanged(null, null);
         }
-        if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "" && txtOTEmpID.Text != "")
+        if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate) && txtOTEmpID.Text != "")
         {
             SignData();
         }

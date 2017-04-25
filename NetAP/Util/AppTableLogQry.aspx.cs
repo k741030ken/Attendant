@@ -18,15 +18,15 @@ public partial class Util_AppTableLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -34,15 +34,15 @@ public partial class Util_AppTableLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_TableName"] == null)
+            if (PageViewState["_TableName"] == null)
             {
-                ViewState["_TableName"] = Util.getRequestQueryStringKey("TableName");
+                PageViewState["_TableName"] = Util.getRequestQueryStringKey("TableName");
             }
-            return (string)(ViewState["_TableName"]);
+            return (string)(PageViewState["_TableName"]);
         }
         set
         {
-            ViewState["_TableName"] = value;
+            PageViewState["_TableName"] = value;
         }
     }
 
@@ -50,15 +50,15 @@ public partial class Util_AppTableLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AllowPurgeYN"] == null)
+            if (PageViewState["_AllowPurgeYN"] == null)
             {
-                ViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN", "N", true);
+                PageViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN", "N", true);
             }
-            return (string)(ViewState["_AllowPurgeYN"]);
+            return (string)(PageViewState["_AllowPurgeYN"]);
         }
         set
         {
-            ViewState["_AllowPurgeYN"] = value.ToUpper();
+            PageViewState["_AllowPurgeYN"] = value.ToUpper();
         }
     }
 
@@ -66,9 +66,9 @@ public partial class Util_AppTableLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AppTableLogType"] != null)
+            if (PageViewState["_AppTableLogType"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_AppTableLogType"];
+                return (Dictionary<string, string>)PageViewState["_AppTableLogType"];
             }
             else
             {
@@ -79,8 +79,8 @@ public partial class Util_AppTableLogQry : SecurePage
                     oDic.Add(pair.Value, pair.Value);
                 }
 
-                ViewState["_AppTableLogType"] = oDic;
-                return (Dictionary<string, string>)ViewState["_AppTableLogType"];
+                PageViewState["_AppTableLogType"] = oDic;
+                return (Dictionary<string, string>)PageViewState["_AppTableLogType"];
             }
         }
     }
@@ -94,12 +94,12 @@ public partial class Util_AppTableLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = ""; }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = ""; }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     }
     #endregion
@@ -155,10 +155,10 @@ public partial class Util_AppTableLogQry : SecurePage
         btnPurgeTable.ToolTip = string.Format("清除[{0}]所有資料", _TableName);
         btnPurgeTable.OnClientClick = string.Format("return confirm('確定清除[{0}]資料庫內，[{1}]資料表的所有資料？');", _DBName, _TableName);
 
-        DataTable dtSchema = Util.getSchemaInfo(_DBName).Select(string.Format(" TABLE_NAME = '{0}' and TABLE_TYPE = 'BASE TABLE' ", _TableName)).CopyToDataTable();
+        DataTable dtSchema = Util.getDataSchemaInfo(_DBName).Select(string.Format(" TABLE_NAME = '{0}' and TABLE_TYPE = 'BASE TABLE' ", _TableName)).CopyToDataTable();
         Dictionary<string, string> dicTable = Util.getDictionary(dtSchema, 3, 6);
-        ViewState["_TableFieldList"] = Util.getArray(dicTable);
-        ViewState["_TablePKFieldList"] = dicTable.AsEnumerable().Where(r => r.Value == "Y").Select(k => k.Key).ToArray();
+        PageViewState["_TableFieldList"] = Util.getArray(dicTable);
+        PageViewState["_TablePKFieldList"] = dicTable.AsEnumerable().Where(r => r.Value == "Y").Select(k => k.Key).ToArray();
 
         Util_ucTextBox oTxt;
         CheckBox oChk;
@@ -177,15 +177,15 @@ public partial class Util_AppTableLogQry : SecurePage
             }
         }
 
-        for (int i = 0; i < ((string[])ViewState["_TablePKFieldList"]).Count(); i++)
+        for (int i = 0; i < ((string[])PageViewState["_TablePKFieldList"]).Count(); i++)
         {
             oTxt = (Util_ucTextBox)Util.FindControlEx(this.Page, string.Format("PKey{0}", (i + 1).ToString().PadLeft(2, '0')));
             oChk = (CheckBox)Util.FindControlEx(this.Page, string.Format("IsLikePKey{0}", (i + 1).ToString().PadLeft(2, '0')));
-            if (oTxt != null && ((string[])ViewState["_TablePKFieldList"])[i] != "TableLogNo")
+            if (oTxt != null && ((string[])PageViewState["_TablePKFieldList"])[i] != "TableLogNo")
             {
                 oTxt.ucCaptionWidth = 100;
                 oTxt.ucWidth = 150;
-                oTxt.ucCaption = ((string[])ViewState["_TablePKFieldList"])[i];
+                oTxt.ucCaption = ((string[])PageViewState["_TablePKFieldList"])[i];
                 oTxt.ucTextData = "";
                 oTxt.Visible = true;
                 oChk.Visible = true;
@@ -238,7 +238,7 @@ public partial class Util_AppTableLogQry : SecurePage
         //組合查詢條件
         Util_ucTextBox oTxt;
         CheckBox oChk;
-        for (int i = 0; i < ((string[])ViewState["_TablePKFieldList"]).Count(); i++)
+        for (int i = 0; i < ((string[])PageViewState["_TablePKFieldList"]).Count(); i++)
         {
             oTxt = (Util_ucTextBox)Util.FindControlEx(this.Page, string.Format("PKey{0}", (i + 1).ToString().PadLeft(2, '0')));
             oChk = (CheckBox)Util.FindControlEx(this.Page, string.Format("IsLikePKey{0}", (i + 1).ToString().PadLeft(2, '0')));
@@ -261,7 +261,7 @@ public partial class Util_AppTableLogQry : SecurePage
         DivSelectTable.Visible = true;
         DivQryCondition.Visible = false;
         DivQryResult.Visible = false;
-        DataTable dtSchema = Util.getSchemaInfo(_DBName).Select(" TABLE_NAME Like '%_LOG' and TABLE_TYPE = 'BASE TABLE' ").CopyToDataTable();
+        DataTable dtSchema = Util.getDataSchemaInfo(_DBName).Select(" TABLE_NAME Like '%_LOG' and TABLE_TYPE = 'BASE TABLE' ").CopyToDataTable();
         ddlTableName.ucIsRequire = true;
         ddlTableName.ucSourceDictionary = Util.getDictionary(dtSchema.DefaultView.ToTable(true, "TABLE_NAME,TABLE_DESCRIPTION".Split(',')));
         ddlTableName.Refresh();
@@ -276,9 +276,9 @@ public partial class Util_AppTableLogQry : SecurePage
         DivQryResult.Visible = true;
         //基礎設定
         Dictionary<string, string> dicDisplay = new Dictionary<string, string>();
-        for (int i = 0; i < ((string[])ViewState["_TablePKFieldList"]).Count(); i++)
+        for (int i = 0; i < ((string[])PageViewState["_TablePKFieldList"]).Count(); i++)
         {
-            dicDisplay.Add(((string[])ViewState["_TablePKFieldList"])[i], ((string[])ViewState["_TablePKFieldList"])[i]);
+            dicDisplay.Add(((string[])PageViewState["_TablePKFieldList"])[i], ((string[])PageViewState["_TablePKFieldList"])[i]);
         }
         dicDisplay.Add("TableLogType", "LogType");
         dicDisplay.Add("TableLogUser", "LogUser");
@@ -286,7 +286,7 @@ public partial class Util_AppTableLogQry : SecurePage
 
         ucGridView1.ucDBName = _DBName;
         ucGridView1.ucDataQrySQL = _QryResultSQL;
-        ucGridView1.ucDataKeyList = (string[])ViewState["_TablePKFieldList"];
+        ucGridView1.ucDataKeyList = (string[])PageViewState["_TablePKFieldList"];
         ucGridView1.ucSortExpression = "";
         ucGridView1.ucSortDirection = "";
 

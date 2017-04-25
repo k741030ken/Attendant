@@ -525,9 +525,9 @@ public class FlowUtility
                         empID = thisLogRow["OTEmpID"].ToString();
                         sOrganID = thisLogRow["EmpOrganID"].ToString();
                         sFlowOrganID = thisLogRow["EmpFlowOrganID"].ToString();
-                        for (var i = dt.Rows.Count - 2; i >= 0; i--)
+                        for (var i = logdt.Rows.Count - 2; i >= 0; i--)
                         {
-                            var item = dt.Rows[i];
+                            var item = logdt.Rows[i];
                             if (item["SignLine"].ToString() != "3" && item["SignLine"].ToString() == signLine)
                             {
                                 empID = item["ApplyID"].ToString();

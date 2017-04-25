@@ -458,6 +458,11 @@ Partial Class OV_OV8001
 
             If Not bFlowSeq Then
                 Throw New Exception("請輸入關卡序號!!")
+            Else
+                txtFlowSeq.Text = Integer.Parse(sFlowSeq).ToString()
+                'If sFlowSeq.Length < 2 Then
+                '    Throw New Exception("關卡序號需輸入兩位數。ex: 01 ")
+                'End If
             End If
 
             If Not bFlowName Then
@@ -530,6 +535,9 @@ Partial Class OV_OV8001
             Dim bFlowSN = Not String.IsNullOrEmpty(sFlowSN)
             Dim sFlowSeq = StringIIF(txtFlowSeq.Text) '關卡序號
             Dim bFlowSeq = Not String.IsNullOrEmpty(sFlowSeq)
+            If bFlowSeq Then
+                sFlowSeq = Integer.Parse(sFlowSeq).ToString()
+            End If
             Dim sFlowName = StringIIF(txtFlowName.Text) '流程名稱
             Dim bFlowName = Not String.IsNullOrEmpty(sFlowName)
             Dim sFlowSeqName = StringIIF(txtFlowSeqName.Text) '關卡名稱

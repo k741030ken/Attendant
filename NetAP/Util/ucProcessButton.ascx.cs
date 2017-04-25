@@ -34,21 +34,37 @@ public partial class Util_ucProcessButton : BaseUserControl
     }
 
     /// <summary>
+    /// 按鈕是否啟用(預設 true)
+    /// </summary>
+    public bool ucBtnEnabled
+    {
+        //2017.03.21 新增
+        get
+        {
+            return btnStart.Enabled;
+        }
+        set
+        {
+            btnStart.Enabled = value;
+        }
+    }
+
+    /// <summary>
     /// 按鈕抬頭
     /// </summary>
     public string ucBtnCaption
     {
         get
         {
-            if (ViewState["_BtnCaption"] == null)
+            if (PageViewState["_BtnCaption"] == null)
             {
-                ViewState["_BtnCaption"] = RS.Resources.Msg_ProcessStart;
+                PageViewState["_BtnCaption"] = RS.Resources.Msg_ProcessStart;
             }
-            return (string)(ViewState["_BtnCaption"]);
+            return (string)(PageViewState["_BtnCaption"]);
         }
         set
         {
-            ViewState["_BtnCaption"] = value;
+            PageViewState["_BtnCaption"] = value;
         }
     }
 
@@ -59,15 +75,15 @@ public partial class Util_ucProcessButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnStyle"] == null)
+            if (PageViewState["_BtnStyle"] == null)
             {
-                ViewState["_BtnStyle"] = "Util_clsBtnGray";
+                PageViewState["_BtnStyle"] = "Util_clsBtnGray";
             }
-            return (string)(ViewState["_BtnStyle"]);
+            return (string)(PageViewState["_BtnStyle"]);
         }
         set
         {
-            ViewState["_BtnStyle"] = value;
+            PageViewState["_BtnStyle"] = value;
         }
     }
 
@@ -78,15 +94,15 @@ public partial class Util_ucProcessButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnWidth"] == null)
+            if (PageViewState["_BtnWidth"] == null)
             {
-                ViewState["_BtnWidth"] = 80;
+                PageViewState["_BtnWidth"] = 80;
             }
-            return (int)(ViewState["_BtnWidth"]);
+            return (int)(PageViewState["_BtnWidth"]);
         }
         set
         {
-            ViewState["_BtnWidth"] = value;
+            PageViewState["_BtnWidth"] = value;
         }
     }
 
@@ -97,15 +113,15 @@ public partial class Util_ucProcessButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_ConfirmMsg"] == null)
+            if (PageViewState["_ConfirmMsg"] == null)
             {
-                ViewState["_ConfirmMsg"] = RS.Resources.Msg_Confirm;
+                PageViewState["_ConfirmMsg"] = RS.Resources.Msg_Confirm;
             }
-            return ViewState["_ConfirmMsg"].ToString();
+            return PageViewState["_ConfirmMsg"].ToString();
         }
         set
         {
-            ViewState["_ConfirmMsg"] = value;
+            PageViewState["_ConfirmMsg"] = value;
         }
     }
 
@@ -116,16 +132,16 @@ public partial class Util_ucProcessButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_ProcessLightboxMsg"] == null)
+            if (PageViewState["_ProcessLightboxMsg"] == null)
             {
-                ViewState["_ProcessLightboxMsg"] = RS.Resources.Msg_ExportDataPreparing;
+                PageViewState["_ProcessLightboxMsg"] = RS.Resources.Msg_ExportDataPreparing;
             }
-            ucLightBox.ucLightBoxMsg = ViewState["_ProcessLightboxMsg"].ToString();
-            return ViewState["_ProcessLightboxMsg"].ToString();
+            ucLightBox.ucLightBoxMsg = PageViewState["_ProcessLightboxMsg"].ToString();
+            return PageViewState["_ProcessLightboxMsg"].ToString();
         }
         set
         {
-            ViewState["_ProcessLightboxMsg"] = value;
+            PageViewState["_ProcessLightboxMsg"] = value;
             ucLightBox.ucLightBoxMsg = value;
         }
     }
@@ -138,15 +154,15 @@ public partial class Util_ucProcessButton : BaseUserControl
     {
         get
         {
-            if (ViewState["_ProcessBreakEnabled"] == null)
+            if (PageViewState["_ProcessBreakEnabled"] == null)
             {
-                ViewState["_ProcessBreakEnabled"] = false;
+                PageViewState["_ProcessBreakEnabled"] = false;
             }
-            return (bool)ViewState["_ProcessBreakEnabled"];
+            return (bool)PageViewState["_ProcessBreakEnabled"];
         }
         set
         {
-            ViewState["_ProcessBreakEnabled"] = value;
+            PageViewState["_ProcessBreakEnabled"] = value;
         }
     }
     #endregion

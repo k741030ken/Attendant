@@ -294,7 +294,15 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             _OTSeq = (Request["OTSeq"] != null) ? Request["OTSeq"].ToString() : "";
             _OTFromAdvanceTxnId = (Request["OTFromAdvanceTxnId"] != null) ? Request["OTFromAdvanceTxnId"].ToString() : "";
             _OTFormNO = (Request["OTFormNO"] != null) ? Request["OTFormNO"].ToString() : "";
-            _OTTxnID = (Request["OTTxnID"] != null) ? Request["OTTxnID"].ToString() : "";
+
+            /// <summary>
+            /// //-------2017/04/20-進行修改後要同步更新OTTxnID
+            /// 利用ViewState紀錄進行修改後的最新OTTxnID值，只要Commit成功則把ViewState和_OTTxnID更新成新的OTTxnID值
+            /// </summary>
+            //_OTTxnID = (Request["OTTxnID"] != null) ? Request["OTTxnID"].ToString() : "";
+            _OTTxnID = (ViewState["_OTTxnID"] != null && ViewState["_OTTxnID"].ToString().Trim() != string.Empty) ? ViewState["_OTTxnID"].ToString() : Request["OTTxnID"] != null ? Request["OTTxnID"].ToString() : string.Empty;
+            //--------------------------------
+            
             LoadData();
             //加班類型
             DataTable dtType = at.QueryData("Code,CodeCName", "AT_CodeMap", " AND TabName='OverTime' AND FldName='OverTimeType'");
@@ -440,7 +448,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
 
         if (_Sex != "" && _Sex == "2")
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 //從10點開始
                 if (Convert.ToInt32(_OTStartTime.Substring(0, 2)) == 22)
@@ -500,7 +508,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         if (_OTStartDate == _OTEndDate)
         {
             cntTotal = (Convert.ToDouble(_OTEndTime.Substring(0, 2)) * 60 + Convert.ToDouble(_OTEndTime.Substring(2, 2))) - (Convert.ToDouble(_OTStartTime.Substring(0, 2)) * 60 + Convert.ToDouble(_OTStartTime.Substring(2, 2)));
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 #region "計算時段"
                 string returnPeriodCount = "";
@@ -588,7 +596,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         {
             cntStart = (23 - (Convert.ToDouble(_OTStartTime.Substring(0, 2)))) * 60 + (60 - Convert.ToDouble(_OTStartTime.Substring(2, 2)));
             cntEnd = (Convert.ToDouble(_OTEndTime.Substring(0, 2))) * 60 + Convert.ToDouble(_OTEndTime.Substring(2, 2));
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 #region "計算時段"
                 string returnPeriodCount = "";
@@ -697,10 +705,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     //加班申請範圍
                     TimeSpan totalBefore = (DateTime.Now.Date).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -721,7 +729,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                         ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
                         return;
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         //檢查到職日以前不可以加
                         if (Convert.ToDateTime(ucDateStart.ucSelectedDate) < Convert.ToDateTime(_EmpDate))
@@ -760,7 +768,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 TimeSpan total = (Convert.ToDateTime(ucDateEnd.ucSelectedDate)).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
                 TimeSpan totalBefore = (DateTime.Now.Date).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -795,7 +803,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
                     return;
                 }
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     //檢查到職日以前不可以加
                     if (Convert.ToDateTime(ucDateStart.ucSelectedDate) < Convert.ToDateTime(_EmpDate))
@@ -858,7 +866,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         }
         if (OTTimeStart.ucDefaultSelectedHH != "請選擇" && OTTimeStart.ucDefaultSelectedMM != "請選擇")
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 if (DateTime.Now.Date == Convert.ToDateTime(ucDateStart.ucSelectedDate))
                 {
@@ -1003,7 +1011,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1111,7 +1119,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1363,7 +1371,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1467,7 +1475,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1763,7 +1771,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
     {
         if (flag == "2")
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 if (DateTime.Now < Convert.ToDateTime(ucDateStart.ucSelectedDate) || DateTime.Now < Convert.ToDateTime(ucDateEnd.ucSelectedDate))
                 {
@@ -3135,7 +3143,9 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         double cntTotal = 0;
         getCntStartAndCntEnd(out cntStart, out cntEnd);
         string mealOver = at.MealJudge(cntStart, Convert.ToDouble(txtMealTime.Text));
-
+        //-------2017/04/20-進行修改後要同步更新OTTxnID
+        string strOTTxnID = string.Empty;
+        //--------------------------------
         string attach = at.QueryAtt(_AttachID, _OTCompID,_EmpID);
         if (string.IsNullOrEmpty(attach))
         {
@@ -3197,6 +3207,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 {
                     sb.Append(" AdjustInvalidDate='', "); //失效時間
                 }
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                strOTTxnID = (_OTCompID + _EmpID + Convert.ToDateTime(ucDateStart.ucSelectedDate).ToString("yyyyMMdd") + OTSeq.ToString("00"));
+                sb.Append(" OTTxnID='" + strOTTxnID + "', ");
+                //--------------------------------
                 sb.Append(" OTAttachment='" + attach + "', ");
                 sb.Append(" OTTotalTime='" + cntTotal + "',MealFlag='" + strcheckMealFlag + "',MealTime='" + txtMealTime.Text + "',OTTypeID='" + ddlOTTypeID.SelectedValue + "',OTReasonMemo='" + (txtOTReasonMemo.ucTextData).Replace("'", "''") + "',");
                 sb.Append(" HolidayOrNot='" + strHo + "',LastChgComp='" + UserInfo.getUserInfo().CompID + "',LastChgID='" + UserInfo.getUserInfo().UserID + "',LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
@@ -3224,6 +3238,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 {
                     sb.Append(" AdjustInvalidDate='', "); //失效時間
                 }
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                strOTTxnID = (_OTCompID + _EmpID + Convert.ToDateTime(ucDateStart.ucSelectedDate).ToString("yyyyMMdd") + OTSeq.ToString("00"));
+                sb.Append(" OTTxnID='" + strOTTxnID + "', ");
+                //--------------------------------
                 sb.Append(" OTAttachment='" + attach + "', ");
                 sb.Append(" OTTotalTime='" + cntStart + "',MealFlag='" + mealOver.Split(',')[0] + "',MealTime='" + mealOver.Split(',')[1] + "',OTTypeID='" + ddlOTTypeID.SelectedValue + "',OTReasonMemo='" + (txtOTReasonMemo.ucTextData).Replace("'", "''") + "',");
                 sb.Append(" HolidayOrNot='" + strHo1 + "',LastChgComp='" + UserInfo.getUserInfo().CompID + "',LastChgID='" + UserInfo.getUserInfo().UserID + "',LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
@@ -3237,7 +3255,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
 
                 OTSeq_1 = at.QuerySeq("OverTimeDeclaration", _OTCompID, _EmpID, ucDateEnd.ucSelectedDate);
                 sb.Append(" INSERT INTO OverTimeDeclaration(OTCompID,OTEmpID,OTStartDate,OTEndDate,OTSeq,OTFromAdvanceTxnId,OTTxnID,OTSeqNo,DeptID,OrganID,DeptName,OrganName,FlowCaseID,OTStartTime,OTEndTime,OTTotalTime,SalaryOrAdjust,AdjustInvalidDate,AdjustStatus,AdjustDate,MealFlag,MealTime,OTTypeID,OTReasonID,OTReasonMemo,OTAttachment,OTFormNO,OTRegisterID,OTRegisterDate,OTStatus,OTValidDate,OTValidID,OTRejectDate,OTRejectID,OTGovernmentNo,OTSalaryPaid,HolidayOrNot,ProcessDate,OTPayDate,OTModifyDate,OTRemark,KeyInComp,KeyInID,HRKeyInFlag,LastChgComp,LastChgID,LastChgDate) ");
-                sb.Append(" SELECT  OTCompID,OTEmpID,'" + ucDateEnd.ucSelectedDate + "','" + ucDateEnd.ucSelectedDate + "','" + OTSeq_1 + "',OTFromAdvanceTxnId,OTTxnID,'2',DeptID,OrganID,DeptName,OrganName,FlowCaseID,'0000','" + OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM + "','" + cntEnd + "',SalaryOrAdjust,AdjustInvalidDate,AdjustStatus,AdjustDate,MealFlag,'" + mealOver.Split(',')[3] + "',OTTypeID,OTReasonID,OTReasonMemo,OTAttachment,OTFormNO,OTRegisterID,OTRegisterDate,OTStatus,OTValidDate,OTValidID,OTRejectDate,OTRejectID,OTGovernmentNo,OTSalaryPaid,'" + strHo2 + "',ProcessDate,OTPayDate,OTModifyDate,OTRemark,KeyInComp,KeyInID,HRKeyInFlag,LastChgComp,LastChgID,LastChgDate FROM OverTimeDeclaration");
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                //sb.Append(" SELECT  OTCompID,OTEmpID,'" + ucDateEnd.ucSelectedDate + "','" + ucDateEnd.ucSelectedDate + "','" + OTSeq_1 + "',OTFromAdvanceTxnId,OTTxnID,'2',DeptID,OrganID,DeptName,OrganName,FlowCaseID,'0000','" + OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM + "','" + cntEnd + "',SalaryOrAdjust,AdjustInvalidDate,AdjustStatus,AdjustDate,MealFlag,'" + mealOver.Split(',')[3] + "',OTTypeID,OTReasonID,OTReasonMemo,OTAttachment,OTFormNO,OTRegisterID,OTRegisterDate,OTStatus,OTValidDate,OTValidID,OTRejectDate,OTRejectID,OTGovernmentNo,OTSalaryPaid,'" + strHo2 + "',ProcessDate,OTPayDate,OTModifyDate,OTRemark,KeyInComp,KeyInID,HRKeyInFlag,LastChgComp,LastChgID,LastChgDate FROM OverTimeDeclaration");
+                sb.Append(" SELECT  OTCompID,OTEmpID,'" + ucDateEnd.ucSelectedDate + "','" + ucDateEnd.ucSelectedDate + "','" + OTSeq_1 + "',OTFromAdvanceTxnId,'" + strOTTxnID + "','2',DeptID,OrganID,DeptName,OrganName,FlowCaseID,'0000','" + OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM + "','" + cntEnd + "',SalaryOrAdjust,AdjustInvalidDate,AdjustStatus,AdjustDate,MealFlag,'" + mealOver.Split(',')[3] + "',OTTypeID,OTReasonID,OTReasonMemo,OTAttachment,OTFormNO,OTRegisterID,OTRegisterDate,OTStatus,OTValidDate,OTValidID,OTRejectDate,OTRejectID,OTGovernmentNo,OTSalaryPaid,'" + strHo2 + "',ProcessDate,OTPayDate,OTModifyDate,OTRemark,KeyInComp,KeyInID,HRKeyInFlag,LastChgComp,LastChgID,LastChgDate FROM OverTimeDeclaration");
+                //--------------------------------
                 sb.Append(" WHERE OTCompID='" + _OTCompID + "'");
                 sb.Append(" AND OTEmpID='" + _EmpID + "'");
                 sb.Append(" AND OTStartDate='" + ucDateStart.ucSelectedDate + "'");
@@ -3246,7 +3267,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 sb.Append(" AND OTEndTime='2359'");
             }
         }
-        else
+        else //原本是跨日單
         {
             if (ucDateStart.ucSelectedDate == ucDateEnd.ucSelectedDate) //不跨日
             {
@@ -3263,6 +3284,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 {
                     sb.Append(" AdjustInvalidDate='', "); //失效時間
                 }
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                strOTTxnID = (_OTCompID + _EmpID + Convert.ToDateTime(ucDateStart.ucSelectedDate).ToString("yyyyMMdd") + OTSeq.ToString("00"));
+                sb.Append(" OTTxnID='" + strOTTxnID + "', ");
+                //--------------------------------
                 sb.Append(" OTAttachment='" + attach + "', ");
                 sb.Append(" OTTotalTime='" + cntTotal + "',MealFlag='" + strcheckMealFlag + "',MealTime='" + txtMealTime.Text + "',OTTypeID='" + ddlOTTypeID.SelectedValue + "',OTReasonMemo='" + (txtOTReasonMemo.ucTextData).Replace("'", "''") + "',");
                 sb.Append(" HolidayOrNot='" + strHo + "',LastChgComp='" + UserInfo.getUserInfo().CompID + "',LastChgID='" + UserInfo.getUserInfo().UserID + "',LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
@@ -3298,6 +3323,10 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 {
                     sb.Append(" AdjustInvalidDate='', "); //失效時間
                 }
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                strOTTxnID = (_OTCompID + _EmpID + Convert.ToDateTime(ucDateStart.ucSelectedDate).ToString("yyyyMMdd") + OTSeq.ToString("00"));
+                sb.Append(" OTTxnID='" + strOTTxnID + "', ");
+                //--------------------------------
                 sb.Append(" OTAttachment='" + attach + "', ");
                 sb.Append(" OTTotalTime='" + cntStart + "',MealFlag='" + mealOver.Split(',')[0] + "',MealTime='" + mealOver.Split(',')[1] + "',OTTypeID='" + ddlOTTypeID.SelectedValue + "',OTReasonMemo='" + (txtOTReasonMemo.ucTextData).Replace("'", "''") + "',");
                 sb.Append(" HolidayOrNot='" + strHo1 + "',LastChgComp='" + UserInfo.getUserInfo().CompID + "',LastChgID='" + UserInfo.getUserInfo().UserID + "',LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
@@ -3320,6 +3349,9 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 {
                     sb.Append(" AdjustInvalidDate='', "); //失效時間
                 }
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                sb.Append(" OTTxnID='" + strOTTxnID + "', ");
+                //--------------------------------
                 sb.Append(" OTAttachment='" + attach + "', ");
                 sb.Append(" OTTotalTime='" + cntEnd + "',MealFlag='" + mealOver.Split(',')[0] + "',MealTime='" + mealOver.Split(',')[3] + "',OTTypeID='" + ddlOTTypeID.SelectedValue + "',OTReasonMemo='" + (txtOTReasonMemo.ucTextData).Replace("'", "''") + "',");
                 sb.Append(" HolidayOrNot='" + strHo2 + "',LastChgComp='" + UserInfo.getUserInfo().CompID + "',LastChgID='" + UserInfo.getUserInfo().UserID + "',LastChgDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "'");
@@ -3339,6 +3371,11 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             {
                 db.ExecuteNonQuery(sb.BuildCommand(), tx);
                 tx.Commit();
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                //如果Commit成功則將全域的OTTxnID與ViewState更新成最新的OTTxnID
+                _OTTxnID = strOTTxnID;
+                ViewState["_OTTxnID"] = strOTTxnID;
+                //--------------------------------
                 _OTStartDate = ucDateStart.ucSelectedDate;
                 _OTEndDate = ucDateEnd.ucSelectedDate;
                 _OTStartTime = OTTimeStart.ucDefaultSelectedHH + OTTimeStart.ucDefaultSelectedMM;
@@ -3352,6 +3389,11 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             {
                 LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
                 tx.Rollback();//資料更新失敗
+                //-------2017/04/20-進行修改後要同步更新OTTxnID
+                //如果Commit成功則將全域的OTTxnID與ViewState更新成最新的OTTxnID
+                //失敗則清空ViewState值
+                ViewState["_OTTxnID"] = string.Empty;
+                //--------------------------------
                 Util.MsgBox("暫存失敗！");
             }
             finally
@@ -3416,7 +3458,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     strShowValue += ucDateEnd.ucSelectedDate + ",";
                     strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
 
-                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnAfter", oAssTo, ""))
+                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), nextIsLastFlow ? "btnAfterLast" : "btnAfter", oAssTo, ""))
                     {
                         string a = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
                         //更新AssignToName(部門+員工姓名)

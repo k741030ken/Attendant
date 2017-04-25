@@ -78,18 +78,18 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_AclEnabled"] == null)
+            if (PageViewState["_AclEnabled"] == null)
             {
-                ViewState["_AclEnabled"] = false;
+                PageViewState["_AclEnabled"] = false;
             }
-            return (bool)(ViewState["_AclEnabled"]);
+            return (bool)(PageViewState["_AclEnabled"]);
         }
         set
         {
-            ViewState["_AclEnabled"] = value;
+            PageViewState["_AclEnabled"] = value;
             if ((bool)value == true)
             {
-                ViewState["_AclEnabled"] = AclExpress.IsAclPage();
+                PageViewState["_AclEnabled"] = AclExpress.IsAclPage();
             }
         }
     }
@@ -102,15 +102,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2016.07.28 新增
         get
         {
-            if (ViewState["_CmdBtnHorizontalAlign"] == null)
+            if (PageViewState["_CmdBtnHorizontalAlign"] == null)
             {
-                ViewState["_CmdBtnHorizontalAlign"] = HorizontalAlign.Left;
+                PageViewState["_CmdBtnHorizontalAlign"] = HorizontalAlign.Left;
             }
-            return (HorizontalAlign)(ViewState["_CmdBtnHorizontalAlign"]);
+            return (HorizontalAlign)(PageViewState["_CmdBtnHorizontalAlign"]);
         }
         set
         {
-            ViewState["_CmdBtnHorizontalAlign"] = value;
+            PageViewState["_CmdBtnHorizontalAlign"] = value;
         }
 
     }
@@ -123,15 +123,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsAutoRefresh"] == null)
+            if (PageViewState["_IsAutoRefresh"] == null)
             {
-                ViewState["_IsAutoRefresh"] = true;
+                PageViewState["_IsAutoRefresh"] = true;
             }
-            return (bool)(ViewState["_IsAutoRefresh"]);
+            return (bool)(PageViewState["_IsAutoRefresh"]);
         }
         set
         {
-            ViewState["_IsAutoRefresh"] = value;
+            PageViewState["_IsAutoRefresh"] = value;
         }
     }
 
@@ -142,11 +142,11 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_doPostBackClientID"] == null)
+            if (PageViewState["_doPostBackClientID"] == null)
             {
-                ViewState["_doPostBackClientID"] = this.UniqueID; // 2016.06.29 調整作法
+                PageViewState["_doPostBackClientID"] = this.UniqueID; // 2016.06.29 調整作法
             }
-            return (string)(ViewState["_doPostBackClientID"]);
+            return (string)(PageViewState["_doPostBackClientID"]);
         }
     }
 
@@ -158,15 +158,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefaultTooltipTitle"] == null)
+            if (PageViewState["_DefaultTooltipTitle"] == null)
             {
-                ViewState["_DefaultTooltipTitle"] = RS.Resources.Msg_DefaultTooltipTitle; //2016.07.29 調整
+                PageViewState["_DefaultTooltipTitle"] = RS.Resources.Msg_DefaultTooltipTitle; //2016.07.29 調整
             }
-            return ViewState["_DefaultTooltipTitle"].ToString();
+            return PageViewState["_DefaultTooltipTitle"].ToString();
         }
         set
         {
-            ViewState["_DefaultTooltipTitle"] = value;
+            PageViewState["_DefaultTooltipTitle"] = value;
         }
     }
 
@@ -177,15 +177,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_HoverTooltipTemplete"] == null)
+            if (PageViewState["_HoverTooltipTemplete"] == null)
             {
-                ViewState["_HoverTooltipTemplete"] = new HoverTooltipTemplete(HoverTooltipTemplete.TooltipType.Simple);
+                PageViewState["_HoverTooltipTemplete"] = new HoverTooltipTemplete(HoverTooltipTemplete.TooltipType.Simple);
             }
-            return (HoverTooltipTemplete)(ViewState["_HoverTooltipTemplete"]);
+            return (HoverTooltipTemplete)(PageViewState["_HoverTooltipTemplete"]);
         }
         set
         {
-            ViewState["_HoverTooltipTemplete"] = value;
+            PageViewState["_HoverTooltipTemplete"] = value;
         }
     }
 
@@ -201,15 +201,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataDisplayToolTipDefinition"] == null)
+            if (PageViewState["_DataDisplayToolTipDefinition"] == null)
             {
-                ViewState["_DataDisplayToolTipDefinition"] = new Dictionary<string, string>();
+                PageViewState["_DataDisplayToolTipDefinition"] = new Dictionary<string, string>();
             }
-            return (Dictionary<string, string>)(ViewState["_DataDisplayToolTipDefinition"]);
+            return (Dictionary<string, string>)(PageViewState["_DataDisplayToolTipDefinition"]);
         }
         set
         {
-            ViewState["_DataDisplayToolTipDefinition"] = value;
+            PageViewState["_DataDisplayToolTipDefinition"] = value;
         }
     }
     #endregion
@@ -222,15 +222,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableAdd"] == null)
+            if (PageViewState["_IsEnableAdd"] == null)
             {
-                ViewState["_IsEnableAdd"] = false;
+                PageViewState["_IsEnableAdd"] = false;
             }
-            return (bool)(ViewState["_IsEnableAdd"]);
+            return (bool)(PageViewState["_IsEnableAdd"]);
         }
         set
         {
-            ViewState["_IsEnableAdd"] = value;
+            PageViewState["_IsEnableAdd"] = value;
         }
     }
 
@@ -241,15 +241,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Add"] == null)
+            if (PageViewState["_Msg_Add"] == null)
             {
-                ViewState["_Msg_Add"] = RS.Resources.GridView_Add;
+                PageViewState["_Msg_Add"] = RS.Resources.GridView_Add;
             }
-            return ViewState["_Msg_Add"].ToString();
+            return PageViewState["_Msg_Add"].ToString();
         }
         set
         {
-            ViewState["_Msg_Add"] = value;
+            PageViewState["_Msg_Add"] = value;
         }
     }
 
@@ -260,15 +260,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Add"] == null)
+            if (PageViewState["_Icon_Add"] == null)
             {
-                ViewState["_Icon_Add"] = Util.Icon_Add;
+                PageViewState["_Icon_Add"] = Util.Icon_Add;
             }
-            return ViewState["_Icon_Add"].ToString();
+            return PageViewState["_Icon_Add"].ToString();
         }
         set
         {
-            ViewState["_Icon_Add"] = value;
+            PageViewState["_Icon_Add"] = value;
         }
     }
     #endregion
@@ -281,15 +281,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableDataDump"] == null)
+            if (PageViewState["_IsEnableDataDump"] == null)
             {
-                ViewState["_IsEnableDataDump"] = false;
+                PageViewState["_IsEnableDataDump"] = false;
             }
-            return (bool)(ViewState["_IsEnableDataDump"]);
+            return (bool)(PageViewState["_IsEnableDataDump"]);
         }
         set
         {
-            ViewState["_IsEnableDataDump"] = value;
+            PageViewState["_IsEnableDataDump"] = value;
         }
     }
 
@@ -300,15 +300,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_DataDump"] == null)
+            if (PageViewState["_Msg_DataDump"] == null)
             {
-                ViewState["_Msg_DataDump"] = RS.Resources.GridView_DataDump;
+                PageViewState["_Msg_DataDump"] = RS.Resources.GridView_DataDump;
             }
-            return ViewState["_Msg_DataDump"].ToString();
+            return PageViewState["_Msg_DataDump"].ToString();
         }
         set
         {
-            ViewState["_Msg_DataDump"] = value;
+            PageViewState["_Msg_DataDump"] = value;
         }
     }
 
@@ -319,15 +319,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_DataDump"] == null)
+            if (PageViewState["_Icon_DataDump"] == null)
             {
-                ViewState["_Icon_DataDump"] = Util.Icon_DataDump;
+                PageViewState["_Icon_DataDump"] = Util.Icon_DataDump;
             }
-            return ViewState["_Icon_DataDump"].ToString();
+            return PageViewState["_Icon_DataDump"].ToString();
         }
         set
         {
-            ViewState["_Icon_DataDump"] = value;
+            PageViewState["_Icon_DataDump"] = value;
         }
     }
     #endregion
@@ -340,15 +340,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Check"] == null)
+            if (PageViewState["_Msg_Check"] == null)
             {
-                ViewState["_Msg_Check"] = RS.Resources.GridView_Check;
+                PageViewState["_Msg_Check"] = RS.Resources.GridView_Check;
             }
-            return ViewState["_Msg_Check"].ToString();
+            return PageViewState["_Msg_Check"].ToString();
         }
         set
         {
-            ViewState["_Msg_Check"] = value;
+            PageViewState["_Msg_Check"] = value;
         }
     }
 
@@ -359,15 +359,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableCheck"] == null)
+            if (PageViewState["_IsEnableCheck"] == null)
             {
-                ViewState["_IsEnableCheck"] = false;
+                PageViewState["_IsEnableCheck"] = false;
             }
-            return (bool)(ViewState["_IsEnableCheck"]);
+            return (bool)(PageViewState["_IsEnableCheck"]);
         }
         set
         {
-            ViewState["_IsEnableCheck"] = value;
+            PageViewState["_IsEnableCheck"] = value;
         }
     }
 
@@ -379,15 +379,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CheckEnabledDataColName"] == null)
+            if (PageViewState["_CheckEnabledDataColName"] == null)
             {
-                ViewState["_CheckEnabledDataColName"] = "";
+                PageViewState["_CheckEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_CheckEnabledDataColName"]);
+            return (string)(PageViewState["_CheckEnabledDataColName"]);
         }
         set
         {
-            ViewState["_CheckEnabledDataColName"] = value;
+            PageViewState["_CheckEnabledDataColName"] = value;
         }
     }
     #endregion
@@ -401,15 +401,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_CheckAll"] == null)
+            if (PageViewState["_Msg_CheckAll"] == null)
             {
-                ViewState["_Msg_CheckAll"] = RS.Resources.GridView_CheckAll;
+                PageViewState["_Msg_CheckAll"] = RS.Resources.GridView_CheckAll;
             }
-            return ViewState["_Msg_CheckAll"].ToString();
+            return PageViewState["_Msg_CheckAll"].ToString();
         }
         set
         {
-            ViewState["_Msg_CheckAll"] = value;
+            PageViewState["_Msg_CheckAll"] = value;
         }
     }
     #endregion
@@ -423,15 +423,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableCopy"] == null)
+            if (PageViewState["_IsEnableCopy"] == null)
             {
-                ViewState["_IsEnableCopy"] = false;
+                PageViewState["_IsEnableCopy"] = false;
             }
-            return (bool)(ViewState["_IsEnableCopy"]);
+            return (bool)(PageViewState["_IsEnableCopy"]);
         }
         set
         {
-            ViewState["_IsEnableCopy"] = value;
+            PageViewState["_IsEnableCopy"] = value;
         }
     }
 
@@ -443,15 +443,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CopyEnabledDataColName"] == null)
+            if (PageViewState["_CopyEnabledDataColName"] == null)
             {
-                ViewState["_CopyEnabledDataColName"] = "";
+                PageViewState["_CopyEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_CopyEnabledDataColName"]);
+            return (string)(PageViewState["_CopyEnabledDataColName"]);
         }
         set
         {
-            ViewState["_CopyEnabledDataColName"] = value;
+            PageViewState["_CopyEnabledDataColName"] = value;
         }
     }
 
@@ -462,15 +462,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Copy"] == null)
+            if (PageViewState["_Msg_Copy"] == null)
             {
-                ViewState["_Msg_Copy"] = RS.Resources.GridView_Copy;
+                PageViewState["_Msg_Copy"] = RS.Resources.GridView_Copy;
             }
-            return ViewState["_Msg_Copy"].ToString();
+            return PageViewState["_Msg_Copy"].ToString();
         }
         set
         {
-            ViewState["_Msg_Copy"] = value;
+            PageViewState["_Msg_Copy"] = value;
         }
     }
 
@@ -481,15 +481,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Copy"] == null)
+            if (PageViewState["_Icon_Copy"] == null)
             {
-                ViewState["_Icon_Copy"] = Util.Icon_Copy;
+                PageViewState["_Icon_Copy"] = Util.Icon_Copy;
             }
-            return ViewState["_Icon_Copy"].ToString();
+            return PageViewState["_Icon_Copy"].ToString();
         }
         set
         {
-            ViewState["_Icon_Copy"] = value;
+            PageViewState["_Icon_Copy"] = value;
         }
     }
     #endregion
@@ -502,15 +502,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableDelete"] == null)
+            if (PageViewState["_IsEnableDelete"] == null)
             {
-                ViewState["_IsEnableDelete"] = false;
+                PageViewState["_IsEnableDelete"] = false;
             }
-            return (bool)(ViewState["_IsEnableDelete"]);
+            return (bool)(PageViewState["_IsEnableDelete"]);
         }
         set
         {
-            ViewState["_IsEnableDelete"] = value;
+            PageViewState["_IsEnableDelete"] = value;
         }
     }
 
@@ -522,15 +522,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteEnabledDataColName"] == null)
+            if (PageViewState["_DeleteEnabledDataColName"] == null)
             {
-                ViewState["_DeleteEnabledDataColName"] = "";
+                PageViewState["_DeleteEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_DeleteEnabledDataColName"]);
+            return (string)(PageViewState["_DeleteEnabledDataColName"]);
         }
         set
         {
-            ViewState["_DeleteEnabledDataColName"] = value;
+            PageViewState["_DeleteEnabledDataColName"] = value;
         }
     }
 
@@ -541,15 +541,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Delete"] == null)
+            if (PageViewState["_Msg_Delete"] == null)
             {
-                ViewState["_Msg_Delete"] = RS.Resources.GridView_Delete;
+                PageViewState["_Msg_Delete"] = RS.Resources.GridView_Delete;
             }
-            return ViewState["_Msg_Delete"].ToString();
+            return PageViewState["_Msg_Delete"].ToString();
         }
         set
         {
-            ViewState["_Msg_Delete"] = value;
+            PageViewState["_Msg_Delete"] = value;
         }
     }
 
@@ -560,15 +560,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_DeleteConfirm"] == null)
+            if (PageViewState["_Msg_DeleteConfirm"] == null)
             {
-                ViewState["_Msg_DeleteConfirm"] = RS.Resources.GridView_DeleteConfirm;
+                PageViewState["_Msg_DeleteConfirm"] = RS.Resources.GridView_DeleteConfirm;
             }
-            return ViewState["_Msg_DeleteConfirm"].ToString();
+            return PageViewState["_Msg_DeleteConfirm"].ToString();
         }
         set
         {
-            ViewState["_Msg_DeleteConfirm"] = value;
+            PageViewState["_Msg_DeleteConfirm"] = value;
         }
     }
 
@@ -579,15 +579,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Delete"] == null)
+            if (PageViewState["_Icon_Delete"] == null)
             {
-                ViewState["_Icon_Delete"] = Util.Icon_Delete;
+                PageViewState["_Icon_Delete"] = Util.Icon_Delete;
             }
-            return ViewState["_Icon_Delete"].ToString();
+            return PageViewState["_Icon_Delete"].ToString();
         }
         set
         {
-            ViewState["_Icon_Delete"] = value;
+            PageViewState["_Icon_Delete"] = value;
         }
     }
     #endregion
@@ -600,15 +600,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableDownload"] == null)
+            if (PageViewState["_IsEnableDownload"] == null)
             {
-                ViewState["_IsEnableDownload"] = false;
+                PageViewState["_IsEnableDownload"] = false;
             }
-            return (bool)(ViewState["_IsEnableDownload"]);
+            return (bool)(PageViewState["_IsEnableDownload"]);
         }
         set
         {
-            ViewState["_IsEnableDownload"] = value;
+            PageViewState["_IsEnableDownload"] = value;
         }
     }
 
@@ -620,15 +620,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DownloadEnabledDataColName"] == null)
+            if (PageViewState["_DownloadEnabledDataColName"] == null)
             {
-                ViewState["_DownloadEnabledDataColName"] = "";
+                PageViewState["_DownloadEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_DownloadEnabledDataColName"]);
+            return (string)(PageViewState["_DownloadEnabledDataColName"]);
         }
         set
         {
-            ViewState["_DownloadEnabledDataColName"] = value;
+            PageViewState["_DownloadEnabledDataColName"] = value;
         }
     }
 
@@ -639,15 +639,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Download"] == null)
+            if (PageViewState["_Msg_Download"] == null)
             {
-                ViewState["_Msg_Download"] = RS.Resources.GridView_Download;
+                PageViewState["_Msg_Download"] = RS.Resources.GridView_Download;
             }
-            return ViewState["_Msg_Download"].ToString();
+            return PageViewState["_Msg_Download"].ToString();
         }
         set
         {
-            ViewState["_Msg_Download"] = value;
+            PageViewState["_Msg_Download"] = value;
         }
     }
 
@@ -658,15 +658,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Download"] == null)
+            if (PageViewState["_Icon_Download"] == null)
             {
-                ViewState["_Icon_Download"] = Util.Icon_Download;
+                PageViewState["_Icon_Download"] = Util.Icon_Download;
             }
-            return ViewState["_Icon_Download"].ToString();
+            return PageViewState["_Icon_Download"].ToString();
         }
         set
         {
-            ViewState["_Icon_Download"] = value;
+            PageViewState["_Icon_Download"] = value;
         }
     }
     #endregion
@@ -679,15 +679,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableEdit"] == null)
+            if (PageViewState["_IsEnableEdit"] == null)
             {
-                ViewState["_IsEnableEdit"] = false;
+                PageViewState["_IsEnableEdit"] = false;
             }
-            return (bool)(ViewState["_IsEnableEdit"]);
+            return (bool)(PageViewState["_IsEnableEdit"]);
         }
         set
         {
-            ViewState["_IsEnableEdit"] = value;
+            PageViewState["_IsEnableEdit"] = value;
         }
     }
 
@@ -699,15 +699,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_EditEnabledDataColName"] == null)
+            if (PageViewState["_EditEnabledDataColName"] == null)
             {
-                ViewState["_EditEnabledDataColName"] = "";
+                PageViewState["_EditEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_EditEnabledDataColName"]);
+            return (string)(PageViewState["_EditEnabledDataColName"]);
         }
         set
         {
-            ViewState["_EditEnabledDataColName"] = value;
+            PageViewState["_EditEnabledDataColName"] = value;
         }
     }
 
@@ -718,15 +718,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Edit"] == null)
+            if (PageViewState["_Msg_Edit"] == null)
             {
-                ViewState["_Msg_Edit"] = RS.Resources.GridView_Edit;
+                PageViewState["_Msg_Edit"] = RS.Resources.GridView_Edit;
             }
-            return ViewState["_Msg_Edit"].ToString();
+            return PageViewState["_Msg_Edit"].ToString();
         }
         set
         {
-            ViewState["_Msg_Edit"] = value;
+            PageViewState["_Msg_Edit"] = value;
         }
     }
 
@@ -737,15 +737,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Edit"] == null)
+            if (PageViewState["_Icon_Edit"] == null)
             {
-                ViewState["_Icon_Edit"] = Util.Icon_Edit;
+                PageViewState["_Icon_Edit"] = Util.Icon_Edit;
             }
-            return ViewState["_Icon_Edit"].ToString();
+            return PageViewState["_Icon_Edit"].ToString();
         }
         set
         {
-            ViewState["_Icon_Edit"] = value;
+            PageViewState["_Icon_Edit"] = value;
         }
     }
     #endregion
@@ -759,15 +759,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableExport"] == null)
+            if (PageViewState["_IsEnableExport"] == null)
             {
-                ViewState["_IsEnableExport"] = false;
+                PageViewState["_IsEnableExport"] = false;
             }
-            return (bool)(ViewState["_IsEnableExport"]);
+            return (bool)(PageViewState["_IsEnableExport"]);
         }
         set
         {
-            ViewState["_IsEnableExport"] = value;
+            PageViewState["_IsEnableExport"] = value;
         }
     }
 
@@ -778,15 +778,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnabledExportOpenXml"] == null)
+            if (PageViewState["_IsEnabledExportOpenXml"] == null)
             {
-                ViewState["_IsEnabledExportOpenXml"] = false;
+                PageViewState["_IsEnabledExportOpenXml"] = false;
             }
-            return (bool)(ViewState["_IsEnabledExportOpenXml"]);
+            return (bool)(PageViewState["_IsEnabledExportOpenXml"]);
         }
         set
         {
-            ViewState["_IsEnabledExportOpenXml"] = value;
+            PageViewState["_IsEnabledExportOpenXml"] = value;
         }
     }
 
@@ -797,15 +797,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] == null)
+            if (PageViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] == null)
             {
-                ViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] = true;
+                PageViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] = true;
             }
-            return (bool)(ViewState["_ExportOpenXmlFormatByDataDisplayDefinition"]);
+            return (bool)(PageViewState["_ExportOpenXmlFormatByDataDisplayDefinition"]);
         }
         set
         {
-            ViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] = value;
+            PageViewState["_ExportOpenXmlFormatByDataDisplayDefinition"] = value;
         }
     }
 
@@ -818,15 +818,15 @@ public partial class Util_ucGridView : BaseUserControl
         // 2016.07.29 新增
         get
         {
-            if (ViewState["_ExportWordEnabled"] == null)
+            if (PageViewState["_ExportWordEnabled"] == null)
             {
-                ViewState["_ExportWordEnabled"] = false;
+                PageViewState["_ExportWordEnabled"] = false;
             }
-            return (bool)(ViewState["_ExportWordEnabled"]);
+            return (bool)(PageViewState["_ExportWordEnabled"]);
         }
         set
         {
-            ViewState["_ExportWordEnabled"] = value;
+            PageViewState["_ExportWordEnabled"] = value;
         }
     }
 
@@ -837,15 +837,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnabledExportPdf"] == null)
+            if (PageViewState["_IsEnabledExportPdf"] == null)
             {
-                ViewState["_IsEnabledExportPdf"] = false;
+                PageViewState["_IsEnabledExportPdf"] = false;
             }
-            return (bool)(ViewState["_IsEnabledExportPdf"]);
+            return (bool)(PageViewState["_IsEnabledExportPdf"]);
         }
         set
         {
-            ViewState["_IsEnabledExportPdf"] = value;
+            PageViewState["_IsEnabledExportPdf"] = value;
         }
     }
 
@@ -856,15 +856,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportAllField"] == null)
+            if (PageViewState["_ExportAllField"] == null)
             {
-                ViewState["_ExportAllField"] = false;
+                PageViewState["_ExportAllField"] = false;
             }
-            return (bool)(ViewState["_ExportAllField"]);
+            return (bool)(PageViewState["_ExportAllField"]);
         }
         set
         {
-            ViewState["_ExportAllField"] = value;
+            PageViewState["_ExportAllField"] = value;
         }
     }
 
@@ -875,15 +875,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Export"] == null)
+            if (PageViewState["_Msg_Export"] == null)
             {
-                ViewState["_Msg_Export"] = RS.Resources.GridView_Export;
+                PageViewState["_Msg_Export"] = RS.Resources.GridView_Export;
             }
-            return ViewState["_Msg_Export"].ToString();
+            return PageViewState["_Msg_Export"].ToString();
         }
         set
         {
-            ViewState["_Msg_Export"] = value;
+            PageViewState["_Msg_Export"] = value;
         }
     }
 
@@ -894,15 +894,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_ExportOpenXml"] == null)
+            if (PageViewState["_Msg_ExportOpenXml"] == null)
             {
-                ViewState["_Msg_ExportOpenXml"] = RS.Resources.GridView_Export;
+                PageViewState["_Msg_ExportOpenXml"] = RS.Resources.GridView_Export;
             }
-            return ViewState["_Msg_ExportOpenXml"].ToString();
+            return PageViewState["_Msg_ExportOpenXml"].ToString();
         }
         set
         {
-            ViewState["_Msg_ExportOpenXml"] = value;
+            PageViewState["_Msg_ExportOpenXml"] = value;
         }
     }
 
@@ -913,15 +913,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_ExportWord"] == null)
+            if (PageViewState["_Msg_ExportWord"] == null)
             {
-                ViewState["_Msg_ExportWord"] = RS.Resources.GridView_Export;
+                PageViewState["_Msg_ExportWord"] = RS.Resources.GridView_Export;
             }
-            return ViewState["_Msg_ExportWord"].ToString();
+            return PageViewState["_Msg_ExportWord"].ToString();
         }
         set
         {
-            ViewState["_Msg_ExportWord"] = value;
+            PageViewState["_Msg_ExportWord"] = value;
         }
     }
 
@@ -932,15 +932,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_ExportPDF"] == null)
+            if (PageViewState["_Msg_ExportPDF"] == null)
             {
-                ViewState["_Msg_ExportPDF"] = RS.Resources.GridView_Export;
+                PageViewState["_Msg_ExportPDF"] = RS.Resources.GridView_Export;
             }
-            return ViewState["_Msg_ExportPDF"].ToString();
+            return PageViewState["_Msg_ExportPDF"].ToString();
         }
         set
         {
-            ViewState["_Msg_ExportPDF"] = value;
+            PageViewState["_Msg_ExportPDF"] = value;
         }
     }
 
@@ -951,15 +951,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Export"] == null)
+            if (PageViewState["_Icon_Export"] == null)
             {
-                ViewState["_Icon_Export"] = Util.Icon_Excel;
+                PageViewState["_Icon_Export"] = Util.Icon_Excel;
             }
-            return ViewState["_Icon_Export"].ToString();
+            return PageViewState["_Icon_Export"].ToString();
         }
         set
         {
-            ViewState["_Icon_Export"] = value;
+            PageViewState["_Icon_Export"] = value;
         }
     }
 
@@ -970,15 +970,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_ExportOpenXml"] == null)
+            if (PageViewState["_Icon_ExportOpenXml"] == null)
             {
-                ViewState["_Icon_ExportOpenXml"] = Util.Icon_ExcelOpenXml;
+                PageViewState["_Icon_ExportOpenXml"] = Util.Icon_ExcelOpenXml;
             }
-            return ViewState["_Icon_ExportOpenXml"].ToString();
+            return PageViewState["_Icon_ExportOpenXml"].ToString();
         }
         set
         {
-            ViewState["_Icon_ExportOpenXml"] = value;
+            PageViewState["_Icon_ExportOpenXml"] = value;
         }
     }
 
@@ -989,15 +989,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_ExportWord"] == null)
+            if (PageViewState["_Icon_ExportWord"] == null)
             {
-                ViewState["_Icon_ExportWord"] = Util.Icon_Word;
+                PageViewState["_Icon_ExportWord"] = Util.Icon_Word;
             }
-            return ViewState["_Icon_ExportWord"].ToString();
+            return PageViewState["_Icon_ExportWord"].ToString();
         }
         set
         {
-            ViewState["_Icon_ExportWord"] = value;
+            PageViewState["_Icon_ExportWord"] = value;
         }
     }
 
@@ -1008,15 +1008,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_ExportPDF"] == null)
+            if (PageViewState["_Icon_ExportPDF"] == null)
             {
-                ViewState["_Icon_ExportPDF"] = Util.Icon_PDF;
+                PageViewState["_Icon_ExportPDF"] = Util.Icon_PDF;
             }
-            return ViewState["_Icon_ExportPDF"].ToString();
+            return PageViewState["_Icon_ExportPDF"].ToString();
         }
         set
         {
-            ViewState["_Icon_ExportPDF"] = value;
+            PageViewState["_Icon_ExportPDF"] = value;
         }
     }
 
@@ -1028,15 +1028,15 @@ public partial class Util_ucGridView : BaseUserControl
     {   //2016.11.23
         get
         {
-            if (ViewState["_ExportConfirm"] == null)
+            if (PageViewState["_ExportConfirm"] == null)
             {
-                ViewState["_ExportConfirm"] = "";
+                PageViewState["_ExportConfirm"] = "";
             }
-            return ViewState["_ExportConfirm"].ToString();
+            return PageViewState["_ExportConfirm"].ToString();
         }
         set
         {
-            ViewState["_ExportConfirm"] = value;
+            PageViewState["_ExportConfirm"] = value;
         }
     }
 
@@ -1047,15 +1047,15 @@ public partial class Util_ucGridView : BaseUserControl
     {   //2016.11.23
         get
         {
-            if (ViewState["_ExportOpenXmlConfirm"] == null)
+            if (PageViewState["_ExportOpenXmlConfirm"] == null)
             {
-                ViewState["_ExportOpenXmlConfirm"] = "";
+                PageViewState["_ExportOpenXmlConfirm"] = "";
             }
-            return ViewState["_ExportOpenXmlConfirm"].ToString();
+            return PageViewState["_ExportOpenXmlConfirm"].ToString();
         }
         set
         {
-            ViewState["_ExportOpenXmlConfirm"] = value;
+            PageViewState["_ExportOpenXmlConfirm"] = value;
         }
     }
 
@@ -1066,15 +1066,15 @@ public partial class Util_ucGridView : BaseUserControl
     {   //2016.11.23
         get
         {
-            if (ViewState["_ExportWordConfirm"] == null)
+            if (PageViewState["_ExportWordConfirm"] == null)
             {
-                ViewState["_ExportWordConfirm"] = "";
+                PageViewState["_ExportWordConfirm"] = "";
             }
-            return ViewState["_ExportWordConfirm"].ToString();
+            return PageViewState["_ExportWordConfirm"].ToString();
         }
         set
         {
-            ViewState["_ExportWordConfirm"] = value;
+            PageViewState["_ExportWordConfirm"] = value;
         }
     }
 
@@ -1085,15 +1085,15 @@ public partial class Util_ucGridView : BaseUserControl
     {   //2016.11.23
         get
         {
-            if (ViewState["_ExportPdfConfirm"] == null)
+            if (PageViewState["_ExportPdfConfirm"] == null)
             {
-                ViewState["_ExportPdfConfirm"] = "";
+                PageViewState["_ExportPdfConfirm"] = "";
             }
-            return ViewState["_ExportPdfConfirm"].ToString();
+            return PageViewState["_ExportPdfConfirm"].ToString();
         }
         set
         {
-            ViewState["_ExportPdfConfirm"] = value;
+            PageViewState["_ExportPdfConfirm"] = value;
         }
     }
 
@@ -1104,15 +1104,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportMaxQty"] == null)
+            if (PageViewState["_ExportMaxQty"] == null)
             {
-                ViewState["_ExportMaxQty"] = 10000;
+                PageViewState["_ExportMaxQty"] = 10000;
             }
-            return (int)ViewState["_ExportMaxQty"];
+            return (int)PageViewState["_ExportMaxQty"];
         }
         set
         {
-            ViewState["_ExportMaxQty"] = value;
+            PageViewState["_ExportMaxQty"] = value;
         }
     }
 
@@ -1123,15 +1123,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportOpenXmlMaxQty"] == null)
+            if (PageViewState["_ExportOpenXmlMaxQty"] == null)
             {
-                ViewState["_ExportOpenXmlMaxQty"] = 50000;
+                PageViewState["_ExportOpenXmlMaxQty"] = 50000;
             }
-            return (int)ViewState["_ExportOpenXmlMaxQty"];
+            return (int)PageViewState["_ExportOpenXmlMaxQty"];
         }
         set
         {
-            ViewState["_ExportOpenXmlMaxQty"] = value;
+            PageViewState["_ExportOpenXmlMaxQty"] = value;
         }
     }
 
@@ -1142,15 +1142,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportWordMaxQty"] == null)
+            if (PageViewState["_ExportWordMaxQty"] == null)
             {
-                ViewState["_ExportWordMaxQty"] = 10000;
+                PageViewState["_ExportWordMaxQty"] = 10000;
             }
-            return (int)ViewState["_ExportWordMaxQty"];
+            return (int)PageViewState["_ExportWordMaxQty"];
         }
         set
         {
-            ViewState["_ExportWordMaxQty"] = value;
+            PageViewState["_ExportWordMaxQty"] = value;
         }
     }
 
@@ -1162,15 +1162,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfMaxQty"] == null)
+            if (PageViewState["_ExportPdfMaxQty"] == null)
             {
-                ViewState["_ExportPdfMaxQty"] = 1000;
+                PageViewState["_ExportPdfMaxQty"] = 1000;
             }
-            return (int)ViewState["_ExportPdfMaxQty"];
+            return (int)PageViewState["_ExportPdfMaxQty"];
         }
         set
         {
-            ViewState["_ExportPdfMaxQty"] = value;
+            PageViewState["_ExportPdfMaxQty"] = value;
         }
     }
 
@@ -1181,15 +1181,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportName"] == null)
+            if (PageViewState["_ExportName"] == null)
             {
-                ViewState["_ExportName"] = string.Format("Export_{0}.xls", DateTime.Today.ToString("yyyyMMdd"));
+                PageViewState["_ExportName"] = string.Format("Export_{0}.xls", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return ViewState["_ExportName"].ToString();
+            return PageViewState["_ExportName"].ToString();
         }
         set
         {
-            ViewState["_ExportName"] = value;
+            PageViewState["_ExportName"] = value;
         }
     }
 
@@ -1200,15 +1200,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExcelOpenXmlName"] == null)
+            if (PageViewState["_ExcelOpenXmlName"] == null)
             {
-                ViewState["_ExcelOpenXmlName"] = string.Format("Export2007_{0}.xlsx", DateTime.Today.ToString("yyyyMMdd"));
+                PageViewState["_ExcelOpenXmlName"] = string.Format("Export2007_{0}.xlsx", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return ViewState["_ExcelOpenXmlName"].ToString();
+            return PageViewState["_ExcelOpenXmlName"].ToString();
         }
         set
         {
-            ViewState["_ExcelOpenXmlName"] = value;
+            PageViewState["_ExcelOpenXmlName"] = value;
         }
     }
 
@@ -1220,13 +1220,47 @@ public partial class Util_ucGridView : BaseUserControl
         //2016.12.13 新增
         get
         {
-            return (string)ViewState["_ExportOpenXmlPassword"];
+            return (string)PageViewState["_ExportOpenXmlPassword"];
         }
         set
         {
-            ViewState["_ExportOpenXmlPassword"] = value;
+            PageViewState["_ExportOpenXmlPassword"] = value;
         }
     }
+
+    /// <summary>
+    /// 匯出ExcelOpenXml表頭(預設 null)
+    /// </summary>
+    public string ucExportOpenXmlHeader
+    {
+        //2017.03.21 新增
+        get
+        {
+            return (string)PageViewState["_ExportOpenXmlHeader"];
+        }
+        set
+        {
+            PageViewState["_ExportOpenXmlHeader"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 匯出ExcelOpenXml表尾(預設 null)
+    /// <para>** 可用 \n 將資料換行 **</para>
+    /// </summary>
+    public string ucExportOpenXmlFooter
+    {
+        //2017.03.21 新增
+        get
+        {
+            return (string)PageViewState["_ExportOpenXmlFooter"];
+        }
+        set
+        {
+            PageViewState["_ExportOpenXmlFooter"] = value;
+        }
+    }
+
 
     /// <summary>
     /// 匯出Word檔名
@@ -1235,15 +1269,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportWordName"] == null)
+            if (PageViewState["_ExportWordName"] == null)
             {
-                ViewState["_ExportWordName"] = string.Format("Export_{0}.doc", DateTime.Today.ToString("yyyyMMdd"));
+                PageViewState["_ExportWordName"] = string.Format("Export_{0}.doc", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return ViewState["_ExportWordName"].ToString();
+            return PageViewState["_ExportWordName"].ToString();
         }
         set
         {
-            ViewState["_ExportWordName"] = value;
+            PageViewState["_ExportWordName"] = value;
         }
     }
 
@@ -1254,15 +1288,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfName"] == null)
+            if (PageViewState["_ExportPdfName"] == null)
             {
-                ViewState["_ExportPdfName"] = string.Format("Export_{0}.pdf", DateTime.Today.ToString("yyyyMMdd"));
+                PageViewState["_ExportPdfName"] = string.Format("Export_{0}.pdf", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return ViewState["_ExportPdfName"].ToString();
+            return PageViewState["_ExportPdfName"].ToString();
         }
         set
         {
-            ViewState["_ExportPdfName"] = value;
+            PageViewState["_ExportPdfName"] = value;
         }
     }
 
@@ -1273,15 +1307,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfTitle"] == null)
+            if (PageViewState["_ExportPdfTitle"] == null)
             {
-                ViewState["_ExportPdfTitle"] = "";
+                PageViewState["_ExportPdfTitle"] = "";
             }
-            return ViewState["_ExportPdfTitle"].ToString();
+            return PageViewState["_ExportPdfTitle"].ToString();
         }
         set
         {
-            ViewState["_ExportPdfTitle"] = value;
+            PageViewState["_ExportPdfTitle"] = value;
         }
     }
 
@@ -1292,15 +1326,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfWatermark"] == null)
+            if (PageViewState["_ExportPdfWatermark"] == null)
             {
-                ViewState["_ExportPdfWatermark"] = "";
+                PageViewState["_ExportPdfWatermark"] = "";
             }
-            return ViewState["_ExportPdfWatermark"].ToString();
+            return PageViewState["_ExportPdfWatermark"].ToString();
         }
         set
         {
-            ViewState["_ExportPdfWatermark"] = value;
+            PageViewState["_ExportPdfWatermark"] = value;
         }
     }
 
@@ -1311,15 +1345,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfWatermarkRotation"] == null)
+            if (PageViewState["_ExportPdfWatermarkRotation"] == null)
             {
-                ViewState["_ExportPdfWatermarkRotation"] = 45;
+                PageViewState["_ExportPdfWatermarkRotation"] = 45;
             }
-            return float.Parse(ViewState["_ExportPdfWatermarkRotation"].ToString());
+            return float.Parse(PageViewState["_ExportPdfWatermarkRotation"].ToString());
         }
         set
         {
-            ViewState["_ExportPdfWatermarkRotation"] = value;
+            PageViewState["_ExportPdfWatermarkRotation"] = value;
         }
     }
 
@@ -1330,15 +1364,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfWatermarkTextSize"] == null)
+            if (PageViewState["_ExportPdfWatermarkTextSize"] == null)
             {
-                ViewState["_ExportPdfWatermarkTextSize"] = 80;
+                PageViewState["_ExportPdfWatermarkTextSize"] = 80;
             }
-            return float.Parse(ViewState["_ExportPdfWatermarkTextSize"].ToString());
+            return float.Parse(PageViewState["_ExportPdfWatermarkTextSize"].ToString());
         }
         set
         {
-            ViewState["_ExportPdfWatermarkTextSize"] = value;
+            PageViewState["_ExportPdfWatermarkTextSize"] = value;
         }
     }
 
@@ -1349,15 +1383,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfPrint"] == null)
+            if (PageViewState["_ExportPdfPrint"] == null)
             {
-                ViewState["_ExportPdfPrint"] = false;
+                PageViewState["_ExportPdfPrint"] = false;
             }
-            return (bool)(ViewState["_ExportPdfPrint"]);
+            return (bool)(PageViewState["_ExportPdfPrint"]);
         }
         set
         {
-            ViewState["_ExportPdfPrint"] = value;
+            PageViewState["_ExportPdfPrint"] = value;
         }
     }
 
@@ -1368,15 +1402,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportPdfCopy"] == null)
+            if (PageViewState["_ExportPdfCopy"] == null)
             {
-                ViewState["_ExportPdfCopy"] = false;
+                PageViewState["_ExportPdfCopy"] = false;
             }
-            return (bool)(ViewState["_ExportPdfCopy"]);
+            return (bool)(PageViewState["_ExportPdfCopy"]);
         }
         set
         {
-            ViewState["_ExportPdfCopy"] = value;
+            PageViewState["_ExportPdfCopy"] = value;
         }
     }
 
@@ -1390,15 +1424,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableMultilingual"] == null)
+            if (PageViewState["_IsEnableMultilingual"] == null)
             {
-                ViewState["_IsEnableMultilingual"] = false;
+                PageViewState["_IsEnableMultilingual"] = false;
             }
-            return (bool)(ViewState["_IsEnableMultilingual"]);
+            return (bool)(PageViewState["_IsEnableMultilingual"]);
         }
         set
         {
-            ViewState["_IsEnableMultilingual"] = value;
+            PageViewState["_IsEnableMultilingual"] = value;
         }
     }
 
@@ -1410,15 +1444,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_MultilingualEnabledDataColName"] == null)
+            if (PageViewState["_MultilingualEnabledDataColName"] == null)
             {
-                ViewState["_MultilingualEnabledDataColName"] = "";
+                PageViewState["_MultilingualEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_MultilingualEnabledDataColName"]);
+            return (string)(PageViewState["_MultilingualEnabledDataColName"]);
         }
         set
         {
-            ViewState["_MultilingualEnabledDataColName"] = value;
+            PageViewState["_MultilingualEnabledDataColName"] = value;
         }
     }
 
@@ -1429,15 +1463,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Multilingual"] == null)
+            if (PageViewState["_Msg_Multilingual"] == null)
             {
-                ViewState["_Msg_Multilingual"] = RS.Resources.GridView_Multilingual;
+                PageViewState["_Msg_Multilingual"] = RS.Resources.GridView_Multilingual;
             }
-            return ViewState["_Msg_Multilingual"].ToString();
+            return PageViewState["_Msg_Multilingual"].ToString();
         }
         set
         {
-            ViewState["_Msg_Multilingual"] = value;
+            PageViewState["_Msg_Multilingual"] = value;
         }
     }
 
@@ -1448,15 +1482,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Multilingual"] == null)
+            if (PageViewState["_Icon_Multilingual"] == null)
             {
-                ViewState["_Icon_Multilingual"] = Util.Icon_Multilingual;
+                PageViewState["_Icon_Multilingual"] = Util.Icon_Multilingual;
             }
-            return ViewState["_Icon_Multilingual"].ToString();
+            return PageViewState["_Icon_Multilingual"].ToString();
         }
         set
         {
-            ViewState["_Icon_Multilingual"] = value;
+            PageViewState["_Icon_Multilingual"] = value;
         }
     }
     #endregion
@@ -1469,15 +1503,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableInformation"] == null)
+            if (PageViewState["_IsEnableInformation"] == null)
             {
-                ViewState["_IsEnableInformation"] = false;
+                PageViewState["_IsEnableInformation"] = false;
             }
-            return (bool)(ViewState["_IsEnableInformation"]);
+            return (bool)(PageViewState["_IsEnableInformation"]);
         }
         set
         {
-            ViewState["_IsEnableInformation"] = value;
+            PageViewState["_IsEnableInformation"] = value;
         }
     }
 
@@ -1489,15 +1523,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_InformationEnabledDataColName"] == null)
+            if (PageViewState["_InformationEnabledDataColName"] == null)
             {
-                ViewState["_InformationEnabledDataColName"] = "";
+                PageViewState["_InformationEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_InformationEnabledDataColName"]);
+            return (string)(PageViewState["_InformationEnabledDataColName"]);
         }
         set
         {
-            ViewState["_InformationEnabledDataColName"] = value;
+            PageViewState["_InformationEnabledDataColName"] = value;
         }
     }
 
@@ -1508,15 +1542,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Information"] == null)
+            if (PageViewState["_Msg_Information"] == null)
             {
-                ViewState["_Msg_Information"] = RS.Resources.GridView_Information;
+                PageViewState["_Msg_Information"] = RS.Resources.GridView_Information;
             }
-            return ViewState["_Msg_Information"].ToString();
+            return PageViewState["_Msg_Information"].ToString();
         }
         set
         {
-            ViewState["_Msg_Information"] = value;
+            PageViewState["_Msg_Information"] = value;
         }
     }
 
@@ -1527,15 +1561,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Information"] == null)
+            if (PageViewState["_Icon_Information"] == null)
             {
-                ViewState["_Icon_Information"] = Util.Icon_Information;
+                PageViewState["_Icon_Information"] = Util.Icon_Information;
             }
-            return ViewState["_Icon_Information"].ToString();
+            return PageViewState["_Icon_Information"].ToString();
         }
         set
         {
-            ViewState["_Icon_Information"] = value;
+            PageViewState["_Icon_Information"] = value;
         }
     }
     #endregion
@@ -1548,15 +1582,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsPrintEnabled"] == null)
+            if (PageViewState["_IsPrintEnabled"] == null)
             {
-                ViewState["_IsPrintEnabled"] = false;
+                PageViewState["_IsPrintEnabled"] = false;
             }
-            return (bool)(ViewState["_IsPrintEnabled"]);
+            return (bool)(PageViewState["_IsPrintEnabled"]);
         }
         set
         {
-            ViewState["_IsPrintEnabled"] = value;
+            PageViewState["_IsPrintEnabled"] = value;
         }
     }
 
@@ -1567,15 +1601,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Print"] == null)
+            if (PageViewState["_Icon_Print"] == null)
             {
-                ViewState["_Icon_Print"] = Util.Icon_Print;
+                PageViewState["_Icon_Print"] = Util.Icon_Print;
             }
-            return ViewState["_Icon_Print"].ToString();
+            return PageViewState["_Icon_Print"].ToString();
         }
         set
         {
-            ViewState["_Icon_Print"] = value;
+            PageViewState["_Icon_Print"] = value;
         }
     }
 
@@ -1586,15 +1620,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Print"] == null)
+            if (PageViewState["_Msg_Print"] == null)
             {
-                ViewState["_Msg_Print"] = RS.Resources.GridView_Print;
+                PageViewState["_Msg_Print"] = RS.Resources.GridView_Print;
             }
-            return ViewState["_Msg_Print"].ToString();
+            return PageViewState["_Msg_Print"].ToString();
         }
         set
         {
-            ViewState["_Msg_Print"] = value;
+            PageViewState["_Msg_Print"] = value;
         }
     }
     #endregion
@@ -1607,15 +1641,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableSelect"] == null)
+            if (PageViewState["_IsEnableSelect"] == null)
             {
-                ViewState["_IsEnableSelect"] = false;
+                PageViewState["_IsEnableSelect"] = false;
             }
-            return (bool)(ViewState["_IsEnableSelect"]);
+            return (bool)(PageViewState["_IsEnableSelect"]);
         }
         set
         {
-            ViewState["_IsEnableSelect"] = value;
+            PageViewState["_IsEnableSelect"] = value;
         }
     }
 
@@ -1628,15 +1662,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2016.08.04 新增
         get
         {
-            if (ViewState["_SelectRowEnabled"] == null)
+            if (PageViewState["_SelectRowEnabled"] == null)
             {
-                ViewState["_SelectRowEnabled"] = false;
+                PageViewState["_SelectRowEnabled"] = false;
             }
-            return (bool)(ViewState["_SelectRowEnabled"]);
+            return (bool)(PageViewState["_SelectRowEnabled"]);
         }
         set
         {
-            ViewState["_SelectRowEnabled"] = value;
+            PageViewState["_SelectRowEnabled"] = value;
         }
     }
 
@@ -1648,15 +1682,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectEnabledDataColName"] == null)
+            if (PageViewState["_SelectEnabledDataColName"] == null)
             {
-                ViewState["_SelectEnabledDataColName"] = "";
+                PageViewState["_SelectEnabledDataColName"] = "";
             }
-            return (string)(ViewState["_SelectEnabledDataColName"]);
+            return (string)(PageViewState["_SelectEnabledDataColName"]);
         }
         set
         {
-            ViewState["_SelectEnabledDataColName"] = value;
+            PageViewState["_SelectEnabledDataColName"] = value;
         }
     }
 
@@ -1667,15 +1701,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Select"] == null)
+            if (PageViewState["_Msg_Select"] == null)
             {
-                ViewState["_Msg_Select"] = RS.Resources.GridView_Select;
+                PageViewState["_Msg_Select"] = RS.Resources.GridView_Select;
             }
-            return ViewState["_Msg_Select"].ToString();
+            return PageViewState["_Msg_Select"].ToString();
         }
         set
         {
-            ViewState["_Msg_Select"] = value;
+            PageViewState["_Msg_Select"] = value;
         }
     }
 
@@ -1686,15 +1720,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Icon_Select"] == null)
+            if (PageViewState["_Icon_Select"] == null)
             {
-                ViewState["_Icon_Select"] = Util.Icon_Select;
+                PageViewState["_Icon_Select"] = Util.Icon_Select;
             }
-            return ViewState["_Icon_Select"].ToString();
+            return PageViewState["_Icon_Select"].ToString();
         }
         set
         {
-            ViewState["_Icon_Select"] = value;
+            PageViewState["_Icon_Select"] = value;
         }
     }
     #endregion
@@ -1707,15 +1741,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_Subtotal"] == null)
+            if (PageViewState["_Msg_Subtotal"] == null)
             {
-                ViewState["_Msg_Subtotal"] = RS.Resources.GridView_Subtotal;
+                PageViewState["_Msg_Subtotal"] = RS.Resources.GridView_Subtotal;
             }
-            return ViewState["_Msg_Subtotal"].ToString();
+            return PageViewState["_Msg_Subtotal"].ToString();
         }
         set
         {
-            ViewState["_Msg_Subtotal"] = value;
+            PageViewState["_Msg_Subtotal"] = value;
         }
     }
     #endregion
@@ -1728,15 +1762,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_GroupSubtotal"] == null)
+            if (PageViewState["_Msg_GroupSubtotal"] == null)
             {
-                ViewState["_Msg_GroupSubtotal"] = RS.Resources.GridView_GroupSubtotal;
+                PageViewState["_Msg_GroupSubtotal"] = RS.Resources.GridView_GroupSubtotal;
             }
-            return ViewState["_Msg_GroupSubtotal"].ToString();
+            return PageViewState["_Msg_GroupSubtotal"].ToString();
         }
         set
         {
-            ViewState["_Msg_GroupSubtotal"] = value;
+            PageViewState["_Msg_GroupSubtotal"] = value;
         }
     }
     #endregion
@@ -1750,15 +1784,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataEditButtonPosition"] == null)
+            if (PageViewState["_DataEditButtonPosition"] == null)
             {
-                ViewState["_DataEditButtonPosition"] = PagerPosition.Top;
+                PageViewState["_DataEditButtonPosition"] = PagerPosition.Top;
             }
-            return (PagerPosition)ViewState["_DataEditButtonPosition"];
+            return (PagerPosition)PageViewState["_DataEditButtonPosition"];
         }
         set
         {
-            ViewState["_DataEditButtonPosition"] = value;
+            PageViewState["_DataEditButtonPosition"] = value;
         }
     }
 
@@ -1770,15 +1804,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_UpdateAllEnabled"] == null)
+            if (PageViewState["_UpdateAllEnabled"] == null)
             {
-                ViewState["_UpdateAllEnabled"] = true;
+                PageViewState["_UpdateAllEnabled"] = true;
             }
-            return (bool)(ViewState["_UpdateAllEnabled"]);
+            return (bool)(PageViewState["_UpdateAllEnabled"]);
         }
         set
         {
-            ViewState["_UpdateAllEnabled"] = value;
+            PageViewState["_UpdateAllEnabled"] = value;
         }
     }
 
@@ -1789,15 +1823,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_UpdateAll"] == null)
+            if (PageViewState["_Msg_UpdateAll"] == null)
             {
-                ViewState["_Msg_UpdateAll"] = RS.Resources.GridView_UpdateAll;
+                PageViewState["_Msg_UpdateAll"] = RS.Resources.GridView_UpdateAll;
             }
-            return ViewState["_Msg_UpdateAll"].ToString();
+            return PageViewState["_Msg_UpdateAll"].ToString();
         }
         set
         {
-            ViewState["_Msg_UpdateAll"] = value;
+            PageViewState["_Msg_UpdateAll"] = value;
         }
     }
 
@@ -1808,15 +1842,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_UpdateAllConfirm"] == null)
+            if (PageViewState["_Msg_UpdateAllConfirm"] == null)
             {
-                ViewState["_Msg_UpdateAllConfirm"] = RS.Resources.GridView_UpdateAllConfirm;
+                PageViewState["_Msg_UpdateAllConfirm"] = RS.Resources.GridView_UpdateAllConfirm;
             }
-            return ViewState["_Msg_UpdateAllConfirm"].ToString();
+            return PageViewState["_Msg_UpdateAllConfirm"].ToString();
         }
         set
         {
-            ViewState["_Msg_UpdateAllConfirm"] = value;
+            PageViewState["_Msg_UpdateAllConfirm"] = value;
         }
 
     }
@@ -1828,15 +1862,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteAllEnabled"] == null)
+            if (PageViewState["_DeleteAllEnabled"] == null)
             {
-                ViewState["_DeleteAllEnabled"] = false;
+                PageViewState["_DeleteAllEnabled"] = false;
             }
-            return (bool)(ViewState["_DeleteAllEnabled"]);
+            return (bool)(PageViewState["_DeleteAllEnabled"]);
         }
         set
         {
-            ViewState["_DeleteAllEnabled"] = value;
+            PageViewState["_DeleteAllEnabled"] = value;
         }
     }
 
@@ -1847,15 +1881,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_DeleteAll"] == null)
+            if (PageViewState["_Msg_DeleteAll"] == null)
             {
-                ViewState["_Msg_DeleteAll"] = RS.Resources.GridView_DeleteAll;
+                PageViewState["_Msg_DeleteAll"] = RS.Resources.GridView_DeleteAll;
             }
-            return ViewState["_Msg_DeleteAll"].ToString();
+            return PageViewState["_Msg_DeleteAll"].ToString();
         }
         set
         {
-            ViewState["_Msg_DeleteAll"] = value;
+            PageViewState["_Msg_DeleteAll"] = value;
         }
     }
 
@@ -1866,15 +1900,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_DeleteAllConfirm"] == null)
+            if (PageViewState["_Msg_DeleteAllConfirm"] == null)
             {
-                ViewState["_Msg_DeleteAllConfirm"] = RS.Resources.GridView_DeleteAllConfirm;
+                PageViewState["_Msg_DeleteAllConfirm"] = RS.Resources.GridView_DeleteAllConfirm;
             }
-            return ViewState["_Msg_DeleteAllConfirm"].ToString();
+            return PageViewState["_Msg_DeleteAllConfirm"].ToString();
         }
         set
         {
-            ViewState["_Msg_DeleteAllConfirm"] = value;
+            PageViewState["_Msg_DeleteAllConfirm"] = value;
         }
     }
     #endregion
@@ -1887,15 +1921,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_GridLines"] == null)
+            if (PageViewState["_GridLines"] == null)
             {
-                ViewState["_GridLines"] = GridLines.Both;
+                PageViewState["_GridLines"] = GridLines.Both;
             }
-            return (GridLines)ViewState["_GridLines"];
+            return (GridLines)PageViewState["_GridLines"];
         }
         set
         {
-            ViewState["_GridLines"] = value;
+            PageViewState["_GridLines"] = value;
         }
     }
 
@@ -1906,15 +1940,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_HeaderCssClass"] == null)
+            if (PageViewState["_HeaderCssClass"] == null)
             {
-                ViewState["_HeaderCssClass"] = "Util_gvHeader";
+                PageViewState["_HeaderCssClass"] = "Util_gvHeader";
             }
-            return ViewState["_HeaderCssClass"].ToString();
+            return PageViewState["_HeaderCssClass"].ToString();
         }
         set
         {
-            ViewState["_HeaderCssClass"] = value;
+            PageViewState["_HeaderCssClass"] = value;
         }
     }
 
@@ -1925,15 +1959,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_GroupHeaderCssClass"] == null)
+            if (PageViewState["_GroupHeaderCssClass"] == null)
             {
-                ViewState["_GroupHeaderCssClass"] = "Util_gvGroupHeader";
+                PageViewState["_GroupHeaderCssClass"] = "Util_gvGroupHeader";
             }
-            return ViewState["_GroupHeaderCssClass"].ToString();
+            return PageViewState["_GroupHeaderCssClass"].ToString();
         }
         set
         {
-            ViewState["_GroupHeaderCssClass"] = value;
+            PageViewState["_GroupHeaderCssClass"] = value;
         }
     }
 
@@ -1944,15 +1978,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_FooterCssClass"] == null)
+            if (PageViewState["_FooterCssClass"] == null)
             {
-                ViewState["_FooterCssClass"] = "Util_gvFooter";
+                PageViewState["_FooterCssClass"] = "Util_gvFooter";
             }
-            return ViewState["_FooterCssClass"].ToString();
+            return PageViewState["_FooterCssClass"].ToString();
         }
         set
         {
-            ViewState["_FooterCssClass"] = value;
+            PageViewState["_FooterCssClass"] = value;
         }
     }
 
@@ -1963,15 +1997,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_RowCssClass"] == null)
+            if (PageViewState["_RowCssClass"] == null)
             {
-                ViewState["_RowCssClass"] = "Util_gvRowNormal";
+                PageViewState["_RowCssClass"] = "Util_gvRowNormal";
             }
-            return ViewState["_RowCssClass"].ToString();
+            return PageViewState["_RowCssClass"].ToString();
         }
         set
         {
-            ViewState["_RowCssClass"] = value;
+            PageViewState["_RowCssClass"] = value;
         }
     }
 
@@ -1982,15 +2016,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_AlternatingRowCssClass"] == null)
+            if (PageViewState["_AlternatingRowCssClass"] == null)
             {
-                ViewState["_AlternatingRowCssClass"] = "Util_gvRowAlternate";
+                PageViewState["_AlternatingRowCssClass"] = "Util_gvRowAlternate";
             }
-            return ViewState["_AlternatingRowCssClass"].ToString();
+            return PageViewState["_AlternatingRowCssClass"].ToString();
         }
         set
         {
-            ViewState["_AlternatingRowCssClass"] = value;
+            PageViewState["_AlternatingRowCssClass"] = value;
         }
     }
 
@@ -2001,15 +2035,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SortableHeaderCssClass"] == null)
+            if (PageViewState["_SortableHeaderCssClass"] == null)
             {
-                ViewState["_SortableHeaderCssClass"] = "Util_gvHeaderSortable";
+                PageViewState["_SortableHeaderCssClass"] = "Util_gvHeaderSortable";
             }
-            return ViewState["_SortableHeaderCssClass"].ToString();
+            return PageViewState["_SortableHeaderCssClass"].ToString();
         }
         set
         {
-            ViewState["_SortableHeaderCssClass"] = value;
+            PageViewState["_SortableHeaderCssClass"] = value;
         }
     }
 
@@ -2020,15 +2054,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SortedAscendingHeaderCssClass"] == null)
+            if (PageViewState["_SortedAscendingHeaderCssClass"] == null)
             {
-                ViewState["_SortedAscendingHeaderCssClass"] = "Util_gvHeaderAsc";
+                PageViewState["_SortedAscendingHeaderCssClass"] = "Util_gvHeaderAsc";
             }
-            return ViewState["_SortedAscendingHeaderCssClass"].ToString();
+            return PageViewState["_SortedAscendingHeaderCssClass"].ToString();
         }
         set
         {
-            ViewState["_SortedAscendingHeaderCssClass"] = value;
+            PageViewState["_SortedAscendingHeaderCssClass"] = value;
         }
     }
 
@@ -2039,15 +2073,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SortedDescendingHeaderCssClass"] == null)
+            if (PageViewState["_SortedDescendingHeaderCssClass"] == null)
             {
-                ViewState["_SortedDescendingHeaderCssClass"] = "Util_gvHeaderDesc";
+                PageViewState["_SortedDescendingHeaderCssClass"] = "Util_gvHeaderDesc";
             }
-            return ViewState["_SortedDescendingHeaderCssClass"].ToString();
+            return PageViewState["_SortedDescendingHeaderCssClass"].ToString();
         }
         set
         {
-            ViewState["_SortedDescendingHeaderCssClass"] = value;
+            PageViewState["_SortedDescendingHeaderCssClass"] = value;
         }
     }
 
@@ -2058,15 +2092,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_UpdateAllCssClass"] == null)
+            if (PageViewState["_UpdateAllCssClass"] == null)
             {
-                ViewState["_UpdateAllCssClass"] = "Util_clsBtnGray";
+                PageViewState["_UpdateAllCssClass"] = "Util_clsBtnGray";
             }
-            return ViewState["_UpdateAllCssClass"].ToString();
+            return PageViewState["_UpdateAllCssClass"].ToString();
         }
         set
         {
-            ViewState["_UpdateAllCssClass"] = value;
+            PageViewState["_UpdateAllCssClass"] = value;
         }
     }
 
@@ -2078,15 +2112,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteAllCssClass"] == null)
+            if (PageViewState["_DeleteAllCssClass"] == null)
             {
-                ViewState["_DeleteAllCssClass"] = "Util_clsBtnGray";
+                PageViewState["_DeleteAllCssClass"] = "Util_clsBtnGray";
             }
-            return ViewState["_DeleteAllCssClass"].ToString();
+            return PageViewState["_DeleteAllCssClass"].ToString();
         }
         set
         {
-            ViewState["_DeleteAllCssClass"] = value;
+            PageViewState["_DeleteAllCssClass"] = value;
         }
     }
 
@@ -2098,15 +2132,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsWidthByPixel"] == null)
+            if (PageViewState["_IsWidthByPixel"] == null)
             {
-                ViewState["_IsWidthByPixel"] = true;
+                PageViewState["_IsWidthByPixel"] = true;
             }
-            return (bool)(ViewState["_IsWidthByPixel"]);
+            return (bool)(PageViewState["_IsWidthByPixel"]);
         }
         set
         {
-            ViewState["_IsWidthByPixel"] = value;
+            PageViewState["_IsWidthByPixel"] = value;
         }
     }
 
@@ -2117,15 +2151,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_UpdateAllWidth"] == null)
+            if (PageViewState["_UpdateAllWidth"] == null)
             {
-                ViewState["_UpdateAllWidth"] = 150;
+                PageViewState["_UpdateAllWidth"] = 150;
             }
-            return (int)(ViewState["_UpdateAllWidth"]);
+            return (int)(PageViewState["_UpdateAllWidth"]);
         }
         set
         {
-            ViewState["_UpdateAllWidth"] = value;
+            PageViewState["_UpdateAllWidth"] = value;
         }
     }
 
@@ -2136,15 +2170,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DeleteAllWidth"] == null)
+            if (PageViewState["_DeleteAllWidth"] == null)
             {
-                ViewState["_DeleteAllWidth"] = 150;
+                PageViewState["_DeleteAllWidth"] = 150;
             }
-            return (int)(ViewState["_DeleteAllWidth"]);
+            return (int)(PageViewState["_DeleteAllWidth"]);
         }
         set
         {
-            ViewState["_DeleteAllWidth"] = value;
+            PageViewState["_DeleteAllWidth"] = value;
         }
     }
     #endregion
@@ -2159,15 +2193,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_FreezeHeaderEnabled"] == null)
+            if (PageViewState["_FreezeHeaderEnabled"] == null)
             {
-                ViewState["_FreezeHeaderEnabled"] = false;
+                PageViewState["_FreezeHeaderEnabled"] = false;
             }
-            return (bool)(ViewState["_FreezeHeaderEnabled"]);
+            return (bool)(PageViewState["_FreezeHeaderEnabled"]);
         }
         set
         {
-            ViewState["_FreezeHeaderEnabled"] = value;
+            PageViewState["_FreezeHeaderEnabled"] = value;
         }
     }
 
@@ -2178,15 +2212,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_FreezeColQty"] == null)
+            if (PageViewState["_FreezeColQty"] == null)
             {
-                ViewState["_FreezeColQty"] = -1;
+                PageViewState["_FreezeColQty"] = -1;
             }
-            return (int)(ViewState["_FreezeColQty"]);
+            return (int)(PageViewState["_FreezeColQty"]);
         }
         set
         {
-            ViewState["_FreezeColQty"] = value;
+            PageViewState["_FreezeColQty"] = value;
         }
     }
 
@@ -2197,15 +2231,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_FreezeWidth"] == null)
+            if (PageViewState["_FreezeWidth"] == null)
             {
-                ViewState["_FreezeWidth"] = 750;
+                PageViewState["_FreezeWidth"] = 750;
             }
-            return (int)(ViewState["_FreezeWidth"]);
+            return (int)(PageViewState["_FreezeWidth"]);
         }
         set
         {
-            ViewState["_FreezeWidth"] = value;
+            PageViewState["_FreezeWidth"] = value;
         }
     }
 
@@ -2216,15 +2250,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_FreezeHeight"] == null)
+            if (PageViewState["_FreezeHeight"] == null)
             {
-                ViewState["_FreezeHeight"] = 350;
+                PageViewState["_FreezeHeight"] = 350;
             }
-            return (int)(ViewState["_FreezeHeight"]);
+            return (int)(PageViewState["_FreezeHeight"]);
         }
         set
         {
-            ViewState["_FreezeHeight"] = value;
+            PageViewState["_FreezeHeight"] = value;
         }
     }
 
@@ -2261,15 +2295,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataForceNoWrap"] == null)
+            if (PageViewState["_DataForceNoWrap"] == null)
             {
-                ViewState["_DataForceNoWrap"] = false;
+                PageViewState["_DataForceNoWrap"] = false;
             }
-            return (bool)(ViewState["_DataForceNoWrap"]);
+            return (bool)(PageViewState["_DataForceNoWrap"]);
         }
         set
         {
-            ViewState["_DataForceNoWrap"] = value;
+            PageViewState["_DataForceNoWrap"] = value;
         }
     }
 
@@ -2281,15 +2315,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExportWaitMsg"] == null)
+            if (PageViewState["_ExportWaitMsg"] == null)
             {
-                ViewState["_ExportWaitMsg"] = RS.Resources.Msg_ExportDataPreparing;
+                PageViewState["_ExportWaitMsg"] = RS.Resources.Msg_ExportDataPreparing;
             }
-            return ViewState["_ExportWaitMsg"].ToString();
+            return PageViewState["_ExportWaitMsg"].ToString();
         }
         set
         {
-            ViewState["_ExportWaitMsg"] = value;
+            PageViewState["_ExportWaitMsg"] = value;
         }
     }
 
@@ -2300,15 +2334,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_EmptyDataHtmlMsg"] == null)
+            if (PageViewState["_EmptyDataHtmlMsg"] == null)
             {
-                ViewState["_EmptyDataHtmlMsg"] = Util.getHtmlMessage(Util.HtmlMessageKind.DataNotFound);
+                PageViewState["_EmptyDataHtmlMsg"] = Util.getHtmlMessage(Util.HtmlMessageKind.DataNotFound);
             }
-            return ViewState["_EmptyDataHtmlMsg"].ToString();
+            return PageViewState["_EmptyDataHtmlMsg"].ToString();
         }
         set
         {
-            ViewState["_EmptyDataHtmlMsg"] = value;
+            PageViewState["_EmptyDataHtmlMsg"] = value;
         }
     }
 
@@ -2319,15 +2353,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsDisplayOnly"] == null)
+            if (PageViewState["_IsDisplayOnly"] == null)
             {
-                ViewState["_IsDisplayOnly"] = false;
+                PageViewState["_IsDisplayOnly"] = false;
             }
-            return (bool)(ViewState["_IsDisplayOnly"]);
+            return (bool)(PageViewState["_IsDisplayOnly"]);
         }
         set
         {
-            ViewState["_IsDisplayOnly"] = value;
+            PageViewState["_IsDisplayOnly"] = value;
         }
     }
 
@@ -2338,15 +2372,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableSorting"] == null)
+            if (PageViewState["_IsEnableSorting"] == null)
             {
-                ViewState["_IsEnableSorting"] = true;
+                PageViewState["_IsEnableSorting"] = true;
             }
-            return (bool)(ViewState["_IsEnableSorting"]);
+            return (bool)(PageViewState["_IsEnableSorting"]);
         }
         set
         {
-            ViewState["_IsEnableSorting"] = value;
+            PageViewState["_IsEnableSorting"] = value;
         }
     }
 
@@ -2359,11 +2393,11 @@ public partial class Util_ucGridView : BaseUserControl
         //2017.02.13 新增
         get
         {
-            return (string[])(ViewState["_SortDisabledFieldList"]);
+            return (string[])(PageViewState["_SortDisabledFieldList"]);
         }
         set
         {
-            ViewState["_SortDisabledFieldList"] = value;
+            PageViewState["_SortDisabledFieldList"] = value;
         }
     }
 
@@ -2374,15 +2408,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CausesValidation"] == null)
+            if (PageViewState["_CausesValidation"] == null)
             {
-                ViewState["_CausesValidation"] = false;
+                PageViewState["_CausesValidation"] = false;
             }
-            return (bool)(ViewState["_CausesValidation"]);
+            return (bool)(PageViewState["_CausesValidation"]);
         }
         set
         {
-            ViewState["_CausesValidation"] = value;
+            PageViewState["_CausesValidation"] = value;
         }
     }
 
@@ -2393,15 +2427,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsEnableSeqNo"] == null)
+            if (PageViewState["_IsEnableSeqNo"] == null)
             {
-                ViewState["_IsEnableSeqNo"] = true;
+                PageViewState["_IsEnableSeqNo"] = true;
             }
-            return (bool)(ViewState["_IsEnableSeqNo"]);
+            return (bool)(PageViewState["_IsEnableSeqNo"]);
         }
         set
         {
-            ViewState["_IsEnableSeqNo"] = value;
+            PageViewState["_IsEnableSeqNo"] = value;
         }
     }
 
@@ -2412,15 +2446,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_Msg_SeqNo"] == null)
+            if (PageViewState["_Msg_SeqNo"] == null)
             {
-                ViewState["_Msg_SeqNo"] = RS.Resources.GridView_SeqNo;
+                PageViewState["_Msg_SeqNo"] = RS.Resources.GridView_SeqNo;
             }
-            return ViewState["_Msg_SeqNo"].ToString();
+            return PageViewState["_Msg_SeqNo"].ToString();
         }
         set
         {
-            ViewState["_Msg_SeqNo"] = value;
+            PageViewState["_Msg_SeqNo"] = value;
         }
     }
 
@@ -2431,15 +2465,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getAppSetting("app://CfgDefConnDB/");
+                PageViewState["_DBName"] = Util.getAppSetting("app://CfgDefConnDB/");
             }
-            return ViewState["_DBName"].ToString();
+            return PageViewState["_DBName"].ToString();
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -2453,15 +2487,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataQrySQL"] == null)
+            if (PageViewState["_DataQrySQL"] == null)
             {
-                ViewState["_DataQrySQL"] = String.Empty;
+                PageViewState["_DataQrySQL"] = String.Empty;
             }
-            return ViewState["_DataQrySQL"].ToString();
+            return PageViewState["_DataQrySQL"].ToString();
         }
         set
         {
-            ViewState["_DataQrySQL"] = value;
+            PageViewState["_DataQrySQL"] = value;
         }
     }
 
@@ -2474,15 +2508,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2017.02.10 新增
         get
         {
-            if (ViewState["_DataCountSQL"] == null)
+            if (PageViewState["_DataCountSQL"] == null)
             {
-                ViewState["_DataCountSQL"] = String.Empty;
+                PageViewState["_DataCountSQL"] = String.Empty;
             }
-            return ViewState["_DataCountSQL"].ToString();
+            return PageViewState["_DataCountSQL"].ToString();
         }
         set
         {
-            ViewState["_DataCountSQL"] = value;
+            PageViewState["_DataCountSQL"] = value;
         }
     }
 
@@ -2496,15 +2530,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataQryTable"] == null)
+            if (PageViewState["_DataQryTable"] == null)
             {
-                ViewState["_DataQryTable"] = null;
+                PageViewState["_DataQryTable"] = null;
             }
-            return (DataTable)ViewState["_DataQryTable"];
+            return (DataTable)PageViewState["_DataQryTable"];
         }
         set
         {
-            ViewState["_DataQryTable"] = value;
+            PageViewState["_DataQryTable"] = value;
         }
     }
 
@@ -2516,15 +2550,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SyncRefreshGridViewIDList"] == null)
+            if (PageViewState["_SyncRefreshGridViewIDList"] == null)
             {
-                ViewState["_SyncRefreshGridViewIDList"] = "".Split(',');
+                PageViewState["_SyncRefreshGridViewIDList"] = "".Split(',');
             }
-            return (string[])ViewState["_SyncRefreshGridViewIDList"];
+            return (string[])PageViewState["_SyncRefreshGridViewIDList"];
         }
         set
         {
-            ViewState["_SyncRefreshGridViewIDList"] = value;
+            PageViewState["_SyncRefreshGridViewIDList"] = value;
         }
     }
 
@@ -2538,15 +2572,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2015.10.08
         get
         {
-            if (ViewState["_HeaderColSpanQtyList"] == null)
+            if (PageViewState["_HeaderColSpanQtyList"] == null)
             {
-                ViewState["_HeaderColSpanQtyList"] = "";
+                PageViewState["_HeaderColSpanQtyList"] = "";
             }
-            return (string)(ViewState["_HeaderColSpanQtyList"]);
+            return (string)(PageViewState["_HeaderColSpanQtyList"]);
         }
         set
         {
-            ViewState["_HeaderColSpanQtyList"] = value;
+            PageViewState["_HeaderColSpanQtyList"] = value;
         }
     }
 
@@ -2559,15 +2593,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2015.10.08
         get
         {
-            if (ViewState["_HeaderColSpanCaptionList"] == null)
+            if (PageViewState["_HeaderColSpanCaptionList"] == null)
             {
-                ViewState["_HeaderColSpanCaptionList"] = "";
+                PageViewState["_HeaderColSpanCaptionList"] = "";
             }
-            return (string)(ViewState["_HeaderColSpanCaptionList"]);
+            return (string)(PageViewState["_HeaderColSpanCaptionList"]);
         }
         set
         {
-            ViewState["_HeaderColSpanCaptionList"] = value;
+            PageViewState["_HeaderColSpanCaptionList"] = value;
         }
     }
 
@@ -2579,15 +2613,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataGroupKey"] == null)
+            if (PageViewState["_DataGroupKey"] == null)
             {
-                ViewState["_DataGroupKey"] = "";
+                PageViewState["_DataGroupKey"] = "";
             }
-            return (string)(ViewState["_DataGroupKey"]);
+            return (string)(PageViewState["_DataGroupKey"]);
         }
         set
         {
-            ViewState["_DataGroupKey"] = value;
+            PageViewState["_DataGroupKey"] = value;
         }
     }
 
@@ -2599,15 +2633,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2016.12.09 新增，用於資料匯出時
         get
         {
-            if (ViewState["_ucDataGroupCaption"] == null)
+            if (PageViewState["_ucDataGroupCaption"] == null)
             {
-                ViewState["_ucDataGroupCaption"] = RS.Resources.GridView_Group;
+                PageViewState["_ucDataGroupCaption"] = RS.Resources.GridView_Group;
             }
-            return ViewState["_ucDataGroupCaption"].ToString();
+            return PageViewState["_ucDataGroupCaption"].ToString();
         }
         set
         {
-            ViewState["_ucDataGroupCaption"] = value;
+            PageViewState["_ucDataGroupCaption"] = value;
         }
     }
 
@@ -2618,15 +2652,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataGroupSubtotalList"] == null)
+            if (PageViewState["_DataGroupSubtotalList"] == null)
             {
-                ViewState["_DataGroupSubtotalList"] = new string[] { };
+                PageViewState["_DataGroupSubtotalList"] = new string[] { };
             }
-            return (string[])(ViewState["_DataGroupSubtotalList"]);
+            return (string[])(PageViewState["_DataGroupSubtotalList"]);
         }
         set
         {
-            ViewState["_DataGroupSubtotalList"] = value;
+            PageViewState["_DataGroupSubtotalList"] = value;
         }
     }
 
@@ -2637,15 +2671,15 @@ public partial class Util_ucGridView : BaseUserControl
     {   //2016.12.13 新增
         get
         {
-            if (ViewState["_DefGroupExpandAll"] == null)
+            if (PageViewState["_DefGroupExpandAll"] == null)
             {
-                ViewState["_DefGroupExpandAll"] = true;
+                PageViewState["_DefGroupExpandAll"] = true;
             }
-            return (bool)(ViewState["_DefGroupExpandAll"]);
+            return (bool)(PageViewState["_DefGroupExpandAll"]);
         }
         set
         {
-            ViewState["_DefGroupExpandAll"] = value;
+            PageViewState["_DefGroupExpandAll"] = value;
         }
     }
 
@@ -2656,15 +2690,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_GroupExpandAll"] == null)
+            if (PageViewState["_GroupExpandAll"] == null)
             {
-                ViewState["_GroupExpandAll"] = RS.Resources.GridView_GroupExpandAll;
+                PageViewState["_GroupExpandAll"] = RS.Resources.GridView_GroupExpandAll;
             }
-            return ViewState["_GroupExpandAll"].ToString();
+            return PageViewState["_GroupExpandAll"].ToString();
         }
         set
         {
-            ViewState["_GroupExpandAll"] = value;
+            PageViewState["_GroupExpandAll"] = value;
         }
     }
 
@@ -2675,15 +2709,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_GroupCollapseAll"] == null)
+            if (PageViewState["_GroupCollapseAll"] == null)
             {
-                ViewState["_GroupCollapseAll"] = RS.Resources.GridView_GroupCollapseAll;
+                PageViewState["_GroupCollapseAll"] = RS.Resources.GridView_GroupCollapseAll;
             }
-            return ViewState["_GroupCollapseAll"].ToString();
+            return PageViewState["_GroupCollapseAll"].ToString();
         }
         set
         {
-            ViewState["_GroupCollapseAll"] = value;
+            PageViewState["_GroupCollapseAll"] = value;
         }
     }
 
@@ -2694,15 +2728,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_GroupHeaderFormat"] == null)
+            if (PageViewState["_GroupHeaderFormat"] == null)
             {
-                ViewState["_GroupHeaderFormat"] = "[{0}]";
+                PageViewState["_GroupHeaderFormat"] = "[{0}]";
             }
-            return (string)(ViewState["_GroupHeaderFormat"]);
+            return (string)(PageViewState["_GroupHeaderFormat"]);
         }
         set
         {
-            ViewState["_GroupHeaderFormat"] = value;
+            PageViewState["_GroupHeaderFormat"] = value;
         }
     }
 
@@ -2715,15 +2749,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2017.01.24 新增，讓AP可自訂合適的分隔符號
         get
         {
-            if (ViewState["_DataKeyDelimiter"] == null)
+            if (PageViewState["_DataKeyDelimiter"] == null)
             {
-                ViewState["_DataKeyDelimiter"] = ",";
+                PageViewState["_DataKeyDelimiter"] = ",";
             }
-            return (string)(ViewState["_DataKeyDelimiter"]);
+            return (string)(PageViewState["_DataKeyDelimiter"]);
         }
         set
         {
-            ViewState["_DataKeyDelimiter"] = value;
+            PageViewState["_DataKeyDelimiter"] = value;
         }
     }
 
@@ -2734,15 +2768,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataKeyList"] == null)
+            if (PageViewState["_DataKeyList"] == null)
             {
-                ViewState["_DataKeyList"] = new string[] { };
+                PageViewState["_DataKeyList"] = new string[] { };
             }
-            return (string[])(ViewState["_DataKeyList"]);
+            return (string[])(PageViewState["_DataKeyList"]);
         }
         set
         {
-            ViewState["_DataKeyList"] = value;
+            PageViewState["_DataKeyList"] = value;
         }
     }
 
@@ -2754,15 +2788,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataDisplayAutoGenerateEnabled"] == null)
+            if (PageViewState["_DataDisplayAutoGenerateEnabled"] == null)
             {
-                ViewState["_DataDisplayAutoGenerateEnabled"] = true;
+                PageViewState["_DataDisplayAutoGenerateEnabled"] = true;
             }
-            return (bool)(ViewState["_DataDisplayAutoGenerateEnabled"]);
+            return (bool)(PageViewState["_DataDisplayAutoGenerateEnabled"]);
         }
         set
         {
-            ViewState["_DataDisplayAutoGenerateEnabled"] = value;
+            PageViewState["_DataDisplayAutoGenerateEnabled"] = value;
         }
     }
 
@@ -2784,15 +2818,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataDisplayDefinition"] == null)
+            if (PageViewState["_DataDisplayDefinition"] == null)
             {
-                ViewState["_DataDisplayDefinition"] = new Dictionary<string, string>();
+                PageViewState["_DataDisplayDefinition"] = new Dictionary<string, string>();
             }
-            return (Dictionary<string, string>)(ViewState["_DataDisplayDefinition"]);
+            return (Dictionary<string, string>)(PageViewState["_DataDisplayDefinition"]);
         }
         set
         {
-            ViewState["_DataDisplayDefinition"] = value;
+            PageViewState["_DataDisplayDefinition"] = value;
         }
     }
 
@@ -2824,15 +2858,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataEditDefinition"] == null)
+            if (PageViewState["_DataEditDefinition"] == null)
             {
-                ViewState["_DataEditDefinition"] = new Dictionary<string, string>();
+                PageViewState["_DataEditDefinition"] = new Dictionary<string, string>();
             }
-            return (Dictionary<string, string>)(ViewState["_DataEditDefinition"]);
+            return (Dictionary<string, string>)(PageViewState["_DataEditDefinition"]);
         }
         set
         {
-            ViewState["_DataEditDefinition"] = value;
+            PageViewState["_DataEditDefinition"] = value;
             if (value.Count > 0)
             {
                 //若有定義可編輯欄位，自動啟用 [Check] 功能
@@ -2848,15 +2882,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataSubtotalList"] == null)
+            if (PageViewState["_DataSubtotalList"] == null)
             {
-                ViewState["_DataSubtotalList"] = new string[] { };
+                PageViewState["_DataSubtotalList"] = new string[] { };
             }
-            return (string[])(ViewState["_DataSubtotalList"]);
+            return (string[])(PageViewState["_DataSubtotalList"]);
         }
         set
         {
-            ViewState["_DataSubtotalList"] = value;
+            PageViewState["_DataSubtotalList"] = value;
         }
     }
 
@@ -2868,15 +2902,15 @@ public partial class Util_ucGridView : BaseUserControl
         //2015.10.08
         get
         {
-            if (ViewState["_PagerDivLineEnabled"] == null)
+            if (PageViewState["_PagerDivLineEnabled"] == null)
             {
-                ViewState["_PagerDivLineEnabled"] = false;
+                PageViewState["_PagerDivLineEnabled"] = false;
             }
-            return (bool)(ViewState["_PagerDivLineEnabled"]);
+            return (bool)(PageViewState["_PagerDivLineEnabled"]);
         }
         set
         {
-            ViewState["_PagerDivLineEnabled"] = value;
+            PageViewState["_PagerDivLineEnabled"] = value;
         }
     }
 
@@ -2887,15 +2921,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_PagerPosition"] == null)
+            if (PageViewState["_PagerPosition"] == null)
             {
-                ViewState["_PagerPosition"] = PagerPosition.Bottom;
+                PageViewState["_PagerPosition"] = PagerPosition.Bottom;
             }
-            return (PagerPosition)ViewState["_PagerPosition"];
+            return (PagerPosition)PageViewState["_PagerPosition"];
         }
         set
         {
-            ViewState["_PagerPosition"] = value;
+            PageViewState["_PagerPosition"] = value;
         }
     }
 
@@ -2906,15 +2940,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefPageSizeList"] == null)
+            if (PageViewState["_DefPageSizeList"] == null)
             {
-                ViewState["_DefPageSizeList"] = new int[] { 10, 20, 30, 50, 100 };
+                PageViewState["_DefPageSizeList"] = new int[] { 10, 20, 30, 50, 100 };
             }
-            return (int[])(ViewState["_DefPageSizeList"]);
+            return (int[])(PageViewState["_DefPageSizeList"]);
         }
         set
         {
-            ViewState["_DefPageSizeList"] = value;
+            PageViewState["_DefPageSizeList"] = value;
         }
     }
 
@@ -2925,15 +2959,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefPageSize"] == null)
+            if (PageViewState["_DefPageSize"] == null)
             {
-                ViewState["_DefPageSize"] = 10;
+                PageViewState["_DefPageSize"] = 10;
             }
-            return (int)ViewState["_DefPageSize"];
+            return (int)PageViewState["_DefPageSize"];
         }
         set
         {
-            ViewState["_DefPageSize"] = value;
+            PageViewState["_DefPageSize"] = value;
         }
     }
 
@@ -2944,15 +2978,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefPageNo"] == null)
+            if (PageViewState["_DefPageNo"] == null)
             {
-                ViewState["_DefPageNo"] = 1;
+                PageViewState["_DefPageNo"] = 1;
             }
-            return (int)ViewState["_DefPageNo"];
+            return (int)PageViewState["_DefPageNo"];
         }
         set
         {
-            ViewState["_DefPageNo"] = value;
+            PageViewState["_DefPageNo"] = value;
         }
     }
 
@@ -2963,15 +2997,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefSortExpression"] == null)
+            if (PageViewState["_DefSortExpression"] == null)
             {
-                ViewState["_DefSortExpression"] = string.Empty;
+                PageViewState["_DefSortExpression"] = string.Empty;
             }
-            return ViewState["_DefSortExpression"].ToString();
+            return PageViewState["_DefSortExpression"].ToString();
         }
         set
         {
-            ViewState["_DefSortExpression"] = value;
+            PageViewState["_DefSortExpression"] = value;
         }
     }
 
@@ -2982,15 +3016,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DefSortDirection"] == null)
+            if (PageViewState["_DefSortDirection"] == null)
             {
-                ViewState["_DefSortDirection"] = string.Empty;
+                PageViewState["_DefSortDirection"] = string.Empty;
             }
-            return ViewState["_DefSortDirection"].ToString();
+            return PageViewState["_DefSortDirection"].ToString();
         }
         set
         {
-            ViewState["_DefSortDirection"] = value;
+            PageViewState["_DefSortDirection"] = value;
         }
     }
 
@@ -3001,15 +3035,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_TotQty"] == null)
+            if (PageViewState["_TotQty"] == null)
             {
-                ViewState["_TotQty"] = -1;  //未初始過
+                PageViewState["_TotQty"] = -1;  //未初始過
             }
-            return (int)(ViewState["_TotQty"]);
+            return (int)(PageViewState["_TotQty"]);
         }
         set
         {
-            ViewState["_TotQty"] = value;
+            PageViewState["_TotQty"] = value;
         }
     }
 
@@ -3020,15 +3054,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_PageSizeList"] == null)
+            if (PageViewState["_PageSizeList"] == null)
             {
-                ViewState["_PageSizeList"] = ucDefPageSizeList;
+                PageViewState["_PageSizeList"] = ucDefPageSizeList;
             }
-            return (int[])(ViewState["_PageSizeList"]);
+            return (int[])(PageViewState["_PageSizeList"]);
         }
         set
         {
-            ViewState["_PageSizeList"] = value;
+            PageViewState["_PageSizeList"] = value;
         }
     }
 
@@ -3039,15 +3073,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_PageSize"] == null)
+            if (PageViewState["_PageSize"] == null)
             {
-                ViewState["_PageSize"] = ucDefPageSize;
+                PageViewState["_PageSize"] = ucDefPageSize;
             }
-            return (int)(ViewState["_PageSize"]);
+            return (int)(PageViewState["_PageSize"]);
         }
         set
         {
-            ViewState["_PageSize"] = value;
+            PageViewState["_PageSize"] = value;
         }
     }
 
@@ -3058,15 +3092,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_PageNo"] == null)
+            if (PageViewState["_PageNo"] == null)
             {
-                ViewState["_PageNo"] = ucDefPageNo;
+                PageViewState["_PageNo"] = ucDefPageNo;
             }
-            return (int)(ViewState["_PageNo"]);
+            return (int)(PageViewState["_PageNo"]);
         }
         set
         {
-            ViewState["_PageNo"] = value;
+            PageViewState["_PageNo"] = value;
         }
     }
 
@@ -3077,15 +3111,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SortExpression"] == null)
+            if (PageViewState["_SortExpression"] == null)
             {
-                ViewState["_SortExpression"] = ucDefSortExpression;
+                PageViewState["_SortExpression"] = ucDefSortExpression;
             }
-            return ViewState["_SortExpression"].ToString();
+            return PageViewState["_SortExpression"].ToString();
         }
         set
         {
-            ViewState["_SortExpression"] = value;
+            PageViewState["_SortExpression"] = value;
         }
     }
 
@@ -3096,15 +3130,15 @@ public partial class Util_ucGridView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SortDirection"] == null)
+            if (PageViewState["_SortDirection"] == null)
             {
-                ViewState["_SortDirection"] = ucDefSortDirection;
+                PageViewState["_SortDirection"] = ucDefSortDirection;
             }
-            return ViewState["_SortDirection"].ToString();
+            return PageViewState["_SortDirection"].ToString();
         }
         set
         {
-            ViewState["_SortDirection"] = value;
+            PageViewState["_SortDirection"] = value;
         }
     }
 
@@ -3222,7 +3256,7 @@ public partial class Util_ucGridView : BaseUserControl
     {
         ucLightBox.ucLightBoxMsg = ucExportWaitMsg;
         if (IsPostBack)
-        { 
+        {
             string evt = Util.getRequestFormKey("__EVENTTARGET").Replace('$', '_');
             if (!string.IsNullOrEmpty(evt))
             {
@@ -3599,7 +3633,8 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 foreach (string colName in RemoveColList)
                 {
-                    dtExport.Columns.Remove(colName);
+                    if (dtExport.Columns.Contains(colName))
+                        dtExport.Columns.Remove(colName);
                 }
             }
         }
@@ -3717,7 +3752,7 @@ public partial class Util_ucGridView : BaseUserControl
     /// </summary>
     public void Reset()
     {
-        this.ViewState.Clear();
+        this.PageViewState.Clear();
     }
 
     /// <summary>
@@ -5369,9 +5404,10 @@ public partial class Util_ucGridView : BaseUserControl
             case "cmdExportOpenXml":
                 strExportFileName = this.ucExportOpenXmlName;
                 //2017.02.16 加入 ucExportOpenXmlFormatByDataDisplayDefinition 及 ucDataDisplayDefinition 判斷
+                //2017.03.21 加入 ucExportOpenXmlHeader, ucExportOpenXmlFooter 
                 if (!ucExportOpenXmlFormatByDataDisplayDefinition || ucDataDisplayDefinition.IsNullOrEmpty())
                 {
-                    objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", true), "Sheet1", ucExportOpenXmlPassword));
+                    objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", true), "Sheet1", ucExportOpenXmlPassword, null, ucExportOpenXmlHeader, ucExportOpenXmlFooter));
                 }
                 else
                 {
@@ -5380,10 +5416,10 @@ public partial class Util_ucGridView : BaseUserControl
                         Dictionary<string, string> dicTmp = new Dictionary<string, string>();
                         dicTmp.AddRange(ucDataDisplayDefinition);
                         dicTmp.TryAdd("RowNo", this.ucSeqNoCaption + "@N0"); //序號欄位
-                        objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", false), "Sheet1", ucExportOpenXmlPassword, dicTmp));
+                        objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", false), "Sheet1", ucExportOpenXmlPassword, dicTmp, ucExportOpenXmlHeader, ucExportOpenXmlFooter));
                     }
                     else
-                        objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", false), "Sheet1", ucExportOpenXmlPassword, ucDataDisplayDefinition));
+                        objExportBytes = Util.getBytes(Util.getExcelOpenXml(getExportData("XLSX", false), "Sheet1", ucExportOpenXmlPassword, ucDataDisplayDefinition, ucExportOpenXmlHeader, ucExportOpenXmlFooter));
                 }
                 break;
             case "cmdExportPdf":
@@ -5740,7 +5776,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                 {
                     case "D": //DateTime (Date) 
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd}");
@@ -5749,7 +5785,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "T": //DateTime (Hour)
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd HH:mm}");
@@ -5757,7 +5793,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "S": //DateTime (Second)
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd HH:mm:ss}");
@@ -5771,7 +5807,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         {
                             // [N] or [Nx]
                             // [P] or [Px]
-                            lab1.DataBinding += delegate(object sender, EventArgs e)
+                            lab1.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5786,7 +5822,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         {
                             // [N[x[yyy]]]
                             // [P[x[yyy]]]
-                            lab1.DataBinding += delegate(object sender, EventArgs e)
+                            lab1.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5800,7 +5836,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "L": //Left
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5809,7 +5845,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "C": //Center
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5818,7 +5854,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "R": //Right
                         pnl1.HorizontalAlign = HorizontalAlign.Right;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5828,7 +5864,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     case "I": //Image [抬頭[@I[xxx[,yyy[,zzz]]]]]    xxx為指定寬度、yyy為URL欄位、zzz為Target欄位，例: 'ProdGraph', '產品圖片@I96,SysUrl,_blank'
                         pnl1.Width = new Unit("100%");
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             string strWidth = "100%";
@@ -5866,7 +5902,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "A": //Anchor [抬頭[@A[xxx[,yyy[,zzz]]]]]　xxx為指定寬度、yyy為URL欄位、zzz為Target欄位
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             string strURL = _ColName;
                             string strTarget = "";
@@ -5886,7 +5922,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "Y": //[抬頭[@Y[xxx]  xxx為指定寬度
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString().Trim();
@@ -5910,7 +5946,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     case "M": //[抬頭[@M[xxx[,yyy[,zzz]]]]] 　 xxx為指定寬度、yyy為「是」時的顯示內容、zzz為「否」時的顯示內容，例: 'IsMail', '發送郵件@M,★,☆'
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
 
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString().Trim();
@@ -5947,7 +5983,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     default:
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate(object sender, EventArgs e)
+                        lab1.DataBinding += delegate (object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5965,7 +6001,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         string strJSON = _DisplayFormat.Substring(_DisplayFormat.IndexOf(',', 0) + 1);
                         if (!string.IsNullOrEmpty(strJSON))
                         {
-                            lab1.DataBinding += delegate(object sender, EventArgs e)
+                            lab1.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if (!string.IsNullOrEmpty(DataBinder.Eval(dataItem, _ColName).ToString()))
@@ -6001,7 +6037,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     {
                         if (!string.IsNullOrEmpty(_EditDataDictionary["ucSourceDictionary"]))
                         {
-                            lab1.DataBinding += delegate(object sender, EventArgs e)
+                            lab1.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if (!string.IsNullOrEmpty(DataBinder.Eval(dataItem, _ColName).ToString()))
@@ -6067,7 +6103,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 }
                             }
 
-                            oTxt.DataBinding += delegate(object sender, EventArgs e)
+                            oTxt.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 switch (tmpMask.ToUpper())
@@ -6097,7 +6133,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             CheckBox oChk = new CheckBox();
                             oChk.ID = "chk" + _ColName;
                             oChk.Checked = false;
-                            oChk.DataBinding += delegate(object sender, EventArgs e)
+                            oChk.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if ("TRUE,Y,1".Split(',').Contains(DataBinder.Eval(dataItem, _ColName).ToString().ToUpper()))
@@ -6127,7 +6163,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             if (_EditDataDictionary != null && _EditDataDictionary.Count > 0)
                             {
 
-                                oChkList.DataBinding += delegate(object sender, EventArgs e)
+                                oChkList.DataBinding += delegate (object sender, EventArgs e)
                                 {
                                     //設定屬性
                                     foreach (var pair in this._EditDataDictionary)
@@ -6161,7 +6197,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             if (_EditDataDictionary != null && _EditDataDictionary.Count > 0)
                             {
 
-                                oRadList.DataBinding += delegate(object sender, EventArgs e)
+                                oRadList.DataBinding += delegate (object sender, EventArgs e)
                                 {
                                     //設定屬性
                                     foreach (var pair in this._EditDataDictionary)
@@ -6186,7 +6222,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 if (_EditDataDictionary.ContainsKey("JSON"))
                                 {
                                     //2014.10.21 新增，DropDownList資料來源可為資料列的指定欄位
-                                    ddl.DataBound += delegate(object sender, EventArgs e)
+                                    ddl.DataBound += delegate (object sender, EventArgs e)
                                     {
                                         object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                         int rowindex = ((sender as Control).NamingContainer as GridViewRow).RowIndex;
@@ -6238,7 +6274,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                         ddl.Items.Add(new ListItem(pair.Value, pair.Key));
                                     }
 
-                                    ddl.DataBound += delegate(object sender, EventArgs e)
+                                    ddl.DataBound += delegate (object sender, EventArgs e)
                                     {
                                         object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                         ddl.SelectedValue = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -6311,7 +6347,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 }
                             }
 
-                            oCal.DataBinding += delegate(object sender, EventArgs e)
+                            oCal.DataBinding += delegate (object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 string strDate = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd}");
@@ -6344,7 +6380,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlHH.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlHH.DataBound += delegate(object sender, EventArgs e)
+                                ddlHH.DataBound += delegate (object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlHH.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:HH}");
@@ -6359,7 +6395,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlMM.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlMM.DataBound += delegate(object sender, EventArgs e)
+                                ddlMM.DataBound += delegate (object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlMM.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:mm}");
@@ -6376,7 +6412,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlSS.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlSS.DataBound += delegate(object sender, EventArgs e)
+                                ddlSS.DataBound += delegate (object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlSS.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:ss}");

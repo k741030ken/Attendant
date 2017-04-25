@@ -26,15 +26,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -45,15 +45,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
+                PageViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -74,15 +74,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_DateFormat"] == null)
+            if (PageViewState["_DateFormat"] == null)
             {
-                ViewState["_DateFormat"] = _DateFormat;
+                PageViewState["_DateFormat"] = _DateFormat;
             }
-            return (string)(ViewState["_DateFormat"]);
+            return (string)(PageViewState["_DateFormat"]);
         }
         set
         {
-            ViewState["_DateFormat"] = value;
+            PageViewState["_DateFormat"] = value;
         }
     }
 
@@ -95,15 +95,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectYearRange"] == null)
+            if (PageViewState["_SelectYearRange"] == null)
             {
-                ViewState["_SelectYearRange"] = _SelectYearRange;
+                PageViewState["_SelectYearRange"] = _SelectYearRange;
             }
-            return (int)(ViewState["_SelectYearRange"]);
+            return (int)(PageViewState["_SelectYearRange"]);
         }
         set
         {
-            ViewState["_SelectYearRange"] = value;
+            PageViewState["_SelectYearRange"] = value;
             //2016.10.26 強化判斷邏輯
             if (CalendarExtender1.SelectedDate != null && CalendarExtender1.SelectedDate.Value != null)
             {
@@ -144,15 +144,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_StartDate"] == null)
+            if (PageViewState["_StartDate"] == null)
             {
-                ViewState["_StartDate"] = _StartDate;
+                PageViewState["_StartDate"] = _StartDate;
             }
-            return (DateTime)(ViewState["_StartDate"]);
+            return (DateTime)(PageViewState["_StartDate"]);
         }
         set
         {
-            ViewState["_StartDate"] = value;
+            PageViewState["_StartDate"] = value;
             CalendarExtender1.StartDate = value;
         }
     }
@@ -164,15 +164,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_EndDate"] == null)
+            if (PageViewState["_EndDate"] == null)
             {
-                ViewState["_EndDate"] = _EndDate;
+                PageViewState["_EndDate"] = _EndDate;
             }
-            return (DateTime)(ViewState["_EndDate"]);
+            return (DateTime)(PageViewState["_EndDate"]);
         }
         set
         {
-            ViewState["_EndDate"] = value;
+            PageViewState["_EndDate"] = value;
             CalendarExtender1.EndDate = value;
         }
     }
@@ -184,15 +184,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = _IsRequire;
+                PageViewState["_IsRequire"] = _IsRequire;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             txtDate.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -205,15 +205,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_ToolTip"] == null)
+            if (PageViewState["_ToolTip"] == null)
             {
-                ViewState["_ToolTip"] = _ToolTip;
+                PageViewState["_ToolTip"] = _ToolTip;
             }
-            return (string)(ViewState["_ToolTip"]);
+            return (string)(PageViewState["_ToolTip"]);
         }
         set
         {
-            ViewState["_ToolTip"] = value;
+            PageViewState["_ToolTip"] = value;
         }
     }
 
@@ -224,15 +224,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_ErrorMessage"] == null)
+            if (PageViewState["_ErrorMessage"] == null)
             {
-                ViewState["_ErrorMessage"] = _ErrorMessage;
+                PageViewState["_ErrorMessage"] = _ErrorMessage;
             }
-            return (string)(ViewState["_ErrorMessage"]);
+            return (string)(PageViewState["_ErrorMessage"]);
         }
         set
         {
-            ViewState["_ErrorMessage"] = value;
+            PageViewState["_ErrorMessage"] = value;
             RequiredFieldValidator1.ErrorMessage = value;
         }
     }
@@ -244,15 +244,15 @@ public partial class Util_ucDatePicker : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;

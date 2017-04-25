@@ -232,7 +232,6 @@
                                     <uc1:ucTextBox ID="txtFlowUpdCustVarNameList" runat="server" ucWidth="500" ucMaxLength="200"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">從流程：<b><asp:Label ID="labFlowCustVarNameList" runat="server"></asp:Label></b></li>
-                                    <hr class="Util_clsHR" />
                                     FlowUpdCustVarNewValueList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustVarNewValueList" runat="server" ucWidth="500" ucMaxLength="200"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
@@ -250,25 +249,23 @@
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">位於[ <b>
                                         <asp:Label ID="labFlowCustDB" runat="server"></asp:Label></b> ]資料庫內的任一資料表</li>
-                                    <hr class="Util_clsHR" />
                                     FlowUpdCustTableKeyList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustTableKeyList" runat="server" ucWidth="500" ucMaxLength="50"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">從表單：<b><asp:Label ID="labFlowKeyFieldList1" runat="server"></asp:Label></b></li>
                                     <li style="color: Gray;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID</b></li>
-                                    <li style="color: Gray;">固定值：ex: <b>Fld01=AA,Fld02=BB ...</b></li>
-                                    <hr class="Util_clsHR" />
+                                    <li style="color: Gray;">自定義：ex: <b>Fld01=AA,Fld02=BB ...</b></li>
                                     FlowUpdCustTableFieldList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustTableFieldList" runat="server" ucWidth="500" ucMaxLength="100"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">[ <b>FlowUpdCustTableName</b> ]定義資料表內的任意欄位清單</li>
-                                    <hr class="Util_clsHR" />
                                     FlowUpdCustTableNewValueList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustTableNewValueList" runat="server" ucWidth="500"
                                         ucMaxLength="100" ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">從表單：<b><asp:Label ID="labFlowKeyFieldList2" runat="server"></asp:Label></b></li>
-                                    <li style="color: Gray;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID,_CurrStepID,_CurrStepName,_CurrDate,_CurrDateTime</b></li>
-                                    <li style="color: Gray;">運算式：以 [ __ ] 開頭的內容，ex: [<b> __Fld01 = Fld01 + 5 </b>]</li>
+                                    <li style="color: Gray; padding-left: 1em; text-indent: -1em;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID,_CurrDate,_CurrDateTime<br />
+                                        ,_CurrStepID,_CurrStepName,_CurrLogStepID,_CurrLogStepName</b></li>
+                                    <li style="color: Gray;">運算式：以 [ __ ] 開頭的內容，ex: [<b> __Fld01 + 1 </b>]</li>
                                     <li style="color: Gray;">固定值：上述以外的內容，則視為固定內容，ex: <b>Open , Close , Y , N ...</b></li>
                                 </td>
                             </tr>
@@ -338,7 +335,7 @@
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">從表單：<b><asp:Label ID="labFlowKeyFieldList1" runat="server"></asp:Label></b></li>
                                     <li style="color: Gray;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID</b></li>
-                                    <li style="color: Gray;">固定值：ex: <b>Fld01=AA,Fld02=BB ...</b></li>
+                                    <li style="color: Gray;">自定義：ex: <b>Fld01=AA,Fld02=BB ...</b></li>
                                     FlowUpdCustTableFieldList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustTableFieldList" runat="server" ucWidth="500" ucMaxLength="100"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
@@ -349,7 +346,7 @@
                                     <li style="color: Gray;">從表單：<b><asp:Label ID="labFlowKeyFieldList2" runat="server"></asp:Label></b></li>
                                     <li style="color: Gray; padding-left: 1em; text-indent: -1em;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID,_CurrDate,_CurrDateTime<br />
                                         ,_CurrStepID,_CurrStepName,_CurrLogStepID,_CurrLogStepName</b></li>
-                                    <li style="color: Gray;">運算式：以 [ __ ] 開頭的內容，ex: [<b> __Fld01 = Fld01 + 5 </b>]</li>
+                                    <li style="color: Gray;">運算式：以 [ __ ] 開頭的內容，ex: [<b> __Fld01 + 1 </b>]</li>
                                     <li style="color: Gray;">固定值：上述以外的內容，則視為固定內容，ex: <b>Open , Close , Y , N ...</b></li>
                                 </td>
                             </tr>

@@ -15,15 +15,15 @@ public partial class Util_AppLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
+                PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -31,15 +31,15 @@ public partial class Util_AppLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AllowPurgeYN"] == null)
+            if (PageViewState["_AllowPurgeYN"] == null)
             {
-                ViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN","N",true);
+                PageViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN","N",true);
             }
-            return (string)(ViewState["_AllowPurgeYN"]);
+            return (string)(PageViewState["_AllowPurgeYN"]);
         }
         set
         {
-            ViewState["_AllowPurgeYN"] = value.ToUpper();
+            PageViewState["_AllowPurgeYN"] = value.ToUpper();
         }
     }
 
@@ -47,9 +47,9 @@ public partial class Util_AppLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_AppLogType"] != null)
+            if (PageViewState["_AppLogType"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_AppLogType"];
+                return (Dictionary<string, string>)PageViewState["_AppLogType"];
             }
             else
             {
@@ -60,8 +60,8 @@ public partial class Util_AppLogQry : SecurePage
                     oDic.Add(pair.Value, pair.Value);
                 }
 
-                ViewState["_AppLogType"] = oDic;
-                return (Dictionary<string, string>)ViewState["_AppLogType"];
+                PageViewState["_AppLogType"] = oDic;
+                return (Dictionary<string, string>)PageViewState["_AppLogType"];
             }
         }
     }
@@ -80,12 +80,12 @@ public partial class Util_AppLogQry : SecurePage
     {
         get
         {
-            if (ViewState["_QryResultSQL"] == null) { ViewState["_QryResultSQL"] = ""; }
-            return (string)(ViewState["_QryResultSQL"]);
+            if (PageViewState["_QryResultSQL"] == null) { PageViewState["_QryResultSQL"] = ""; }
+            return (string)(PageViewState["_QryResultSQL"]);
         }
         set
         {
-            ViewState["_QryResultSQL"] = value;
+            PageViewState["_QryResultSQL"] = value;
         }
     } 
     #endregion

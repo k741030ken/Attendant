@@ -423,7 +423,7 @@ public class OverTimeUpdateSingleDataApprovedHandler : IHttpHandler, System.Web.
                     //    strShowValue += (dt2.Rows[0]["OTEndTime"].ToString()).Substring(0, 2) + "：" + (dt2.Rows[0]["OTEndTime"].ToString()).Substring(2, 2);
                     //}
 
-                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnAfter", oAssTo, ""))
+                    if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnAfterLast", oAssTo, ""))
                     {
                         string flowCaseID = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
                         //更新AssignToName(部門+員工姓名)

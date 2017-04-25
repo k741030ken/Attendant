@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 
@@ -28,12 +27,12 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsWidthByPixel"] == null) ViewState["_IsWidthByPixel"] = true;
-            return (bool)ViewState["_IsWidthByPixel"];
+            if (PageViewState["_IsWidthByPixel"] == null) PageViewState["_IsWidthByPixel"] = true;
+            return (bool)PageViewState["_IsWidthByPixel"];
         }
         set
         {
-            ViewState["_IsWidthByPixel"] = value;
+            PageViewState["_IsWidthByPixel"] = value;
         }
     }
 
@@ -44,13 +43,13 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_Width"] == null) ViewState["_Width"] = 100;
-            return (int)ViewState["_Width"];
+            if (PageViewState["_Width"] == null) PageViewState["_Width"] = 100;
+            return (int)PageViewState["_Width"];
         }
 
         set
         {
-            ViewState["_Width"] = value;
+            PageViewState["_Width"] = value;
         }
     }
 
@@ -61,13 +60,13 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_RadioListWidth"] == null) ViewState["_RadioListWidth"] = 200;
-            return (int)ViewState["_RadioListWidth"];
+            if (PageViewState["_RadioListWidth"] == null) PageViewState["_RadioListWidth"] = 200;
+            return (int)PageViewState["_RadioListWidth"];
         }
 
         set
         {
-            ViewState["_RadioListWidth"] = value;
+            PageViewState["_RadioListWidth"] = value;
         }
     }
 
@@ -78,13 +77,13 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_RadioListHeight"] == null) ViewState["_RadioListHeight"] = 175;
-            return (int)ViewState["_RadioListHeight"];
+            if (PageViewState["_RadioListHeight"] == null) PageViewState["_RadioListHeight"] = 175;
+            return (int)PageViewState["_RadioListHeight"];
         }
 
         set
         {
-            ViewState["_RadioListHeight"] = value;
+            PageViewState["_RadioListHeight"] = value;
         }
     }
 
@@ -95,12 +94,12 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_SourceDictionary"] == null) ViewState["_SourceDictionary"] = null;
-            return (Dictionary<string, string>)ViewState["_SourceDictionary"];
+            if (PageViewState["_SourceDictionary"] == null) PageViewState["_SourceDictionary"] = null;
+            return (Dictionary<string, string>)PageViewState["_SourceDictionary"];
         }
         set
         {
-            ViewState["_SourceDictionary"] = value;
+            PageViewState["_SourceDictionary"] = value;
 
             //設定候選項目
             RadioList1.DataSource = value;
@@ -151,15 +150,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsRequire"] == null)
+            if (PageViewState["_IsRequire"] == null)
             {
-                ViewState["_IsRequire"] = false;
+                PageViewState["_IsRequire"] = false;
             }
-            return (bool)(ViewState["_IsRequire"]);
+            return (bool)(PageViewState["_IsRequire"]);
         }
         set
         {
-            ViewState["_IsRequire"] = value;
+            PageViewState["_IsRequire"] = value;
             txtID.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
         }
@@ -172,15 +171,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ToolTip"] == null)
+            if (PageViewState["_ToolTip"] == null)
             {
-                ViewState["_ToolTip"] = _ToolTip;
+                PageViewState["_ToolTip"] = _ToolTip;
             }
-            return (string)(ViewState["_ToolTip"]);
+            return (string)(PageViewState["_ToolTip"]);
         }
         set
         {
-            ViewState["_ToolTip"] = value;
+            PageViewState["_ToolTip"] = value;
         }
     }
 
@@ -198,8 +197,8 @@ public partial class Util_ucRadioList : BaseUserControl
     /// </summary>
     public bool ucIsSearchBoxEnabled
     {
-        get { if (ViewState["_IsSearchBoxEnabled"] == null) { ViewState["_IsSearchBoxEnabled"] = true; } return (bool)ViewState["_IsSearchBoxEnabled"]; }
-        set { ViewState["_IsSearchBoxEnabled"] = value; }
+        get { if (PageViewState["_IsSearchBoxEnabled"] == null) { PageViewState["_IsSearchBoxEnabled"] = true; } return (bool)PageViewState["_IsSearchBoxEnabled"]; }
+        set { PageViewState["_IsSearchBoxEnabled"] = value; }
     }
 
     /// <summary>
@@ -207,8 +206,8 @@ public partial class Util_ucRadioList : BaseUserControl
     /// </summary>
     public bool ucIsExitBoxEnabled
     {
-        get { if (ViewState["_IsExitBoxEnabled"] == null) { ViewState["_IsExitBoxEnabled"] = true; } return (bool)ViewState["_IsExitBoxEnabled"]; }
-        set { ViewState["_IsExitBoxEnabled"] = value; }
+        get { if (PageViewState["_IsExitBoxEnabled"] == null) { PageViewState["_IsExitBoxEnabled"] = true; } return (bool)PageViewState["_IsExitBoxEnabled"]; }
+        set { PageViewState["_IsExitBoxEnabled"] = value; }
     }
 
     /// <summary>
@@ -218,15 +217,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_WaterMarkCSS"] == null)
+            if (PageViewState["_WaterMarkCSS"] == null)
             {
-                ViewState["_WaterMarkCSS"] = _WaterMarkClass;
+                PageViewState["_WaterMarkCSS"] = _WaterMarkClass;
             }
-            return (string)(ViewState["_WaterMarkCSS"]);
+            return (string)(PageViewState["_WaterMarkCSS"]);
         }
         set
         {
-            ViewState["_WaterMarkCSS"] = value;
+            PageViewState["_WaterMarkCSS"] = value;
         }
     }
 
@@ -237,15 +236,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsReadOnly"] == null)
+            if (PageViewState["_IsReadOnly"] == null)
             {
-                ViewState["_IsReadOnly"] = false;
+                PageViewState["_IsReadOnly"] = false;
             }
-            return (bool)(ViewState["_IsReadOnly"]);
+            return (bool)(PageViewState["_IsReadOnly"]);
         }
         set
         {
-            ViewState["_IsReadOnly"] = value;
+            PageViewState["_IsReadOnly"] = value;
         }
     }
 
@@ -256,15 +255,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_ReadOnlyCSS"] == null)
+            if (PageViewState["_ReadOnlyCSS"] == null)
             {
-                ViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
+                PageViewState["_ReadOnlyCSS"] = _ReadOnlyClass;
             }
-            return (string)(ViewState["_ReadOnlyCSS"]);
+            return (string)(PageViewState["_ReadOnlyCSS"]);
         }
         set
         {
-            ViewState["_ReadOnlyCSS"] = value;
+            PageViewState["_ReadOnlyCSS"] = value;
         }
     }
 
@@ -275,15 +274,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "";
+                PageViewState["_CssClass"] = "";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
         }
     }
 
@@ -294,15 +293,15 @@ public partial class Util_ucRadioList : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToggleVisibility"] == null)
+            if (PageViewState["_IsToggleVisibility"] == null)
             {
-                ViewState["_IsToggleVisibility"] = false;
+                PageViewState["_IsToggleVisibility"] = false;
             }
-            return (bool)(ViewState["_IsToggleVisibility"]);
+            return (bool)(PageViewState["_IsToggleVisibility"]);
         }
         set
         {
-            ViewState["_IsToggleVisibility"] = value;
+            PageViewState["_IsToggleVisibility"] = value;
             if (value == true)
             {
                 chkVisibility.Visible = true;

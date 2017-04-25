@@ -31,15 +31,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DBName"] == null)
+            if (PageViewState["_DBName"] == null)
             {
-                ViewState["_DBName"] = "";
+                PageViewState["_DBName"] = "";
             }
-            return (string)(ViewState["_DBName"]);
+            return (string)(PageViewState["_DBName"]);
         }
         set
         {
-            ViewState["_DBName"] = value;
+            PageViewState["_DBName"] = value;
         }
     }
 
@@ -54,8 +54,8 @@ public partial class Util_ucTreeView : BaseUserControl
         {
             if (value != null)
             {
-                ViewState["_NodeInfoDataStatus"] = "W"; //For 程式內部辨識  [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
-                ViewState["_NodeInfoData"] = value;
+                PageViewState["_NodeInfoDataStatus"] = "W"; //For 程式內部辨識  [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
+                PageViewState["_NodeInfoData"] = value;
             }
         }
     }
@@ -67,15 +67,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_DataNotFoundMsg"] == null)
+            if (PageViewState["_DataNotFoundMsg"] == null)
             {
-                ViewState["_DataNotFoundMsg"] = RS.Resources.Msg_DataNotFound;
+                PageViewState["_DataNotFoundMsg"] = RS.Resources.Msg_DataNotFound;
             }
-            return (string)(ViewState["_DataNotFoundMsg"]);
+            return (string)(PageViewState["_DataNotFoundMsg"]);
         }
         set
         {
-            ViewState["_DataNotFoundMsg"] = value;
+            PageViewState["_DataNotFoundMsg"] = value;
         }
     }
 
@@ -86,15 +86,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_RootNodeID"] == null)
+            if (PageViewState["_RootNodeID"] == null)
             {
-                ViewState["_RootNodeID"] = "";
+                PageViewState["_RootNodeID"] = "";
             }
-            return (string)(ViewState["_RootNodeID"]);
+            return (string)(PageViewState["_RootNodeID"]);
         }
         set
         {
-            ViewState["_RootNodeID"] = value;
+            PageViewState["_RootNodeID"] = value;
         }
     }
 
@@ -105,15 +105,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectedNodeID"] == null)
+            if (PageViewState["_SelectedNodeID"] == null)
             {
-                ViewState["_SelectedNodeID"] = "";
+                PageViewState["_SelectedNodeID"] = "";
             }
-            return (string)(ViewState["_SelectedNodeID"]);
+            return (string)(PageViewState["_SelectedNodeID"]);
         }
         set
         {
-            ViewState["_SelectedNodeID"] = value.Trim();
+            PageViewState["_SelectedNodeID"] = value.Trim();
         }
     }
 
@@ -124,15 +124,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ChkGrantIDList"] == null)
+            if (PageViewState["_ChkGrantIDList"] == null)
             {
                 return null;
             }
-            return (string[])(ViewState["_ChkGrantIDList"]);
+            return (string[])(PageViewState["_ChkGrantIDList"]);
         }
         set
         {
-            ViewState["_ChkGrantIDList"] = value;
+            PageViewState["_ChkGrantIDList"] = value;
         }
     }
 
@@ -143,15 +143,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsPopup"] == null)
+            if (PageViewState["_IsPopup"] == null)
             {
-                ViewState["_IsPopup"] = false;
+                PageViewState["_IsPopup"] = false;
             }
-            return (bool)(ViewState["_IsPopup"]);
+            return (bool)(PageViewState["_IsPopup"]);
         }
         set
         {
-            ViewState["_IsPopup"] = value;
+            PageViewState["_IsPopup"] = value;
         }
     }
 
@@ -162,15 +162,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_TargetFrame"] == null)
+            if (PageViewState["_TargetFrame"] == null)
             {
-                ViewState["_TargetFrame"] = "";
+                PageViewState["_TargetFrame"] = "";
             }
-            return (string)(ViewState["_TargetFrame"]);
+            return (string)(PageViewState["_TargetFrame"]);
         }
         set
         {
-            ViewState["_TargetFrame"] = value;
+            PageViewState["_TargetFrame"] = value;
         }
     }
 
@@ -181,15 +181,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupCfgSetting"] == null)
+            if (PageViewState["_PopupCfgSetting"] == null)
             {
-                ViewState["_PopupCfgSetting"] = "app://CfgPopupSpecs/";
+                PageViewState["_PopupCfgSetting"] = "app://CfgPopupSpecs/";
             }
-            return (string)(ViewState["_PopupCfgSetting"]);
+            return (string)(PageViewState["_PopupCfgSetting"]);
         }
         set
         {
-            ViewState["_PopupCfgSetting"] = value;
+            PageViewState["_PopupCfgSetting"] = value;
         }
     }
 
@@ -200,15 +200,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsToolBarEnabled"] == null)
+            if (PageViewState["_IsToolBarEnabled"] == null)
             {
-                ViewState["_IsToolBarEnabled"] = true;
+                PageViewState["_IsToolBarEnabled"] = true;
             }
-            return (bool)(ViewState["_IsToolBarEnabled"]);
+            return (bool)(PageViewState["_IsToolBarEnabled"]);
         }
         set
         {
-            ViewState["_IsToolBarEnabled"] = value;
+            PageViewState["_IsToolBarEnabled"] = value;
         }
     }
 
@@ -219,15 +219,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsHideRootNode"] == null)
+            if (PageViewState["_IsHideRootNode"] == null)
             {
-                ViewState["_IsHideRootNode"] = true;
+                PageViewState["_IsHideRootNode"] = true;
             }
-            return (bool)(ViewState["_IsHideRootNode"]);
+            return (bool)(PageViewState["_IsHideRootNode"]);
         }
         set
         {
-            ViewState["_IsHideRootNode"] = value;
+            PageViewState["_IsHideRootNode"] = value;
         }
     }
 
@@ -238,15 +238,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsShowLines"] == null)
+            if (PageViewState["_IsShowLines"] == null)
             {
-                ViewState["_IsShowLines"] = false;
+                PageViewState["_IsShowLines"] = false;
             }
-            return (bool)(ViewState["_IsShowLines"]);
+            return (bool)(PageViewState["_IsShowLines"]);
         }
         set
         {
-            ViewState["_IsShowLines"] = value;
+            PageViewState["_IsShowLines"] = value;
         }
     }
 
@@ -257,15 +257,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CollapseAllImageUrl"] == null)
+            if (PageViewState["_CollapseAllImageUrl"] == null)
             {
-                ViewState["_CollapseAllImageUrl"] = Util.Icon_Up;
+                PageViewState["_CollapseAllImageUrl"] = Util.Icon_Up;
             }
-            return (string)(ViewState["_CollapseAllImageUrl"]);
+            return (string)(PageViewState["_CollapseAllImageUrl"]);
         }
         set
         {
-            ViewState["_CollapseAllImageUrl"] = value;
+            PageViewState["_CollapseAllImageUrl"] = value;
         }
     }
 
@@ -276,15 +276,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExpandAllImageUrl"] == null)
+            if (PageViewState["_ExpandAllImageUrl"] == null)
             {
-                ViewState["_ExpandAllImageUrl"] = Util.Icon_Down;
+                PageViewState["_ExpandAllImageUrl"] = Util.Icon_Down;
             }
-            return (string)(ViewState["_ExpandAllImageUrl"]);
+            return (string)(PageViewState["_ExpandAllImageUrl"]);
         }
         set
         {
-            ViewState["_ExpandAllImageUrl"] = value;
+            PageViewState["_ExpandAllImageUrl"] = value;
         }
     }
 
@@ -296,15 +296,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CollapseImageUrl"] == null)
+            if (PageViewState["_CollapseImageUrl"] == null)
             {
-                ViewState["_CollapseImageUrl"] = Util.Icon_FolderOpen;
+                PageViewState["_CollapseImageUrl"] = Util.Icon_FolderOpen;
             }
-            return (string)(ViewState["_CollapseImageUrl"]);
+            return (string)(PageViewState["_CollapseImageUrl"]);
         }
         set
         {
-            ViewState["_CollapseImageUrl"] = value;
+            PageViewState["_CollapseImageUrl"] = value;
         }
     }
 
@@ -315,15 +315,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_ExpandImageUrl"] == null)
+            if (PageViewState["_ExpandImageUrl"] == null)
             {
-                ViewState["_ExpandImageUrl"] = Util.Icon_FolderClose;
+                PageViewState["_ExpandImageUrl"] = Util.Icon_FolderClose;
             }
-            return (string)(ViewState["_ExpandImageUrl"]);
+            return (string)(PageViewState["_ExpandImageUrl"]);
         }
         set
         {
-            ViewState["_ExpandImageUrl"] = value;
+            PageViewState["_ExpandImageUrl"] = value;
         }
     }
 
@@ -334,15 +334,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_NoExpandImageUrl"] == null)
+            if (PageViewState["_NoExpandImageUrl"] == null)
             {
-                ViewState["_NoExpandImageUrl"] = Util.Icon_SpaceHalf;
+                PageViewState["_NoExpandImageUrl"] = Util.Icon_SpaceHalf;
             }
-            return (string)(ViewState["_NoExpandImageUrl"]);
+            return (string)(PageViewState["_NoExpandImageUrl"]);
         }
         set
         {
-            ViewState["_NoExpandImageUrl"] = value;
+            PageViewState["_NoExpandImageUrl"] = value;
         }
     }
 
@@ -353,15 +353,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_NodeDefaultImageUrl"] == null)
+            if (PageViewState["_NodeDefaultImageUrl"] == null)
             {
-                ViewState["_NodeDefaultImageUrl"] = Util.Icon_Detail;
+                PageViewState["_NodeDefaultImageUrl"] = Util.Icon_Detail;
             }
-            return (string)(ViewState["_NodeDefaultImageUrl"]);
+            return (string)(PageViewState["_NodeDefaultImageUrl"]);
         }
         set
         {
-            ViewState["_NodeDefaultImageUrl"] = value;
+            PageViewState["_NodeDefaultImageUrl"] = value;
         }
     }
 
@@ -372,15 +372,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_CssClass"] == null)
+            if (PageViewState["_CssClass"] == null)
             {
-                ViewState["_CssClass"] = "Util_TreeView";
+                PageViewState["_CssClass"] = "Util_TreeView";
             }
-            return (string)(ViewState["_CssClass"]);
+            return (string)(PageViewState["_CssClass"]);
         }
         set
         {
-            ViewState["_CssClass"] = value;
+            PageViewState["_CssClass"] = value;
         }
     }
 
@@ -391,15 +391,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_NodeForeColor"] == null)
+            if (PageViewState["_NodeForeColor"] == null)
             {
-                ViewState["_NodeForeColor"] = "#555555";
+                PageViewState["_NodeForeColor"] = "#555555";
             }
-            return (string)(ViewState["_NodeForeColor"]);
+            return (string)(PageViewState["_NodeForeColor"]);
         }
         set
         {
-            ViewState["_NodeForeColor"] = value;
+            PageViewState["_NodeForeColor"] = value;
         }
     }
 
@@ -410,15 +410,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_NodeIndent"] == null)
+            if (PageViewState["_NodeIndent"] == null)
             {
-                ViewState["_NodeIndent"] = 8;
+                PageViewState["_NodeIndent"] = 8;
             }
-            return (int)(ViewState["_NodeIndent"]);
+            return (int)(PageViewState["_NodeIndent"]);
         }
         set
         {
-            ViewState["_NodeIndent"] = value;
+            PageViewState["_NodeIndent"] = value;
         }
     }
 
@@ -429,15 +429,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsHoverFontUnderline"] == null)
+            if (PageViewState["_IsHoverFontUnderline"] == null)
             {
-                ViewState["_IsHoverFontUnderline"] = true;
+                PageViewState["_IsHoverFontUnderline"] = true;
             }
-            return (bool)(ViewState["_IsHoverFontUnderline"]);
+            return (bool)(PageViewState["_IsHoverFontUnderline"]);
         }
         set
         {
-            ViewState["_IsHoverFontUnderline"] = value;
+            PageViewState["_IsHoverFontUnderline"] = value;
         }
     }
 
@@ -448,15 +448,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsHoverFontBold"] == null)
+            if (PageViewState["_IsHoverFontBold"] == null)
             {
-                ViewState["_IsHoverFontBold"] = true;
+                PageViewState["_IsHoverFontBold"] = true;
             }
-            return (bool)(ViewState["_IsHoverFontBold"]);
+            return (bool)(PageViewState["_IsHoverFontBold"]);
         }
         set
         {
-            ViewState["_IsHoverFontBold"] = value;
+            PageViewState["_IsHoverFontBold"] = value;
         }
     }
 
@@ -467,15 +467,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_SelectedNodeForeColor"] == null)
+            if (PageViewState["_SelectedNodeForeColor"] == null)
             {
-                ViewState["_SelectedNodeForeColor"] = "#A31515";
+                PageViewState["_SelectedNodeForeColor"] = "#A31515";
             }
-            return (string)(ViewState["_SelectedNodeForeColor"]);
+            return (string)(PageViewState["_SelectedNodeForeColor"]);
         }
         set
         {
-            ViewState["_SelectedNodeForeColor"] = value;
+            PageViewState["_SelectedNodeForeColor"] = value;
         }
     }
 
@@ -486,15 +486,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsSelectedFontUnderline"] == null)
+            if (PageViewState["_IsSelectedFontUnderline"] == null)
             {
-                ViewState["_IsSelectedFontUnderline"] = true;
+                PageViewState["_IsSelectedFontUnderline"] = true;
             }
-            return (bool)(ViewState["_IsSelectedFontUnderline"]);
+            return (bool)(PageViewState["_IsSelectedFontUnderline"]);
         }
         set
         {
-            ViewState["_IsSelectedFontUnderline"] = value;
+            PageViewState["_IsSelectedFontUnderline"] = value;
         }
     }
 
@@ -505,15 +505,15 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         get
         {
-            if (ViewState["_IsSelectedFontBold"] == null)
+            if (PageViewState["_IsSelectedFontBold"] == null)
             {
-                ViewState["_IsSelectedFontBold"] = true;
+                PageViewState["_IsSelectedFontBold"] = true;
             }
-            return (bool)(ViewState["_IsSelectedFontBold"]);
+            return (bool)(PageViewState["_IsSelectedFontBold"]);
         }
         set
         {
-            ViewState["_IsSelectedFontBold"] = value;
+            PageViewState["_IsSelectedFontBold"] = value;
         }
     }
     #endregion
@@ -561,8 +561,8 @@ public partial class Util_ucTreeView : BaseUserControl
     /// </summary>
     public void ExpandAll()
     {
-        ViewState["_IsExpandAll"] = true;
-        ViewState["_IsCollapseAll"] = false;
+        PageViewState["_IsExpandAll"] = true;
+        PageViewState["_IsCollapseAll"] = false;
         //處理根節點
         setRootNodeJS();
         if (MainTree.Nodes.Count > 0)
@@ -576,8 +576,8 @@ public partial class Util_ucTreeView : BaseUserControl
     /// </summary>
     public void CollapseAll()
     {
-        ViewState["_IsExpandAll"] = false;
-        ViewState["_IsCollapseAll"] = true;
+        PageViewState["_IsExpandAll"] = false;
+        PageViewState["_IsCollapseAll"] = true;
         //處理根節點
         setRootNodeJS();
         if (MainTree.Nodes.Count > 0)
@@ -598,7 +598,7 @@ public partial class Util_ucTreeView : BaseUserControl
     /// </summary>
     public void Reset()
     {
-        this.ViewState.Clear();
+        this.PageViewState.Clear();
     }
 
     /// <summary>
@@ -626,19 +626,19 @@ public partial class Util_ucTreeView : BaseUserControl
     {
         MainTree.Style["display"] = "none";
 
-        if (ViewState["_IsExpandAll"] == null)
+        if (PageViewState["_IsExpandAll"] == null)
         {
-            ViewState["_IsExpandAll"] = false;
+            PageViewState["_IsExpandAll"] = false;
         }
 
-        if (ViewState["_IsCollapseAll"] == null)
+        if (PageViewState["_IsCollapseAll"] == null)
         {
-            ViewState["_IsCollapseAll"] = false;
+            PageViewState["_IsCollapseAll"] = false;
         }
 
-        if (ViewState["_IsSelectedNode"] == null)
+        if (PageViewState["_IsSelectedNode"] == null)
         {
-            ViewState["_IsSelectedNode"] = false;
+            PageViewState["_IsSelectedNode"] = false;
         }
 
         if (string.IsNullOrEmpty(ucRootNodeID))
@@ -652,14 +652,14 @@ public partial class Util_ucTreeView : BaseUserControl
         {
             if (getNodeInfoData() == null)
             {
-                if (ViewState["_NodeInfoDataStatus"] != null)
+                if (PageViewState["_NodeInfoDataStatus"] != null)
                 {
                     //ucNodeInfoData
-                    if (((string)ViewState["_NodeInfoDataStatus"]) == "N")
+                    if (((string)PageViewState["_NodeInfoDataStatus"]) == "N")
                     {
                         labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, "[ucNodeInfoData] 自訂資料表的欄位名稱有錯誤 , 至少需有 [" + Util.getStringJoin(_NodeInfoData_NeedFldList) + "] 等欄位!");
                     }
-                    if (((string)ViewState["_NodeInfoDataStatus"]) == "Y")
+                    if (((string)PageViewState["_NodeInfoDataStatus"]) == "Y")
                     {
                         labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, ucDataNotFoundMsg);
                     }
@@ -688,7 +688,7 @@ public partial class Util_ucTreeView : BaseUserControl
             {
                 if (getNodeInfoData().Select(string.Format(" NodeID = '{0}' ", ucSelectedNodeID)).Count() > 0)
                 {
-                    ViewState["_IsSelectedNode"] = true;
+                    PageViewState["_IsSelectedNode"] = true;
                     _IsAjax = false;
                 }
             }
@@ -751,12 +751,12 @@ public partial class Util_ucTreeView : BaseUserControl
             //處理根節點
             setRootNodeJS();
 
-            if ((bool)ViewState["_IsExpandAll"])
+            if ((bool)PageViewState["_IsExpandAll"])
             {
                 ExpandAll();
             }
 
-            if ((bool)ViewState["_IsCollapseAll"])
+            if ((bool)PageViewState["_IsCollapseAll"])
             {
                 CollapseAll();
             }
@@ -822,7 +822,7 @@ public partial class Util_ucTreeView : BaseUserControl
 
         if (oNode.Value == ucSelectedNodeID)
         {
-            if ((bool)ViewState["_IsSelectedNode"])
+            if ((bool)PageViewState["_IsSelectedNode"])
             {
                 oNode.Selected = true;
             }
@@ -891,7 +891,7 @@ public partial class Util_ucTreeView : BaseUserControl
     /// <returns></returns>
     protected DataTable getNodeInfoData()
     {
-        if (ViewState["_NodeInfoData"] == null)
+        if (PageViewState["_NodeInfoData"] == null)
         {
             DbHelper db = new DbHelper(ucDBName);
             string strSQL = string.Format("Select * From viewNodeInfo Where IsEnabled = 'Y'  And CultureCode = '{0}' ", Util.getUICultureCode());
@@ -903,52 +903,52 @@ public partial class Util_ucTreeView : BaseUserControl
             }
 
             DataTable dt = db.ExecuteDataSet(strSQL).Tables[0];
-            ViewState["_NodeInfoData"] = dt;
+            PageViewState["_NodeInfoData"] = dt;
         }
         else
         {
-            //利用 ViewState["_NodeInfoDataStatus"] 進行程式邏輯判斷   [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
-            if (ViewState["_NodeInfoDataStatus"] != null && ((string)ViewState["_NodeInfoDataStatus"]) == "W")
+            //利用 PageViewState["_NodeInfoDataStatus"] 進行程式邏輯判斷   [W:等待檢查  Y:已檢查成功 N:已檢查但有Error]
+            if (PageViewState["_NodeInfoDataStatus"] != null && ((string)PageViewState["_NodeInfoDataStatus"]) == "W")
             {
                 //若使用了[ucNodeInfoData]屬性設定了自訂節點資料，則使用前需檢查資料欄位是否合理
                 _IsAjax = false; //自動關閉Ajax模式，以提昇效能
-                ViewState["_NodeInfoDataStatus"] = "Y";
-                DataTable dtNode = (DataTable)ViewState["_NodeInfoData"];
+                PageViewState["_NodeInfoDataStatus"] = "Y";
+                DataTable dtNode = (DataTable)PageViewState["_NodeInfoData"];
                 if (dtNode != null && dtNode.Rows.Count > 0)
                 {
-                    //檢查必要欄位(不存在就觸發Error並清空 ViewState["_NodeInfoData"])
+                    //檢查必要欄位(不存在就觸發Error並清空 PageViewState["_NodeInfoData"])
                     for (int i = 0; i < _NodeInfoData_NeedFldList.Count(); i++)
                     {
-                        if ((string)ViewState["_NodeInfoDataStatus"] == "Y")
+                        if ((string)PageViewState["_NodeInfoDataStatus"] == "Y")
                         {
                             if (!dtNode.Columns.Contains(_NodeInfoData_NeedFldList[i]))
                             {
-                                ViewState["_NodeInfoDataStatus"] = "N";
-                                ViewState["_NodeInfoData"] = null;
+                                PageViewState["_NodeInfoDataStatus"] = "N";
+                                PageViewState["_NodeInfoData"] = null;
                             }
                         }
                     }
                     //處理非必要欄位(不存在就自動新增)
-                    if ((string)ViewState["_NodeInfoDataStatus"] == "Y")
+                    if ((string)PageViewState["_NodeInfoDataStatus"] == "Y")
                     {
                         for (int i = 0; i < _NodeInfoData_OptiFldList.Count(); i++)
                         {
                             if (!dtNode.Columns.Contains(_NodeInfoData_OptiFldList[i]))
                             {
                                 dtNode.Columns.Add(_NodeInfoData_OptiFldList[i]);
-                                ViewState["_NodeInfoData"] = dtNode;
+                                PageViewState["_NodeInfoData"] = dtNode;
                             }
                         }
                     }
                 }
                 else
                 {
-                    ViewState["_NodeInfoData"] = null;
+                    PageViewState["_NodeInfoData"] = null;
                 }
             }
         }
 
-        return (DataTable)(ViewState["_NodeInfoData"]);
+        return (DataTable)(PageViewState["_NodeInfoData"]);
     }
 
     /// <summary>

@@ -17,15 +17,15 @@ public partial class Util_ucToggleControlVisibility : BaseUserControl
     {
         get
         {
-            if (ViewState["_ParentControlID"] == null)
+            if (PageViewState["_ParentControlID"] == null)
             {
-                ViewState["_ParentControlID"] = "";
+                PageViewState["_ParentControlID"] = "";
             }
-            return (string)(ViewState["_ParentControlID"]);
+            return (string)(PageViewState["_ParentControlID"]);
         }
         set
         {
-            ViewState["_ParentControlID"] = value;
+            PageViewState["_ParentControlID"] = value;
         }
     }
 
@@ -36,15 +36,15 @@ public partial class Util_ucToggleControlVisibility : BaseUserControl
     {
         get
         {
-            if (ViewState["_ToggleVisibilityToolTip"] == null)
+            if (PageViewState["_ToggleVisibilityToolTip"] == null)
             {
-                ViewState["_ToggleVisibilityToolTip"] = SinoPac.WebExpress.Common.Properties.Resources.ToggleControlVisibility_ToolTip;
+                PageViewState["_ToggleVisibilityToolTip"] = SinoPac.WebExpress.Common.Properties.Resources.ToggleControlVisibility_ToolTip;
             }
-            return (string)(ViewState["_ToggleVisibilityToolTip"]);
+            return (string)(PageViewState["_ToggleVisibilityToolTip"]);
         }
         set
         {
-            ViewState["_ToggleVisibilityToolTip"] = value;
+            PageViewState["_ToggleVisibilityToolTip"] = value;
         }
     }
 

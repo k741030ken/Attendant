@@ -18,15 +18,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_ContextData"] == null)
+            if (PageViewState["_ContextData"] == null)
             {
-                ViewState["_ContextData"] = "";
+                PageViewState["_ContextData"] = "";
             }
-            return (string)(ViewState["_ContextData"]);
+            return (string)(PageViewState["_ContextData"]);
         }
         set
         {
-            ViewState["_ContextData"] = value;
+            PageViewState["_ContextData"] = value;
         }
     }
 
@@ -37,18 +37,18 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_CausesValidation"] == null)
+            if (PageViewState["_CausesValidation"] == null)
             {
-                ViewState["_CausesValidation"] = false;
+                PageViewState["_CausesValidation"] = false;
                 btnClose.CausesValidation = false;
                 btnComplete.CausesValidation = false;
                 btnCancel.CausesValidation = false;
             }
-            return (bool)(ViewState["_CausesValidation"]);
+            return (bool)(PageViewState["_CausesValidation"]);
         }
         set
         {
-            ViewState["_CausesValidation"] = value;
+            PageViewState["_CausesValidation"] = value;
             btnClose.CausesValidation = value;
             btnComplete.CausesValidation = value;
             btnCancel.CausesValidation = value;
@@ -77,15 +77,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCompleteHeader"] == null)
+            if (PageViewState["_BtnCompleteHeader"] == null)
             {
-                ViewState["_BtnCompleteHeader"] = RS.Resources.ModalPopup_btnComplete;
+                PageViewState["_BtnCompleteHeader"] = RS.Resources.ModalPopup_btnComplete;
             }
-            return (string)(ViewState["_BtnCompleteHeader"]);
+            return (string)(PageViewState["_BtnCompleteHeader"]);
         }
         set
         {
-            ViewState["_BtnCompleteHeader"] = value;
+            PageViewState["_BtnCompleteHeader"] = value;
         }
     }
 
@@ -96,15 +96,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCancelHeader"] == null)
+            if (PageViewState["_BtnCancelHeader"] == null)
             {
-                ViewState["_BtnCancelHeader"] = RS.Resources.ModalPopup_btnCancel;
+                PageViewState["_BtnCancelHeader"] = RS.Resources.ModalPopup_btnCancel;
             }
-            return (string)(ViewState["_BtnCancelHeader"]);
+            return (string)(PageViewState["_BtnCancelHeader"]);
         }
         set
         {
-            ViewState["_BtnCancelHeader"] = value;
+            PageViewState["_BtnCancelHeader"] = value;
         }
     }
 
@@ -115,15 +115,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCompleteWidth"] == null)
+            if (PageViewState["_BtnCompleteWidth"] == null)
             {
-                ViewState["_BtnCompleteWidth"] = 120;
+                PageViewState["_BtnCompleteWidth"] = 120;
             }
-            return (int)(ViewState["_BtnCompleteWidth"]);
+            return (int)(PageViewState["_BtnCompleteWidth"]);
         }
         set
         {
-            ViewState["_BtnCompleteWidth"] = value;
+            PageViewState["_BtnCompleteWidth"] = value;
         }
     }
 
@@ -135,15 +135,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_BtnCancelWidth"] == null)
+            if (PageViewState["_BtnCancelWidth"] == null)
             {
-                ViewState["_BtnCancelWidth"] = 120;
+                PageViewState["_BtnCancelWidth"] = 120;
             }
-            return (int)(ViewState["_BtnCancelWidth"]);
+            return (int)(PageViewState["_BtnCancelWidth"]);
         }
         set
         {
-            ViewState["_BtnCancelWidth"] = value;
+            PageViewState["_BtnCancelWidth"] = value;
         }
     }
 
@@ -154,15 +154,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeader"] == null)
+            if (PageViewState["_PopupHeader"] == null)
             {
-                ViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
+                PageViewState["_PopupHeader"] = RS.Resources.ModalPopup_Header;
             }
-            return (string)(ViewState["_PopupHeader"]);
+            return (string)(PageViewState["_PopupHeader"]);
         }
         set
         {
-            ViewState["_PopupHeader"] = value;
+            PageViewState["_PopupHeader"] = value;
         }
     }
 
@@ -173,15 +173,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupWidth"] == null)
+            if (PageViewState["_PopupWidth"] == null)
             {
-                ViewState["_PopupWidth"] = 650;
+                PageViewState["_PopupWidth"] = 650;
             }
-            return (int)(ViewState["_PopupWidth"]);
+            return (int)(PageViewState["_PopupWidth"]);
         }
         set
         {
-            ViewState["_PopupWidth"] = value;
+            PageViewState["_PopupWidth"] = value;
         }
     }
 
@@ -192,15 +192,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_PopupHeight"] == null)
+            if (PageViewState["_PopupHeight"] == null)
             {
-                ViewState["_PopupHeight"] = 500;
+                PageViewState["_PopupHeight"] = 500;
             }
-            return (int)(ViewState["_PopupHeight"]);
+            return (int)(PageViewState["_PopupHeight"]);
         }
         set
         {
-            ViewState["_PopupHeight"] = value;
+            PageViewState["_PopupHeight"] = value;
         }
     }
 
@@ -211,15 +211,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_FrameURL"] == null)
+            if (PageViewState["_FrameURL"] == null)
             {
-                ViewState["_FrameURL"] = "";
+                PageViewState["_FrameURL"] = "";
             }
-            return (string)(ViewState["_FrameURL"]);
+            return (string)(PageViewState["_FrameURL"]);
         }
         set
         {
-            ViewState["_FrameURL"] = value;
+            PageViewState["_FrameURL"] = value;
         }
     }
 
@@ -230,15 +230,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_FrameRefreshTimeout"] == null)
+            if (PageViewState["_FrameRefreshTimeout"] == null)
             {
-                ViewState["_FrameRefreshTimeout"] = 300;
+                PageViewState["_FrameRefreshTimeout"] = 300;
             }
-            return (int)(ViewState["_FrameRefreshTimeout"]);
+            return (int)(PageViewState["_FrameRefreshTimeout"]);
         }
         set
         {
-            ViewState["_FrameRefreshTimeout"] = value;
+            PageViewState["_FrameRefreshTimeout"] = value;
         }
     }
 
@@ -249,15 +249,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_HtmlContent"] == null)
+            if (PageViewState["_HtmlContent"] == null)
             {
-                ViewState["_HtmlContent"] = "";
+                PageViewState["_HtmlContent"] = "";
             }
-            return (string)(ViewState["_HtmlContent"]);
+            return (string)(PageViewState["_HtmlContent"]);
         }
         set
         {
-            ViewState["_HtmlContent"] = value;
+            PageViewState["_HtmlContent"] = value;
         }
     }
 
@@ -268,15 +268,15 @@ public partial class Util_ucModalPopup : BaseUserControl
     {
         get
         {
-            if (ViewState["_PanelID"] == null)
+            if (PageViewState["_PanelID"] == null)
             {
-                ViewState["_PanelID"] = "";
+                PageViewState["_PanelID"] = "";
             }
-            return (string)(ViewState["_PanelID"]);
+            return (string)(PageViewState["_PanelID"]);
         }
         set
         {
-            ViewState["_PanelID"] = value;
+            PageViewState["_PanelID"] = value;
         }
     }
 
@@ -405,7 +405,7 @@ public partial class Util_ucModalPopup : BaseUserControl
     public void Reset()
     {
         //參數回覆初始值
-        this.ViewState.Clear();
+        this.PageViewState.Clear();
         btnClose.Visible = true;
         btnComplete.Visible = false;
         btnCancel.Visible = false;
