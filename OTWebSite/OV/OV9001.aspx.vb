@@ -205,7 +205,7 @@ Partial Class OV_OV9001
     End Function
     Protected Sub beforeCheck()
         Dim compID As String = lblCompID.Text.Substring(0, 6)
-        Dim systemID As String = "OT"
+        Dim systemID As String = ddlSystemCode.SelectedValue
         Dim flowCode As String = ddlFlowCode.SelectedValue
         '----------------------是用流程----------------------
         Dim sameProcess As DataTable
@@ -263,7 +263,7 @@ Partial Class OV_OV9001
 
     Protected Sub DoAdd(ByVal mainchk As Boolean)
         Dim compID As String = lblCompID.Text.Substring(0, 6)
-        Dim systemID As String = "OT"
+        Dim systemID As String = ddlSystemCode.SelectedValue
         Dim flowCode As String = ddlFlowCode.SelectedValue
         Dim Seq As Integer = getSeq(compID, systemID, flowCode)
         Dim successFlag As Boolean = False
@@ -351,11 +351,11 @@ Partial Class OV_OV9001
     End Sub
     Public Sub Message()
         Dim isSuccess As Boolean = False
-        Dim sCompID As String = "SPHBK1"
+        Dim sCompID As String = IIf(lblCompID.Text <> "", lblCompID.Text, "")
         Dim sEmpID As String = IIf(txtEmpID.Text <> "", txtEmpID.Text, "")
         Dim sOrganID As String = IIf(ddlOrganID.SelectedValue <> "", ddlOrganID.SelectedValue, "")
         Dim sDeptID As String = IIf(ddlDeptID.SelectedValue <> "", ddlDeptID.SelectedValue, "")
-        Dim sSystemID As String = "OT"
+        Dim sSystemID As String = IIf(ddlSystemCode.SelectedValue <> "", ddlSystemCode.SelectedValue, "")
         Dim sFlowCode As String = IIf(ddlFlowCode.SelectedValue <> "", ddlFlowCode.SelectedValue, "")
         Dim sFlowSN As String = IIf(ddlFlowSN.SelectedValue <> "", ddlFlowSN.SelectedValue, "")
         Dim sRankIDTop As String = IIf(ddlRankB.SelectedValue <> "", ddlRankB.SelectedValue, "")

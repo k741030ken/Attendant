@@ -796,6 +796,7 @@ Partial Class OV_OV8001
         '系統代碼
         ddlSystemID.Items.Insert(0, New ListItem("---請選擇---", ""))
         ddlSystemID.Items.Insert(1, New ListItem("OT", "OT"))
+        ddlSystemID.Items.Insert(2, New ListItem("OB", "OB"))
     End Sub
     Private Sub ddlSingIDCheck()
         If ddlSingIDDefine.SelectedValue = "2" Then
