@@ -63,6 +63,27 @@ public class Aattendant : System.Web.SessionState.IRequiresSessionState
         return result;
     }
 
+    #region"日期檢核"
+    public static Boolean DateCheck(string DateText)
+    {
+        DateTime DateChk;
+        if (DateText.Replace("_", "").Replace("/", "").Length < 8)
+        {
+            return false;
+        }
+        else
+        {
+            string[] strDate = DateText.Split("/");
+            int Year = Convert.ToInt32(strDate[0]);
+            int Month = Convert.ToInt32(strDate[1]);
+            int DateD = Convert.ToInt32(strDate[2]);
+            if (Year < 1900 || Month > 12 || Month < 0 || DateD > 31 || DateD < 0) return false;
+            else return DateTime.TryParse(DateText, out DateChk);
+        }
+        return true;
+    }
+    #endregion"日期檢核"
+
     /// <summary>
     /// GetRankIDMappingData
     /// </summary>
