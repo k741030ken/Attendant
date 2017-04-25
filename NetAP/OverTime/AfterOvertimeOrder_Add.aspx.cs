@@ -261,7 +261,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
         txtMealTime.Text = "0";
 
-        if (txtOTEmpID.Text != "" && ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+        if (txtOTEmpID.Text != "" && Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
         {
             SignData();
         }
@@ -339,10 +339,10 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     //加班申請範圍
                     TimeSpan totalBefore = (DateTime.Now.Date).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -396,7 +396,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 TimeSpan total = (Convert.ToDateTime(ucDateEnd.ucSelectedDate)).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
                 TimeSpan totalBefore = (DateTime.Now.Date).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -506,7 +506,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         }
         if (OTTimeStart.ucDefaultSelectedHH != "請選擇" && OTTimeStart.ucDefaultSelectedMM != "請選擇")
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 if (DateTime.Now.Date == Convert.ToDateTime(ucDateStart.ucSelectedDate))
                 {
@@ -655,7 +655,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -765,7 +765,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1016,7 +1016,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1121,7 +1121,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -4175,7 +4175,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         {
             EndTime_SelectedIndexChanged(null, null);
         }
-        if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "" && txtOTEmpID.Text != "")
+        if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate) && txtOTEmpID.Text != "")
         {
             SignData();
         }
@@ -4302,7 +4302,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         {
             EndTime_SelectedIndexChanged(null, null);
         }
-        if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "" && txtOTEmpID.Text != "")
+        if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate) && txtOTEmpID.Text != "")
         {
             SignData();
         }

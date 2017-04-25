@@ -419,7 +419,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
 
         if (_Sex != "" && _Sex == "2")
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 //從10點開始
                 if (Convert.ToInt32(_OTStartTime.Substring(0, 2)) == 22)
@@ -480,7 +480,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
         if (_OTStartDate == _OTEndDate)
         {
             cntTotal = (Convert.ToDouble(_OTEndTime.Substring(0, 2)) * 60 + Convert.ToDouble(_OTEndTime.Substring(2, 2))) - (Convert.ToDouble(_OTStartTime.Substring(0, 2)) * 60 + Convert.ToDouble(_OTStartTime.Substring(2, 2)));
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 #region "計算時段"
                 string returnPeriodCount = "";
@@ -568,7 +568,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
         {
             cntStart = (23 - (Convert.ToDouble(_OTStartTime.Substring(0, 2)))) * 60 + (60 - Convert.ToDouble(_OTStartTime.Substring(2, 2)));
             cntEnd = (Convert.ToDouble(_OTEndTime.Substring(0, 2))) * 60 + Convert.ToDouble(_OTEndTime.Substring(2, 2));
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 #region "計算時段"
                 string returnPeriodCount = "";
@@ -678,7 +678,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate))
             {
                 string msg = "";
                 ucDateEnd.ucSelectedDate = ucDateStart.ucSelectedDate;
@@ -710,7 +710,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                         return;
                     }
                 }
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     //檢查到職日以前不可以加
                     if (Convert.ToDateTime(ucDateStart.ucSelectedDate) < Convert.ToDateTime(_EmpDate))
@@ -748,7 +748,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
         }
         else
         {
-            if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+            if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
             {
                 string msg = "";
                 TimeSpan total = (Convert.ToDateTime(ucDateEnd.ucSelectedDate)).Subtract(Convert.ToDateTime(ucDateStart.ucSelectedDate));
@@ -792,7 +792,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                         return;
                     }
                 }
-                if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                 {
                     //檢查到職日以前不可以加
                     if (Convert.ToDateTime(ucDateStart.ucSelectedDate) < Convert.ToDateTime(_EmpDate))
@@ -948,7 +948,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1057,7 +1057,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                     {
                         EtxtMealTimeChecked(null, null, false);
                     }
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1319,7 +1319,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
@@ -1425,7 +1425,7 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                 }
                 else
                 {
-                    if (ucDateStart.ucSelectedDate != "" && ucDateEnd.ucSelectedDate != "")
+                    if (Aattendant.DateCheck(ucDateStart.ucSelectedDate) && Aattendant.DateCheck(ucDateEnd.ucSelectedDate))
                     {
                         #region "計算時段"
                         string returnPeriodCount = "";
