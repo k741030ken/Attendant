@@ -1078,17 +1078,24 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
     private bool TryCatchIsFlowVerify(string FlowLogID, string btn, Dictionary<string, string> oAssDic, string FlowStepOpinion, CommandHelper sb, out string ErrMsg, DataRow drOverTime = null, bool isOnly = true)
     {
         ErrMsg = "";
-        //查無主管的檢核往前移了
-        //if(oAssDic.IsNullOrEmpty())
-        //{
-        //    MsgOut(drOverTime, "查無下一關審核主管。", isOnly);
-        //    return false;
-        //}
-        //else if (oAssDic.Count == 0)
-        //{
-        //    MsgOut(drOverTime, "查無下一關審核主管。", isOnly);
-        //    return false;
-        //}
+        /************************************************/
+        /*測試用test                                                                  */
+        /*sb.Append("test我是來製作錯誤的!!");                    */
+        /*if (btn == "btnClose") btn = "btnApprove";                */
+        /************************************************/
+
+        //查無主管的檢核往前移了，正常應該是不會有空的oAssDic，以防萬一留著
+        if(oAssDic.IsNullOrEmpty())
+        {
+            MsgOut(drOverTime, "查無下一關審核主管。", isOnly);
+            return false;
+        }
+        else if (oAssDic.Count == 0)
+        {
+            MsgOut(drOverTime, "查無下一關審核主管。", isOnly);
+            return false;
+        }
+        //改派流程可能有出現現在關卡與下一關卡同一人需要放他過
         //else if (oAssDic.Keys.First().Trim().Equals(UserInfo.getUserInfo().UserID.Trim()) 
         //    && !btn.Trim().Equals("btnClose") 
         //    && !btn.Trim().Equals("btnReject"))
@@ -1096,11 +1103,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         //    MsgOut(drOverTime, "查無下一關審核主管。", isOnly);
         //    return false;
         //}
-        /*****************************************/
-        /*測試用test                                                    */
-        /*sb.Append("test我是來製作錯誤的!!");      */
-        /*if (btn == "btnClose") btn = "btnApprove";  */
-        /*****************************************/
+      
         DbHelper db = new DbHelper(Aattendant._AattendantDBName);
         DbConnection cn = db.OpenConnection();
         DbTransaction tx = cn.BeginTransaction();

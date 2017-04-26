@@ -3531,7 +3531,8 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                         }
                         try
                         {
-                            db.ExecuteNonQuery(sb.BuildCommand());
+                            tx.Rollback();//測試用
+                            //db.ExecuteNonQuery(sb.BuildCommand());
                             tx.Commit();
                             Util.MsgBox("送簽成功", "AfterOvertimeOrder.aspx");//提案送審成功
                         }
@@ -3568,9 +3569,95 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         {
             try
             {
-                db.ExecuteNonQuery(sb.BuildCommand(), tx);
-                tx.Commit();
-                Util.MsgBox("送簽成功", "AfterOvertimeOrder.aspx");//提案送審成功
+                Dictionary<string, string> oAssTo = new Dictionary<string, string>();
+                //逐筆送簽
+                oAssTo.Clear();
+                oAssTo.Add(UserInfo.getUserInfo().UserID, UserInfo.getUserInfo().OrganName + "-" + UserInfo.getUserInfo().UserName);
+                if (oAssTo.Count > 0)
+                {
+                    //若有指派對象，才開始組合新增流程 IsFlowInsVerify() 所需的參數
+                    string strStartTime = OTTimeStart.ucDefaultSelectedHH + OTTimeStart.ucDefaultSelectedMM;
+                    string strEndTime = OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM;
+
+                    string strKeyValue = "A," + _OTCompID + ",";
+                    strKeyValue += _EmpID + ",";
+                    strKeyValue += ucDateStart.ucSelectedDate + ",";
+                    strKeyValue += ucDateEnd.ucSelectedDate + ",";
+                    strKeyValue += OTSeq;
+
+                    string strShowValue = _EmpID + ",";
+                    strShowValue += lblOTEmpName.Text + ",";
+                    strShowValue += ucDateStart.ucSelectedDate + ",";
+                    strShowValue += OTTimeStart.ucDefaultSelectedHH + "：" + OTTimeStart.ucDefaultSelectedMM + ",";
+                    strShowValue += ucDateEnd.ucSelectedDate + ",";
+                    strShowValue += OTTimeEnd.ucDefaultSelectedHH + "：" + OTTimeEnd.ucDefaultSelectedMM;
+
+                    isSuccess = FlowUtility.QueryFlowDataAndToUserData_First(_OTCompID, "", "", _EmpID, UserInfo.getUserInfo().UserID, ucDateStart.ucSelectedDate, "1",
+                out empData, out toUserData, out flowCode, out flowSN, out nextIsLastFlow, out meassge);
+
+                    if (!isSuccess)
+                    {
+                        Util.MsgBox("查無加班人相關資料-送簽失敗！");
+                    }
+                    else if (FlowExpress.IsFlowInsVerify(flow.FlowID, strKeyValue.Split(','), strShowValue.Split(','), "btnAfterApprove", oAssTo, ""))
+                    {
+                        string strFlowCaseID = FlowExpress.getFlowCaseID(flow.FlowID, strKeyValue);
+                                //更新AssignToName(部門+員工姓名)
+                        if (!string.IsNullOrEmpty(strFlowCaseID))
+                        {
+                            if (FlowExpress.IsSubFlowClose(flow.FlowID, strFlowCaseID))
+                            {
+                                    if (ucDateStart.ucSelectedDate == ucDateEnd.ucSelectedDate)
+                                    {
+                                        sb.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID='" + strFlowCaseID + "'");
+                                        sb.Append(" WHERE OTCompID='" + _OTCompID + "'");
+                                        sb.Append(" AND OTEmpID='" + _EmpID + "'");
+                                        sb.Append(" AND OTStartDate='" + ucDateStart.ucSelectedDate + "'");
+                                        sb.Append(" AND OTEndDate='" + ucDateEnd.ucSelectedDate + "'");
+                                        sb.Append(" AND OTStartTime='" + strStartTime + "'");
+                                        sb.Append(" AND OTEndTime='" + strEndTime + "'");
+                                        sb.Append(" AND OTSeq='" + OTSeq + "'");
+                                    }
+                                    else
+                                    {
+                                        sb.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID='" + strFlowCaseID + "'");
+                                        sb.Append(" WHERE OTCompID='" + _OTCompID + "'");
+                                        sb.Append(" AND OTEmpID='" + _EmpID + "'");
+                                        sb.Append(" AND OTStartDate='" + ucDateStart.ucSelectedDate + "'");
+                                        sb.Append(" AND OTEndDate='" + ucDateStart.ucSelectedDate + "'");
+                                        sb.Append(" AND OTStartTime='" + strStartTime + "'");
+                                        sb.Append(" AND OTEndTime='2359'");
+                                        sb.Append(" AND OTSeq='" + OTSeq + "'");
+
+                                        sb.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID='" + strFlowCaseID + "'");
+                                        sb.Append(" WHERE OTCompID='" + _OTCompID + "'");
+                                        sb.Append(" AND OTEmpID='" + _EmpID + "'");
+                                        sb.Append(" AND OTStartDate='" + ucDateEnd.ucSelectedDate + "'");
+                                        sb.Append(" AND OTEndDate='" + ucDateEnd.ucSelectedDate + "'");
+                                        sb.Append(" AND OTStartTime='0000'");
+                                        sb.Append(" AND OTEndTime='" + strEndTime + "'");
+                                        sb.Append(" AND OTSeq='" + OTSeq_1 + "'");
+                                    }
+                            }
+                            //加進HROverTimeLog
+                            FlowUtility.InsertHROverTimeLogCommand(strFlowCaseID, "1", strFlowCaseID + ".00001",
+                               "D", empData["EmpID"], empData["OrganID"], empData["FlowOrganID"], UserInfo.getUserInfo().UserID,
+                               "", "", "", "",
+                               "", "", "", "", "2",
+                               false, ref sb, 1, "1");
+                            //加進MailLog
+                          
+                        }
+                        db.ExecuteNonQuery(sb.BuildCommand(), tx);
+                        tx.Commit();
+                        Util.MsgBox("送簽成功", "AfterOvertimeOrder.aspx");//提案送審成功
+                    }
+                    else
+                    {
+                        tx.Rollback();//資料更新失敗
+                        Util.MsgBox("送簽失敗！");
+                    }
+                }
             }
             catch (Exception ex)
             {

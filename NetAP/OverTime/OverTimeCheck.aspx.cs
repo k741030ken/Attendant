@@ -794,7 +794,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
             }
         }
 
-        //如果找不到下一關主管資料，會等於現在登入者，這時候到OverTimeCustVerify就直接拋審核失敗
+        //如果找不到下一關主管資料，彈跳視窗並且return false
         if (toUserData["SignID"] == "")
         {
             toUserData["SignIDComp"] = UserInfo.getUserInfo().CompID.Trim();
