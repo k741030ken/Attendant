@@ -395,10 +395,8 @@ Partial Class OV_OV4300
         End If
 
         '從申報檔取出每一筆，開始計算時段
-        Dim throwMsg As New StringBuilder
-        Dim errorList As New StringBuilder
-        ViewState.Item("throwMsg") = ""
-        ViewState.Item("errorList") = ""
+        Dim errorDt As DataTable = getTable_ErrorMsg()
+        ViewState.Item("OverTotalCount") = data_Declaration.Rows.Count
         For i As Integer = 0 To data_Declaration.Rows.Count - 1 Step 1
             Dim compID As String = data_Declaration.Rows(i).Item("OTCompID").ToString
             Dim empID As String = data_Declaration.Rows(i).Item("OTEmpID").ToString
@@ -455,18 +453,13 @@ Partial Class OV_OV4300
             If chkWord = "Correct" Then
                 getTime_Interval(data_Period, compID, empID, startDate, endDate, startTime, endTime, salaryOrAdjust, seq, txnID, seqNo, deptID, organID, deptName, organName, mealFlag, mealTime, overTimeFlag, time3HR, holiDay)
             ElseIf chkWord = "Same" Then
-                throwMsg.AppendLine("員工編號:" & empID & ",加班日期:" & startDate & "時間:" & startTime & "~" & endTime & ",資料已存在於OverTime")
+                setExcelDT(errorDt, empID, startDate, startTime, endTime, "失敗", "資料已存在於OverTime")
             ElseIf chkWord = "Error" Then
-                errorList.AppendLine("員工編號:" & empID & ",加班日期:" & startDate & "時間:" & startTime & "~" & endTime & ",資料有誤")
+                setExcelDT(errorDt, empID, startDate, startTime, endTime, "失敗", "資料有誤")
             End If
         Next
 
-        If throwMsg.ToString <> "" Then
-            ViewState.Item("throwMsg") = throwMsg.ToString
-        End If
-        If errorList.ToString <> "" Then
-            ViewState.Item("errorList") = errorList.ToString
-        End If
+
         'Table 查看用的
         ShowTable.Visible = False
         pcMain1.DataTable = data_Period
@@ -474,15 +467,18 @@ Partial Class OV_OV4300
 
         If data_Period.Rows.Count > 0 Then
             InsertDB(data_Period) '新增到資料庫
-        Else
-            If ViewState.Item("throwMsg").ToString <> "" Then
-                Bsp.Utility.ShowMessage(Me, ViewState.Item("throwMsg"))
-                Return
+            ViewState.Item("errorDT") = errorDt
+            Dim allCount As Integer = ViewState.Item("OverTotalCount") - ViewState.Item("exOverTotalCount")
+            Dim TipMsg As New StringBuilder
+            TipMsg.AppendLine("拋轉成功" & "，成功筆數 : " & allCount & " 筆 ; 失敗筆數 : " & ViewState.Item("exOverTotalCount") & " 筆。")
+            If errorDt.Rows.Count > 0 Then
+                TipMsg.AppendLine("是否要下載拋轉錯誤報表?")
             End If
-            If ViewState.Item("errorList").ToString <> "" Then
-                Bsp.Utility.ShowMessage(Me, ViewState.Item("errorList"))
-                Return
+            msg.Text = TipMsg.ToString
+            If errorDt.Rows.Count > 0 Then
+                Bsp.Utility.RunClientScript(Me.Page, "DownLoad();")
             End If
+
         End If
     End Sub
 #End Region
@@ -1169,6 +1165,44 @@ Partial Class OV_OV4300
         Return myTable
     End Function
 #End Region
+#Region "虛擬Table-For 下載錯誤訊息使用"
+    Public Function getTable_ErrorMsg() As DataTable
+        Dim myTable As New DataTable
+        Dim col As DataColumn
+        '員工編號
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTEmpID"
+        myTable.Columns.Add(col)
+        '加班日期
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTDate"
+        myTable.Columns.Add(col)
+        '加班開始時間
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTStartTime"
+        myTable.Columns.Add(col)
+        '加班結束時間
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTEndTime"
+        myTable.Columns.Add(col)
+        '狀態
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTStatus"
+        myTable.Columns.Add(col)
+        '錯誤訊息
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "OTErrorMsg"
+        myTable.Columns.Add(col)
+
+        Return myTable
+    End Function
+#End Region
 #Region "取出申報檔(For 拋轉日期)資料"
     Public Function getOriData(ByVal ucDate As String, ByVal empID As String, ByVal isTrans As Boolean) As DataTable
         Dim dataTable As DataTable
@@ -1409,6 +1443,8 @@ Partial Class OV_OV4300
         Dim InsertCount As Integer = 0
         Dim checkEmp As String = ""
         Dim checkHDate As String = ""
+        'Dim exOverTotalCount As Integer = dataTable.Rows.Count
+        ViewState.Item("exOverTotalCount") = dataTable.Rows.Count
         For i As Integer = 0 To dataTable.Rows.Count - 1 Step 1
             If "0" = dataTable.Rows(i).Item("SalaryPaid").ToString And "1" = dataTable.Rows(i).Item("SalaryOrAdjust").ToString Then
                 Dim chkcomp As String = dataTable.Rows(i).Item("CompID").ToString
@@ -1515,16 +1551,10 @@ Partial Class OV_OV4300
 
             End Try
         End Using
-
+        'successFlag = True
         If successFlag Then
-            Bsp.Utility.ShowMessage(Me, "拋轉成功")
-            If ViewState.Item("throwMsg").ToString <> "" Then
-                Bsp.Utility.ShowMessage(Me, ViewState.Item("throwMsg"))
-            End If
-            If ViewState.Item("errorList").ToString <> "" Then
-                Bsp.Utility.ShowMessage(Me, ViewState.Item("errorList"))
-            End If
-
+            'Dim allCount As Integer = ViewState.Item("OverTotalCount") - exOverTotalCount
+            'Bsp.Utility.ShowMessage(Me, "拋轉成功" & "，成功筆數 : " & allCount & "失敗筆數 : " & exOverTotalCount & "。")
             Dim choseType As String = ViewState.Item("ChoseType").ToString '下拉選單選擇的拋轉條件
             If choseType = "PersonBlock" Then
                 resetGrid()
@@ -1610,6 +1640,101 @@ Partial Class OV_OV4300
         Return result
     End Function
 #End Region
+
+    Protected Sub btnDown_Click(sender As Object, e As System.EventArgs) Handles btnDown.Click
+        DoDownload(ViewState.Item("errorDT"))
+    End Sub
+
+    Public Sub DoDownload(ByVal dataTable As DataTable)
+        Try
+            '產出檔頭
+            Dim strFileName As String = Bsp.Utility.GetNewFileName("拋轉錯誤訊息-") & ".xls"
+
+            '動態產生GridView以便匯出成EXCEL
+            Dim gvExport As GridView = New GridView()
+            gvExport.AllowPaging = False
+            gvExport.AllowSorting = False
+            gvExport.FooterStyle.BackColor = Drawing.ColorTranslator.FromHtml("#99CCCC")
+            gvExport.FooterStyle.ForeColor = Drawing.ColorTranslator.FromHtml("#003399")
+            gvExport.RowStyle.CssClass = "tr_evenline"
+            gvExport.AlternatingRowStyle.CssClass = "tr_oddline"
+            gvExport.EmptyDataRowStyle.CssClass = "GridView_EmptyRowStyle"
+            '複製datatable待處理
+            Dim dt As DataTable = dataTable.Clone()
+            '複製資料
+            For index As Integer = 0 To dataTable.Rows.Count - 1
+                dt.ImportRow(dataTable.Rows(index))
+            Next
+            '處理列印欄位
+            For index As Integer = dataTable.Columns.Count - 1 To 0 Step -1
+                Dim itemData = dt.Columns.Item(index)
+                Dim isPrintColumn = False
+
+                Select Case itemData.ColumnName
+                    Case "OTEmpID"     '員工編號
+                        itemData.ColumnName = "員工編號"
+                        isPrintColumn = True
+                    Case "OTDate"  '加班日期
+                        itemData.ColumnName = "加班日期"
+                        isPrintColumn = True
+                    Case "OTStartTime"   '加班開始時間
+                        itemData.ColumnName = "加班開始時間"
+                        isPrintColumn = True
+                    Case "OTEndTime"  '加班結束時間
+                        itemData.ColumnName = "加班結束時間"
+                        isPrintColumn = True
+                    Case "OTStatus"   '狀態
+                        itemData.ColumnName = "狀態"
+                        isPrintColumn = True
+                    Case "OTErrorMsg"  '錯誤訊息
+                        itemData.ColumnName = "錯誤訊息"
+                        isPrintColumn = True
+                End Select
+
+                If Not isPrintColumn Then '移除不必要的欄位
+                    dt.Columns.RemoveAt(index)
+                End If
+            Next
+            dt.AcceptChanges()
+            gvExport.DataSource = dt
+            gvExport.DataBind()
+
+            Response.ClearContent()
+            Response.BufferOutput = True
+            Response.Charset = "utf-8"
+            Response.ContentType = "application/save-as"         '隱藏檔案網址路逕的下載
+            Response.AddHeader("Content-Transfer-Encoding", "binary")
+            Response.ContentEncoding = System.Text.Encoding.UTF8
+            Response.AddHeader("content-disposition", "attachment; filename=" & Server.UrlPathEncode(strFileName))
+
+            Dim oStringWriter As New System.IO.StringWriter()
+            Dim oHtmlTextWriter As New System.Web.UI.HtmlTextWriter(oStringWriter)
+
+            Response.Write("<meta http-equiv=Content-Type content=text/html charset=utf-8>")
+            Dim style As String = "<style>td{font-size:9pt} a{font-size:9pt} tr{page-break-after: always}</style>"
+
+            gvExport.Attributes.Add("style", "vnd.ms-excel.numberformat:@") '設定所有儲存格為文字格式
+            gvExport.RenderControl(oHtmlTextWriter)
+            Response.Write(style)
+            Response.Write(oStringWriter.ToString())
+            'Response.End()
+        Catch ex As Exception
+            Bsp.Utility.ShowMessage(Me, Me.FunID & ".DoDownload", ex)
+        End Try
+    End Sub
+
+    Public Sub setExcelDT(ByRef dataTable As DataTable, ByVal empID As String, ByVal otDate As String, ByVal otStartTime As String, ByVal otEndTime As String, ByVal otStatus As String, ByVal otErrorMsg As String)
+        Dim dataRows As DataRow
+        dataRows = dataTable.NewRow
+        dataRows("OTEmpID") = empID
+        dataRows("OTDate") = otDate
+        dataRows("OTStartTime") = otStartTime
+        dataRows("OTEndTime") = otEndTime
+        dataRows("OTStatus") = otStatus
+        dataRows("OTErrorMsg") = otErrorMsg
+        dataTable.Rows.Add(dataRows)
+
+    End Sub
 
     '#Region "留守檢核"
     '    Public Function getStayInterval(ByVal AddDate As String, ByVal AddSTime As String, ByVal AddETime As String) As Array

@@ -75,6 +75,12 @@
 //            btnDownload.style.color = '#000000'
         }
     }
+    function DownLoad() {
+        var message = document.getElementById("msg").value
+        if (!confirm(message))
+            return false;
+        document.getElementById("btnDown").click();
+    }
     function btnClear() {
         var btnAdd = window.parent.frames[0].document.getElementById("ucButtonPermission_btnAdd");
         var btnQuery = window.parent.frames[0].document.getElementById("ucButtonPermission_btnQuery");
@@ -120,6 +126,8 @@
                     <asp:ListItem Text="人員" Value="PersonBlock"></asp:ListItem>
 <%--                    <asp:ListItem Text="留守" Value="StayBlock"></asp:ListItem>--%>
                 </asp:DropDownList>
+                <asp:TextBox ID="msg" runat="server" Style="display: none" ></asp:TextBox>
+                <asp:Button ID="btnDown" runat="server" Style="display: none"/>
             </td>
         </tr>
         <tr id = "trDate" runat="server" visible="false">
