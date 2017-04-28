@@ -282,12 +282,12 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
         }
         TextBox txtStartDate = (TextBox)ucDateStart.FindControl("txtDate");
         txtStartDate.AutoPostBack = true;
-        txtStartDate.CausesValidation = false;
+        txtStartDate.CausesValidation = true;
         txtStartDate.TextChanged += StartDate_TextChanged;
 
         TextBox txtEndDate = (TextBox)ucDateEnd.FindControl("txtDate");
         txtEndDate.AutoPostBack = true;
-        txtEndDate.CausesValidation = false;
+        txtEndDate.CausesValidation = true;
         txtEndDate.TextChanged += EndDate_TextChanged;
 
         //加班開始時間

@@ -196,14 +196,13 @@
                             <asp:Label ID="lblOvertimeDate" runat="server" Text="*加班日期：" ForeColor="Blue"></asp:Label>
                         </td>
                         <td style="width:35%" align="left" colspan="3">                                
-                                <asp:ucDate ID="ucDateStart" runat="server" 
-                                CssClass="InputTextStyle_Thin" Enabled="True" Width="80px" AutoPostBack="true" />
+                            <asp:ucDate ID="ucDateStart" runat="server" CssClass="InputTextStyle_Thin" Enabled="True" Width="80px"/>
                             <asp:Label ID="Label4" runat="server" Text="~"></asp:Label>
                             <asp:ucDate ID="ucDateEnd" runat="server" 
-                                CssClass="InputTextStyle_Thin" Enabled="True" Width="80px" AutoPostBack="true" />
+CssClass="InputTextStyle_Thin" Enabled="True" Width="80px"/>
                         </td>
                     </tr>
-                        <tr style="height:20px" class="Util_clsRow1">
+                    <tr style="height:20px" class="Util_clsRow1">
                         <td width="10%" align="left">
                             <asp:Label ID="lblStartTime" runat="server" Text="*加班開始時間：" ForeColor="Blue"></asp:Label>
                         </td>

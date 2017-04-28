@@ -1080,7 +1080,7 @@ public partial class Overtime_OvertimeCustVerify : SecurePage
         ErrMsg = "";
         /************************************************/
         /*測試用test                                                                  */
-        /*sb.Append("test我是來製作錯誤的!!");                    */
+        //sb.Append("test我是來製作錯誤的!!");                    
         /*if (btn == "btnClose") btn = "btnApprove";                */
         /************************************************/
 
