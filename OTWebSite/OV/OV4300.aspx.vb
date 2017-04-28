@@ -465,11 +465,13 @@ Partial Class OV_OV4300
         pcMain1.DataTable = data_Period
         gvMain1.DataBind()
 
+        Dim TipMsg As New StringBuilder
+        ViewState.Item("errorDT") = errorDt
         If data_Period.Rows.Count > 0 Then
             InsertDB(data_Period) '新增到資料庫
-            ViewState.Item("errorDT") = errorDt
+
             Dim allCount As Integer = ViewState.Item("OverTotalCount") - ViewState.Item("exOverTotalCount")
-            Dim TipMsg As New StringBuilder
+
             TipMsg.AppendLine("拋轉成功" & "，成功筆數 : " & allCount & " 筆 ; 失敗筆數 : " & ViewState.Item("exOverTotalCount") & " 筆。")
             If errorDt.Rows.Count > 0 Then
                 TipMsg.AppendLine("是否要下載拋轉錯誤報表?")
@@ -478,7 +480,15 @@ Partial Class OV_OV4300
             If errorDt.Rows.Count > 0 Then
                 Bsp.Utility.RunClientScript(Me.Page, "DownLoad();")
             End If
-
+        Else
+            TipMsg.AppendLine("拋轉失敗" & "，成功筆數 : 0 筆 ; 失敗筆數 : " & errorDt.Rows.Count & " 筆。")
+            If errorDt.Rows.Count > 0 Then
+                TipMsg.AppendLine("是否要下載拋轉錯誤報表?")
+            End If
+            msg.Text = TipMsg.ToString
+            If errorDt.Rows.Count > 0 Then
+                Bsp.Utility.RunClientScript(Me.Page, "DownLoad();")
+            End If
         End If
     End Sub
 #End Region
@@ -1717,7 +1727,7 @@ Partial Class OV_OV4300
             gvExport.RenderControl(oHtmlTextWriter)
             Response.Write(style)
             Response.Write(oStringWriter.ToString())
-            'Response.End()
+            Response.End()
         Catch ex As Exception
             Bsp.Utility.ShowMessage(Me, Me.FunID & ".DoDownload", ex)
         End Try

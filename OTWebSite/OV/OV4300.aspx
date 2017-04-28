@@ -146,8 +146,8 @@
             <asp:FilteredTextBoxExtender ID="fttxtEmpID" runat="server" TargetControlID="txtEmpID" FilterType="Numbers ,UppercaseLetters" ></asp:FilteredTextBoxExtender>
                 <%--<asp:TextBox CssClass="InputTextStyle_Thin" ID="txtEmpID" MaxLength="6" runat="server" Style="text-transform: uppercase"></asp:TextBox>--%>
                 <asp:TextBox CssClass="InputTextStyle_Thin" ID="txtEmpID" runat="server" Width="80px" AutoPostBack="true" MaxLength="6" style="TEXT-TRANSFORM:uppercase"></asp:TextBox>
-                <asp:Label ID="lblEmpID" runat="server" Font-Names="微軟正黑體"></asp:Label>
                 <uc:ButtonQuerySelectUserID ID="ucQueryEmp" runat="server" WindowHeight="800" WindowWidth="600" ButtonText="..." />
+                <asp:Label ID="lblEmpID" runat="server" Font-Names="微軟正黑體"></asp:Label>
             </td>
         </tr>
         <tr id = "trEmp2" runat="server" visible="false">
