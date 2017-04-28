@@ -344,6 +344,20 @@
                                 Width="80px" />
                         </td>
                     </tr>
+                    <tr>
+                    <td class="tdpadding">
+                        </td>
+                    <td align="left" width="10%" class="style1">
+                            加班轉換方式：
+                        </td>
+                        <td align="left" width="20%" class="style1">
+                            <asp:DropDownList ID="ddlSalaryOrAdjust" runat="server" AutoPostBack="true" Font-Names="微軟正黑體">
+                                <asp:ListItem Value="" Text="---請選擇---"></asp:ListItem>
+                                <asp:ListItem Value="1" Text="轉薪資"></asp:ListItem>
+                                <asp:ListItem Value="2" Text="轉補休"></asp:ListItem>
+                            </asp:DropDownList>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

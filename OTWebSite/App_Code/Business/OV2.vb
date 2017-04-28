@@ -27,6 +27,7 @@ Public Class OV2
     Public Property OvertimeDateB As String
     Public Property OvertimeDateE As String
     Public Property OTPayDate As String
+    Public Property OTSalaryOrAdjust As String
     'Public Property OTSalaryPaid As String
 
     Private Property eHRMSDB_ITRD As String
@@ -109,6 +110,11 @@ Public Class OV2
         'strSQL.AppendLine(" left join " + eHRMSDB_ITRD + ".[dbo].RankMapping TRM on T.RankID=RM.RankID")
         strSQL.AppendLine(" Where 1=1  ")
         strSQL.AppendLine(" and OVA.OTCompID='" + UserProfile.SelectCompRoleID + "'  ")
+
+        If isNull("OTSalaryOrAdjust") Then
+            strSQL.AppendLine(" and OVA.SalaryOrAdjust='" + OTSalaryOrAdjust + "'")
+        End If
+
         If isNull("OTEmpName") Then
             strSQL.AppendLine(" and P.Name='" + OTEmpName + "'")
         End If
@@ -210,6 +216,11 @@ Public Class OV2
         'strSQL.AppendLine(" left join " + eHRMSDB_ITRD + ".[dbo].RankMapping TRM on T.RankID=RM.RankID")
         strSQL.AppendLine(" Where 1=1  ")
         strSQL.AppendLine(" and OVD.OTCompID='" + UserProfile.SelectCompRoleID + "'  ")
+
+        If isNull("OTSalaryOrAdjust") Then
+            strSQL.AppendLine(" and OVD.SalaryOrAdjust='" + OTSalaryOrAdjust + "'")
+        End If
+
         If isNull("OTEmpName") Then
             strSQL.AppendLine(" and P.Name='" + OTEmpName + "'")
         End If
@@ -329,6 +340,11 @@ Public Class OV2
         strSQL.AppendLine(" left join " + eHRMSDB_ITRD + ".[dbo].RankMapping RM on P.RankID=RM.RankID  AND RM.CompID=OVA.OTCompID")
         strSQL.AppendLine(" Where 1=1  ")
         strSQL.AppendLine(" and OVA.OTCompID='" + UserProfile.SelectCompRoleID + "'")
+
+        If isNull("OTSalaryOrAdjust") Then
+            strSQL.AppendLine(" and OVA.SalaryOrAdjust='" + OTSalaryOrAdjust + "'")
+        End If
+
         If isNull("OTEmpName") Then
             strSQL.AppendLine(" and P.Name='" + OTEmpName + "'")
         End If
@@ -432,6 +448,11 @@ Public Class OV2
         strSQL.AppendLine(" left join " + eHRMSDB_ITRD + ".[dbo].RankMapping RM on P.RankID=RM.RankID  AND RM.CompID=OVD.OTCompID")
         strSQL.AppendLine(" Where 1=1  ")
         strSQL.AppendLine(" And OVD.OTCompID='" + UserProfile.SelectCompRoleID + "'")
+
+        If isNull("OTSalaryOrAdjust") Then
+            strSQL.AppendLine(" and OVD.SalaryOrAdjust='" + OTSalaryOrAdjust + "'")
+        End If
+
         If isNull("OTEmpName") Then
             strSQL.AppendLine(" and P.Name='" + OTEmpName + "'")
         End If

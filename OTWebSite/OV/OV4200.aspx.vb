@@ -332,6 +332,7 @@ Partial Class OV_OV4200
         ddlOTStatus.SelectedIndex = 0
         ucOTStartDate.DateText = ""
         ucOTEndDate.DateText = ""
+        ddlSalaryOrAdjust.SelectedIndex = 0
         ViewState.Item("DoQuery") = ""
         DoQuery()
         pcMain.DataTable.Clear()
@@ -496,6 +497,7 @@ Partial Class OV_OV4200
                         End If
                         If ucOTStartDate.DateText.Trim <> "" Then beManageOTDec.OTStartDate.Value = ucOTStartDate.DateText.Trim
                         If ucOTEndDate.DateText.Trim <> "" Then beManageOTDec.OTEndDate.Value = ucOTEndDate.DateText.Trim
+                        If ddlSalaryOrAdjust.SelectedValue <> "" Then beManageOTDec.SalaryOrAdjust.Value = ddlSalaryOrAdjust.SelectedValue.Trim
                         Return bsManageOTDec.QueryAll(beManageOTDec).Tables(0)
                     Case "0"
                         '填單人員
@@ -509,6 +511,8 @@ Partial Class OV_OV4200
 
                 If ucOTStartDate.DateText.Trim <> "" Then beManageOTDec.OTStartDate.Value = ucOTStartDate.DateText.Trim
                 If ucOTEndDate.DateText.Trim <> "" Then beManageOTDec.OTEndDate.Value = ucOTEndDate.DateText.Trim
+
+                If ddlSalaryOrAdjust.SelectedValue <> "" Then beManageOTDec.SalaryOrAdjust.Value = ddlSalaryOrAdjust.SelectedValue.Trim
 
                 Return bsManageOTDec.Query(beManageOTDec).Tables(0)
             Else

@@ -58,6 +58,7 @@ Public Class OV_1
     Public Property Seq As String
     Public Property OTAttachment As String
     Public Property OTRegisterComp As String
+    Public Property OTSalaryOrAdjust As String
     Public Property isSalaryPaid As Boolean = False
 
 
@@ -498,6 +499,11 @@ Public Class OV_1
 
             strSQL.AppendLine(" Where 1=1")
             strSQL.AppendLine(" And OVA.OTCompID = '" + UserProfile.SelectCompRoleID + "'") '20170219 Beatrice Add
+
+            If isNull("OTSalaryOrAdjust") Then
+                strSQL.AppendLine(" and OVA.SalaryOrAdjust=" + Bsp.Utility.Quote(OTSalaryOrAdjust))
+            End If
+
             If isNull("OTEmpName") Then
                 strSQL.AppendLine(" and P.Name=" + Bsp.Utility.Quote(OTEmpName))
             End If
@@ -647,6 +653,11 @@ Public Class OV_1
             'strSQL.AppendLine(" left join " + eHRMSDB_ITRD + ".[dbo].RankMapping TRM on T.RankID=RM.RankID")
             strSQL.AppendLine(" Where 1=1")
             strSQL.AppendLine(" And OVD.OTCompID = '" + UserProfile.SelectCompRoleID + "'") '20170219 Beatrice Add
+
+            If isNull("OTSalaryOrAdjust") Then
+                strSQL.AppendLine(" and OVD.SalaryOrAdjust=" + Bsp.Utility.Quote(OTSalaryOrAdjust))
+            End If
+
             If isNull("OTEmpName") Then
                 strSQL.AppendLine(" and P.Name=" + Bsp.Utility.Quote(OTEmpName))
             End If

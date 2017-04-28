@@ -455,7 +455,7 @@ Partial Class OV_OV4300
             ElseIf chkWord = "Same" Then
                 setExcelDT(errorDt, empID, startDate, startTime, endTime, "失敗", "資料已存在於OverTime")
             ElseIf chkWord = "Error" Then
-                setExcelDT(errorDt, empID, startDate, startTime, endTime, "失敗", "資料有誤")
+                setExcelDT(errorDt, empID, startDate, startTime, endTime, "失敗", "您欲申請的加班時間區間已有紀錄")
             End If
         Next
 
@@ -468,7 +468,7 @@ Partial Class OV_OV4300
         Dim TipMsg As New StringBuilder
         ViewState.Item("errorDT") = errorDt
         If data_Period.Rows.Count > 0 Then
-            InsertDB(data_Period) '新增到資料庫
+            'InsertDB(data_Period) '新增到資料庫
 
             Dim allCount As Integer = ViewState.Item("OverTotalCount") - ViewState.Item("exOverTotalCount")
 

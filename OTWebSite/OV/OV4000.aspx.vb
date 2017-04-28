@@ -372,7 +372,7 @@ Partial Class OV4000
         txtDateOfApprovalE.DateText = ""
         txtDateOfApplicationB.DateText = ""
         txtDateOfApplicationE.DateText = ""
-
+        ddlSalaryOrAdjust.SelectedValue = ""
 
         tbOTPayDateErrorMsg.Visible = False
         If ddlType.SelectedValue.Equals("bef") Then
@@ -923,7 +923,7 @@ Partial Class OV4000
         OV_1.DateOfApprovalE = txtDateOfApprovalE.DateText
         OV_1.DateOfApplicationB = txtDateOfApplicationB.DateText
         OV_1.DateOfApplicationE = txtDateOfApplicationE.DateText
-
+        OV_1.OTSalaryOrAdjust = ddlSalaryOrAdjust.SelectedValue
         If ckOTSalaryPaid.Checked Then
             OV_1.OTSalaryPaid = "1"
         Else

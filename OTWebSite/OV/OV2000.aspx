@@ -295,6 +295,16 @@
       <%--          &nbsp;<asp:CheckBox ID="ckOTSalaryPaid" runat="server" ClientIDMode="AutoID" AutoPostBack="true" Text="未計薪" />
 --%>
                 </td>
+                <td class="style3">
+                    <asp:Label ID="Label5" runat="server" Text="加班轉換方式"></asp:Label>
+                    ：</td>
+                <td class="tr_style">
+                        <asp:DropDownList ID="ddlSalaryOrAdjust" runat="server">
+                        <asp:ListItem Text="---請選擇---" Value=""></asp:ListItem>
+                        <asp:ListItem Text="轉薪資" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="轉補休" Value="2"></asp:ListItem>
+                    </asp:DropDownList>
+                </td>
             </tr>
         </table>
         <br />

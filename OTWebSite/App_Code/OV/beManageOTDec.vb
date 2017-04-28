@@ -1314,7 +1314,7 @@ Namespace beManageOTDec
             If ManageOTDecRow.OTStartDate.Value.Trim <> "" And ManageOTDecRow.OTEndDate.Value.Trim <> "" Then strSQL.AppendLine(" AND CONVERT(DATETIME, LEFT(A.OTDate, 10), 111) >= @OTStartDate AND CONVERT( DATETIME, LEFT(A.OTDate, 10), 111) <= @OTEndDate ") '查出起迄日皆符合的加班單
             If ManageOTDecRow.OTStartDate.Value.Trim <> "" And ManageOTDecRow.OTEndDate.Value.Trim = "" Then strSQL.AppendLine(" AND CONVERT(DATETIME,LEFT(A.OTDate,10),111) >= (convert(char(10),@OTStartDate,111)) ") '只有起日，查出所有起日之後的加班單
             If ManageOTDecRow.OTStartDate.Value.Trim = "" And ManageOTDecRow.OTEndDate.Value.Trim <> "" Then strSQL.AppendLine(" AND CONVERT(DATETIME,LEFT(A.OTDate,10),111) <= (convert(char(10),@OTEndDate,111)) ") '只有迄日，查出所有迄日之前的加班單
-
+            If ManageOTDecRow.SalaryOrAdjust.Value.Trim <> "" Then strSQL.AppendLine(" AND A.SalaryOrAdjust = @SalaryOrAdjust ")
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
             db.AddInParameter(dbcmd, "@OTCompID", DbType.String, ManageOTDecRow.OTCompID.Value)
             db.AddInParameter(dbcmd, "@OTRegisterID", DbType.String, ManageOTDecRow.OTRegisterID.Value)
@@ -1323,7 +1323,7 @@ Namespace beManageOTDec
             db.AddInParameter(dbcmd, "@OTStatus", DbType.String, ManageOTDecRow.OTStatus.Value)
             db.AddInParameter(dbcmd, "@OTStartDate", DbType.String, ManageOTDecRow.OTStartDate.Value)
             db.AddInParameter(dbcmd, "@OTEndDate", DbType.String, ManageOTDecRow.OTEndDate.Value)
-
+            db.AddInParameter(dbcmd, "@SalaryOrAdjust", DbType.String, ManageOTDecRow.SalaryOrAdjust.Value)
             Return db.ExecuteDataSet(dbcmd)
         End Function
 
@@ -1422,7 +1422,7 @@ Namespace beManageOTDec
             If ManageOTDecRow.OTStartDate.Value.Trim <> "" And ManageOTDecRow.OTEndDate.Value.Trim <> "" Then strSQL.AppendLine(" AND CONVERT(DATETIME, LEFT(A.OTDate, 10), 111) >= @OTStartDate AND CONVERT( DATETIME, LEFT(A.OTDate, 10), 111) <= @OTEndDate ") '查出起迄日皆符合的加班單
             If ManageOTDecRow.OTStartDate.Value.Trim <> "" And ManageOTDecRow.OTEndDate.Value.Trim = "" Then strSQL.AppendLine(" AND CONVERT(DATETIME,LEFT(A.OTDate,10),111) >= (convert(char(10),@OTStartDate,111)) ") '只有起日，查出所有起日之後的加班單
             If ManageOTDecRow.OTStartDate.Value.Trim = "" And ManageOTDecRow.OTEndDate.Value.Trim <> "" Then strSQL.AppendLine(" AND CONVERT(DATETIME,LEFT(A.OTDate,10),111) <= (convert(char(10),@OTEndDate,111)) ") '只有迄日，查出所有迄日之前的加班單
-
+            If ManageOTDecRow.SalaryOrAdjust.Value.Trim <> "" Then strSQL.AppendLine(" AND A.SalaryOrAdjust = @SalaryOrAdjust ")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
             db.AddInParameter(dbcmd, "@OTCompID", DbType.String, ManageOTDecRow.OTCompID.Value)
@@ -1432,7 +1432,7 @@ Namespace beManageOTDec
             db.AddInParameter(dbcmd, "@OTStatus", DbType.String, ManageOTDecRow.OTStatus.Value)
             db.AddInParameter(dbcmd, "@OTStartDate", DbType.String, ManageOTDecRow.OTStartDate.Value)
             db.AddInParameter(dbcmd, "@OTEndDate", DbType.String, ManageOTDecRow.OTEndDate.Value)
-
+            db.AddInParameter(dbcmd, "@SalaryOrAdjust", DbType.String, ManageOTDecRow.SalaryOrAdjust.Value)
             Return db.ExecuteDataSet(dbcmd)
         End Function
 
