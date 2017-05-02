@@ -19,6 +19,229 @@ public class OBFlowUtility
     private static DbHelper db = new DbHelper(_AattendantDBName);
     #endregion "全域變數"
 
+    #region "新增HROtherFlowLog"
+    /// <summary>
+    /// 新增HROtherFlowLog
+    /// </summary>
+    /// <param name="flowCaseID">流程系統ID</param>
+    /// <param name="flowLogBatNo">流程系統PK</param>
+    /// <param name="flowLogID">流程系統PK</param>
+    /// <param name="sMode">B:公出 P:打卡</param>
+    /// <param name="sEmpID">加班人</param>
+    /// <param name="sEmpOrganID">加班人OrganID</param>
+    /// <param name="sEmpFlowOrganID">加班人FlowOrganID</param>
+    /// <param name="sApplyID">申請人或簽核者</param>
+    /// <param name="flowCode">WF流程代碼</param>
+    /// <param name="flowSN">WF流程識別碼</param>
+    /// <param name="flowSeq">WF關卡序號</param>
+    /// <param name="signLine">1: 依行政 2:依功能 3:依特定人</param>
+    /// <param name="signIDComp">簽核人公司</param>
+    /// <param name="signID">簽核人</param>
+    /// <param name="signOrganID">簽核人所走的OrganID</param>
+    /// <param name="signFlowOrganID">簽核人所走的FlowOrganID</param>
+    /// <param name="flowStatus">
+    /// 簽核狀態:
+    /// 0：申請送出 1：簽核中 2：同意 3：駁回 4：表單取消 5：退闗
+    /// </param>
+    /// <param name="isResetCommand">是否重設SQLCommand</param>
+    /// <param name="sb">回傳SQLCommand</param>
+    /// <param name="seq">序號</param>
+    /// <param name="flowBeginOrEnd">是否是開始或結束流程: 1=> 開始 0=> 結束</param>
+    /// <param name="remark">簽核意見</param>
+    /// <param name="sReAssignFlag">0:非改派 1:改派</param>
+    /// <param name="sReAssignComp">改派調整後公司代碼</param>
+    /// <param name="sReAssignEmpID">改派調整後員工編號</param>
+    public static void InsertHROtherFlowLogCommand(
+        string flowCaseID, string flowLogBatNo, string flowLogID,
+        string sMode, string sEmpID, string sEmpOrganID, string sEmpFlowOrganID, string sApplyID,
+        string flowCode, string flowSN, string flowSeq, string signLine,
+        string signIDComp, string signID, string signOrganID, string signFlowOrganID,
+        string flowStatus,
+        bool isResetCommand, ref CommandHelper sb,
+        int seq = 1,
+        string flowBeginOrEnd = "", int count = 0,
+        string remark = "",
+        string sReAssignFlag = "0",
+        string sReAssignComp = "",
+        string sReAssignEmpID = ""
+        )
+    {
+        var CommandKey = "InsertHROtherFlowLog_" + count + "_";
+        var dateNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        var meassage = "";
+        var retrunTable = new DataTable("RetrunTable");
+        if (QueryHROtherFlowLog(flowCaseID, sMode, out retrunTable, out meassage) &&
+            retrunTable != null && retrunTable.Rows.Count > 0 &&
+            retrunTable.Rows[0]["Seq"] != null)
+        {
+            var selectRow = retrunTable.Rows.Cast<DataRow>().OrderByDescending(row => row.Field<byte>("Seq")).FirstOrDefault();
+            if (selectRow != null && selectRow["Seq"] != null && selectRow["Seq"].ToString() != "")
+            {
+                seq = int.Parse(selectRow["Seq"].ToString()) + 1;
+            }
+        }
+        if (isResetCommand)
+        {
+            sb.Reset();
+        }
+        sb.AppendStatement(" INSERT INTO HROtherFlowLog ");
+        sb.Append(" ( ");
+        sb.Append(" FlowCaseID, Seq ");
+        sb.Append(" , FlowLogBatNo, FlowLogID ");
+        sb.Append(" , Mode, EmpID, EmpOrganID, EmpFlowOrganID, ApplyID ");
+        sb.Append(" , FlowCode, FlowSN, FlowSeq, SignLine ");
+        sb.Append(" , SignIDComp, SignID, SignOrganID, SignFlowOrganID, SignTime ");
+        sb.Append(" , FlowStatus, Remark ");
+        sb.Append(" , ReAssignFlag, ReAssignComp, ReAssignEmpID ");
+        sb.Append(" , LastChgComp, LastChgID, LastChgDate ");
+        sb.Append(" ) ");
+        sb.Append(" VALUES ");
+        sb.Append(" ( ").AppendParameter(CommandKey + "FlowCaseID", flowCaseID); //流程系統ID
+        sb.Append(" , ").AppendParameter(CommandKey + "Seq", seq); //序號
+
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowLogBatNo", flowLogBatNo); //流程系統PK
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowLogID", flowLogID); //流程系統PK
+
+        sb.Append(" , ").AppendParameter(CommandKey + "Mode", sMode); //A: 事先 D:事後
+        sb.Append(" , ").AppendParameter(CommandKey + "EmpID", sEmpID); //加班人
+        sb.Append(" , ").AppendParameter(CommandKey + "EmpOrganID", sEmpOrganID); //
+        sb.Append(" , ").AppendParameter(CommandKey + "EmpFlowOrganID", sEmpFlowOrganID); //
+        sb.Append(" , ").AppendParameter(CommandKey + "ApplyID", sApplyID); //申請人或簽核者
+
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowCode", flowCode); //WF流程代碼
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowSN", flowSN); //WF流程識別碼
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowSeq", flowSeq); //WF關卡序號
+        sb.Append(" , ").AppendParameter(CommandKey + "SignLine", signLine); //1: 依行政 2:依功能 3:依特定人
+
+        sb.Append(" , ").AppendParameter(CommandKey + "SignIDComp", signIDComp); //簽核人公司
+        sb.Append(" , ").AppendParameter(CommandKey + "SignID", signID); //簽核人
+        sb.Append(" , ").AppendParameter(CommandKey + "SignOrganID", signOrganID); //
+        sb.Append(" , ").AppendParameter(CommandKey + "SignFlowOrganID", signFlowOrganID); //
+        sb.Append(" , ").AppendParameter(CommandKey + "SignTime", dateNow); //簽核時間
+
+        sb.Append(" , ").AppendParameter(CommandKey + "FlowStatus", flowStatus); //簽核狀態
+        sb.Append(" , ").AppendParameter(CommandKey + "Remark", remark); //簽核意見
+
+        sb.Append(" , ").AppendParameter(CommandKey + "ReAssignFlag", sReAssignFlag); //0:非改派 1:改派
+        sb.Append(" , ").AppendParameter(CommandKey + "ReAssignComp", sReAssignComp); //改派調整後公司代碼
+        sb.Append(" , ").AppendParameter(CommandKey + "ReAssignEmpID", sReAssignEmpID); //改派調整後員工編號
+
+        sb.Append(" , ").AppendParameter(CommandKey + "LastChgComp", signIDComp);
+        sb.Append(" , ").AppendParameter(CommandKey + "LastChgID", signID);
+        sb.Append(" , ").AppendParameter(CommandKey + "LastChgDate", dateNow);
+        sb.Append(" ) ");
+
+        if (!string.IsNullOrEmpty(flowBeginOrEnd))
+        {
+            ChangeFlowFlag(flowCaseID, flowCode, flowSN, signIDComp, signID, flowBeginOrEnd, ref sb, count);
+        }
+    }
+    #endregion "新增HROtherFlowLog"
+
+    #region "處理流程使用狀態"
+    /// <summary>
+    /// 處理流程使用狀態
+    /// </summary>
+    /// <param name="flowCaseID">流程系統ID</param>
+    /// <param name="flowCode">流程代碼</param>
+    /// <param name="flowSN">流程識別碼</param>
+    /// <param name="signIDComp">簽核人公司</param>
+    /// <param name="signID">簽核人</param>
+    /// <param name="flowBeginOrEnd">是否是開始或結束流程: 1=> 開始 0=> 結束</param>
+    /// <param name="sb">回傳SQLCommand</param>
+    public static void ChangeFlowFlag(string flowCaseID, string flowCode, string flowSN, string signIDComp, string signID, string flowBeginOrEnd, ref CommandHelper sb, int count = 0)
+    {
+        var isDeleteFlowEndFlag = true;
+        var dateNow = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        //新增或修改流程開始flag
+        var hadData = hadHROverTimeMainData(signIDComp, flowCaseID, flowCode, flowSN);
+        if (!string.IsNullOrEmpty(flowBeginOrEnd) && flowBeginOrEnd == "1")
+        {
+            if (!hadData)
+            {
+                string CommandKey2 = "InsertHROverTimeMain_" + count + "_";
+                sb.AppendStatement(" INSERT INTO HROverTimeMain ");
+                sb.Append(" (CompID, FlowCaseID, FlowCode, FlowSN, FlowFlag, LastChgComp, LastChgID, LastChgDate) ");
+                sb.Append(" VALUES ");
+                sb.Append(" (").AppendParameter(CommandKey2 + "CompID", signIDComp);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "FlowCaseID", flowCaseID);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "FlowCode", flowCode);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "FlowSN", flowSN);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "FlowFlag", "1");
+                sb.Append(" ,").AppendParameter(CommandKey2 + "LastChgComp", signIDComp);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "LastChgID", signID);
+                sb.Append(" ,").AppendParameter(CommandKey2 + "LastChgDate", dateNow);
+                sb.Append(" ) ");
+            }
+            else
+            {
+                string CommandKey2 = "UpdateHROverTimeMain_" + count + "_";
+                sb.AppendStatement(" UPDATE HROverTimeMain ");
+                sb.Append(" SET ");
+                sb.Append(" FlowFlag = ").AppendParameter(CommandKey2 + "FlowFlag", "1");
+                sb.Append(" , LastChgComp = ").AppendParameter(CommandKey2 + "LastChgComp", signIDComp);
+                sb.Append(" , LastChgID = ").AppendParameter(CommandKey2 + "LastChgID", signID);
+                sb.Append(" , LastChgDate = ").AppendParameter(CommandKey2 + "LastChgDate", dateNow);
+                sb.Append(" WHERE 0 = 0 ");
+                sb.Append(" AND CompID = ").AppendParameter(CommandKey2 + "CompID", signIDComp);
+                sb.Append(" AND FlowCaseID = ").AppendParameter(CommandKey2 + "FlowCaseID", flowCaseID);
+                sb.Append(" AND FlowCode = ").AppendParameter(CommandKey2 + "FlowCode", flowCode);
+                sb.Append(" AND FlowSN = ").AppendParameter(CommandKey2 + "FlowSN", flowSN);
+            }
+        }
+
+        //刪除或修改流程結束後flag
+        if (!string.IsNullOrEmpty(flowBeginOrEnd) && flowBeginOrEnd == "0")
+        {
+            if (isDeleteFlowEndFlag)
+            {
+                string CommandKey3 = "DeleteHROverTimeMain_" + count + "_";
+                sb.AppendStatement(" DELETE FROM HROverTimeMain ");
+                sb.Append(" WHERE 0 = 0 ");
+                sb.Append(" AND CompID = ").AppendParameter(CommandKey3 + "CompID", signIDComp);
+                sb.Append(" AND FlowCaseID = ").AppendParameter(CommandKey3 + "FlowCaseID", flowCaseID);
+                sb.Append(" AND FlowCode = ").AppendParameter(CommandKey3 + "FlowCode", flowCode);
+                sb.Append(" AND FlowSN = ").AppendParameter(CommandKey3 + "FlowSN", flowSN);
+            }
+            else
+            {
+                if (!hadData)
+                {
+                    string CommandKey3 = "InsertHROverTimeMain2_" + count + "_";
+                    sb.AppendStatement(" INSERT INTO HROverTimeMain ");
+                    sb.Append(" (CompID, FlowCaseID, FlowCode, FlowSN, FlowFlag, LastChgComp, LastChgID, LastChgDate) ");
+                    sb.Append(" VALUES ");
+                    sb.Append(" (").AppendParameter(CommandKey3 + "CompID", signIDComp);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "FlowCaseID", flowCaseID);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "FlowCode", flowCode);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "FlowSN", flowSN);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "FlowFlag", "0");
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "LastChgComp", signIDComp);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "LastChgID", signID);
+                    sb.Append(" ,").AppendParameter(CommandKey3 + "LastChgDate", dateNow);
+                    sb.Append(" ) ");
+                }
+                else
+                {
+                    string CommandKey3 = "UpdateHROverTimeMain2_" + count + "_";
+                    sb.AppendStatement(" UPDATE HROverTimeMain ");
+                    sb.Append(" SET ");
+                    sb.Append(" FlowFlag = ").AppendParameter(CommandKey3 + "FlowFlag", "0");
+                    sb.Append(" , LastChgComp = ").AppendParameter(CommandKey3 + "LastChgComp", signIDComp);
+                    sb.Append(" , LastChgID = ").AppendParameter(CommandKey3 + "LastChgID", signID);
+                    sb.Append(" , LastChgDate = ").AppendParameter(CommandKey3 + "LastChgDate", dateNow);
+                    sb.Append(" WHERE 0 = 0 ");
+                    sb.Append(" AND CompID = ").AppendParameter(CommandKey3 + "CompID", signIDComp);
+                    sb.Append(" AND FlowCaseID = ").AppendParameter(CommandKey3 + "FlowCaseID", flowCaseID);
+                    sb.Append(" AND FlowCode = ").AppendParameter(CommandKey3 + "FlowCode", flowCode);
+                    sb.Append(" AND FlowSN = ").AppendParameter(CommandKey3 + "FlowSN", flowSN);
+                }
+            }
+        }
+        sb.Append(" ; ");
+    }
+    #endregion "處理流程使用狀態"
+
     #region "第一位/下位簽核者"
     /// <summary>
     /// 第一位簽核者
@@ -65,13 +288,13 @@ public class OBFlowUtility
     /// <param name="applyID">目前簽核者</param>
     /// <param name="queryDate">加班開始日</param>
     /// <param name="flowCaseID">流程系統ID</param>
-    /// <param name="otModel">A:預先申請 D:事後申報</param>
+    /// <param name="Model">A:預先申請 D:事後申報</param>
     /// <param name="toUserData">下位簽核者資料</param>
     /// <param name="isLastFlow">本次是否為最後一位簽核</param>
     /// <param name="nextIsLastFlow">下位簽核者是否為最後一位簽核</param>
     /// <param name="message">訊息</param>
     /// <returns>bool</returns>
-    private static bool QueryToUserData(string compID, string applyID, string queryDate, string flowCaseID, string otModel,
+    private static bool QueryToUserData(string compID, string applyID, string queryDate, string flowCaseID, string Model,
         out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out string signLineDefine, out bool isLastFlow, out bool nextIsLastFlow, out string message)
     {
         var isSuccess = false;
@@ -89,7 +312,7 @@ public class OBFlowUtility
         toUserData = new Dictionary<string, string>();
         try
         {
-            if (QueryNextHRFlowEngineData(compID, flowCaseID, otModel, out thisLogRow, out logdt, out dt, out index, out nextRow, out flowCode, out flowSN, out signLineDefine, out message))
+            if (QueryNextHRFlowEngineData(compID, flowCaseID, Model, out thisLogRow, out logdt, out dt, out index, out nextRow, out flowCode, out flowSN, out signLineDefine, out message))
             {
                 nextIsLastFlow = nextRow["FlowEndFlag"].ToString() == "1";
                 isLastFlow = dt.Rows[index]["FlowEndFlag"].ToString() == "1";
@@ -444,7 +667,7 @@ public class OBFlowUtility
     /// </summary>
     /// <param name="compID">公司</param>
     /// <param name="flowCaseID">流程系統ID</param>
-    /// <param name="otModel">A:預先申請 D:事後申報</param>
+    /// <param name="Model">A:預先申請 D:事後申報</param>
     /// <param name="returnTable">列出關卡</param>
     /// <param name="thisRowIndex">目前關卡所在</param>
     /// <param name="nextRow">DataRow</param>
@@ -453,7 +676,7 @@ public class OBFlowUtility
     /// <param name="signLineDefine">目前signLineDefine</param>
     /// <param name="message">string</param>
     /// <returns>bool</returns>
-    private static bool QueryNextHRFlowEngineData(string compID, string flowCaseID, string otModel, out DataRow returnRow, out DataTable returnTable, out DataTable returnTable2, out int thisRowIndex, out DataRow nextRow, out string flowCode, out string flowSN, out string signLineDefine, out string message)
+    private static bool QueryNextHRFlowEngineData(string compID, string flowCaseID, string Model, out DataRow returnRow, out DataTable returnTable, out DataTable returnTable2, out int thisRowIndex, out DataRow nextRow, out string flowCode, out string flowSN, out string signLineDefine, out string message)
     {
         var isSuccess = false;
         var systemID = "OB";
@@ -465,7 +688,7 @@ public class OBFlowUtility
         returnTable2 = new DataTable();
         thisRowIndex = 0;
         returnRow = returnTable.NewRow();
-        if (QueryHROverTimeLogLast(flowCaseID, otModel, out returnTable, out returnRow, out message))
+        if (QueryHROtherFlowLogLast(flowCaseID, Model, out returnTable, out returnRow, out message))
         {
             flowCode = returnRow["FlowCode"].ToString();
             flowSN = returnRow["FlowSN"].ToString();
@@ -505,17 +728,17 @@ public class OBFlowUtility
     /// 查詢流程最後一筆紀錄
     /// </summary>
     /// <param name="flowCaseID">流程系統ID</param>
-    /// <param name="otModel">A:預先申請 D:事後申報</param>
+    /// <param name="Model">A:預先申請 D:事後申報</param>
     /// <param name="returnTable">DataTable</param>
     /// <param name="returnRow">DataRow</param>
     /// <param name="message">string</param>
     /// <returns>bool</returns>
-    public static bool QueryHROverTimeLogLast(string flowCaseID, string otModel, out DataTable returnTable, out DataRow returnRow, out string message)
+    public static bool QueryHROtherFlowLogLast(string flowCaseID, string Model, out DataTable returnTable, out DataRow returnRow, out string message)
     {
         var isSuccess = false;
         returnTable = new DataTable();
         message = "";
-        if (QueryHROverTimeLog(flowCaseID, otModel, out returnTable, out message))
+        if (QueryHROtherFlowLog(flowCaseID, Model, out returnTable, out message))
         {
             if (string.IsNullOrEmpty(message) && returnTable.Rows.Count > 0)
             {
@@ -703,11 +926,11 @@ public class OBFlowUtility
     /// 查詢流程log
     /// </summary>
     /// <param name="flowCaseID">流程ID</param>
-    /// <param name="otMode">A:預先申請 D:事後申報</param>
+    /// <param name="Mode">A:預先申請 D:事後申報</param>
     /// <param name="returnTable">return: returnTable</param>
     /// <param name="message">return: message</param>
     /// <returns>bool</returns>
-    private static bool QueryHROverTimeLog(string flowCaseID, string otMode, out DataTable returnTable, out string message)
+    private static bool QueryHROtherFlowLog(string flowCaseID, string Mode, out DataTable returnTable, out string message)
     {
         var isSuccess = false;
         returnTable = new DataTable();
@@ -719,14 +942,14 @@ public class OBFlowUtility
             sb.AppendStatement(" SELECT ");
             sb.Append(" FlowCaseID, Seq "); //PK
             sb.Append(" , FlowLogBatNo, FlowLogID "); //流程系統所需key
-            sb.Append(" , OTMode, OTEmpID, EmpOrganID, EmpFlowOrganID, ApplyID "); //申請相關資料
+            sb.Append(" , Mode, OTEmpID, EmpOrganID, EmpFlowOrganID, ApplyID "); //申請相關資料
             sb.Append(" , FlowCode, FlowSN, FlowSeq, SignLine "); //流程設定資料
             sb.Append(" , SignIDComp, SignID, SignOrganID, SignFlowOrganID, SignTime "); //簽核者資料
             sb.Append(" , ReAssignFlag, ReAssignComp, ReAssignEmpID "); //改派資料
             sb.Append(" , FlowStatus, Remark "); //狀態與備註
-            sb.Append(" FROM HROverTimeLog ");
+            sb.Append(" FROM HROtherFlowLog ");
             sb.Append(" WHERE 0 = 0 ");
-            sb.Append(" AND OTMode = ").AppendParameter("OTMode", otMode); //A:預先申請 D:事後申報
+            sb.Append(" AND Mode = ").AppendParameter("Mode", Mode); //A:預先申請 D:事後申報
             sb.Append(" AND FlowCaseID = ").AppendParameter("FlowCaseID", flowCaseID); //流程ID
             sb.Append(" ORDER BY FlowCaseID, Seq ");
             var ds = db.ExecuteDataSet(sb.BuildCommand());
@@ -1070,7 +1293,7 @@ public class OBFlowUtility
             sb.Append(" AND VisableFlag = ").AppendParameter("VisableFlag", "0"); //隱藏註記;
             sb.Append(" AND Status = ").AppendParameter("Status", "1"); //生效;
             sb.Append(" AND CompID = ").AppendParameter("CompID", compID); //公司代碼
-            sb.Append(" AND SystemID = ").AppendParameter("SystemID", systemID); //系統別 : OT=>加班
+            sb.Append(" AND SystemID = ").AppendParameter("SystemID", systemID); //系統別 : OT=>加班 OB=>公出
             sb.Append(" AND FlowCode = ").AppendParameter("FlowCode", flowCode); //流程代碼
             sb.Append(" AND FlowSN = ").AppendParameter("FlowSN", flowSN); //流程識別碼
             if (!string.IsNullOrEmpty(speComp))
