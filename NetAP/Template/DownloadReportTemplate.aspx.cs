@@ -86,4 +86,26 @@ public partial class Template_DownloadReportTemplate : System.Web.UI.Page
             FileUtility.DownLoadDOCX(Response, fileData, "TestDocumentWithTemplateTable", true);
         }        
     }
+
+    protected void DocxWordDownload03_Click(object sender, EventArgs e)
+    {
+        var isSuccess = false;
+        byte[] fileData = null;
+        try
+        {
+            fileData = Template.MakeDutyReport001();
+            if (fileData.Length > 0)
+            {
+                isSuccess = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            string errMassge = ex.Message;
+        }
+        if (isSuccess)
+        {
+            FileUtility.DownLoadDOCX(Response, fileData, "測試值勤套表", true);
+        }
+    }
 }

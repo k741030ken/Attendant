@@ -26,6 +26,10 @@
             onclick="DocxWordDownload02_Click" Text="下載docx.dll基本Table套表(Word)" 
             Width="310px" />
         <br />
+        <asp:Button ID="DocxWordDownload03" runat="server" Height="60px" 
+            onclick="DocxWordDownload03_Click" Text="測試值勤套表" 
+            Width="310px" />
+        <br />
     </div>   
     </form>
 </body>

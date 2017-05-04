@@ -697,7 +697,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         //清除按鈕內容
         if (!nextAssignTo(OverTimeTable["CompID"].ToString(), OverTimeTable["AssignTo"].ToString(), OTStartDate, FlowCaseID, AD, out toUserData))return false;
 
-        nextFlowBtn(OverTimeTable["OTEmpID"].ToString(), OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(), AD, ref btnName);
+        nextFlowBtn(OverTimeTable["EmpID"].ToString(), OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(), AD, ref btnName);
         
         //btnName
         OverTimeTable["btnName"] = btnName;
