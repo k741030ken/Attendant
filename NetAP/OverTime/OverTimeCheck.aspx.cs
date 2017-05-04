@@ -389,7 +389,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         //CustVerify.setFlowSignID_CompID是多筆，由上面組ViewState["dtOverTimeAdvance"]來做
         ClearBtn(strFlowCaseID);
         CustVerify.setFlowSignID_CompID(SignID_CompID);
-        Session["btnVisible"] = "0";
+        
         //單筆產生按鈕
         sb.Reset();
         sb.Append("SELECT top 1 FlowLogID FROM " + FlowCustDB + "FlowFullLog ");
@@ -397,7 +397,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         string strFlowLogID = db.ExecuteScalar(sb.BuildCommand()).ToString();
         FlowExpress oFlowReload = new FlowExpress(_DBName, strFlowLogID, true);
         FlowExpress.setFlowOpenLogVerifyInfo(oFlowReload, true);
-
+        Session["btnVisible"] = "0";
         Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", _DBName, strFlowLogID, "Self", "N", "N", ""));
 
 
