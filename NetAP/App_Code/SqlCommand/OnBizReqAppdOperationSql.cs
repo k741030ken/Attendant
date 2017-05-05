@@ -26,11 +26,17 @@ public partial class OnBizReqAppdOperationSql
         {
             sb = new StringBuilder();
         }
-        sb.Append("SELECT CompID,EmpID,EmpNameN,CONVERT(NVARCHAR(10),WriteDate,111) AS WriteDate,DeputyID + '-' + DeputyName AS DeputyID_Name,CONVERT(NVARCHAR(10),VisitBeginDate,111) AS VisitBeginDate,CONVERT(NVARCHAR (5),BeginTime) AS BeginTime,CONVERT(NVARCHAR(10),VisitEndDate,111) AS VisitEndDate,CONVERT(NVARCHAR (5),EndTime) AS EndTime,VisitReasonCN,FormSeq");
-        sb.Append(" FROM VisitForm");
-        sb.Append(" WHERE CompID=@CompID");
-        sb.Append(" AND ValidID=@ValidID");
-        sb.Append(" AND OBFormStatus='2'");
+        sb.Append("SELECT CompID,EmpID,EmpNameN,CONVERT(NVARCHAR(10),WriteDate,111) AS WriteDate,DeputyID + '-' + DeputyName AS DeputyID_Name");
+        sb.Append(" ,CONVERT(NVARCHAR(10),VisitBeginDate,111) AS VisitBeginDate,CONVERT(NVARCHAR (5),BeginTime) AS BeginTime,CONVERT(NVARCHAR(10)");
+        sb.Append(" ,VisitEndDate,111) AS VisitEndDate,CONVERT(NVARCHAR (5),EndTime) AS EndTime,VisitReasonCN,FormSeq,VF.FlowCaseID,OBL.FlowLogID");
+        sb.Append(" FROM VisitForm VF");
+        sb.Append(" LEFT JOIN OnBizReqAppd_ITRDFlowOpenLog OBL ON VF.FlowCaseID = OBL.FlowCaseID ");
+        sb.Append(" LEFT JOIN PS_UserProxy UP ON VF.ValidID = UP.UserID AND CONVERT(VARCHAR(8),GETDATE(),112) BETWEEN UP.ProxyStartDate AND UP.ProxyEndDate");
+        sb.Append(" WHERE CompID = @CompID");
+        sb.Append(" AND (ValidID = @ValidID");
+        sb.Append(" OR UP.ProxyUser = @ValidID)");
+        sb.Append(" AND EmpID <> @ValidID ");
+        sb.Append(" AND OBFormStatus = '2'");
         sb.Append(" ; ");
     }
 
@@ -65,4 +71,38 @@ public partial class OnBizReqAppdOperationSql
         sb.Append(" ; ");
 
     }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="CompID"></param>
+    /// <param name="EmpID"></param>
+    /// <param name="WriteDate"></param>
+    /// <param name="FormSeq"></param>
+    /// <param name="OBFormStatus"></param>
+    /// <param name="RejectReasonCN"></param>
+    /// <param name="sb"></param>
+    public static void UpdateVisitForm(string CompID, string EmpID, string WriteDate, string FormSeq, string OBFormStatus, string RejectReasonCN, ref CommandHelper sb)
+    {
+
+        string SQL = @"	UPDATE VisitForm SET OBFormStatus = '{0}'
+                        ,RejectReasonCN = '{1}'
+                        WHERE CompID = '{2}'
+                        AND EmpID = '{3}'
+                        AND WriteDate = '{4}'
+                        AND FormSeq = '{5}' ;";
+        sb.AppendStatement(string.Format(SQL, OBFormStatus, RejectReasonCN, CompID, EmpID, WriteDate, FormSeq));
+        
+    }
+
+
+    private void UpdateHROverTimeLog(string FlowCaseID, string FlowStatus, ref  CommandHelper sb)
+    {
+        string SQL = @"	UPDATE HROtherFlowLog SET FlowStatus = '{0}' 
+                        WHERE FlowCaseID = '{1}'
+                        AND Seq = (SELECT TOP 1 Seq FROM HROtherFlowLog WHERE FlowCaseID = '{1}' ORDER BY Seq DESC) ;";
+
+        sb.AppendStatement(string.Format(SQL, FlowStatus, FlowCaseID));
+    }
+    
 }

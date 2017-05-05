@@ -118,6 +118,9 @@ public class FN_OnBizReqAppdOperation
             data.BeginTime = item.BeginTime;
             data.VisitEndDate = item.VisitEndDate;
             data.EndTime = item.EndTime;
+            data.FlowCaseID = item.FlowCaseID;
+            data.FlowLogID = item.FlowLogID;
+            data.VisitReasonCN = item.VisitReasonCN;
             result.Add(data);
         }
         return result;
