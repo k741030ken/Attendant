@@ -3940,7 +3940,14 @@ public partial class OverTime_OvertimePreOrder_Add : SecurePage
             txtOrganName.Text = UserInfo.getUserInfo().OrganName;
             txtOTEmpID.Text = UserInfo.getUserInfo().UserID;
             txtOTEmpName.Text = UserInfo.getUserInfo().UserName;
-
+            CompareValidator StartDateCompare = ucDateStart.FindControl("CompareUnusualTime1") as CompareValidator;
+            RegularExpressionValidator StartDateUnusual = ucDateStart.FindControl("regUnusualTime") as RegularExpressionValidator;
+            StartDateCompare.Style.Add("display", "none");
+            StartDateUnusual.Style.Add("display", "none");
+            CompareValidator EndDateCompare = ucDateEnd.FindControl("CompareUnusualTime1") as CompareValidator;
+            RegularExpressionValidator EndDateUnusual = ucDateEnd.FindControl("regUnusualTime") as RegularExpressionValidator;
+            EndDateCompare.Style.Add("display", "none");
+            EndDateUnusual.Style.Add("display", "none");
             ucDateStart.ucSelectedDate = DateTime.Now.ToString("yyyy/MM/dd");
             ucDateEnd.ucSelectedDate = DateTime.Now.ToString("yyyy/MM/dd");
             chkMealFlag.Checked = true;
