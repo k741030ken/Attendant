@@ -210,6 +210,15 @@ Partial Class OV_OV8300
             End If
         End If
 
+        If txtAdjustEmpID.Text <> "" Then
+            If txtAdjustEmpID.Text.Equals(lblAppEmpID.Text.Split("-")(0)) Then
+                Bsp.Utility.ShowMessage(Me, "調整處理人員與目前處理人員相同，請再確認!")
+                txtAdjustEmpID.Focus()
+                Return False
+            End If
+        End If
+        
+
         Return True
     End Function
 
