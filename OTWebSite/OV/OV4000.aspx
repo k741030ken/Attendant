@@ -429,12 +429,22 @@
                 <td class="table_td_header">
                     <asp:Label runat="server" Text="申請日期：" ID="labDateOfApplication" Font-Names="微軟正黑體"></asp:Label>
                 </td>
-                <td colspan="3">
+                <td>
                     <uc:ucCalender ID="txtDateOfApplicationB" runat="server" CssClass="InputTextStyle_Thin"
                         Enabled="True" width="80px" />
                     <asp:Label runat="server" Text="～"></asp:Label>
                     <uc:ucCalender ID="txtDateOfApplicationE" runat="server" CssClass="InputTextStyle_Thin"
                         Enabled="True" width="80px" />
+                </td>
+                <td class="table_td_header">
+                    <asp:Label ID="Label13" runat="server" Text="加班轉換方式："></asp:Label>
+                </td>
+                <td colspan="1">
+                    <asp:DropDownList ID="ddlSalaryOrAdjust" runat="server">
+                        <asp:ListItem Text="---請選擇---" Value=""></asp:ListItem>
+                        <asp:ListItem Text="轉薪資" Value="1"></asp:ListItem>
+                        <asp:ListItem Text="轉補休" Value="2"></asp:ListItem>
+                    </asp:DropDownList>
                 </td>
             </tr>
         </table>

@@ -317,7 +317,7 @@ public partial class OverTime_AfterOvertimeOrder : BasePage
                             {
                                 sb.AppendStatement("UPDATE OverTimeAdvance SET OTStatus='9'");
                                 sb.Append(" WHERE OTCompID='" + dtAdv.Rows[i]["OTCompID"] + "'");
-                                sb.Append(" AND OTEmpID='" + dtAdv.Rows[i]["EmpID"] + "'");
+                                sb.Append(" AND OTEmpID='" + dtAdv.Rows[i]["OTEmpID"] + "'");
                                 sb.Append(" AND OTStartDate='" + dtAdv.Rows[0]["OTStartDate"] + "'");
                                 sb.Append(" AND OTEndDate='" + dtAdv.Rows[0]["OTEndDate"] + "'");
                                 sb.Append(" AND OTStartTime='" + dtAdv.Rows[0]["OTStartTime"] + "'");
@@ -1118,15 +1118,26 @@ public partial class OverTime_AfterOvertimeOrder : BasePage
                     {
                         Dictionary<string, string> user= new Dictionary<string, string>();
                         user.Add(UserInfo.getUserInfo().UserID, UserInfo.getUserInfo().UserName);
-
-                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnAfterApprove", user, ""))
+                        
+                        isSuccess = FlowUtility.QueryFlowDataAndToUserData_First(dt.Rows[i]["OTCompID"].ToString(), "", "", dt.Rows[i]["EmpID"].ToString(), UserInfo.getUserInfo().UserID, dt.Rows[i]["OTStartDate"].ToString(), "1",
+                        out empData, out toUserData, out flowCode, out flowSN, out nextIsLastFlow, out meassge);
+                        if (!isSuccess)
+                        {
+                            Util.MsgBox("查無加班人相關資料-送簽失敗！");
+                        }
+                        else if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), "btnAfterApprove", user, ""))
                         {
                             string strFlowCaseID = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);
                             if (FlowExpress.IsSubFlowClose(flow.FlowID, strFlowCaseID))
                             {
+                                FlowUtility.InsertHROverTimeLogCommand(strFlowCaseID, "1", strFlowCaseID + ".00001",
+                               "D", empData["EmpID"], empData["OrganID"], empData["FlowOrganID"], UserInfo.getUserInfo().UserID,
+                               "", "", "", "",
+                               "", "", "", "", "2",
+                               false, ref sb, 1, "1");
                                 if (dt.Rows[i]["OTStartDate"].ToString() == dt.Rows[i]["OTEndDate"].ToString())
                                 {
-                                    sb.AppendStatement("UPDATE OverTimeDeclaration SET OTStatus='3',");
+                                    sb.AppendStatement(" UPDATE OverTimeDeclaration SET OTStatus='3',");
                                     sb.Append(" OTValidDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',");
                                     sb.Append(" OTValidID='" + UserInfo.getUserInfo().UserID + "',");
                                     sb.Append(" FlowCaseID='" + strFlowCaseID + "'");
@@ -1146,7 +1157,7 @@ public partial class OverTime_AfterOvertimeOrder : BasePage
                                     {
                                         if (crossDayArray.Split(',')[j] == dt.Rows[i]["OTStartDate"].ToString())
                                         {
-                                            sb.AppendStatement("UPDATE OverTimeDeclaration SET OTStatus='3',");
+                                            sb.AppendStatement(" UPDATE OverTimeDeclaration SET OTStatus='3',");
                                             sb.Append(" OTValidDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',");
                                             sb.Append(" OTValidID='" + UserInfo.getUserInfo().UserID + "',");
                                             sb.Append(" FlowCaseID='" + strFlowCaseID + "'");
@@ -1160,7 +1171,7 @@ public partial class OverTime_AfterOvertimeOrder : BasePage
                                         }
                                         else
                                         {
-                                            sb.AppendStatement("UPDATE OverTimeDeclaration SET OTStatus='3',");
+                                            sb.AppendStatement(" UPDATE OverTimeDeclaration SET OTStatus='3',");
                                             sb.Append(" OTValidDate='" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "',");
                                             sb.Append(" OTValidID='" + UserInfo.getUserInfo().UserID + "',");
                                             sb.Append(" FlowCaseID='" + strFlowCaseID + "'");

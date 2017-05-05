@@ -123,11 +123,11 @@ Partial Class OV_OV8300
 
         lblCompID.Text = DetailDatas.Rows(0).Item("CompID").ToString & "-" & getCompany(DetailDatas.Rows(0).Item("CompID").ToString)
         lblFromName.Text = DetailDatas.Rows(0).Item("FormName").ToString
-        lblFormEmpID.Text = DetailDatas.Rows(0).Item("AddEmpName").ToString
+        lblFormEmpID.Text = DetailDatas.Rows(0).Item("AddEmpID").ToString & "-" & DetailDatas.Rows(0).Item("AddEmpName").ToString
         lblAppDate.Text = DetailDatas.Rows(0).Item("AddDate").ToString
         lblAddDate.Text = DetailDatas.Rows(0).Item("StartDate").ToString & "~" & DetailDatas.Rows(0).Item("EndDate").ToString
         lblAddTime.Text = DetailDatas.Rows(0).Item("StartTime").ToString & "~" & DetailDatas.Rows(0).Item("EndTime").ToString
-        lblAppEmpID.Text = DetailDatas.Rows(0).Item("AdjustEmpName").ToString
+        lblAppEmpID.Text = DetailDatas.Rows(0).Item("AdjustEmpID").ToString & "-" & DetailDatas.Rows(0).Item("AdjustEmpName").ToString
         lblLastChgComp.Text = DetailDatas.Rows(0).Item("LastChgComp").ToString & "-" & getCompany(DetailDatas.Rows(0).Item("LastChgComp").ToString)
         lblLastChgID.Text = DetailDatas.Rows(0).Item("LastChgID").ToString & "-" & getName(DetailDatas.Rows(0).Item("LastChgComp").ToString, DetailDatas.Rows(0).Item("LastChgID").ToString)
         lblLastChgDate.Text = DetailDatas.Rows(0).Item("LastChgDate").ToString

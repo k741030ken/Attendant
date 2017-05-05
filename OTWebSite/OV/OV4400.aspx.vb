@@ -611,7 +611,7 @@ Partial Class OV_OV4400
         strSQL.AppendLine("left join " & eHRMSDB_ITRD & ".[dbo].Organization ORT2 ON ORT.OrgType=ORT2.OrganID")
         strSQL.AppendLine("WHERE 1=1 ")
         strSQL.AppendLine("AND OTD.OTCompID = " & Bsp.Utility.Quote(compID))
-        strSQL.AppendLine("AND OTD.OTStatus IN ('2','3') ")
+        strSQL.AppendLine("AND OTD.OTStatus IN ('3') ")
         strSQL.AppendLine("AND OTD.SalaryOrAdjust = @SalaryOrAdjust ")
         If bDeptID Then '部門 有值
             strSQL.AppendLine("AND OTD.DeptID = @DeptID ")

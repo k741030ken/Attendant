@@ -143,7 +143,8 @@ sb.Append(" LEFT JOIN AT_CodeMap AS OTT ON OTT.TabName='OverTime' and OTT.FldNam
 sb.Append(" where (");
 if (strUserID != "")
 {
-    sb.Append(" (AOL.AssignTo in(" + strUserID + ")and isnull(OT.OTEmpID,OD.OTEmpID)<>'" + UserInfo.getUserInfo().UserID + "') or ");//20170213 再修改，加入代理人判斷
+    //sb.Append(" (AOL.AssignTo in(" + strUserID + ")and isnull(OT.OTEmpID,OD.OTEmpID)<>'" + UserInfo.getUserInfo().UserID + "') or ");//20170213 再修改，加入代理人判斷
+    sb.Append(" AOL.AssignTo in(" + strUserID + ") or ");//20170213 再修改，加入代理人判斷
 }
 sb.Append(" AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "')");  //本人單
 sb.Append(" AND ( ((OT.OTSeqNo=1 and OT.OTStatus='2')OR (OT.OTSeqNo=1 and OT.OTSeqNo=OD.OTSeqNo and OT.OTTxnID=OD.OTFromAdvanceTxnId))OR (OD.OTSeqNo=1 and OD.OTStatus='2') ) ");
@@ -346,11 +347,11 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
     protected void btnCheck_Click(object sender, EventArgs e)//簽核需呼叫流程引擎
     {
         //FlowExpress oFlow = new FlowExpress(_DBName, _CurrFlowLogID, false);
-        LoadGridViewData();
+        if (!LoadGridViewData())return;
         DbHelper db = new DbHelper(_DBName);
         CommandHelper sb = db.CreateCommandHelper();
-        DataTable dtFlowCaseID;
         string SignID_CompID = "";
+        string strFlowCaseID = "";
         if (ViewState["dtOverTimeAdvance"] == null && ViewState["dtOverTimeDeclaration"] == null)
         {
             Util.MsgBox("尚未有資料可以審核");
@@ -370,79 +371,39 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                 if (dtOTA.Rows.Count > 0 && dtOTD.Rows.Count > 0)
                 {
                     SignID_CompID = dtOTA.Rows[0]["SignID"].ToString().Trim() + "," + dtOTA.Rows[0]["SignIDComp"].ToString().Trim();
-                    sb.Reset();
-                    sb.Append("SELECT Top 1 FlowLogID,OTCompID,FlowCaseID,AssignTo FROM(");
-                    sb.Append(" SELECT top 1 FlowLogID,OTCompID,OT.FlowCaseID,AssignTo FROM " + FlowCustDB + "FlowFullLog AL");
-                    sb.Append(" LEFT JOIN OverTimeAdvance OT ON OT.FlowCaseID=AL.FlowCaseID");
-                    sb.Append(" WHERE OT.OTEmpID='" + dtOTA.Rows[0]["EmpID"].ToString() + "'");
-                    sb.Append(" AND OT.OTStartDate='" + dtOTA.Rows[0]["OTStartDate"].ToString().Split('~')[0] + "'");
-                    sb.Append(" AND OT.OTStartTime='" + dtOTA.Rows[0]["OTStartTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OT.OTEndTime='" + dtOTA.Rows[0]["OTEndTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OT.OTSeq='" + dtOTA.Rows[0]["OTSeq"].ToString() + "'");
-                    sb.Append(" order by FlowLogID desc ");
-                    sb.Append(" UNION");
-                    sb.Append(" SELECT top 1 FlowLogID,OTCompID,OD.FlowCaseID,AssignTo FROM " + FlowCustDB + "FlowFullLog ADL");
-                    sb.Append(" LEFT JOIN OverTimeDeclaration OD ON OD.FlowCaseID=ADL.FlowCaseID");
-                    sb.Append(" WHERE OD.OTEmpID='" + dtOTD.Rows[0]["EmpID"].ToString() + "'");
-                    sb.Append(" AND OD.OTStartDate='" + dtOTD.Rows[0]["OTStartDate"].ToString().Split('~')[0] + "'");
-                    sb.Append(" AND OD.OTStartTime='" + dtOTD.Rows[0]["OTStartTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OD.OTEndTime='" + dtOTD.Rows[0]["OTEndTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OD.OTSeq='" + dtOTD.Rows[0]["OTSeq"].ToString() + "'");
-                    sb.Append(" order by FlowLogID desc ");
-                    sb.Append(" ) A order by FlowLogID desc");
-                    dtFlowCaseID = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
+                    strFlowCaseID = dtOTA.Rows[0]["FlowCaseID"].ToString().Trim();
                 }
                 else if (dtOTA.Rows.Count > 0 && dtOTD.Rows.Count <= 0)
                 {
                     SignID_CompID = dtOTA.Rows[0]["SignID"].ToString().Trim() + "," + dtOTA.Rows[0]["SignIDComp"].ToString().Trim();
-                    sb.Reset();
-                    sb.Append("SELECT top 1 FlowLogID,OTCompID,OT.FlowCaseID,AssignTo FROM " + FlowCustDB + "FlowFullLog AL");
-                    sb.Append(" LEFT JOIN OverTimeAdvance OT ON OT.FlowCaseID=AL.FlowCaseID");
-                    sb.Append(" WHERE OT.OTEmpID='" + dtOTA.Rows[0]["EmpID"] + "'");
-                    sb.Append(" AND OT.OTStartDate='" + dtOTA.Rows[0]["OTStartDate"].ToString().Split('~')[0] + "'");
-                    sb.Append(" AND OT.OTStartTime='" + dtOTA.Rows[0]["OTStartTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OT.OTEndTime='" + dtOTA.Rows[0]["OTEndTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OT.OTSeq='" + dtOTA.Rows[0]["OTSeq"].ToString() + "'");
-                    sb.Append(" order by FlowLogID desc ");
-                    dtFlowCaseID = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
+                    strFlowCaseID = dtOTA.Rows[0]["FlowCaseID"].ToString().Trim();
                 }
                 else
                 {
                     SignID_CompID = dtOTD.Rows[0]["SignID"].ToString().Trim() + "," + dtOTD.Rows[0]["SignIDComp"].ToString().Trim();
-                    sb.Reset();
-                    sb.Append("SELECT top 1 FlowLogID,OTCompID,OD.FlowCaseID,AssignTo FROM " + FlowCustDB + "FlowFullLog ADL");
-                    sb.Append(" LEFT JOIN OverTimeDeclaration OD ON OD.FlowCaseID=ADL.FlowCaseID");
-                    sb.Append(" WHERE OD.OTEmpID='" + dtOTD.Rows[0]["EmpID"] + "'");
-                    sb.Append(" AND OD.OTStartDate='" + dtOTD.Rows[0]["OTStartDate"].ToString().Split('~')[0] + "'");
-                    sb.Append(" AND OD.OTStartTime='" + dtOTD.Rows[0]["OTStartTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OD.OTEndTime='" + dtOTD.Rows[0]["OTEndTime"].ToString().Replace(":", "") + "'");
-                    sb.Append(" AND OD.OTSeq='" + dtOTD.Rows[0]["OTSeq"].ToString() + "'");
-                    sb.Append(" order by FlowLogID desc ");
-                    dtFlowCaseID = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
+                    strFlowCaseID = dtOTD.Rows[0]["FlowCaseID"].ToString().Trim();
                 }
             }
         }
-
         //只有要傳第一筆過去，不要作迴圈了
         //CustVerify.setFlowSignID_CompID是多筆，由上面組ViewState["dtOverTimeAdvance"]來做
-        ClearBtn(dtFlowCaseID.Rows[0]["FlowCaseID"].ToString());
-        //SignID_CompID = UserInfo.getUserInfo().UserID.Trim() + "," + UserInfo.getUserInfo().CompID.Trim();
+        ClearBtn(strFlowCaseID);
         CustVerify.setFlowSignID_CompID(SignID_CompID);
-        Session["btnVisible"] = "0";
+        
         //單筆產生按鈕
         sb.Reset();
         sb.Append("SELECT top 1 FlowLogID FROM " + FlowCustDB + "FlowFullLog ");
-        sb.Append(" WHERE FlowCaseID='" + dtFlowCaseID.Rows[0]["FlowCaseID"] .ToString()+ "'");
+        sb.Append(" WHERE FlowCaseID='" + strFlowCaseID + "'");
         string strFlowLogID = db.ExecuteScalar(sb.BuildCommand()).ToString();
         FlowExpress oFlowReload = new FlowExpress(_DBName, strFlowLogID, true);
         FlowExpress.setFlowOpenLogVerifyInfo(oFlowReload, true);
-
-        Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", _DBName, dtFlowCaseID.Rows[0]["FlowLogID"].ToString(), "Self", "N", "N", ""));
+        Session["btnVisible"] = "0";
+        Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", _DBName, strFlowLogID, "Self", "N", "N", ""));
 
 
     }
 
-    protected void LoadGridViewData()
+    protected bool LoadGridViewData()
     {
         DataTable dtOverTimeAdvance = new DataTable();
         dtOverTimeAdvance.Columns.Add("OTRegisterComp");
@@ -486,10 +447,13 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         dtOverTimeDeclaration.Columns.Add("SignOrganID");
         dtOverTimeDeclaration.Columns.Add("SignFlowOrganID");
 
+        int Num = 0;
+        string strNum = "";
         foreach (GridViewRow row in gvMain.Rows)
         {
             if (row.RowType == DataControlRowType.DataRow)
             {
+                Num++;
                 CheckBox chk_chkOverTimeA = (CheckBox)row.Cells[2].FindControl("chkOverTimeA");
                 if (chk_chkOverTimeA.Checked)
                 {
@@ -507,8 +471,16 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeAdvance["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["OTSeq"].ToString();
                         drOverTimeAdvance["OTSeqNo"] = "1";
                         drOverTimeAdvance["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["FlowCaseID"].ToString();
-                        nextOverTime("A", ref drOverTimeAdvance);
-                        dtOverTimeAdvance.Rows.Add(drOverTimeAdvance);
+                        //DataRow併入btnName與toUserData的資料
+                        if (nextOverTime("A", ref drOverTimeAdvance))
+                        {
+                            dtOverTimeAdvance.Rows.Add(drOverTimeAdvance);
+                        }
+                        else
+                        { 
+                            //紀錄gv上第幾個單無下一關主管
+                            strNum = strNum + Num.ToString() + ","; 
+                        }
                     }
                     else
                     {
@@ -524,7 +496,8 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeAdvance["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["OTSeq"].ToString();
                         drOverTimeAdvance["OTSeqNo"] = "1";
                         drOverTimeAdvance["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["FlowCaseID"].ToString();
-                        dtOverTimeAdvance.Rows.Add(drOverTimeAdvance);
+                       
+                        //dtOverTimeAdvance.Rows.Add(drOverTimeAdvance);
                         DataRow drOverTimeAdvance2 = dtOverTimeAdvance.NewRow();
                         drOverTimeAdvance2["EmpID"] = gvMain.DataKeys[row.RowIndex].Values["OTEmpID"].ToString();
                         drOverTimeAdvance2["OTStartDate"] = gvMain.DataKeys[row.RowIndex].Values["OTDate"].ToString().Split('~')[1];
@@ -534,7 +507,15 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeAdvance["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["OTSeq"].ToString();
                         drOverTimeAdvance2["OTSeqNo"] = "2";
                         drOverTimeAdvance2["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["FlowCaseID"].ToString();
-                        dtOverTimeAdvance.Rows.Add(drOverTimeAdvance2);
+                        if (nextOverTime("A", ref drOverTimeAdvance))
+                        {
+                            dtOverTimeAdvance.Rows.Add(drOverTimeAdvance);
+                            dtOverTimeAdvance.Rows.Add(drOverTimeAdvance2);
+                        }
+                        else
+                        {
+                            strNum = strNum + Num.ToString() + ",";
+                        }
                     }
                 }
                 ViewState["dtOverTimeAdvance"] = dtOverTimeAdvance;
@@ -557,8 +538,16 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeDeclaration["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["AfterOTSeq"].ToString();
                         drOverTimeDeclaration["OTSeqNo"] = "1";
                         drOverTimeDeclaration["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["AfterFlowCaseID"].ToString();
-                        nextOverTime("D", ref drOverTimeDeclaration);
-                        dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
+                        if (nextOverTime("D", ref drOverTimeDeclaration))
+                        {
+                            dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
+                        }
+                        else
+                        {
+                            strNum = strNum + Num.ToString() + ",";
+                        }
+                        //nextOverTime("D", ref drOverTimeDeclaration);
+                        //dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
                     }
                     else
                     {
@@ -574,8 +563,8 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeDeclaration["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["AfterOTSeq"].ToString();
                         drOverTimeDeclaration["OTSeqNo"] = "1";
                         drOverTimeDeclaration["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["AfterFlowCaseID"].ToString();
-                        nextOverTime("D", ref drOverTimeDeclaration);
-                        dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
+                        //nextOverTime("D", ref drOverTimeDeclaration);
+                        //dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
                         DataRow drOverTimeDeclaration2 = dtOverTimeDeclaration.NewRow();
                         drOverTimeDeclaration2["EmpID"] = gvMain.DataKeys[row.RowIndex].Values["OTEmpID"].ToString();
                         drOverTimeDeclaration2["OTStartDate"] = gvMain.DataKeys[row.RowIndex].Values["AfterOTDate"].ToString().Split('~')[1];
@@ -585,13 +574,27 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                         drOverTimeDeclaration["OTSeq"] = gvMain.DataKeys[row.RowIndex].Values["AfterOTSeq"].ToString();
                         drOverTimeDeclaration2["OTSeqNo"] = "2";
                         drOverTimeDeclaration2["FlowCaseID"] = gvMain.DataKeys[row.RowIndex].Values["AfterFlowCaseID"].ToString();
-                        dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration2);
+                        if (nextOverTime("D", ref drOverTimeDeclaration))
+                        {
+                            dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration);
+                            dtOverTimeDeclaration.Rows.Add(drOverTimeDeclaration2);
+                        }
+                        else
+                        {
+                            strNum = strNum + Num.ToString() + ",";
+                        }
                     }
                 }
                 ViewState["dtOverTimeDeclaration"] = dtOverTimeDeclaration;
                 Session["dtOverTimeDeclaration"] = dtOverTimeDeclaration;
             }
         }
+        if(strNum!="")
+        {
+            Util.MsgBox("第" + strNum.Remove(strNum.Length-1) + "項 查無下一關主管資料");
+            return false;
+        }
+        return true;
     }
 
     protected void gvMain_RowCommand(object sender, GridViewCommandEventArgs e)
@@ -609,7 +612,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
             case "DetailA":
                 gvFlowCaseID=gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString();
                 sb.Reset();
-                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate FROM " + FlowCustDB + "FlowOpenLog OL");
+                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTEmpID,OT.OTStartDate FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeAdvance OT ON OL.FlowCaseID=OT.FlowCaseID");
                 sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
@@ -618,13 +621,16 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
 
                 //取得下一關主管相關訊息
                 if (!nextAssignTo(
-                    dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), 
-                    dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), 
-                    dtFlowLogIDA.Rows[0]["OTStartDate"].ToString(), 
-                    gvFlowCaseID, 
-                    "A", 
-                    out toUserData))return ;
-
+                    dtFlowLogIDA.Rows[0]["OTCompID"].ToString(),
+                    dtFlowLogIDA.Rows[0]["AssignTo"].ToString(),
+                    dtFlowLogIDA.Rows[0]["OTStartDate"].ToString(),
+                    gvFlowCaseID,
+                    "A",
+                    out toUserData))
+                {
+                    Util.MsgBox("查無下一關主管資料");
+                    return;
+                }
                 //將下一關主管資料丟給共用檔，待之後永豐流程去撈取
                 CustVerify.setFlowSignID_CompID(toUserData["SignID"].ToString() + "," + toUserData["SignIDComp"].ToString());
                 //傳給審核畫面-單筆審核使用
@@ -632,7 +638,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                 //按鈕清單
                 ClearBtn(gvFlowCaseID);
                 //下一關邏輯判斷，產生審核按鈕資訊
-                nextFlowBtn(dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "A",ref  btnName);
+                nextFlowBtn(dtFlowLogIDA.Rows[0]["OTEmpID"].ToString(), dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "A", ref  btnName);
                 //產生審核按鈕
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), "".Split(','), false, "", "");
                 //跳轉畫面
@@ -643,7 +649,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
             case "DetailD":
                 gvFlowCaseID = gvMain.DataKeys[clickedRow.RowIndex].Values[9].ToString();
                 sb.Reset();
-                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate  FROM " + FlowCustDB + "FlowOpenLog OL");
+                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTEmpID,OT.OTStartDate  FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeDeclaration OT ON OL.FlowCaseID=OT.FlowCaseID");
                 sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
@@ -653,21 +659,22 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                     dtFlowLogIDD.Rows[0]["AssignTo"].ToString(),
                     dtFlowLogIDD.Rows[0]["OTStartDate"].ToString(),
                     gvFlowCaseID, 
-                    "D", 
-                    out toUserData))return ;
+                    "D",
+                    out toUserData))
+                {
+                    Util.MsgBox("查無下一關主管資料");
+                    return;
+                }
                 CustVerify.setFlowSignID_CompID(toUserData["SignID"].ToString() + "," + toUserData["SignIDComp"].ToString());
                 Session["toUserData"] = toUserData;
-                //ucModalPopup.Reset();
 
                 //按鈕清單
                 ClearBtn(gvFlowCaseID);
-                nextFlowBtn(dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), dtFlowLogIDD.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "D", ref  btnName);
+                nextFlowBtn(dtFlowLogIDD.Rows[0]["OTEmpID"].ToString(), dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), dtFlowLogIDD.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "D", ref  btnName);
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), null, false, "", "");
 
                 Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}"
                                             , _DBName, dtFlowLogIDD.Rows[0]["FlowLogID"].ToString(), "Self", "N", "N", ""));
-                //Response.Redirect(string.Format("FlowPageVerify.aspx?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}&Type={6}"
-                //                           , "AattendantDB", dtFlowLogIDD.Rows[0]["FlowLogID"], "Self", "N", "N", "", "2"));
                 break;
 
         }
@@ -678,7 +685,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
     /// 在尾端追加btnName審核按鈕、toUserData下一關主管訊息。
     /// 組合時，順便將按鈕產生出來。
     /// </summary>
-    private void nextOverTime(string AD,ref DataRow OverTimeTable)
+    private Boolean  nextOverTime(string AD,ref DataRow OverTimeTable)
     {
         //input
         string OTStartDate, FlowCaseID, btnName="";
@@ -688,9 +695,9 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         FlowCaseID = OverTimeTable["FlowCaseID"].ToString();
 
         //清除按鈕內容
-        if (!nextAssignTo(OverTimeTable["CompID"].ToString(), OverTimeTable["AssignTo"].ToString(), OTStartDate, FlowCaseID, AD, out toUserData))return;
+        if (!nextAssignTo(OverTimeTable["CompID"].ToString(), OverTimeTable["AssignTo"].ToString(), OTStartDate, FlowCaseID, AD, out toUserData))return false;
 
-        nextFlowBtn(OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(),AD, ref btnName);
+        nextFlowBtn(OverTimeTable["EmpID"].ToString(), OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(), AD, ref btnName);
         
         //btnName
         OverTimeTable["btnName"] = btnName;
@@ -700,7 +707,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         OverTimeTable["SignID"] = toUserData["SignID"].ToString();
         OverTimeTable["SignOrganID"] = toUserData["SignOrganID"].ToString();
         OverTimeTable["SignFlowOrganID"] = toUserData["SignFlowOrganID"].ToString();
-
+        return true;
     }
 
     /// <summary>
@@ -794,13 +801,16 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
             }
         }
 
-        //如果找不到下一關主管資料，會等於現在登入者，這時候到OverTimeCustVerify就直接拋審核失敗
+        //如果找不到下一關主管資料，彈跳視窗並且return false
         if (toUserData["SignID"] == "")
         {
             toUserData["SignIDComp"] = UserInfo.getUserInfo().CompID.Trim();
             toUserData["SignID"] = UserInfo.getUserInfo().UserID.Trim();
-            Util.MsgBox("查無下一關主管資料");
-            return false;
+            //Util.MsgBox("查無下一關主管資料");
+            if (isLastFlow) //最後一關不用找下一關主管
+                return true;
+            else
+                return false;
         }
         return true;
     }
@@ -905,7 +915,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         }
 
     }
-    private void nextFlowBtn(string AssignTo, string CompID, string FlowCaseID, string AD, ref string btnName)
+    private void nextFlowBtn(string OTEmpID,string AssignTo, string CompID, string FlowCaseID, string AD, ref string btnName)
     {
         
         bool IsUpValidRankID = true;
@@ -999,8 +1009,23 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         //最後一關
         else
         {
+            //當加班人是自己主管的代理人並審自己的加班單
+            if (OTEmpID.Trim().Equals(UserInfo.getUserInfo().UserID.Trim()))
+            {
+                //加班人RankID>19 
+                if (IsUpEmpRankID)
+                {
+                    Session["btnVisible"] = "2";
+                    btnName = "btnClose";
+                }
+                else
+                {
+                    Session["btnVisible"] = "1";
+                    btnName = "btnReApprove";
+                }
+            }
             //大於Rank16
-            if (IsUpValidRankID)
+            else if (IsUpValidRankID)
             {
                 Session["btnVisible"] = "2";
                 btnName = "btnClose";

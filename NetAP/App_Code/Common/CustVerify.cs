@@ -28,6 +28,8 @@ public class CustVerify
     }
     public static void setFlowSignID_CompID(string data)
     {
+        //一筆內容：SingID1,CompID1
+        //多筆內容：SingID1,CompID1|$|SingID2,CompID2|$|SignID3,CompID3
         FlowSignID_CompID = data;
     }
 

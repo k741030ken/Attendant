@@ -75,6 +75,12 @@
 //            btnDownload.style.color = '#000000'
         }
     }
+    function DownLoad() {
+        var message = document.getElementById("msg").value
+        if (!confirm(message))
+            return false;
+        document.getElementById("btnDown").click();
+    }
     function btnClear() {
         var btnAdd = window.parent.frames[0].document.getElementById("ucButtonPermission_btnAdd");
         var btnQuery = window.parent.frames[0].document.getElementById("ucButtonPermission_btnQuery");
@@ -120,6 +126,8 @@
                     <asp:ListItem Text="人員" Value="PersonBlock"></asp:ListItem>
 <%--                    <asp:ListItem Text="留守" Value="StayBlock"></asp:ListItem>--%>
                 </asp:DropDownList>
+                <asp:TextBox ID="msg" runat="server" Style="display: none" ></asp:TextBox>
+                <asp:Button ID="btnDown" runat="server" Style="display: none"/>
             </td>
         </tr>
         <tr id = "trDate" runat="server" visible="false">
@@ -138,8 +146,8 @@
             <asp:FilteredTextBoxExtender ID="fttxtEmpID" runat="server" TargetControlID="txtEmpID" FilterType="Numbers ,UppercaseLetters" ></asp:FilteredTextBoxExtender>
                 <%--<asp:TextBox CssClass="InputTextStyle_Thin" ID="txtEmpID" MaxLength="6" runat="server" Style="text-transform: uppercase"></asp:TextBox>--%>
                 <asp:TextBox CssClass="InputTextStyle_Thin" ID="txtEmpID" runat="server" Width="80px" AutoPostBack="true" MaxLength="6" style="TEXT-TRANSFORM:uppercase"></asp:TextBox>
-                <asp:Label ID="lblEmpID" runat="server" Font-Names="微軟正黑體"></asp:Label>
                 <uc:ButtonQuerySelectUserID ID="ucQueryEmp" runat="server" WindowHeight="800" WindowWidth="600" ButtonText="..." />
+                <asp:Label ID="lblEmpID" runat="server" Font-Names="微軟正黑體"></asp:Label>
             </td>
         </tr>
         <tr id = "trEmp2" runat="server" visible="false">

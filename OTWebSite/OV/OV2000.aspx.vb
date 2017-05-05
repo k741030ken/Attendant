@@ -169,6 +169,7 @@ Partial Class OV2000
         tbOTFormNO.Text = ""
         txtOvertimeDateB.DateText = ""
         txtOvertimeDateE.DateText = ""
+        ddlSalaryOrAdjust.SelectedValue = ""
         'tbOTPayDateErrorMsg.Visible = False
 
     End Sub
@@ -541,7 +542,7 @@ Partial Class OV2000
         OV2.OTPayDate = tbOTPayDate.Text
         OV2.OvertimeDateB = txtOvertimeDateB.DateText
         OV2.OvertimeDateE = txtOvertimeDateE.DateText
-
+        OV2.OTSalaryOrAdjust = ddlSalaryOrAdjust.SelectedValue
         'If ckOTSalaryPaid.Checked Then
         '    OV2.OTSalaryPaid = "0"
         'Else
