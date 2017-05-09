@@ -411,7 +411,7 @@ Namespace beHRFlowTypeDefine
 
     Public Class Service
         Public Function DeleteRowByPrimaryKey(ByVal HRFlowTypeDefineRow As Row) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -425,11 +425,11 @@ Namespace beHRFlowTypeDefine
             db.AddInParameter(dbcmd, "@FlowCode", DbType.String, HRFlowTypeDefineRow.FlowCode.Value)
             db.AddInParameter(dbcmd, "@FlowType", DbType.String, HRFlowTypeDefineRow.FlowType.Value)
 
-            return db.ExecuteNonQuery(dbcmd)
+            Return db.ExecuteNonQuery(dbcmd)
         End Function
 
-        public Function DeleteRowByPrimaryKey(ByVal HRFlowTypeDefineRow As Row, ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+        Public Function DeleteRowByPrimaryKey(ByVal HRFlowTypeDefineRow As Row, ByVal tran As DbTransaction) As Integer
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -443,11 +443,11 @@ Namespace beHRFlowTypeDefine
             db.AddInParameter(dbcmd, "@FlowCode", DbType.String, HRFlowTypeDefineRow.FlowCode.Value)
             db.AddInParameter(dbcmd, "@FlowType", DbType.String, HRFlowTypeDefineRow.FlowType.Value)
 
-            return db.ExecuteNonQuery(dbcmd, tran)
+            Return db.ExecuteNonQuery(dbcmd, tran)
         End Function
 
         Public Function DeleteRowByPrimaryKey(ByVal HRFlowTypeDefineRow As Row()) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
@@ -458,7 +458,7 @@ Namespace beHRFlowTypeDefine
             strSQL.AppendLine("And FlowType = @FlowType")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
-            using cn As DbConnection = db.CreateConnection()
+            Using cn As DbConnection = db.CreateConnection()
                 cn.Open()
                 Dim tran As DbTransaction = cn.BeginTransaction()
                 Dim inTrans As Boolean = True
@@ -473,7 +473,7 @@ Namespace beHRFlowTypeDefine
                         intRowsAffected += db.ExecuteNonQuery(dbcmd, tran)
                     Next
                     tran.Commit()
-                    inTrans = false
+                    inTrans = False
                 Catch ex As Exception
                     If inTrans Then tran.Rollback()
                     Throw
@@ -486,7 +486,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function DeleteRowByPrimaryKey(ByVal HRFlowTypeDefineRow As Row(), ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
@@ -510,7 +510,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function QueryByKey(ByVal HRFlowTypeDefineRow As Row) As DataSet
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -528,7 +528,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function QueryByKey(HRFlowTypeDefineRow As Row, tran As DbTransaction) As DataSet
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -546,7 +546,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Update(ByVal HRFlowTypeDefineRow As Row) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim strDot As String = String.Empty
@@ -554,7 +554,7 @@ Namespace beHRFlowTypeDefine
             strSQL.AppendLine("Update HRFlowTypeDefine Set")
             For i As Integer = 0 To HRFlowTypeDefineRow.FieldNames.Length - 1
                 If Not HRFlowTypeDefineRow.IsIdentityField(HRFlowTypeDefineRow.FieldNames(i)) AndAlso HRFlowTypeDefineRow.IsUpdated(HRFlowTypeDefineRow.FieldNames(i)) AndAlso HRFlowTypeDefineRow.CreateUpdateSQL(HRFlowTypeDefineRow.FieldNames(i)) Then
-                    strSQL.AppendLine(string.Format("{0}{1} = @{1}", strDot, HRFlowTypeDefineRow.FieldNames(i)))
+                    strSQL.AppendLine(String.Format("{0}{1} = @{1}", strDot, HRFlowTypeDefineRow.FieldNames(i)))
                     strDot = ","
                 End If
             Next
@@ -582,7 +582,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Update(ByVal HRFlowTypeDefineRow As Row, ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim strDot As String = String.Empty
@@ -590,10 +590,10 @@ Namespace beHRFlowTypeDefine
             strSQL.AppendLine("Update HRFlowTypeDefine Set")
             For i As Integer = 0 To HRFlowTypeDefineRow.FieldNames.Length - 1
                 If Not HRFlowTypeDefineRow.IsIdentityField(HRFlowTypeDefineRow.FieldNames(i)) AndAlso HRFlowTypeDefineRow.IsUpdated(HRFlowTypeDefineRow.FieldNames(i)) AndAlso HRFlowTypeDefineRow.CreateUpdateSQL(HRFlowTypeDefineRow.FieldNames(i)) Then
-                    strSQL.AppendLine(string.Format("{0}{1} = @{1}", strDot, HRFlowTypeDefineRow.FieldNames(i)))
+                    strSQL.AppendLine(String.Format("{0}{1} = @{1}", strDot, HRFlowTypeDefineRow.FieldNames(i)))
                     strDot = ","
                 End If
-            Next 
+            Next
             If strDot = String.Empty Then Throw New Exception("未異動資料欄位！")
             strSQL.AppendLine("Where SystemID = @PKSystemID")
             strSQL.AppendLine("And FlowCode = @PKFlowCode")
@@ -618,7 +618,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Update(ByVal HRFlowTypeDefineRow As Row()) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
@@ -675,7 +675,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Update(ByVal HRFlowTypeDefineRow As Row(), ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
@@ -686,7 +686,7 @@ Namespace beHRFlowTypeDefine
                 If strSQL.Length > 0 Then strSQL.Remove(0, strSQL.Length)
                 strSQL.AppendLine("Update HRFlowTypeDefine Set")
                 For i As Integer = 0 To r.FieldNames.Length - 1
-                    If Not r.IsIdentityField(r.FieldNames(i)) AndAlso r.IsUpdated(r.FieldNames(i)) AndAlso r.CreateUpdateSQL(r.FieldNames(i))
+                    If Not r.IsIdentityField(r.FieldNames(i)) AndAlso r.IsUpdated(r.FieldNames(i)) AndAlso r.CreateUpdateSQL(r.FieldNames(i)) Then
                         strSQL.AppendLine(String.Format("{0}{1} = @{1}", strDot, r.FieldNames(i)))
                         strDot = ","
                     End If
@@ -717,7 +717,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function IsDataExists(ByVal HRFlowTypeDefineRow As Row) As Boolean
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intCount As Integer = 0
@@ -737,7 +737,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function IsDataExists(ByVal HRFlowTypeDefineRow As Row, ByVal tran As DbTransaction) As Boolean
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intCount As Integer = 0
@@ -757,7 +757,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function QuerybyWhere(WhereCondition As String) As DataSet
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim strSQL As StringBuilder = New StringBuilder()
 
             strSQL.AppendLine("Select * From HRFlowTypeDefine")
@@ -767,7 +767,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Insert(ByVal HRFlowTypeDefineRow As Row) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -798,7 +798,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Insert(ByVal HRFlowTypeDefineRow As Row, ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
@@ -829,7 +829,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Insert(ByVal HRFlowTypeDefineRow As Row()) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
@@ -880,7 +880,7 @@ Namespace beHRFlowTypeDefine
         End Function
 
         Public Function Insert(ByVal HRFlowTypeDefineRow As Row(), ByVal tran As DbTransaction) As Integer
-            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB_ITRD")
+            Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
             Dim intRowsAffected As Integer = 0
