@@ -771,6 +771,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                     sb.AppendLine(" AND DD.OTPayDate='" + txtOTPayDate.Text + "' ");
                 }
             }
+            sb.AppendLine("ORDER BY OTCompID, OTEmpID, OTDate, OTTime");
             ch.Reset();
             ch.AppendStatement(sb.ToString());
             gvMain.DataSource = db.ExecuteDataSet(ch.BuildCommand()).Tables[0];
@@ -1221,6 +1222,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                         sb.AppendLine(" AND DD.OTPayDate='" + txtOTPayDate.Text + "' ");
                     }
                 }
+                sb.AppendLine("ORDER BY OTCompID, OTEmpID, OTDate, OTTime");
                 ch.Reset();
                 ch.AppendStatement(sb.ToString());
                 gvMain.DataSource = db.ExecuteDataSet(ch.BuildCommand()).Tables[0];
@@ -1492,7 +1494,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 {
                     sb.AppendLine(" AND EmpP.PositionID='" + ddlPosition.SelectedValue + "'");
                 }
-
+                sb.AppendLine("ORDER BY OTEmpID");
                 ch.Reset();
                 ch.AppendStatement(sb.ToString());
 

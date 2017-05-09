@@ -1579,6 +1579,8 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                             ddlSalaryOrAdjust.Items[2].Enabled = true;
                             //ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
+                        //有多個選項則回到請選擇
+                        ddlSalaryOrAdjust.SelectedIndex = 0;
                     }
                     else
                     { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
@@ -1586,15 +1588,25 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                         {
                             ddlSalaryOrAdjust.Items[0].Selected = false;
                         }
-                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 2)
                         {
                             ddlSalaryOrAdjust.Items[1].Enabled = true;
                             ddlSalaryOrAdjust.Items[1].Selected = true;
                         }
-                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        else
+                        {
+                            ddlSalaryOrAdjust.Items[2].Enabled = true;
+                            ddlSalaryOrAdjust.Items[2].Selected = true;
+                        }
+                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 3)
                         {
                             ddlSalaryOrAdjust.Items[2].Enabled = false;
                             ddlSalaryOrAdjust.Items[2].Selected = false;
+                        }
+                        else
+                        {
+                            ddlSalaryOrAdjust.Items[1].Enabled = false;
+                            ddlSalaryOrAdjust.Items[1].Selected = false;
                         }
                     }
                 }
@@ -1620,9 +1632,11 @@ public partial class OverTime_OvertimePreOrder_Modify :BasePage
                         ddlSalaryOrAdjust.Items[2].Enabled = true;
                         //ddlSalaryOrAdjust.Items[2].Selected = false;
                     }
+                    //有多個選項則回到請選擇
+                    ddlSalaryOrAdjust.SelectedIndex = 0;
                 }
                 else
-                { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
+                { //RankID小於19且除了兩天皆為假日以外 : 參數預設值
                     if (ddlSalaryOrAdjust.Items.Count >= 1)
                     {
                         ddlSalaryOrAdjust.Items[0].Selected = false;

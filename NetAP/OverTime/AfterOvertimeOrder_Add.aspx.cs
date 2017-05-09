@@ -15,7 +15,7 @@ using SinoPac.WebExpress.Work;
 public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
 {
     #region "全域變數"
-    private string _overtimeDBName =Util.getAppSetting("app://AattendantDB_OverTime/");// "AattendantDB";
+    private string _overtimeDBName = Util.getAppSetting("app://AattendantDB_OverTime/");// "AattendantDB";
     private Aattendant at = new Aattendant();
     public string _AttachID
     {
@@ -297,7 +297,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         //依照RankID階級與加班起迄日來控制 加班轉換方式的下拉選項
         GetPersonal(UserInfo.getUserInfo().CompID, txtOTEmpID.Text);
     }
-    
+
     protected void btnUpdateAttachName_Click(object sender, EventArgs e)
     {
         getAttachName();
@@ -357,7 +357,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                             return;
                         }
                     }
-                    else 
+                    else
                     {
                         Util.MsgBox("加班日期不可以選擇未來日期");
                         ucDateStart.ucSelectedDate = DateTime.Now.ToString("yyyy/MM/dd");
@@ -411,7 +411,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                         return;
                     }
                 }
-                else 
+                else
                 {
                     Util.MsgBox("加班日期不可以選擇未來日期");
                     ucDateStart.ucSelectedDate = DateTime.Now.ToString("yyyy/MM/dd");
@@ -481,16 +481,16 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     //從10點開始
                     if (Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) == 22)
                     {
-                        lblStartSex.Visible = true; 
+                        lblStartSex.Visible = true;
                     }
                     else if (Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) > 22)
                     {
-                        lblStartSex.Visible = true; 
+                        lblStartSex.Visible = true;
                     }
                     //從凌晨開始到六點
                     else if (Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) >= 0 && Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) < 6)
                     {
-                        lblStartSex.Visible = true; 
+                        lblStartSex.Visible = true;
                     }
                     else
                     {
@@ -558,7 +558,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 {
                     if (OTTimeEnd.ucDefaultSelectedMM != "請選擇" && Convert.ToInt32(OTTimeEnd.ucDefaultSelectedMM) >= 1)
                     {
-                        lblEndSex.Visible = true; 
+                        lblEndSex.Visible = true;
                     }
                     else
                     {
@@ -567,7 +567,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 }
                 else if (Convert.ToInt32(OTTimeEnd.ucDefaultSelectedHH) > 22)
                 {
-                    lblEndSex.Visible = true; 
+                    lblEndSex.Visible = true;
                 }
                 else if (Convert.ToInt32(OTTimeEnd.ucDefaultSelectedHH) >= 0 && Convert.ToInt32(OTTimeEnd.ucDefaultSelectedHH) < 6)
                 {
@@ -756,7 +756,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 {
                     getCntStartAndCntEnd(out cntStart, out cntEnd);
 
-                    
+
                     if (cntEnd + cntStart > 120) //加班超過兩小時需扣用餐時間60分鐘
                     {
                         EtxtMealTimeChecked(null, null, true);
@@ -898,7 +898,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
     /// <param name="sender"></param>
     /// <param name="e"></param>
     /// <param name="isChecked"></param>
-    protected void EtxtMealTimeChecked(object sender, EventArgs e, bool isChecked) 
+    protected void EtxtMealTimeChecked(object sender, EventArgs e, bool isChecked)
     {
         chkMealFlag.Checked = isChecked;
         if (isChecked)
@@ -1256,20 +1256,25 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
     /// RankID小於19且兩天皆為假日 : 可轉補休或轉薪資
     /// RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
     /// </remarks>
-    /// <param name="sRankID">string</param>
-    /// <param name="startDate">string</param>
-    /// <param name="endDate">string</param>
+    /// <param name="sRankID">string,加班人RankID</param>
+    /// <param name="startDate">string,加班日期起日</param>
+    /// <param name="endDate">string,加班日期迄日</param>
     private void ddlSalaryOrAdjustChange(string sRankID, string startDate, string endDate)
     {
         if (!string.IsNullOrEmpty(sRankID) && !string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
         {
             bool bRankIDisNumeric = at.IsNumeric(sRankID);
-            var dRankID = Aattendant.GetDecimal(sRankID);
+            decimal dRankID = Aattendant.GetDecimal(sRankID);       //將加班人的RankID轉為Decimal
+            bool bRankIDMapisNumeric = at.IsNumeric(sRankID);      //判斷參數設定的轉補休職等設定有設定(也就是參數必需是數字!)
+
             if (!string.IsNullOrEmpty(_dtPara.Rows[0]["AdjustRankID"].ToString()))
             {
+                //取得轉補休職等設定之職等數值
                 var dRankIDMap = Aattendant.GetDecimal(Aattendant.GetRankIDFormMapping(lblCompID.Text, _dtPara.Rows[0]["AdjustRankID"].ToString()));
+
+                //如果加班人職等大於等於參數設定的職等，僅能選擇轉補休
                 if (dRankID >= dRankIDMap)
-                { //RankID大於等於19 : 只能轉補休
+                {
                     if (ddlSalaryOrAdjust.Items.Count >= 1)
                     {
                         ddlSalaryOrAdjust.Items[0].Selected = false;
@@ -1285,13 +1290,15 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                         ddlSalaryOrAdjust.Items[2].Selected = true;
                     }
                 }
+                //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資，反之則看參數設定
                 else if (dRankID < dRankIDMap)
                 {
                     //bool datesIsDifferent = at.CompareDate(startDate, endDate) != 0;
                     bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
                     bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
+                    //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資
                     if (dateStartIsHoliday && dateEndIsHoliday)
-                    { //RankID小於19且兩天皆為假日 : 可轉補休或轉薪資
+                    {
                         if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
                             //ddlSalaryOrAdjust.Items[0].Selected = true;
@@ -1306,23 +1313,34 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                             ddlSalaryOrAdjust.Items[2].Enabled = true;
                             //ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
-
+                        //有多個選項則回到請選擇
+                        ddlSalaryOrAdjust.SelectedIndex = 0;
                     }
                     else
-                    { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
+                    { //RankID小於19且除了兩天皆為假日以外 : 看參數設定
                         if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
                             ddlSalaryOrAdjust.Items[0].Selected = false;
                         }
-                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 2)
                         {
                             ddlSalaryOrAdjust.Items[1].Enabled = true;
                             ddlSalaryOrAdjust.Items[1].Selected = true;
                         }
-                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        else
+                        {
+                            ddlSalaryOrAdjust.Items[2].Enabled = true;
+                            ddlSalaryOrAdjust.Items[2].Selected = true;
+                        }
+                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 3)
                         {
                             ddlSalaryOrAdjust.Items[2].Enabled = false;
                             ddlSalaryOrAdjust.Items[2].Selected = false;
+                        }
+                        else
+                        {
+                            ddlSalaryOrAdjust.Items[1].Enabled = false;
+                            ddlSalaryOrAdjust.Items[1].Selected = false;
                         }
                     }
                 }
@@ -1333,7 +1351,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
                 bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
                 if (dateStartIsHoliday && dateEndIsHoliday)
-                { //RankID小於19且兩天皆為假日 : 可轉補休或轉薪資
+                { //加班日期兩天皆為假日 : 可轉補休或轉薪資
                     if (ddlSalaryOrAdjust.Items.Count >= 1)
                     {
                         //ddlSalaryOrAdjust.Items[0].Selected = true;
@@ -1348,9 +1366,11 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                         ddlSalaryOrAdjust.Items[2].Enabled = true;
                         //ddlSalaryOrAdjust.Items[2].Selected = false;
                     }
+                    //有多個選項則回到請選擇
+                    ddlSalaryOrAdjust.SelectedIndex = 0;
                 }
                 else
-                { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
+                { //兩天非皆為假日 : 參數預設值
                     if (ddlSalaryOrAdjust.Items.Count >= 1)
                     {
                         ddlSalaryOrAdjust.Items[0].Selected = false;
@@ -2651,7 +2671,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeAdvance WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "'  AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "'");
             sb.Append(" AND OTTxnID NOT IN");
             sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
-            sb.Append(" UNION ALL"); 
+            sb.Append(" UNION ALL");
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeDeclaration WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "') A ");
             dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
             if (dt.Rows.Count > 0)
@@ -2691,7 +2711,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeAdvance WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateStart.ucSelectedDate + "'");
             sb.Append(" AND OTTxnID NOT IN");
             sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
-            sb.Append(" UNION ALL"); 
+            sb.Append(" UNION ALL");
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeDeclaration WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateStart.ucSelectedDate + "') A ");
             dtStart = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
 
@@ -2700,7 +2720,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeAdvance WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateEnd.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "'");
             sb.Append(" AND OTTxnID NOT IN");
             sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
-            sb.Append(" UNION ALL"); 
+            sb.Append(" UNION ALL");
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeDeclaration WHERE OTStatus in('2','3') AND OTCompID='" + lblCompID.Text + "' AND OTEmpID='" + txtOTEmpID.Text + "' AND OTStartDate='" + ucDateEnd.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "') A ");
             dtEnd = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
 
@@ -3668,7 +3688,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         var flowSN = "";
         var nextIsLastFlow = false;
         var meassge = "";
-        
+
         try
         {
             if (gvMain.Visible && gvMain.Rows.Count > 0)
@@ -4069,7 +4089,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
     {
         Response.Redirect("AfterOvertimeOrder.aspx");
     }
-    
+
     protected void imgLaunch_Click(object sender, ImageClickEventArgs e) //人員選取
     {
         ddlOrg_SelectedIndexChanged(null, null);
@@ -4256,7 +4276,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             }
             else
             {
-                DataTable dtOrgan = at.QueryData("P.OrganID,O.OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization] O  LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P ON O.OrganID=P.OrganID", " AND P.CompID = '" + UserInfo.getUserInfo().CompID + "' AND P.OrganID = '" + UserInfo.getUserInfo().OrganID + "' AND P.EmpID='"+txtOTEmpID.Text+"'");
+                DataTable dtOrgan = at.QueryData("P.OrganID,O.OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization] O  LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P ON O.OrganID=P.OrganID", " AND P.CompID = '" + UserInfo.getUserInfo().CompID + "' AND P.OrganID = '" + UserInfo.getUserInfo().OrganID + "' AND P.EmpID='" + txtOTEmpID.Text + "'");
                 if (dtOrgan.Rows.Count > 0)
                 {
                     lblCompID.Text = UserInfo.getUserInfo().CompID;
@@ -4280,7 +4300,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 txtOTEmpName.Text = dt.Rows[0]["NameN"].ToString();
                 _Sex = dt.Rows[0]["Sex"].ToString();
                 _rankID = Aattendant.GetRankIDFormMapping(lblCompID.Text, dt.Rows[0]["RankID"].ToString()); ;
-                _WorkSiteID= dt.Rows[0]["WorkSiteID"].ToString();
+                _WorkSiteID = dt.Rows[0]["WorkSiteID"].ToString();
             }
         }
         else
@@ -4318,7 +4338,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         if (gvMain.Rows.Count > 0)
         {
             gvMain.Visible = true;
-             RefreshGrid();
+            RefreshGrid();
         }
         else
         {
