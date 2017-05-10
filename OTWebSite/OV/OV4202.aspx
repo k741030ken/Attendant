@@ -394,7 +394,7 @@
                     </tr>
                     <tr>
                         <td align="left" width="10%" class="td_EditHeader">
-                            加班類型
+                            *加班類型
                         </td>
                         <td colspan="3" align="left" width="20%" class="td_Edit">
                             <asp:DropDownList ID="ddlCodeCName" runat="server">
@@ -403,7 +403,7 @@
                     </tr>
                     <tr>
                         <td align="left" width="10%" class="td_EditHeader">
-                            加班原因
+                            *加班原因
                         </td>
                         <td colspan="3" class="td_Edit" style="width: 20%" align="left">
                             <asp:TextBox ID="txtOTReasonMemo" runat="server" class="defTxtBoxStyle" CssClass="InputTextStyle_Thin"

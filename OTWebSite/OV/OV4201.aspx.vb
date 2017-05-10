@@ -567,48 +567,46 @@ Partial Class OV_OV4201
 
         Dim dateStartIsHoliday As Boolean = objOV42.CheckHolidayOrNot(startDate)
         Dim dateEndIsHoliday As Boolean = objOV42.CheckHolidayOrNot(endDate)
+        Dim isSameDate As Boolean = If(startDate = endDate, True, False)    '判斷是跨日還是單日單
 
-        If Not String.IsNullOrEmpty(sRankID) AndAlso Not String.IsNullOrEmpty(startDate) AndAlso Not String.IsNullOrEmpty(endDate) Then
-            '先回到預設值
+        If Not String.IsNullOrEmpty(startDate) AndAlso Not String.IsNullOrEmpty(endDate) Then
+            '先回到預設值並enable
+            ddlSalaryOrAdjust.Enabled = True
             ddlSalaryOrAdjust.SelectedIndex = 0
 
-            If IsNumeric(AdjustRankID) Then '判斷參數設定的轉補休職等設定有設定(也就是參數必需是數字!)，若不為數字則參照參數設定預設值選擇
-                If IsNumeric(sRankID) = True Then
-                    Dim dRankID = Convert.ToInt32(sRankID)
-                    If dRankID >= AdjustRankID Then '如果加班人職等大於等於參數設定的職等，僅能選擇轉補休
-                        '如果RankID大於等於AdjustRankID只能轉補休
-                        Debug.Print(ddlSalaryOrAdjust.Items.Count)
-                        Debug.Print(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休")).ToString())
+            If IsNumeric(AdjustRankID) AndAlso IsNumeric(sRankID) Then '判斷參數設定的轉補休職等設定有設定(也就是參數必需是數字!)，若不為數字則參照參數設定預設值選擇
+                Dim dRankID = Convert.ToInt32(sRankID)
+                If dRankID >= AdjustRankID Then '如果加班人職等大於等於參數設定的職等，僅能選擇轉補休
+                    '如果RankID大於等於AdjustRankID只能轉補休
+                    ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = False
+                    ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
 
-                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = False
-                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                    '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
+                    ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
 
-                        '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
-                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
-                    ElseIf dRankID < AdjustRankID Then  '如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資，反之則看參數設定
-                        If dateStartIsHoliday AndAlso dateEndIsHoliday Then
-                            'RankID小於AdjustRankID且兩天皆為假日 : 可轉補休或轉薪資
-                            Try
-                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
-                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
-                                '2017/05/09 - 如果有多個選擇則回到請選擇選項
-                                ddlSalaryOrAdjust.SelectedIndex = 0
-                            Catch ex As Exception
-                                Debug.Print("ddlSalaryOrAdjust指向問題" + ex.Message)
-                            End Try
-                        Else
-                            'RankID小於AdjustRankID且除了兩天皆為假日以外 :看參數設定之預設值
+                ElseIf dRankID < AdjustRankID Then  '如果加班人職小於於參數設定的職等
+                    If isSameDate Then  '是單日單
+                        '是單日單且加班日是假日則開放所有選項
+                        If dateStartIsHoliday Then
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                            '2017/05/08 HR 要求如前台假日預先加班申請初始帶入轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+
+                        Else    '單日單且加班日是平日則看參數檔預設值
                             Select Case _dtPara.Rows(0)("SalaryOrAjust").ToString()
                                 Case "1"    '參數設定預設為轉薪資
                                     ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
                                     ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
-                                    '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
+                                    '2017/05/10 - 若有限制選項，將預設選項選為未受限制的選項且鎖定不給修改
                                     ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))
+                                    ddlSalaryOrAdjust.Enabled = False
                                 Case "2"    '參數設定預設為轉補休
                                     ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = False
                                     ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
-                                    '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
+                                    '2017/05/10 - 若有限制選項，將預設選項選為未受限制的選項且鎖定不給修改
                                     ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                                    ddlSalaryOrAdjust.Enabled = False
                                 Case Else   '參數設定錯誤，來亂的喔!
                                     Debug.Print("參數設定錯誤,SalaryOrAjust=" & _dtPara.Rows(0)("SalaryOrAjust").ToString())
                                     ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
@@ -616,42 +614,64 @@ Partial Class OV_OV4201
                                     '2017/05/08 - 參數有誤則就回到預設-請選擇
                                     ddlSalaryOrAdjust.SelectedIndex = 0
                             End Select
-
-                            '===============2017/05/08-不知道為啥會有這兩行，先註解掉
-                            'ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
-                            'ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
-                            '=====================================================
+                        End If
+                    Else    '是跨日單
+                        '加班起訖日皆是假日則開放所有選項
+                        If dateStartIsHoliday AndAlso dateEndIsHoliday Then
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                            '假日預設至轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                        Else
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
+                            '加班起訖日非全是假日則只能轉薪資
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))
                         End If
                     End If
                 End If
             Else '如果回傳的RanKID不為數字，依參數設定值選擇
-                '如果加班起訖日期皆是假日，可選擇轉薪資或轉補休
-                If dateStartIsHoliday AndAlso dateEndIsHoliday Then
-                    ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
-                    ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
-                    '2017/05/09 - 如果有多個選擇則回到請選擇選項
-                    ddlSalaryOrAdjust.SelectedIndex = 0
-                Else    '如果加班起訖日期並非皆是假日，看參數設定值
-                    Select Case _dtPara.Rows(0)("SalaryOrAjust").ToString()
-                        Case "1"    '參數設定預設為轉薪資
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
-
-                            '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
-                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))
-                        Case "2"    '參數設定預設為轉補休
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = False
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
-
-                            '2017/05/09 - 若有限制選項，將預設選項選為未受限制的選項
-                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
-                        Case Else   '參數設定錯誤，來亂的喔!
-                            Debug.Print("參數設定錯誤,SalaryOrAjust=" & _dtPara.Rows(0)("SalaryOrAjust").ToString())
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
-                            ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
-                            '2017/05/08 - 參數有誤則就回到預設-請選擇
-                            ddlSalaryOrAdjust.SelectedIndex = 0
-                    End Select
+                If isSameDate Then  '是單日單
+                    '是單日單且加班日是假日則開放所有選項
+                    If dateStartIsHoliday Then
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                        '2017/05/08 HR 要求如前台假日預先加班申請初始帶入轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                    Else    '單日單且加班日是平日則看參數檔預設值
+                        Select Case _dtPara.Rows(0)("SalaryOrAjust").ToString()
+                            Case "1"    '參數設定預設為轉薪資
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
+                                '2017/05/10 - 若有限制選項，將預設選項選為未受限制的選項且鎖定不給修改
+                                ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))
+                                ddlSalaryOrAdjust.Enabled = False
+                            Case "2"    '參數設定預設為轉補休
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = False
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                                '2017/05/10 - 若有限制選項，將預設選項選為未受限制的選項且鎖定不給修改
+                                ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                                ddlSalaryOrAdjust.Enabled = False
+                            Case Else   '參數設定錯誤，來亂的喔!
+                                Debug.Print("參數設定錯誤,SalaryOrAjust=" & _dtPara.Rows(0)("SalaryOrAjust").ToString())
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                                ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                                '2017/05/08 - 參數有誤則就回到預設-請選擇
+                                ddlSalaryOrAdjust.SelectedIndex = 0
+                        End Select
+                    End If
+                Else    '是跨日單
+                    '加班起訖日皆是假日則開放所有選項
+                    If dateStartIsHoliday AndAlso dateEndIsHoliday Then
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
+                        '假日預設至轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                    Else    '加班起訖日非全是假日則只能轉薪資
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
+                        ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = False
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))
+                    End If
                 End If
             End If
         End If
@@ -3177,6 +3197,9 @@ Partial Class OV_OV4201
                         End If
                     End If
                 End If
+                '依照RankID階級與加班起迄日來控制 加班轉換方式的下拉選項
+                ddlSalaryOrAdjustChange(_rankID, ucOTStartDate.DateText, ucOTEndDate.DateText)
+                ddlSalaryOrAdjust_SelectedIndexChanged(Nothing, EventArgs.Empty)
             End If
         End If
     End Sub

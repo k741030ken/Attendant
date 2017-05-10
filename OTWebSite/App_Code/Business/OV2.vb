@@ -142,6 +142,7 @@ Public Class OV2
             strSQL.AppendLine(" and P.WorkStatus='" + WorkStatus + "'")
         End If
 
+
         '20170304kevin
         If isNull("RankIDMIN") Then
             If isNull("TitleIDMIN") Then
@@ -190,6 +191,7 @@ Public Class OV2
         If isNull("OrgType") Then
             strSQL.AppendLine(" and ORT.OrgType='" + OrgType + "'")
         End If
+        strSQL.AppendLine(" Order by P.EmpID,OVA.OTStartDate,OVA.OTStartTime ")
 
         Return strSQL.ToString
     End Function
@@ -313,7 +315,7 @@ Public Class OV2
         'If isNull("OTSalaryPaid") Then
         '    strSQL.AppendLine(" and OVD.OTSalaryPaid='" + OTSalaryPaid + "'")
         'End If
-
+        strSQL.AppendLine(" Order by P.EmpID,OVD.OTStartDate,OVD.OTStartTime ")
 
 
         Return strSQL.ToString
@@ -424,6 +426,7 @@ Public Class OV2
         If isNull("OrgType") Then
             strSQL.AppendLine(" and ORT.OrgType='" + OrgType + "'")
         End If
+        strSQL.AppendLine(" Order by P.EmpID ")
 
         Return strSQL.ToString
     End Function
@@ -535,7 +538,7 @@ Public Class OV2
             strSQL.AppendLine(" and ORT.OrgType='" + OrgType + "'")
         End If
 
-
+        strSQL.AppendLine(" Order by P.EmpID ")
 
 
         Return strSQL.ToString
@@ -753,46 +756,7 @@ Public Class OV2
 
    
 
-        '此邏輯為放入有事先申請也有事後申報的資料 並且放入把放入的資料分別記錄起來
-        For i = 0 To OVDDB.Rows.Count - 1
-            For j = 0 To OVADB.Rows.Count - 1
-                If OVDDB.Rows(i).Item("OVDOTFromAdvanceTxnId").Equals(OVADB.Rows(j).Item("OVAOTTxnID")) Then
-                    ' OTCompID, EmpID, Name, OVADate, OVATime, OVAOTTypeName, OVAOTReasonMemo, OVAOTStatus, OVDDate, OVDTime, OVDOTTypeName, OVDOTReasonMemo, OVDOTStatus
-                    Dim dataRows As DataRow
-                    dataRows = detialTable.NewRow
-                    dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
-                    dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
-                    dataRows("Name") = OVADB.Rows(j).Item("OVAName")
-                    dataRows("OVADate") = OVADB.Rows(j).Item("OVAOTStartDate") + "~" + OVADB.Rows(j).Item("OVAOTEndDate")
-                    dataRows("OVATime") = OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(2, 2) + "~" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(2, 2)
-                    dataRows("OVAOTReasonMemo") = OVADB.Rows(j).Item("OVAOTReasonMemo")
-                    dataRows("OVAOTTypeName") = OVADB.Rows(j).Item("OVAOTTypeName")
-                    dataRows("OVAOTStatus") = OVADB.Rows(j).Item("OVAOTStatus")
-                    dataRows("OVAOTTxnID") = OVADB.Rows(j).Item("OVAOTTxnID")
 
-                    dataRows("OTCompID") = OVDDB.Rows(i).Item("OVDOTCompID")
-                    dataRows("EmpID") = OVDDB.Rows(i).Item("OVDEmpID")
-                    dataRows("Name") = OVDDB.Rows(i).Item("OVDName")
-                    dataRows("OVDDate") = OVDDB.Rows(i).Item("OVDOTStartDate") + "~" + OVDDB.Rows(i).Item("OVDOTEndDate")
-                    dataRows("OVDTime") = OVDDB.Rows(i).Item("OVDOTStartTime").ToString().Substring(0, 2) + ":" + OVDDB.Rows(i).Item("OVDOTStartTime").ToString().Substring(2, 2) + "~" + OVDDB.Rows(i).Item("OVDOTEndTime").ToString().Substring(0, 2) + ":" + OVDDB.Rows(i).Item("OVDOTEndTime").ToString().Substring(2, 2)
-                    dataRows("OVDOTReasonMemo") = OVDDB.Rows(i).Item("OVDOTReasonMemo")
-                    dataRows("OVDOTTypeName") = OVDDB.Rows(i).Item("OVDOTTypeName")
-                    dataRows("OVDOTStatus") = OVDDB.Rows(i).Item("OVDOTStatus")
-                    dataRows("OVDOTTxnID") = OVDDB.Rows(i).Item("OVDOTTxnID")
-                    dataRows("OVDOTPayDate") = OVDDB.Rows(i).Item("OVDOTPayDate")
-
-                    detialTable.Rows.Add(dataRows)
-                    Dim OVAOTSeqNo As String = OVADB.Rows(j).Item("OVAOTSeqNo")
-                    Dim OVAOTTxnID As String = OVADB.Rows(j).Item("OVAOTTxnID")
-
-                    Dim OVDOTSeqNo As String = OVDDB.Rows(i).Item("OVDOTSeqNo")
-                    Dim OVDOTTxnID As String = OVDDB.Rows(i).Item("OVDOTTxnID")
-
-                    reMoveRowForOVADBList.Add(OVAOTSeqNo + "~" + OVAOTTxnID)
-                    reMoveRowForOVDDBList.Add(OVDOTSeqNo + "~" + OVDOTTxnID)
-                End If
-            Next
-        Next
         '移除已結合的OVA 為防DB髒資料 導致錯誤 所以先查資料然後再移除
         For i = 0 To reMoveRowForOVADBList.Count - 1
             Dim OVAPK As String = reMoveRowForOVADBList.Item(i)
@@ -822,6 +786,23 @@ Public Class OV2
             'OVDDB.Rows.Remove(reMoveRowForOVDDBList.Item(i))
         Next
 
+       
+        '加入剩下的OVA
+        For j = 0 To OVADB.Rows.Count - 1
+            Dim dataRows As DataRow
+            dataRows = detialTable.NewRow
+            dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
+            dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
+            dataRows("Name") = OVADB.Rows(j).Item("OVAName")
+            dataRows("OVADate") = OVADB.Rows(j).Item("OVAOTStartDate") + "~" + OVADB.Rows(j).Item("OVAOTEndDate")
+            dataRows("OVATime") = OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(2, 2) + "~" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(2, 2)
+            dataRows("OVAOTTypeName") = OVADB.Rows(j).Item("OVAOTTypeName")
+            dataRows("OVAOTReasonMemo") = OVADB.Rows(j).Item("OVAOTReasonMemo")
+            dataRows("OVAOTStatus") = OVADB.Rows(j).Item("OVAOTStatus")
+            dataRows("OVAOTTxnID") = OVADB.Rows(j).Item("OVAOTTxnID")
+            detialTable.Rows.Add(dataRows)
+        Next
+
         '加入剩下的OVD
         For i = 0 To OVDDB.Rows.Count - 1
             Dim dataRows As DataRow
@@ -838,21 +819,7 @@ Public Class OV2
             dataRows("OVDOTPayDate") = OVDDB.Rows(i).Item("OVDOTPayDate")
             detialTable.Rows.Add(dataRows)
         Next
-        '加入剩下的OVA
-        For j = 0 To OVADB.Rows.Count - 1
-            Dim dataRows As DataRow
-            dataRows = detialTable.NewRow
-            dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
-            dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
-            dataRows("Name") = OVADB.Rows(j).Item("OVAName")
-            dataRows("OVADate") = OVADB.Rows(j).Item("OVAOTStartDate") + "~" + OVADB.Rows(j).Item("OVAOTEndDate")
-            dataRows("OVATime") = OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(2, 2) + "~" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(2, 2)
-            dataRows("OVAOTTypeName") = OVADB.Rows(j).Item("OVAOTTypeName")
-            dataRows("OVAOTReasonMemo") = OVADB.Rows(j).Item("OVAOTReasonMemo")
-            dataRows("OVAOTStatus") = OVADB.Rows(j).Item("OVAOTStatus")
-            dataRows("OVAOTTxnID") = OVADB.Rows(j).Item("OVAOTTxnID")
-            detialTable.Rows.Add(dataRows)
-        Next
+
         Dim arrayForRemove As ArrayList = New ArrayList()
         If isNull("OTPayDate") Then
             For i = 0 To detialTable.Rows.Count - 1
@@ -899,6 +866,47 @@ Public Class OV2
             detialTable.Rows.Remove(arrayForRemove.Item(i))
         Next
 
+        '此邏輯為放入有事先申請也有事後申報的資料 並且放入把放入的資料分別記錄起來
+        For i = 0 To OVDDB.Rows.Count - 1
+            For j = 0 To OVADB.Rows.Count - 1
+                If OVDDB.Rows(i).Item("OVDOTFromAdvanceTxnId").Equals(OVADB.Rows(j).Item("OVAOTTxnID")) Then
+                    ' OTCompID, EmpID, Name, OVADate, OVATime, OVAOTTypeName, OVAOTReasonMemo, OVAOTStatus, OVDDate, OVDTime, OVDOTTypeName, OVDOTReasonMemo, OVDOTStatus
+                    Dim dataRows As DataRow
+                    dataRows = detialTable.NewRow
+                    dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
+                    dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
+                    dataRows("Name") = OVADB.Rows(j).Item("OVAName")
+                    dataRows("OVADate") = OVADB.Rows(j).Item("OVAOTStartDate") + "~" + OVADB.Rows(j).Item("OVAOTEndDate")
+                    dataRows("OVATime") = OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTStartTime").ToString().Substring(2, 2) + "~" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(0, 2) + ":" + OVADB.Rows(j).Item("OVAOTEndTime").ToString().Substring(2, 2)
+                    dataRows("OVAOTReasonMemo") = OVADB.Rows(j).Item("OVAOTReasonMemo")
+                    dataRows("OVAOTTypeName") = OVADB.Rows(j).Item("OVAOTTypeName")
+                    dataRows("OVAOTStatus") = OVADB.Rows(j).Item("OVAOTStatus")
+                    dataRows("OVAOTTxnID") = OVADB.Rows(j).Item("OVAOTTxnID")
+
+                    dataRows("OTCompID") = OVDDB.Rows(i).Item("OVDOTCompID")
+                    dataRows("EmpID") = OVDDB.Rows(i).Item("OVDEmpID")
+                    dataRows("Name") = OVDDB.Rows(i).Item("OVDName")
+                    dataRows("OVDDate") = OVDDB.Rows(i).Item("OVDOTStartDate") + "~" + OVDDB.Rows(i).Item("OVDOTEndDate")
+                    dataRows("OVDTime") = OVDDB.Rows(i).Item("OVDOTStartTime").ToString().Substring(0, 2) + ":" + OVDDB.Rows(i).Item("OVDOTStartTime").ToString().Substring(2, 2) + "~" + OVDDB.Rows(i).Item("OVDOTEndTime").ToString().Substring(0, 2) + ":" + OVDDB.Rows(i).Item("OVDOTEndTime").ToString().Substring(2, 2)
+                    dataRows("OVDOTReasonMemo") = OVDDB.Rows(i).Item("OVDOTReasonMemo")
+                    dataRows("OVDOTTypeName") = OVDDB.Rows(i).Item("OVDOTTypeName")
+                    dataRows("OVDOTStatus") = OVDDB.Rows(i).Item("OVDOTStatus")
+                    dataRows("OVDOTTxnID") = OVDDB.Rows(i).Item("OVDOTTxnID")
+                    dataRows("OVDOTPayDate") = OVDDB.Rows(i).Item("OVDOTPayDate")
+
+                    detialTable.Rows.Add(dataRows)
+                    Dim OVAOTSeqNo As String = OVADB.Rows(j).Item("OVAOTSeqNo")
+                    Dim OVAOTTxnID As String = OVADB.Rows(j).Item("OVAOTTxnID")
+
+                    Dim OVDOTSeqNo As String = OVDDB.Rows(i).Item("OVDOTSeqNo")
+                    Dim OVDOTTxnID As String = OVDDB.Rows(i).Item("OVDOTTxnID")
+
+                    reMoveRowForOVADBList.Add(OVAOTSeqNo + "~" + OVAOTTxnID)
+                    reMoveRowForOVDDBList.Add(OVDOTSeqNo + "~" + OVDOTTxnID)
+                End If
+            Next
+        Next
+
 
         For i = 0 To detialTable.Rows.Count - 1
             If (detialTable.Rows(i).Item("OVAOTStatus").ToString()).Equals("1") Then
@@ -933,6 +941,8 @@ Public Class OV2
                 detialTable.Rows(i).Item("OVDOTStatus") = "計薪後收回"
             End If
         Next
+
+
 
         Return (detialTable)
     End Function
