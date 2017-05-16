@@ -1266,6 +1266,13 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
             bool bRankIDisNumeric = at.IsNumeric(sRankID);
             decimal dRankID = Aattendant.GetDecimal(sRankID);       //將加班人的RankID轉為Decimal
             bool bRankIDMapisNumeric = at.IsNumeric(sRankID);      //判斷參數設定的轉補休職等設定有設定(也就是參數必需是數字!)
+            bool datesIsDifferent = at.CompareDate(startDate, endDate) != 0 ? true : false;     //判斷加班起訖日是否是同一天,false為同一天,true為不同天
+            bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
+            bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
+
+            //先回到預設值並Enable
+            ddlSalaryOrAdjust.Enabled = true;
+            ddlSalaryOrAdjust.SelectedIndex = 0;
 
             if (!string.IsNullOrEmpty(_dtPara.Rows[0]["AdjustRankID"].ToString()))
             {
@@ -1293,9 +1300,111 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                 //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資，反之則看參數設定
                 else if (dRankID < dRankIDMap)
                 {
-                    //bool datesIsDifferent = at.CompareDate(startDate, endDate) != 0;
-                    bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
-                    bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
+                    //是跨日單
+                    if (datesIsDifferent)
+                    {
+                        //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資
+                        if (dateStartIsHoliday && dateEndIsHoliday)
+                        {
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                //ddlSalaryOrAdjust.Items[0].Selected = true;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[1].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //假日預設選項為轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
+                        }
+                        else
+                        { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = false;
+                                ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //重新再指向預設選項
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"));
+                        }
+                    }
+                    else    //是單日單
+                    {
+                        if (dateStartIsHoliday)     //加班日為假日
+                        {
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[1].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //假日預設選項為轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
+                        }
+                        else        //加班日為平日
+                        {
+                            //RankID小於19且加班日為平日 : 看參數設定且要將選項disable
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                                {
+                                    ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[1].Selected = true;
+                                }
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                                {
+                                    ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[1].Selected = true;
+                                }
+                                else
+                                {
+                                    ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[2].Selected = true;
+                                }
+                            }
+
+                            //將選項鎖住
+                            ddlSalaryOrAdjust.Enabled = false;
+                        }   
+                    }
+                }
+            }
+            //當轉補休職等設定為請選擇的時候，必須依據參數檔的加班轉換方式預設值(SalaryOrAjust) 
+            else
+            {
+                //是跨日單
+                if (datesIsDifferent)
+                {
                     //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資
                     if (dateStartIsHoliday && dateEndIsHoliday)
                     {
@@ -1313,88 +1422,81 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                             ddlSalaryOrAdjust.Items[2].Enabled = true;
                             //ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
-                        //有多個選項則回到請選擇
-                        ddlSalaryOrAdjust.SelectedIndex = 0;
+                        //假日預設選項為轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
                     }
                     else
-                    { //RankID小於19且除了兩天皆為假日以外 : 看參數設定
+                    { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
                         if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
                             ddlSalaryOrAdjust.Items[0].Selected = false;
                         }
-                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 2)
+                        if (ddlSalaryOrAdjust.Items.Count >= 2)
                         {
                             ddlSalaryOrAdjust.Items[1].Enabled = true;
                             ddlSalaryOrAdjust.Items[1].Selected = true;
                         }
-                        else
-                        {
-                            ddlSalaryOrAdjust.Items[2].Enabled = true;
-                            ddlSalaryOrAdjust.Items[2].Selected = true;
-                        }
-                        if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 3)
+                        if (ddlSalaryOrAdjust.Items.Count >= 3)
                         {
                             ddlSalaryOrAdjust.Items[2].Enabled = false;
                             ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
-                        else
+                        //重新再指向預設選項
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"));
+                    }
+                }
+                else    //是單日單
+                {
+                    if (dateStartIsHoliday)     //加班日為假日
+                    {
+                        if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
-                            ddlSalaryOrAdjust.Items[1].Enabled = false;
-                            ddlSalaryOrAdjust.Items[1].Selected = false;
+                            ddlSalaryOrAdjust.Items[0].Selected = false;
                         }
+                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        {
+                            ddlSalaryOrAdjust.Items[1].Enabled = true;
+                            //ddlSalaryOrAdjust.Items[1].Selected = false;
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        {
+                            ddlSalaryOrAdjust.Items[2].Enabled = true;
+                            //ddlSalaryOrAdjust.Items[2].Selected = false;
+                        }
+                        //假日預設選項為轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
                     }
-                }
-            }
-            //當轉補休職等設定為請選擇的時候，必須依據參數檔的加班轉換方式預設值(SalaryOrAjust) 
-            else
-            {
-                bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
-                bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
-                if (dateStartIsHoliday && dateEndIsHoliday)
-                { //加班日期兩天皆為假日 : 可轉補休或轉薪資
-                    if (ddlSalaryOrAdjust.Items.Count >= 1)
+                    else        //加班日為平日
                     {
-                        //ddlSalaryOrAdjust.Items[0].Selected = true;
-                    }
-                    if (ddlSalaryOrAdjust.Items.Count >= 2)
-                    {
-                        ddlSalaryOrAdjust.Items[1].Enabled = true;
-                        //ddlSalaryOrAdjust.Items[1].Selected = false;
-                    }
-                    if (ddlSalaryOrAdjust.Items.Count >= 3)
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = true;
-                        //ddlSalaryOrAdjust.Items[2].Selected = false;
-                    }
-                    //有多個選項則回到請選擇
-                    ddlSalaryOrAdjust.SelectedIndex = 0;
-                }
-                else
-                { //兩天非皆為假日 : 參數預設值
-                    if (ddlSalaryOrAdjust.Items.Count >= 1)
-                    {
-                        ddlSalaryOrAdjust.Items[0].Selected = false;
-                    }
-                    if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 2)
-                    {
-                        ddlSalaryOrAdjust.Items[1].Enabled = true;
-                        ddlSalaryOrAdjust.Items[1].Selected = true;
-                    }
-                    else
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = true;
-                        ddlSalaryOrAdjust.Items[2].Selected = true;
-                    }
+                        //RankID小於19且加班日為平日 : 看參數設定且要將選項disable
+                        if (ddlSalaryOrAdjust.Items.Count >= 1)
+                        {
+                            ddlSalaryOrAdjust.Items[0].Selected = false;
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        {
+                            if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        {
+                            if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                            else
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                ddlSalaryOrAdjust.Items[2].Selected = true;
+                            }
+                        }
 
-                    if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 3)
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = false;
-                        ddlSalaryOrAdjust.Items[2].Selected = false;
-                    }
-                    else
-                    {
-                        ddlSalaryOrAdjust.Items[1].Enabled = false;
-                        ddlSalaryOrAdjust.Items[1].Selected = false;
+                        //將選項鎖住
+                        ddlSalaryOrAdjust.Enabled = false;
                     }
                 }
             }
