@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
+using System.Web.UI.HtmlControls;
 
 public partial class Template_DownloadReportTemplate : System.Web.UI.Page
 {
@@ -11,6 +13,26 @@ public partial class Template_DownloadReportTemplate : System.Web.UI.Page
     {
 
     }
+
+    protected void ReadExcel02_Click(object sender, EventArgs e)
+    {
+        Template.ReadExcelTest02();
+    }
+
+    protected void ReadExcel01_Click(object sender, System.EventArgs e)
+    {
+        if (File1.PostedFile != null)
+        {
+            // Get a reference to PostedFile object
+            HttpPostedFile myFile = File1.PostedFile;
+            Template.ReadExcelTest01(myFile.InputStream);
+        }
+        else
+        {
+            // No file
+        }
+    }
+
     protected void OpenXmlWordDownload01_Click(object sender, EventArgs e)
     {
 

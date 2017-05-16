@@ -11,6 +11,7 @@ using Office.Word.CreateNotice;
 using Office.Word;
 using Novacode;
 using System.IO;
+using Excel;
 
 /// <summary>
 /// TestLogic 的摘要描述
@@ -20,6 +21,65 @@ public class Template //與交易同名
     private static string _attendantDBName = Aattendant._AattendantDBName;
     private static string _attendantFlowID = Aattendant._AattendantFlowID;
     private static string _eHRMSDB_ITRD = Aattendant._eHRMSDB_ITRD;
+
+    /// <summary>
+    /// 指定Excel檔案位置來讀裡面的資料
+    /// </summary>
+    public static void ReadExcelTest02()
+    {
+        // Excel 檔案位置
+        string filePath = HttpContext.Current.Server.MapPath("~/OpenXmlTemplateFiles/Template.xlsx");
+        // 你要抓取 Excel檔裡的工作表名稱
+        string set = "Sheet1";
+        // 讀取 Excel檔案
+        using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+        {
+            // 創建讀取 Excel檔
+            using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
+            {
+                //excelRead.IsFirstRowAsColumnNames = true;
+                // 將讀取到 Excel檔暫存至內存
+                DataSet result = excelRead.AsDataSet();
+                // 獲得 Excel檔的行與列的數目
+                int columns = result.Tables[set].Columns.Count;
+                int rows = result.Tables[set].Rows.Count;
+                // 將資料讀取出來
+                for (int i = 1; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        string data = result.Tables[set].Rows[i][j].ToString();
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 上傳Excel檔案位置來讀裡面的資料
+    /// </summary>
+    public static void ReadExcelTest01(Stream stream)
+    {
+        // 你要抓取 Excel檔裡的工作表名稱
+        string set = "Sheet1";
+        using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
+        {
+            //excelRead.IsFirstRowAsColumnNames = true;
+            // 將讀取到 Excel檔暫存至內存
+            DataSet result = excelRead.AsDataSet();
+            // 獲得 Excel檔的行與列的數目
+            int columns = result.Tables[set].Columns.Count;
+            int rows = result.Tables[set].Rows.Count;
+            // 將資料讀取出來
+            for (int i = 1; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    string data = result.Tables[set].Rows[i][j].ToString();
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// 取得DB資料
