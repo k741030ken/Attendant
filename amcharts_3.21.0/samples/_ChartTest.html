@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+	
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>Charts Test</title>
+        <script type="text/javascript" src="../amcharts/Chart.min.js"></script>
+<style>
+    .box{width:30%; float:left;}
+    .zone{width:100%; height:100%;}
+</style>
+		
+    <script type="text/javascript">
+	
+    var pieData = [
+    {
+        value: 168,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "孫小毛"
+    },
+    {
+        value: 143,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "王大毛"
+    },
+    {
+        value: 89,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "曾甲仙"
+    }
+];
+window.onload = function(){
+    var ctx = document.getElementById("chart-area").getContext("2d");
+    var myPieChart = new Chart(ctx).Pie(pieData, {
+        responsive : true,
+        animationEasing: "easeOutQuart",
+    });
+};
+		
+    </script>
+    </head>
+
+    <body>
+        <div class="box">
+    <canvas id="chart-area" class="zone"></canvas>
+</div>
+    </body>
+
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+    <head>
+	
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>amCharts examples</title>
+        <link type="text/css" rel="stylesheet" href="style.css" />
+		<link type="text/css" rel="stylesheet" media="all" href="../amcharts/plugins/export/export.css" />
+        <script type="text/javascript" src="../amcharts/amcharts.js"></script>
+        <script type="text/javascript" src="../amcharts/serial.js"></script>
+        <script type="text/javascript" src="../amcharts/gantt.js"></script>
+		<script type="text/javascript" src="../amcharts/themes/light.js"></script>
+        <script type="text/javascript" src="../amcharts/plugins/export/export.js"></script>
+
+		
+    <script type="text/javascript">
+	
+    Number.prototype.padLeft = function(base,chr){
+        var  len = (String(base || 10).length - String(this).length)+1;
+        return len > 0? new Array(len).join(chr || '0')+this : this;
+    }
+	
+    var chartData = generateChartData();	
+	AmCharts.useUTC = true;
+    var chart = AmCharts.makeChart("chartdiv", {
+        "type": "gantt",
+        "theme": "light",
+		"mouseWheelScrollEnabled": true,
+		"rotate": true,
+        "marginRight": 60,            
+        "columnWidth": 0.8,
+	    "startDuration": 0, //動畫效果
+		"brightnessStep": 7,
+		"maxSelectedSeries": 5,
+		"startDate": "2017/03/20",
+        "dataDateFormat": "YYYY/MM/DD JJ:NN",
+		"period": "mm",
+        "categoryField": "category",
+        "segmentsField": "segments",	        
+        "startDateField": "start",
+        "endDateField": "end",
+		"colorField": "color",
+		"valueScrollbar": { //valueScrollbar
+            "autoGridCount": true
+        },
+		"chartScrollbar": {  //Scrollbar             
+            "graphType": "smoothedLine",
+			"updateOnReleaseOnly": true,
+            "resizeEnabled": false,
+            "scrollbarHeight": 15,
+            "scrollDuration": 0,               
+			"backgroundColor": "#2F373E"
+        },
+		"graph": {
+            "fillAlphas": 1,
+            "lineAlpha": 1,
+            "lineColor": "#fff",
+            "dateFormat": "YYYY/MM/DD JJ:NN",
+            "balloonText": "<b>[[category]]</b>:<br />開始時間:[[open]]<br />結束時間:[[value]]"
+        },
+		"chartCursor": {               
+            "valueBalloonsEnabled": false,               
+            "valueLineBalloonEnabled": true,
+            "valueLineEnabled": true,
+            "zoomable": false,
+            "valueZoomable": true,
+			"cursorAlpha": 0,
+            "valueLineAlpha": 0.5,
+			"cursorColor": "#C10066"
+        },
+		"valueAxis": {
+            "type": "date",
+		    "position": "bottom", 
+		    "minimumDate": AmCharts.stringToDate("2017/03/19 23:55", "YYYY/MM/DD JJ:NN"), //X value 最小範圍
+            "maximumDate": AmCharts.stringToDate("2017/03/21 00:05", "YYYY/MM/DD JJ:NN"), //X value 最大範圍
+		    "guides": [{ //產生現在日期時間基準黑實線
+		        "dataType": "DateTimeNow",
+                //"value": AmCharts.stringToDate(getAmChartsFormatDate(chartData[1].date), "YYYY/MM/DD JJ:NN"),
+		        "value": AmCharts.stringToDate("2017/03/20 15:33", "YYYY/MM/DD JJ:NN"),
+		        "lineThickness": 2,
+                "lineAlpha": 1,
+                "dashLength": 1,
+                "lineColor": "#000000",
+                "label": "現在時間:" + "15:33",
+		        "color": "#000000",
+                "labelRotation": 90,
+                "inside": true
+            }]
+        },
+        "export": {
+            "enabled": true
+        },           
+	    "legend": { //狀態顏色對應清單
+            "data": [ {
+                    "title": "班表",
+                    "color": "#CCEEFF"
+                }, {
+                    "title": "公出",
+                    "color": "#008800"
+                }, {
+                    "title": "請假",
+                    "color": "#007799"
+                }, {
+                    "title": "非公務出勤",
+                    "color": "#FFBB00"
+                }, {
+                    "title": "打卡",
+                    "color": "#7700BB"
+                }, {
+                    "title": "上課",
+                    "color": "#BBBB00"
+                }, {
+                    "title": "出差",
+                    "color": "#77DDFF"
+                }, {
+                    "title": "加班",
+                    "color": "#CC0000"
+                }
+		    ]
+        },      
+        "dataProvider": [ { //塞值
+            "category": "北祥0",
+            "segments": [ {
+                "start": "2017/03/20 09:33",
+                "end": "2017/03/20 23:33",
+                "color": "#CCEEFF",
+                "task": "Gathering requirements"
+            }]
+        }, {
+            "category": "北祥1",
+            "segments": [ {
+                "start": "2017/03/20 07:00",
+                "end": "2017/03/20 13:00",
+                "color": "#008800",
+                "task": "Gathering requirements"
+            }, {
+                "start": "2017/03/20 13:00",
+                "end": "2017/03/20 14:00",
+		        "color": "#007799",
+                "task": "Producing specifications"
+            }, {
+                "start": "2017/03/20 15:00",
+                "end": "2017/03/20 16:00",
+		        "color": "#FFBB00",
+                "task": "Development"
+            } ]
+        }, {
+            "category": "北祥2",
+            "segments": [ {
+                "start": "2017/03/20 09:33",
+                "end": "2017/03/20 10:33",
+                "color": "#7700BB",
+                "task": "Gathering requirements"
+            }, {
+                "start": "2017/03/20 11:33",
+                "end": "2017/03/20 12:33",
+		        "color": "#BBBB00",
+                "task": "Producing specifications"
+            }, {
+                "start": "2017/03/20 15:33",
+                "end": "2017/03/20 17:33",
+		        "color": "#77DDFF",
+                "task": "Development"
+            } ]
+        }, {
+            "category": "北祥3",
+            "segments": [ {
+                "start": "2017/03/20 07:00",
+                "end": "2017/03/20 08:00",
+                "color": "#CC0000",
+                "task": "Gathering requirements"
+            }, {
+                "start": "2017/03/20 13:00",
+                "end": "2017/03/20 14:00",
+                "task": "Producing specifications"
+            }, {
+                "start": "2017/03/20 15:00",
+                "end": "2017/03/20 16:00",
+                "task": "Development"
+            } ]
+        }, {
+            "category": "北祥4",
+            "segments": [ {
+                "start": "2017/03/20 09:33",
+                "end": "2017/03/20 10:33",
+                "color": "#b9783f",
+                "task": "Gathering requirements"
+            }, {
+                "start": "2017/03/20 11:33",
+                "end": "2017/03/20 12:33",
+                "task": "Producing specifications"
+            }, {
+                "start": "2017/03/20 15:33",
+                "end": "2017/03/20 17:33",
+                "task": "Development"
+            } ]
+        } ]           
+    } );
+	
+	chart.addListener( "init", function() { //建立事件
+	    chart.chartCursor.addListener( "moved", AmCharts.myHandleMove );
+        chart.chartDiv.onclick = AmCharts.myHandleClick;
+    });
+
+    AmCharts.myCurrentPosition;
+    AmCharts.myHandleMove = function( event ) { //滑鼠取得X值後暫存
+        var xValue = AmCharts.roundTo(chart.valueAxis.coordinateToValue(event.x), 2); 
+        AmCharts.myCurrentPosition = new Date(xValue);
+        //console.log( AmCharts.myCurrentPosition);
+    }
+
+    AmCharts.myHandleClick = function( event ) { //產生點選時的參考紅虛線
+        var guide = new AmCharts.Guide();
+        guide.value = AmCharts.stringToDate(getAmChartsFormatDate(AmCharts.myCurrentPosition), "YYYY/MM/DD JJ:NN"),
+        guide.lineAlpha = 1;
+        guide.lineThickness = 2;
+    	guide.dashLength = 2;
+        guide.lineColor = "#AA0000";
+    	guide.label = getAmChartsFormatTime(AmCharts.myCurrentPosition);
+    	guide.color = "#AA0000";
+        guide.fontSize = 16;
+        guide.labelRotation = 0;
+        guide.inside = false;
+    	var newGuides = [guide];
+    	if(chart.valueAxis.guides != null && chart.valueAxis.guides.length>0){	   
+           for(var index=0; index < chart.valueAxis.guides.length; index++ ){
+    	       var item = chart.valueAxis.guides[index];
+    	       if(item.dataType!= null && item.dataType == "DateTimeNow"){
+    		       newGuides.push(item);
+    			   break;
+    		   }
+    	   }
+    	}
+    	chart.valueAxis.guides = newGuides;    
+        chart.validateData();	
+    }
+	
+	function getAmChartsFormatDate(d){ //日期格式化
+	    var dformat = [ d.getUTCFullYear(),(d.getUTCMonth()+1).padLeft(),d.getUTCDate().padLeft()].join('/')+ ' ' +
+                      [ d.getUTCHours().padLeft(),d.getUTCMinutes().padLeft()].join(':');  
+		return dformat;
+	}
+	
+	function getAmChartsFormatTime(d){ //時間格式化
+	    var dformat = [ d.getUTCHours().padLeft(),d.getUTCMinutes().padLeft()].join(':');  
+		return dformat;
+	}
+  
+    function generateChartData() { //取得目前日期包成物件
+        var chartData = [];
+        var firstDate = new Date();
+        firstDate.setDate(firstDate.getDate() - 5);       
+        for (var i = 0; i < 10; i++) {
+            // we create date objects here. In your data, you can have date strings
+            // and then set format of your dates using chart.dataDateFormat property,
+            // however when possible, use date objects, as this will speed up chart rendering.
+            var newDate = new Date(firstDate);
+            newDate.setDate(newDate.getDate() + i);      
+            var visits = Math.round((40 + i / 5)) + 20 + i;        
+            chartData.push({
+                date: newDate,
+                visits: visits
+            });
+        }
+        //console.clear();
+        //console.log((chartData));
+        //console.log("zzzzzz::::::::::: "+chartData[1].date);
+        //console.log("zzzzzz::::::::::: "+chartData[2].date);
+        return chartData;
+    }
+		
+    </script>
+    </head>
+
+    <body>
+        <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+    </body>
+
+</html>
