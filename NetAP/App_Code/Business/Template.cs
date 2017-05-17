@@ -37,7 +37,7 @@ public class Template //與交易同名
             // 創建讀取 Excel檔
             using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
             {
-                //excelRead.IsFirstRowAsColumnNames = true;
+                excelRead.IsFirstRowAsColumnNames = true;
                 // 將讀取到 Excel檔暫存至內存
                 DataSet result = excelRead.AsDataSet();
                 // 獲得 Excel檔的行與列的數目
