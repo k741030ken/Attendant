@@ -67,7 +67,7 @@
             </tr>   
             <tr>
                 <td style="width: 100%">
-                    <asp:GridView ID="gvCheckVisitForm" runat="server" AllowPaging="False" AllowSorting="true" AutoGenerateColumns="False" CssClass="GridViewStyle" CellPadding="2" DataKeyNames="CompID,EmpID,EmpID_NameN,WriteDate,DeputyID_Name,VisitBeginDate,BeginTime,VisitEndDate,EndTime,VisitReasonCN,FormSeq" Width="100%" PageSize="15" HeaderStyle-ForeColor="dimgray" onrowcommand="gvCheckVisitForm_RowCommand">
+                    <asp:GridView ID="gvCheckVisitForm" runat="server" AllowPaging="False" AllowSorting="true" AutoGenerateColumns="False" CssClass="GridViewStyle" CellPadding="2" DataKeyNames="CompID,EmpID,EmpID_NameN,WriteDate,DeputyID_Name,VisitBeginDate,BeginTime,VisitEndDate,EndTime,VisitReasonCN,FormSeq,FlowCaseID,FlowLogID" Width="100%" PageSize="15" HeaderStyle-ForeColor="dimgray" onrowcommand="gvCheckVisitForm_RowCommand">
                         <FooterStyle BackColor="#99CCCC" ForeColor="#003399" />
                         <Columns>
                             <%--加班單預先申請--%>
@@ -75,7 +75,7 @@
                                 <HeaderStyle CssClass="td_header" Width="3%" />
                                 <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center" />
                                 <ItemTemplate>
-                                    <asp:CheckBox ID="chkChoiced" runat="server" Enabled="false"  />
+                                    <asp:CheckBox ID="chkChoiced" runat="server" />
                                 </ItemTemplate>
                             </asp:TemplateField>  
                             <asp:TemplateField HeaderText="序號" >
@@ -93,22 +93,10 @@
                                 <HeaderStyle CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" Width="3%" HorizontalAlign="Center" />
                             </asp:TemplateField>
-                            <asp:BoundField DataField="CompID" HeaderText="公出人員公司" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
-                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
-                            </asp:BoundField>
-                            <asp:BoundField DataField="EmpID" HeaderText="公出人員編號" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
-                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
-                            </asp:BoundField>
                             <asp:BoundField DataField="EmpID_NameN" HeaderText="公出人員">
                                 <HeaderStyle Width="5%" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="WriteDate" HeaderText="登錄日期" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
-                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
-                            </asp:BoundField> 
                             <asp:BoundField DataField="DeputyID_Name" HeaderText="代理人員">
                                 <HeaderStyle Width="5%" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
@@ -133,10 +121,37 @@
                                 <HeaderStyle Width="5%" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="CompID" HeaderText="公出人員公司" Visible="false">
+                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="EmpID" HeaderText="公出人員編號" Visible="false">
+                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
+                            </asp:BoundField>
+                            <asp:BoundField DataField="WriteDate" HeaderText="登錄日期" Visible="false">
+                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
+                            </asp:BoundField> 
                             <asp:BoundField DataField="FormSeq" HeaderText="打卡紀錄確認序號" Visible="false">
                                 <HeaderStyle Width="5%" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
+                            <asp:TemplateField HeaderText="核准/駁回" >
+                                <ItemTemplate>
+                                    <asp:RadioButton ID="rbnApproved" GroupName="rbnCheckType" runat="server" Text="核准" AutoPostBack="true" Font-Names="微軟正黑體" />
+                                    <asp:RadioButton ID="rbnReject" GroupName="rbnCheckType" runat="server" Text="駁回" AutoPostBack="true" Font-Names="微軟正黑體" />
+                                </ItemTemplate>
+                                <HeaderStyle Width="8%" Height="15px" CssClass="td_header" />
+                                <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center"/>
+                            </asp:TemplateField>
+                            <asp:TemplateField HeaderText="審核意見" >
+                                <ItemTemplate>
+                                    <asp:TextBox id="txtReson" rows="2" runat="server" class="InputTextStyle_Thin" TextMode="MultiLine" Width="95%" Height="60px" ></asp:TextBox>
+                                </ItemTemplate>
+                                <HeaderStyle Width="15%" Height="15px" CssClass="td_header" />
+                                <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center"/>
+                            </asp:TemplateField>
                         </Columns>
                         <EmptyDataRowStyle CssClass="GridView_EmptyRowStyle" />
                         <EmptyDataTemplate>

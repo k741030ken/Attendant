@@ -7,8 +7,16 @@
     <title>DownloadReportTemplate</title>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" method="post" enctype="multipart/form-data" runat="server">
     <div>
+    
+<input type="file" id="File1" name="File1" runat="server" />
+ <asp:Button ID="ReadExcel01" runat="server" Height="60px" 
+            onclick="ReadExcel01_Click" Text="upload" Width="310px" />
+        <br />
+    <asp:Button ID="ReadExcel02" runat="server" Height="60px" 
+            onclick="ReadExcel02_Click" Text="讀取Excel2" Width="310px" />
+        <br />
         <asp:Button ID="OpenXmlWordDownload01" runat="server" Height="60px" 
             onclick="OpenXmlWordDownload01_Click" Text="下載基本套表(Word)" Width="310px" />
         <br />
@@ -24,6 +32,10 @@
         <br />
         <asp:Button ID="DocxWordDownload02" runat="server" Height="60px" 
             onclick="DocxWordDownload02_Click" Text="下載docx.dll基本Table套表(Word)" 
+            Width="310px" />
+        <br />
+        <asp:Button ID="DocxWordDownload03" runat="server" Height="60px" 
+            onclick="DocxWordDownload03_Click" Text="測試值勤套表" 
             Width="310px" />
         <br />
     </div>   

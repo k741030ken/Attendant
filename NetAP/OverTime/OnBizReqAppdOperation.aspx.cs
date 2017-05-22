@@ -82,6 +82,10 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
     //        Session["CheckVisitPKModel"] = JsonConvert.SerializeObject(value);
     //    }
     //}
+
+    /// <summary>
+    /// _SessionCheckVisitPKModel
+    /// </summary>
     private CheckVisitPKModel _SessionCheckVisitPKModel //全域private變數要為('_'+'小駝峰')
     {
         get
@@ -98,7 +102,9 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
         }
     }
 
-
+    private static string _attendantDBName = Aattendant._AattendantDBName;
+    private static string _attendantFlowID = Aattendant._AattendantFlowID;
+    private static string _eHRMSDB_ITRD = Aattendant._eHRMSDB_ITRD;
     /// <summary>
     /// _templateModel
     /// </summary>
@@ -121,13 +127,16 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
 
     #region "2. 功能鍵處理邏輯"
     /// <summary>
-    /// btnQuery_Click
+    /// btnRelease_Click
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     protected void btnRelease_Click(object sender, EventArgs e)
     {
-       
+        if (CheckData()) {
+            DoRelease();
+            LoadData();
+        }
     }
 
     #endregion
@@ -159,10 +168,16 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    //protected void gvMain_RowDataBound(object sender, GridViewRowEventArgs e)
-    //{
-
-    //}
+    protected void gvCheckVisitForm_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        DataRowView oRow;
+        if (e.Row.RowType == DataControlRowType.DataRow)
+        {
+            oRow = (DataRowView)e.Row.DataItem;
+            e.Row.Cells[9].ToolTip = oRow["VisitReasonCN"] + "";
+            e.Row.Cells[9].Text = (oRow["VisitReasonCN"] + "").Substring(0, (oRow["VisitReasonCN"] + "").Length <= 10 ? (oRow["VisitReasonCN"] + "").Length : 10);
+        }
+    }
 
     /// <summary>
     /// gvMain_RowCommand
@@ -234,6 +249,27 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
         return result;
     }
 
+
+    private bool CheckData()
+    {
+        for (int introw = 0; introw < gvCheckVisitForm.Rows.Count; introw++)
+        {
+            CheckBox objchk = (CheckBox)gvCheckVisitForm.Rows[introw].FindControl("chkChoiced");
+            RadioButton rdoApp = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnApproved");
+            RadioButton rdoRej = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnReject");
+            TextBox txtReson = (TextBox)gvCheckVisitForm.Rows[introw].FindControl("txtReson");
+            if (objchk.Checked == true) { 
+                if (rdoApp.Checked == true || rdoRej.Checked == true) {
+                    if (txtReson.Text.Length > 200) {
+                        Util.MsgBox("審核意見大於200字");
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     #endregion
 
     #region "7. private Method"
@@ -261,5 +297,74 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
         _OnBizReqAppdOperationModel = viewData;
     }
 
+    /// <summary>
+    /// 審核
+    /// </summary>
+    private void DoRelease()
+    {
+        DbHelper db = new DbHelper(_attendantDBName);
+        CommandHelper sb = db.CreateCommandHelper();
+        DbConnection cn = db.OpenConnection();
+        DbTransaction tx = cn.BeginTransaction();
+        FlowExpress oFlow = new FlowExpress("OnBizReqAppd_ITRD");
+        string FlowCustDB = oFlow.FlowID;
+        Dictionary<string, string> oAssDic = CustVerify.getEmpID_Name_Dictionary(UserInfo.getUserInfo().UserID, UserInfo.getUserInfo().CompID);
+
+        try
+        {
+            for (int introw = 0; introw < gvCheckVisitForm.Rows.Count; introw++)
+            {
+                CheckBox objchk = (CheckBox)gvCheckVisitForm.Rows[introw].FindControl("chkChoiced");
+            
+
+                if (objchk.Checked == true)
+                {
+
+                    RadioButton rdoApp = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnApproved");
+                    RadioButton rdoRej = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnReject");
+                    TextBox txtReson = (TextBox)gvCheckVisitForm.Rows[introw].FindControl("txtReson");
+                    string rowCompID = gvCheckVisitForm.DataKeys[introw].Values["CompID"].ToString();
+                    string rowEmpID = gvCheckVisitForm.DataKeys[introw].Values["EmpID"].ToString();
+                    string rowWriteDate = gvCheckVisitForm.DataKeys[introw].Values["WriteDate"].ToString();
+                    string rowFormSeq = gvCheckVisitForm.DataKeys[introw].Values["FormSeq"].ToString();
+                    string rowFlowCaseID = gvCheckVisitForm.DataKeys[introw].Values["FlowCaseID"].ToString();
+                    string rowFlowLogID = gvCheckVisitForm.DataKeys[introw].Values["FlowLogID"].ToString();
+                    string btnAct = "";
+                    string OBFormStatus = "";
+                    if (rdoApp.Checked == true)
+                    {
+                        btnAct = "btnClose";
+                        OBFormStatus = "3";
+                    }
+                    else if (rdoRej.Checked == true)
+                    {
+                        btnAct = "btnReject";
+                        OBFormStatus = "4";
+                    }
+
+                    OnBizReqAppdOperationSql.UpdateVisitForm(rowCompID, rowEmpID, rowWriteDate, rowFormSeq, OBFormStatus, txtReson.Text.ToString(), ref sb);
+                    FlowUtility.ChangeFlowFlag(rowFlowCaseID, "OB01", "0001", UserInfo.getUserInfo().CompID, UserInfo.getUserInfo().UserID, "0", ref sb);
+
+                    if (FlowExpress.IsFlowVerify(FlowCustDB, rowFlowLogID, btnAct, oAssDic, txtReson.Text.ToString()))
+                    {
+                        db.ExecuteNonQuery(sb.BuildCommand(), tx);
+                        tx.Commit();
+                        Util.MsgBox("審核成功!");
+                    }
+                    else
+                    {
+                        throw new Exception("審核失敗!");
+                    }
+
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            tx.Rollback();
+            Util.MsgBox(ex.Message);
+        }
+        
+    }
     #endregion
 }

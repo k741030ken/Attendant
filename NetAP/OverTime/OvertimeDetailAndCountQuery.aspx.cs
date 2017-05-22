@@ -557,6 +557,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
             sb.AppendLine(", AT.CodeCName AfterOTTypeID");
             sb.AppendLine(", D.OTReasonMemo AfterOTReasonMemo");
             sb.AppendLine(", AfterOTStatus = CASE D.OTStatus WHEN '1' THEN '暫存' WHEN '2' THEN '送簽' WHEN '3' THEN '核准' WHEN '4' THEN '駁回' WHEN '5' THEN '刪除' WHEN '6' THEN '取消' WHEN '7' THEN '作廢' WHEN '9' THEN '計薪後收回' ELSE '' END");
+            sb.AppendLine(", '2' As GroupType");
             sb.AppendLine("FROM " + flow.FlowCustDB + "FlowFullLog AOL");
             sb.AppendLine("LEFT JOIN OverTimeDeclaration D ON AOL.FlowCaseID=D.FlowCaseID");
             sb.AppendLine("LEFT JOIN OverTimeDeclaration D2 ON D.OTTxnID=D2.OTTxnID AND D2.OTSeqNo='2'");
@@ -674,6 +675,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
             sb.AppendLine(", ATD.CodeCName AfterOTTypeID");
             sb.AppendLine(", DD.OTReasonMemo AfterOTReasonMemo");
             sb.AppendLine(", AfterOTStatus = CASE DD.OTStatus WHEN '1' THEN '暫存' WHEN '2' THEN '送簽' WHEN '3' THEN '核准' WHEN '4' THEN '駁回' WHEN '5' THEN '刪除' WHEN '6' THEN '取消' WHEN '7' THEN '作廢' WHEN '9' THEN '計薪後收回' ELSE '' END");
+            sb.AppendLine(", GroupType = CASE WHEN DD.OTFromAdvanceTxnId IS NULL THEN '1' ELSE '3' END");
             sb.AppendLine("FROM " + flow.FlowCustDB + "FlowFullLog AOL");
             sb.AppendLine("LEFT JOIN OverTimeAdvance AA ON AOL.FlowCaseID=AA.FlowCaseID");
             sb.AppendLine("LEFT JOIN OverTimeAdvance AA2 ON AA.OTTxnID=AA2.OTTxnID AND AA2.OTSeqNo='2'");
@@ -771,6 +773,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                     sb.AppendLine(" AND DD.OTPayDate='" + txtOTPayDate.Text + "' ");
                 }
             }
+            sb.AppendLine("ORDER BY GroupType, OTCompID, OTEmpID, OTDate, OTTime");
             ch.Reset();
             ch.AppendStatement(sb.ToString());
             gvMain.DataSource = db.ExecuteDataSet(ch.BuildCommand()).Tables[0];
@@ -939,6 +942,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine(", AT.CodeCName AfterOTTypeID");
                 sb.AppendLine(", D.OTReasonMemo AfterOTReasonMemo");
                 sb.AppendLine(", AfterOTStatus = CASE D.OTStatus WHEN '1' THEN '暫存' WHEN '2' THEN '送簽' WHEN '3' THEN '核准' WHEN '4' THEN '駁回' WHEN '5' THEN '刪除' WHEN '6' THEN '取消' WHEN '7' THEN '作廢' WHEN '9' THEN '計薪後收回' ELSE '' END");
+                sb.AppendLine(", '2' As GroupType");
                 sb.AppendLine("FROM OverTimeDeclaration D");
                 sb.AppendLine("LEFT JOIN OverTimeDeclaration D2 ON D.OTTxnID = D2.OTTxnID AND D2.OTSeqNo = '2'");
                 sb.AppendLine("LEFT JOIN " + _eHRMSDB + "..Personal PD ON D.OTCompID = PD.CompID AND D.OTEmpID = PD.EmpID");
@@ -1100,6 +1104,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine(", ISNULL(ATD.CodeCName, '') AfterOTTypeID");
                 sb.AppendLine(", ISNULL(DD.OTReasonMemo, '') AfterOTReasonMemo");
                 sb.AppendLine(", AfterOTStatus = CASE DD.OTStatus WHEN '1' THEN '暫存' WHEN '2' THEN '送簽' WHEN '3' THEN '核准' WHEN '4' THEN '駁回' WHEN '5' THEN '刪除' WHEN '6' THEN '取消' WHEN '7' THEN '作廢' WHEN '9' THEN '計薪後收回' ELSE '' END");
+                sb.AppendLine(", GroupType = CASE WHEN DD.OTFromAdvanceTxnId IS NULL THEN '1' ELSE '3' END");
                 sb.AppendLine("FROM OverTimeAdvance AA");
                 sb.AppendLine("LEFT JOIN OverTimeAdvance AA2 ON AA.OTTxnID = AA2.OTTxnID AND AA2.OTSeqNo = '2'");
                 sb.AppendLine("LEFT JOIN OverTimeDeclaration DD ON AA.OTTxnID = DD.OTFromAdvanceTxnId AND AA.OTSeqNo = DD.OTSeqNo");
@@ -1113,7 +1118,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 sb.AppendLine("LEFT JOIN AT_CodeMap AS AT ON AT.TabName = 'OverTime' and AT.FldName = 'OverTimeType' AND AT.Code = AA.OTTypeID");
                 sb.AppendLine("LEFT JOIN AT_CodeMap AS ATD ON ATD.TabName = 'OverTime' and ATD.FldName = 'OverTimeType' AND ATD.Code = DD.OTTypeID");
                 sb.AppendLine("WHERE AA.OTSeqNo <> '2'");
-                sb.AppendLine(" AND AA.OTCompID = '" + ddlCompID.SelectedValue + "' ");
+                sb.AppendLine("AND AA.OTCompID = '" + ddlCompID.SelectedValue + "' ");
                 if (AllSearch)
                 {
                     sb.AppendLine("AND (PA.OrganID IN ('" + orgWhere + "') OR EA.OrganID IN ('" + orgFlowWhere + "')) ");
@@ -1221,6 +1226,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                         sb.AppendLine(" AND DD.OTPayDate='" + txtOTPayDate.Text + "' ");
                     }
                 }
+                sb.AppendLine("ORDER BY GroupType, OTCompID, OTEmpID, OTDate, OTTime");
                 ch.Reset();
                 ch.AppendStatement(sb.ToString());
                 gvMain.DataSource = db.ExecuteDataSet(ch.BuildCommand()).Tables[0];
@@ -1492,7 +1498,7 @@ public partial class OverTime_OvertimeDetailAndCountQuery : SecurePage
                 {
                     sb.AppendLine(" AND EmpP.PositionID='" + ddlPosition.SelectedValue + "'");
                 }
-
+                sb.AppendLine("ORDER BY OTEmpID");
                 ch.Reset();
                 ch.AppendStatement(sb.ToString());
 

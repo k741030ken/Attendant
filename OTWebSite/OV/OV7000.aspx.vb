@@ -157,7 +157,7 @@ Partial Class OV_OV7000
                     rbtnOTLimitFlagApply.Checked = True
                 End If
 
-                If rSalaryOrAjust = "1" Then
+                If rSalaryOrAjust = "2" Then
                     rbtnTurnAdjust.Checked = True
                 Else
                     rbtnTurnSalary.Checked = True
@@ -206,7 +206,7 @@ Partial Class OV_OV7000
             jsObj.Add("EmpRankID", ddlEmpRankID.SelectedValue)
             jsObj.Add("ValidRankID", ddlValidRankID.SelectedValue)
             jsObj.Add("AdjustRankID", ddlAdjustRankID.SelectedValue)
-            Dim Salary As String = IIf(rbtnTurnAdjust.Checked = True, "1", "2")
+            Dim Salary As String = IIf(rbtnTurnAdjust.Checked = True, "2", "1")
             jsObj.Add("SalaryOrAjust", Salary)
             jsObj.Add("AdjustInvalidDate", txtAdjustInvalidDate.DateText)
 
@@ -272,7 +272,7 @@ Partial Class OV_OV7000
             txtMealTimeH.Text = ViewState.Item("MealTimeH")
             ddlEmpRankID.SelectedValue = ViewState.Item("EmpRankID")
             ddlValidRankID.SelectedValue = ViewState.Item("ValidRankID")
-            Dim rSalaryOrAjust As String = ViewState.Item("SalaryOrAjust").ToString : IIf(rSalaryOrAjust.Equals("1"), rbtnTurnAdjust.Checked = True, rbtnTurnSalary.Checked = True)
+            Dim rSalaryOrAjust As String = ViewState.Item("SalaryOrAjust").ToString : IIf(rSalaryOrAjust.Equals("2"), rbtnTurnAdjust.Checked = True, rbtnTurnSalary.Checked = True)
             txtAdjustInvalidDate.DateText = ViewState.Item("AdjustInvalidDate")
             txtLastChgComp.Text = ViewState.Item("LastChgComp")
             txtLastChgDate.Text = ViewState.Item("LastChgDate")

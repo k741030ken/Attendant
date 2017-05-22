@@ -402,6 +402,16 @@ public class CheckVisitGridDataModel //請取有意義的名稱+Model結尾
     /// </summary>
     public String FormSeq { get; set; }
 
+    /// <summary>
+    /// FlowCaseID(X)
+    /// </summary>
+    public String FlowCaseID { get; set; }
+
+    /// <summary>
+    /// FlowLogID(X)
+    /// </summary>
+    public String FlowLogID { get; set; }
+
 }
 
 public class CheckVisitPKModel //請取有意義的名稱+Model結尾

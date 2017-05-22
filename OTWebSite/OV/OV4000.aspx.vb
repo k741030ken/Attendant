@@ -284,7 +284,9 @@ Partial Class OV4000
                             gvExport.Rows(i).Cells(25).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(26).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(30).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
+                            gvExport.Rows(i).Cells(31).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(37).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
+                            gvExport.Rows(i).Cells(38).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                         Next
 
                     End If

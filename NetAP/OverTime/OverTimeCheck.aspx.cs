@@ -143,7 +143,8 @@ sb.Append(" LEFT JOIN AT_CodeMap AS OTT ON OTT.TabName='OverTime' and OTT.FldNam
 sb.Append(" where (");
 if (strUserID != "")
 {
-    sb.Append(" (AOL.AssignTo in(" + strUserID + ")and isnull(OT.OTEmpID,OD.OTEmpID)<>'" + UserInfo.getUserInfo().UserID + "') or ");//20170213 再修改，加入代理人判斷
+    //sb.Append(" (AOL.AssignTo in(" + strUserID + ")and isnull(OT.OTEmpID,OD.OTEmpID)<>'" + UserInfo.getUserInfo().UserID + "') or ");//20170213 再修改，加入代理人判斷
+    sb.Append(" AOL.AssignTo in(" + strUserID + ") or ");//20170213 再修改，加入代理人判斷
 }
 sb.Append(" AOL.AssignTo = '" + UserInfo.getUserInfo().UserID + "')");  //本人單
 sb.Append(" AND ( ((OT.OTSeqNo=1 and OT.OTStatus='2')OR (OT.OTSeqNo=1 and OT.OTSeqNo=OD.OTSeqNo and OT.OTTxnID=OD.OTFromAdvanceTxnId))OR (OD.OTSeqNo=1 and OD.OTStatus='2') ) ");
@@ -388,7 +389,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         //CustVerify.setFlowSignID_CompID是多筆，由上面組ViewState["dtOverTimeAdvance"]來做
         ClearBtn(strFlowCaseID);
         CustVerify.setFlowSignID_CompID(SignID_CompID);
-        Session["btnVisible"] = "0";
+        
         //單筆產生按鈕
         sb.Reset();
         sb.Append("SELECT top 1 FlowLogID FROM " + FlowCustDB + "FlowFullLog ");
@@ -396,7 +397,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         string strFlowLogID = db.ExecuteScalar(sb.BuildCommand()).ToString();
         FlowExpress oFlowReload = new FlowExpress(_DBName, strFlowLogID, true);
         FlowExpress.setFlowOpenLogVerifyInfo(oFlowReload, true);
-
+        Session["btnVisible"] = "0";
         Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", _DBName, strFlowLogID, "Self", "N", "N", ""));
 
 
@@ -611,7 +612,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
             case "DetailA":
                 gvFlowCaseID=gvMain.DataKeys[clickedRow.RowIndex].Values[8].ToString();
                 sb.Reset();
-                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate FROM " + FlowCustDB + "FlowOpenLog OL");
+                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTEmpID,OT.OTStartDate FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeAdvance OT ON OL.FlowCaseID=OT.FlowCaseID");
                 sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
@@ -637,7 +638,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
                 //按鈕清單
                 ClearBtn(gvFlowCaseID);
                 //下一關邏輯判斷，產生審核按鈕資訊
-                nextFlowBtn(dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "A",ref  btnName);
+                nextFlowBtn(dtFlowLogIDA.Rows[0]["OTEmpID"].ToString(), dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), dtFlowLogIDA.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "A", ref  btnName);
                 //產生審核按鈕
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDA.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), "".Split(','), false, "", "");
                 //跳轉畫面
@@ -648,7 +649,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
             case "DetailD":
                 gvFlowCaseID = gvMain.DataKeys[clickedRow.RowIndex].Values[9].ToString();
                 sb.Reset();
-                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTStartDate  FROM " + FlowCustDB + "FlowOpenLog OL");
+                sb.Append("SELECT OL.FlowLogID,OL.AssignTo,OT.OTCompID,OT.OTEmpID,OT.OTStartDate  FROM " + FlowCustDB + "FlowOpenLog OL");
                 sb.Append(" LEFT JOIN OverTimeDeclaration OT ON OL.FlowCaseID=OT.FlowCaseID");
                 sb.Append(" WHERE OT.FlowCaseID='" + gvFlowCaseID + "'");
                 sb.Append(" AND OT.OTSeqNo='1'");
@@ -669,7 +670,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
 
                 //按鈕清單
                 ClearBtn(gvFlowCaseID);
-                nextFlowBtn(dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), dtFlowLogIDD.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "D", ref  btnName);
+                nextFlowBtn(dtFlowLogIDD.Rows[0]["OTEmpID"].ToString(), dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), dtFlowLogIDD.Rows[0]["OTCompID"].ToString(), gvFlowCaseID, "D", ref  btnName);
                 FlowExpress.getFlowTodoList(FlowExpress.TodoListAssignKind.All, dtFlowLogIDD.Rows[0]["AssignTo"].ToString(), _DBName.Split(','), null, false, "", "");
 
                 Response.Redirect(string.Format(FlowExpress._FlowPageVerifyURL + "?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}"
@@ -696,7 +697,7 @@ sb.Append(" ORDER BY SortNo ,OTDate,OTTime,AfterOTDate,AfterOTTime ASC");
         //清除按鈕內容
         if (!nextAssignTo(OverTimeTable["CompID"].ToString(), OverTimeTable["AssignTo"].ToString(), OTStartDate, FlowCaseID, AD, out toUserData))return false;
 
-        nextFlowBtn(OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(),AD, ref btnName);
+        nextFlowBtn(OverTimeTable["EmpID"].ToString(), OverTimeTable["AssignTo"].ToString(), OverTimeTable["CompID"].ToString(), OverTimeTable["FlowCaseID"].ToString(), AD, ref btnName);
         
         //btnName
         OverTimeTable["btnName"] = btnName;
@@ -914,7 +915,7 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         }
 
     }
-    private void nextFlowBtn(string AssignTo, string CompID, string FlowCaseID, string AD, ref string btnName)
+    private void nextFlowBtn(string OTEmpID,string AssignTo, string CompID, string FlowCaseID, string AD, ref string btnName)
     {
         
         bool IsUpValidRankID = true;
@@ -1008,8 +1009,23 @@ out toUserData, out  flowCode, out  flowSN, out  signLineDefine, out  isLastFlow
         //最後一關
         else
         {
+            //當加班人是自己主管的代理人並審自己的加班單
+            if (OTEmpID.Trim().Equals(UserInfo.getUserInfo().UserID.Trim()))
+            {
+                //加班人RankID>19 
+                if (IsUpEmpRankID)
+                {
+                    Session["btnVisible"] = "2";
+                    btnName = "btnClose";
+                }
+                else
+                {
+                    Session["btnVisible"] = "1";
+                    btnName = "btnReApprove";
+                }
+            }
             //大於Rank16
-            if (IsUpValidRankID)
+            else if (IsUpValidRankID)
             {
                 Session["btnVisible"] = "2";
                 btnName = "btnClose";

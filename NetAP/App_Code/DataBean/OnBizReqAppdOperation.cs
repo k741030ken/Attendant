@@ -400,4 +400,15 @@ public class CheckVisitGridDataBean //請取有意義的名稱+Bean結尾
     /// ValidID(X)
     /// </summary>
     public String ValidID { get; set; }
+
+    /// <summary>
+    /// FlowCaseID(X)
+    /// </summary>
+    public String FlowCaseID { get; set; }
+
+    /// <summary>
+    /// FlowLogID(X)
+    /// </summary>
+    public String FlowLogID { get; set; }
+
 }

@@ -17,7 +17,7 @@
 <body>
     <form id="form1" runat="server">
     <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server" CombineScripts="True"></asp:ToolkitScriptManager>
-    <table style="width:100%;border:1px solid" rules="all">
+        <table style="width:80%" rules="all" align="center">
             <tr style="height:20px">
                     <td colspan="4" align="left">
                         <asp:Button ID="btnGoBack" runat="server" Text="返回" OnClientClick="return confirm('確定要返回？')" onclick="btnGoBack_Click" CssClass="Util_clsBtn" />

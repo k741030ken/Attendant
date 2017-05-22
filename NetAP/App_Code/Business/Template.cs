@@ -11,6 +11,7 @@ using Office.Word.CreateNotice;
 using Office.Word;
 using Novacode;
 using System.IO;
+using Excel;
 
 /// <summary>
 /// TestLogic 的摘要描述
@@ -20,6 +21,69 @@ public class Template //與交易同名
     private static string _attendantDBName = Aattendant._AattendantDBName;
     private static string _attendantFlowID = Aattendant._AattendantFlowID;
     private static string _eHRMSDB_ITRD = Aattendant._eHRMSDB_ITRD;
+
+    /// <summary>
+    /// 指定Excel檔案位置來讀裡面的資料
+    /// </summary>
+    public static void ReadExcelTest02()
+    {
+        // Excel 檔案位置
+        string filePath = HttpContext.Current.Server.MapPath("~/OpenXmlTemplateFiles/Template.xlsx");
+        // 你要抓取 Excel檔裡的工作表名稱
+        string set = "Sheet1";
+        // 讀取 Excel檔案
+        using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
+        {
+            // 創建讀取 Excel檔
+            //ExcelReaderFactory.CreateOpenXmlReader(stream) //XLSXA
+            //ExcelReaderFactory.CreateBinaryReader(stream) //XLS
+            using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
+            {
+                //excelRead.IsFirstRowAsColumnNames = true;
+                // 將讀取到 Excel檔暫存至內存
+                DataSet result = excelRead.AsDataSet();
+                // 獲得 Excel檔的行與列的數目
+                int columns = result.Tables[set].Columns.Count;
+                int rows = result.Tables[set].Rows.Count;
+                // 將資料讀取出來
+                for (int i = 1; i < rows; i++)
+                {
+                    for (int j = 0; j < columns; j++)
+                    {
+                        string data = result.Tables[set].Rows[i][j].ToString();
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 上傳Excel檔案位置來讀裡面的資料
+    /// </summary>
+    public static void ReadExcelTest01(Stream stream)
+    {
+        // 你要抓取 Excel檔裡的工作表名稱
+        string set = "Sheet1";
+        //ExcelReaderFactory.CreateOpenXmlReader(stream) //XLSXA
+        //ExcelReaderFactory.CreateBinaryReader(stream) //XLS
+        using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
+        {
+            //excelRead.IsFirstRowAsColumnNames = true;
+            // 將讀取到 Excel檔暫存至內存
+            DataSet result = excelRead.AsDataSet();
+            // 獲得 Excel檔的行與列的數目
+            int columns = result.Tables[set].Columns.Count;
+            int rows = result.Tables[set].Rows.Count;
+            // 將資料讀取出來
+            for (int i = 1; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    string data = result.Tables[set].Rows[i][j].ToString();
+                }
+            }
+        }
+    }
 
     /// <summary>
     /// 取得DB資料
@@ -321,6 +385,142 @@ public class Template //與交易同名
                 docX.Bookmarks["bmkNoContent"].SetText("Here there was a bookmark");
                 docX.Bookmarks["bmkContent"].SetText("Here there was a bookmark with a previous content");
                 docX.Bookmarks["bmkFormattedContent"].SetText("Here there was a formatted bookmark");
+                docX.SaveAs(memStream);
+                wordFileData = memStream.ToArray();
+            }
+        }
+        return wordFileData;
+    }
+
+    /// <summary>
+    /// 日期測試資料
+    /// </summary>
+    /// <returns></returns>
+    private static List<DateTime> testDateDatas()
+    {
+        return new List<DateTime>() { 
+            DateTime.Parse("2017/3/1"), 
+            DateTime.Parse("2017/3/2"),
+            DateTime.Parse("2017/3/3"), 
+            DateTime.Parse("2017/3/4"),
+            DateTime.Parse("2017/3/5"), 
+            DateTime.Parse("2017/3/6"),
+            DateTime.Parse("2017/3/7"), 
+            DateTime.Parse("2017/3/8"),
+            DateTime.Parse("2017/3/9"), 
+            DateTime.Parse("2017/3/10"),
+            DateTime.Parse("2017/3/11"), 
+            DateTime.Parse("2017/3/12"),
+            DateTime.Parse("2017/3/13"), 
+            DateTime.Parse("2017/3/14"),
+            DateTime.Parse("2017/3/15"), 
+            DateTime.Parse("2017/3/16"),
+            DateTime.Parse("2017/3/17"), 
+            DateTime.Parse("2017/3/18"),
+            DateTime.Parse("2017/3/19"), 
+            DateTime.Parse("2017/3/20"),
+            DateTime.Parse("2017/3/21"), 
+            DateTime.Parse("2017/3/22"),
+            DateTime.Parse("2017/3/23"), 
+            DateTime.Parse("2017/3/24"),
+            DateTime.Parse("2017/3/25"), 
+            DateTime.Parse("2017/3/26"),
+            DateTime.Parse("2017/3/27"), 
+            DateTime.Parse("2017/3/28"),
+            DateTime.Parse("2017/3/29"), 
+            DateTime.Parse("2017/3/30"), 
+            DateTime.Parse("2017/3/31")
+        };
+    }
+
+    /// <summary>
+    ///值班人測試資料
+    /// </summary>
+    /// <returns></returns>
+    private static Dictionary<DateTime, List<string>> testEmpDatas()
+    {
+        return new Dictionary<DateTime, List<string>>() { 
+            { DateTime.Parse("2017/3/12"), new List<string>(){"00000","111111","222222"}},
+            { DateTime.Parse("2017/3/24"), new List<string>(){"好人","壞人","爛好人"}},
+        };
+    }
+
+    /// <summary>
+    /// 組成套表所需的日期資料
+    /// </summary>
+    /// <param name="dateList">當月所有日期</param>
+    /// <returns></returns>
+    private static List<Dictionary<string, string>> getDutyReportDateDictionary(List<DateTime> dateList, Dictionary<DateTime, List<string>> empDictionary)
+    {
+        const string NEW_LINE_SYMBOL = "\n";
+        List<Dictionary<string, string>> dateDatas = new List<Dictionary<string, string>>();
+        var defaultData = new Dictionary<string, string>() { 
+                { "Date", "" }, 
+                { "CWeek", "" }, 
+                { "EWeek", "" }, 
+                { "NWeek", ""},
+                { "Emp", ""}
+                };
+        foreach (var item in dateList)
+        {
+            var emp = "";
+            if (empDictionary != null && empDictionary.ContainsKey(item) && empDictionary[item].Count > 0)
+            {
+                emp = string.Join(NEW_LINE_SYMBOL, empDictionary[item]);
+            }
+            dateDatas.Add( 
+                new Dictionary<string, string>() { 
+                { "Date", item.ToString("MM/dd") }, 
+                { "CWeek", DateUtility.GetDayOfWeek(item, "C") }, 
+                { "EWeek", DateUtility.GetDayOfWeek(item, "E") }, 
+                { "NWeek", DateUtility.GetDayOfWeek(item) },
+                { "Emp", emp}
+                });
+        }
+        if (dateDatas != null && dateDatas.Count > 0 && dateDatas[0]["NWeek"] != "")
+        {
+            int nWeek = int.Parse(dateDatas[0]["NWeek"]);
+            var dateDatas_New = new List<Dictionary<string, string>>();
+            for (var i = 0; i < nWeek; i++)
+            {
+                dateDatas_New.Add(defaultData);
+            }
+            foreach (var item in dateDatas)
+            {
+                dateDatas_New.Add(item);
+            }
+            dateDatas = dateDatas_New;
+        }
+        var dateDatasCount = dateDatas.Count;
+        for (var j = 0; j < (35 - dateDatasCount); j++ )
+        {
+            dateDatas.Add(defaultData);
+        }
+        return dateDatas;
+    }
+
+    /// <summary>
+    /// 製作值勤表含套表內容
+    /// </summary>
+    /// <returns></returns>
+    public static byte[] MakeDutyReport001()
+    {
+        byte[] wordFileData = null;
+        using (MemoryStream memStream = new MemoryStream())
+        {
+            var templatPath = HttpContext.Current.Server.MapPath("~/OpenXmlTemplateFiles/DutyReport001.docx");
+            List<Dictionary<string, string>> dateDatas = getDutyReportDateDictionary(testDateDatas(), testEmpDatas());
+
+            using (DocX docX = DocX.Load(templatPath))
+            {
+                // Replace bookmars content
+                docX.ReplaceText("[$Field1$]", "測試");
+                docX.ReplaceText("[$Field2$]", "3");
+                for (var index = 0; index < 35; index++)
+                {
+                    docX.ReplaceText(string.Format("[$DATE{0}$]", index.ToString().PadLeft(2, '0')), (dateDatas[index]["Date"]));
+                    docX.ReplaceText(string.Format("[$EMP{0}$]", index.ToString().PadLeft(2, '0')), (dateDatas[index]["Emp"]));
+                }
                 docX.SaveAs(memStream);
                 wordFileData = memStream.ToArray();
             }

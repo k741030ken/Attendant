@@ -1,0 +1,930 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WebTest Name="WebTest1" Id="80bb2dba-dfec-42d3-a0d1-1c43eee9c35f" Owner="" Priority="2147483647" Enabled="True" CssProjectStructure="" CssIteration="" Timeout="0" WorkItemIds="" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010" Description="" CredentialUserName="" CredentialPassword="" PreAuthenticate="True" Proxy="default" StopOnError="False" RecordedResultFile="WebTest1.7acf24f7-2442-410b-9e03-ef50c5b0a777.rec.webtestresult" ResultsLocale="">
+  <Items>
+    <Request Method="GET" Guid="58c6b416-5498-49c0-8d2b-96bc82f36498" Version="1.1" Url="http://10.11.36.114:8007/hrlogin/hrlogin.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam37.btnExecute" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnExecute" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam38.ddlUICulture" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;正體中" />
+            <RuleParameter Name="Index" Value="8" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+    <Request Method="POST" Guid="4ca3c32d-1b5e-402f-82d1-b4d2d204eb87" Version="1.1" Url="http://10.11.36.114:8007/hrlogin/hrlogin.aspx" ThinkTime="106" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <FormPostHttpBody>
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="/wEPDwUKLTQ1NDM1MTA0Mg9kFgICAw9kFgQCAQ8WAh4HVmlzaWJsZWcWBAIBDw8WHh4KX01heExlbmd0aGYeEl9Jc0F1dG9Ub1VwcGVyQ2FzZWgeDF9Jc0FjdGl2ZUlNRWceC19Jc1Bhc3N3b3JkaB4OX1RleHRTaGlmdEtpbmQLKX9TaW5vUGFjLldlYkV4cHJlc3MuQ29tbW9uLlV0aWwrVGV4dFNoaWZ0S2luZCwgU2lub1BhYy5XZWJFeHByZXNzLkNvbW1vbiwgVmVyc2lvbj03LjMuMzEuMSwgQ3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsAB4KX1dhdGVyTWFya2UeCF9Jc0NsZWFyaB4IX1Rvb2xUaXBlHgtfSXNSZWFkT25seWgeCV9Dc3NDbGFzc2UeD19Jc1dpZHRoQnlQaXhlbGceE19Jc0Rpc3BFbnRlcmVkV29yZHNoHgZfV2lkdGgCUB4IX0lzRm9jdXNnHglfSXNSZWdFeHBoZBYEAgEPZBYCAgEPEA9kFgIeB29uY2xpY2sFvwF2YXIgb1ZhbGlkID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3R4dFVzZXJJRF9SZXF1aXJlZEZpZWxkVmFsaWRhdG9yMScpO1ZhbGlkYXRvckVuYWJsZShvVmFsaWQsdGhpcy5jaGVja2VkKTtVdGlsX0Noa0JveFRvZ2dsZVZpc2liaWxpdHkoJ3R4dFVzZXJJRF9jaGtWaXNpYmlsaXR5JywgJ3R4dFVzZXJJRF9kaXZEYXRhQXJlYScpO2RkZAIDDxYCHgVzdHlsZQU2ZmxvYXQ6bGVmdDtkaXNwbGF5OmlubGluZS1ibG9jaztwYWRkaW5nOjA7dmlzaWJpbGl0eTo7FgYCAQ8PFggeCFJlYWRPbmx5aB4FV2lkdGgbAAAAAAAAVEABAAAAHghDc3NDbGFzc2UeBF8hU0ICggIWAh4Hb25rZXl1cAUOdGhpcy50aXRsZT0nJztkAgMPDxYEHxMbAAAAAAAAVEABAAAAHxUCgAJkZAIFD2QWAgIBDw8WAh4EVGV4dAUXW+Wkp+Wvq+mOluWuml3lt7LllZ/nlKgWAh8RBZQBcGFkZGluZzogMnB4IDEwcHggMnB4IDEwcHg7IGNvbG9yOiMwMDA7IGJhY2tncm91bmQ6ICNGRkU4QTY7IGZvbnQtd2VpZ2h0OiBib2xkOyBib3JkZXI6IDFweCBzb2xpZCBkYXJrZ3JheTsgd2hpdGUtc3BhY2U6IG5vd3JhcDsgYm9yZGVyLXJhZGl1czogM3B4O2QCAw8QDxYGHg5EYXRhVmFsdWVGaWVsZAUDS2V5Hg1EYXRhVGV4dEZpZWxkBQVWYWx1ZR4LXyFEYXRhQm91bmRnZBAVBAdFbmdsaXNoDOeugOS9k+S4reaWhwzmraPpq5TkuK3mlocM566A5L2T5rGJ6K+tFQQCZW4GemgtQ0hTBnpoLUNIVAd6aC1IYW5zFCsDBGdnZ2dkZAIDDw8WAh8XZWRkZCcVRYXTh9jCCMwScw4nRuV09m/9" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATEGENERATOR" Value="{{$HIDDEN1.__VIEWSTATEGENERATOR}}" RecordedValue="5BB0F290" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="/wEdAAjZzgedK7WHnuKA2o+sVRATZhTqo2ydrcAvVXhVX0KFKYIFfRRZhXsxUy43qfmVgP+LRbqXAr4pXRAx5LgPPFjgeCPFcn5aPMYhB6gel0o/bl3FQ/qnQW2uFoZPnhwrJ1dgzCkpqcXHoLWR+fc8xH3YRrPpGzrD+ZG0Wk4Yrn35Fvkef/tZRg7GcFN37NgKG6UWNPge" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtUserID$txtData" Value="102119" RecordedValue="102119" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlUICulture" Value="zh-CHT" RecordedValue="zh-CHT" CorrelationBinding="{{FormPostParam38.ddlUICulture}}" UrlEncode="True" />
+        <FormPostParameter Name="btnExecute" Value="Local Login" RecordedValue="Local Login" CorrelationBinding="{{FormPostParam37.btnExecute}}" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="GET" Guid="1823f212-eed7-4ed2-a4fe-7e1bccef2289" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam33.btnQuery" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnQuery" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam34.txtOTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="txtOTEmpID" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam35.ddlQueryConditions" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="s&quot;:[&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;1&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam36.ddlOTStatus" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+    </Request>
+    <Request Method="POST" Guid="3c007f5a-8780-4235-8b76-74c560f37583" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam29.btnUpdate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnUpdate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam30.txtOTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="txtOTEmpID" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam31.ddlQueryConditions" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="s&quot;:[&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;1&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam32.ddlOTStatus" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" RecordedValue=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="AR+LCAAAAAAABACtV91zE1UUT5ZuGtKPFGxiRd1dHpxtp6Rkk6gDtQ8kKTYjJdgGHixMZpt7u1m73c1kb0vjEz4UFHGAoehgZ5xxRgFBHB1fKjKOf4IPPvjMkLR98k/Ae/cj2SZLBkq30+TmnHPP73zfvU+9wQEv7ZOWJkVZDb437OmmfKGAP5tLaQulTLozmxsn375sLi0iiL9y8gLszuamkYgW9ZPiAuzCNA2JCmFg8dyymkn7bQG8OK6VF05mA8cV7XxK1CFmUk/xEwRBOiAciccE4Z23E4lgOMz40rCEMmn6AB+NRt8XovwhYxF1LJj92bJEVJ2QdYSXIgajKZ5nevOnRAlmdIJ2QpOKTMgifLgIy5VpVJZVyaD7TMdo3/SpieQHAnPQkju2iLRjpZJSGV+YhYDQUrqeUkRdlxjekiExQvh/ulDWFOWUpstI1tSsilcoKRbmJSZgukAshEyXw1b6Xq8OFVhAXDozncucTOW4Ao4Gx50vQpXLJqIjp0uWP5ysc6qGOHVRUTjUyoYK3sfzHFQBJ+qEWecdknWya5BssEk8P2SJ2RQncLw9cLwdcNwFON4KHHcFjrUHjrUDjrkAx1qBY67AQntgoQV40Nhtbm67d9DKcENkrqwtcHBianI6ncxnclPpkRkwq50bmTEE5E9EUj+kRM4R/WXIWRvHnEBDhhmm+0P1GAiOGDjcIyY+27kW3+zoCduj1wB5BkS7CLbLXGviHAbbicOkNkIuJrvUgEs9uvcGeQhoWjuvNqMaTjsCarjf8NRYmR4+Xl19vHqB54Yb0sN8hK//JIOSBMHFelNOcAi6+GMKxdyE4k1CcTehRJNQwinkFgXD4Bco3yynwDnEfazJ6vPuSEQ5jVQTtmVKU2BKA3CMT0R5TsTF4rCYG8vWly8MErdA4k6QuA0S3x2QmAUSc4LEbJDY7oAIFojgBBFsEGF3QCwMJ0SUNwBc9VtDqzFx8BAkTZwtA1jmZivOU8dxDjgms2PE1LueYzrxyjg1/farABO0z2CIxJwo6VKYovYEQbgffwbDFD7vT8hSESW15WQZivPjqjirQFAEYWoOS3VQXkOq84ysy5hRBICiDUpHDi4jemDz1s2NaxefrD/479GVzftfbNz9svrnyuMLt7HcW0SO7aG7a7+sb/56bevyhc3vrmD6kEUPPnn4sHp5bfO3S7WH17AezIpYrBBmEfrN9dqNb2qXPt9Yvbtx5zoWOBy0DCNO9AEQ9s4BSrCJPkIMhv1ML37pEs+IyiI8LkMF0B0kJUwPoRKzTaKfEEm/Ml35g4SV1BZVIDGd9Rj0hah9Efxgx7Y+xaZcIj/C5itVpMn6EOXxmZz+4T2UJBmW0YY5bK9pABtsYLJ9ErtvFxA6d44gRCObX93bWvlp4/bV6mc/4gDbCIITIW5H129FF4MFGvWJIXu2Tb86rrcVN+T1YM3epuAEGiW+c22dDW2xl9e219bW5Tjfdq7uXaNiKaOhSNsFcMmRewF56xYR3V3Bz9nDk5NnDwPABPL4DlBGxr3B85d8Ze2fv/2MPz+uAouU7GAf/OvHKjL6FBRBVlUqRSyQ0zR8mSjRkZmtP76t3bh8jqtef1S9er/29Q+1tYu4P2e21m4Z9Nr6ytat76srd6o//272ODHPi30GpNc1taDIhXn6o9NIVvKp4jweDjlNkhRoTAFZkVFlkEfLyLzcJKEkq/lCcb7B5Q9xzXwgL5EeO4aHDD80CnAvU2SM0DqqKJBml2AZyQVRiYiKLKlHkVYaXaqrOzraGEQ78xLvDGgqmFVMz3pRUdZHlsiAGOP5UYCTEvYxPtd07G3JxgQZEduSMUHqD6eV3b99M/tKPYNsfz1zbKjIhl82Teyr9Jnnyw+2tU12CNc9N+zAc6eFfe2F88EecM8C+3pTCN+oh5190xHvI+TSvY/y9oU95K+7f9jjAdSoEaKOoBGhAboHyHpJEStHVU2Fo+B/O7Wn9LUPAAA=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATEENCRYPTED" Value="{{$HIDDEN1.__VIEWSTATEENCRYPTED}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="V9wb/LjsitNhItkX3KJI3Hzkq+1ubp7PuxY2WSQ3CLtBzoLwhD7DnRemmkvcdDrQP55lCiadBOjojapTRRbJ/FuVBwn0h2MsInd1WeZpVzzrju4KIt3uhupa+lpz+QmbqTXpbDwwDmG6xsfqbEdJtyaigvRYzz2JAL5FonMUlC2xcMC/IaG4agRhuJPu1K8CQvepECWZQB0m3bAGLbzdohXPUTAH2r6FBoq2G8F6vBtAFW8TKcwc4vcOV5VIw4prpfXSV/JuWUNXLL9DXkBXiYKlNn/H9rHRCpqQilvE6EZJeFFWp+Lcg8PGujPu5F0PmeuejbXe8i7s3Z9+kQxOSnchIRRlu7i8kVV4JZJhsokeB6FnSS9tLxNqX34+MsqfB9cWgvbma+NVl+FiYrHffRVagIK+AdaiLHTI6ARrWvKSu20vGcUx2gX0UjniVAkEqx4cHAIs5f8QQQhMSCHQUxJJAKlDmpBCSCPH1jqcH9U2dHX3MGlxm2UmWPbJ7Jsp0MttRSpplgdlRNmSOFDNyqngDS9rHMs/ciFAnYI9SZfIxvvMNo0MZtLcBg7WKtxrp3bO5yOqaAG7k2JRhNd1c6s6cdo/7TqL7orS1wQoGOSzjFe6ZWEQMTzfAhECBX4/RQ42kxJBK9cpXm/MmuCbW9smN4bjlMp/HxuFhei2IDb6FG02MUbkIUZG0SlvvsUvWrzF5rlJTdns9UdLruJ4KMAVgqz9LacI+7GlQd3mjoLr3VqfrLOgGq+ZdpnNwf8cxrSWY2z3i6vA1SHB6LJHhdJkq+RI9bRPtqtllDkRP1z+iuZJGHM6AUo6Sc4Ic02mBW8mj9Xb+zC5XyNoWtxyuu684jdYrUst08HmbIUev4jR0kbWVfyM6lFJ8j2SBJ7bKfWfqS5G94jQfK0fX2E+jVD2CHqKl8gnC9Dq/6CF+F9U7xsEOqs1br0ciUQy5jNIcKsYLMukYL4Fu7ZWF7rV0Vg+T8HhMiQzVfutdbu727vlKnnzRH9982refzKWbZcAa1e6cE/zYXRpsdEfja1SVRzXvRw8Qor2zwnovvLLFr8ZmVg3RjZWx/+kmYbkO/1NskMssbMgafiz53fjn9Ta/kzqqW+V9QmE2tcRG9j7Pj0aOwOyLsFq9zd+hbsaoWuA9EYZAxRj8mqr/MZa0zNKgwDdA9I=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenWidth" Value="{{$HIDDEN1.ScreenWidth}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenHeight" Value="{{$HIDDEN1.ScreenHeight}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnQuery" Value="查詢" RecordedValue="查詢" CorrelationBinding="{{FormPostParam33.btnQuery}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOrgAndFlow" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlQueryConditions" Value="0" RecordedValue="0" CorrelationBinding="{{FormPostParam35.ddlQueryConditions}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{FormPostParam34.txtOTEmpID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpName" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTFormNO" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTStatus" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam36.ddlOTStatus}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateBegin$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateEnd$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Guid="b6bace6d-3bc9-48d2-9ffb-34f7868a20bf" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder.aspx" ThinkTime="23" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="http://10.11.36.114:8007/OverTime/OvertimePreOrder_Modify.aspx?OTCompID=SPHBK1&amp;OTEmpID=102119&amp;OTStartDate=2017/05/11&amp;OTEndDate=2017/05/11&amp;OTStartTime=0000&amp;OTEndTime=0100&amp;OTTxnID=SPHBK11021192017051195&amp;OTFormNO=2017051160102119" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam23.OTTxnID" DisplayName="擷取文字" Description="從回應中擷取文字，並將它放入測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTTxnID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam17.OTCompID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="?OTCompID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam18.OTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEmpID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam19.OTStartDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam20.OTEndDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam21.OTStartTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam22.OTEndTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam24.OTFormNO" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTFormNO=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam21.btnTempSave" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnTempSave" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam22.ucDateStart$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateStart_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam23.ucDateEnd$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateEnd_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam24.OTTimeStart$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam25.OTTimeStart$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam26.OTTimeEnd$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;01&lt;" />
+            <RuleParameter Name="Index" Value="24" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam27.OTTimeEnd$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam28.ddlOTTypeID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" RecordedValue=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATEENCRYPTED" Value="{{$HIDDEN1.__VIEWSTATEENCRYPTED}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="Q4wyYD835Rh2GjShfvjGRlvbXLNSuvpbUWAtp7VfRkPEAR8X148HWS4w6+vbBL/1hzUVXgTo8Y7CpoyhMD3HuhZ5+fUR7vQKRQkM1FU7QjkcoQ36FRSb+phlX1R4W4IyClEo1Y5TmmDlFBaKfpEAQsvypuy5+RiSxcwH/J6B3KAq4tJaFY36koVDqLvdN3tPAGVqLOMmO9JMgMgm+AkmARQnSvRC7z9B/nXw27u1paUhsSDafAdt5ZONI5W4okBznU6LHuHSYUCMrpW/r8mH0BD0sYZ/uaMVNIXR9NE1JbX4JUEHdc9vtXJ16lxLsiZDv7rlFP+LZJdZ9AQP2EvqR1cIeUmOWW9Rmbjps9trQhD8q9Q1UdJBgcwJ/iox/wWGyETw8X0+mNu9Sqbk1LYOETACPYHLGhPo4Q61LOsyfphcHKUs2AXQ66s1zo9X2vcdewHAx5Mk54yZ3y8XJukOffjv0Yli9iPJ7NjJfLVIahAPMgBSISN8hxk7nzmIKkOZDDZE3ljRpdNll9UHMsO0Klu32lgm6pj4v3qN/rUxGrOrVDHMuoWps3/w2u/dL7fAH08sBvyxL+GXyFChDU0oi1gMj3//Ka+I7HGPZhrNT1OaN2q3iyKzVpnZ9bfyWRsPQlB9CjZ6BgAAqJvzpv/QDl+aEEc+JQ64ppXN/nlUTcE+onBjaAjhapQL1pqRXNYHCo5XQNwlliE2TxOQjAC3+tI4WoDMQA4GfZu/+X6+Sdla9A4njs/GKE+M/um5c/G2p34YVyR9RbBmizbgyY3c8ssOg4vrUo0us3L559UCgG0hXuqrZ342E17rgCO1Vk+pKwUomwkEm5zNAARfs0bn2sme8a5Bt6O8CnfKTWzX5q6MwsfBM5RcSf5bhNqVtY4pEzAJy7wy5l372HSKv8uS4nOzyVK+7LMMwQmN7AIBHbdNjJYkBBnusXWQH+y+5Z/sbL53JalrXiLsjSsPKA3j85TFCFvMlW66Ub12ETBO51Mzt9Yzkbi+zuMnRavQQQtcz6zz8a/GgcUjdqyFncbNGu0NwOpKt/GmHezMes9/ZOzykiaiSvZumYJhwsvP4CpguqQmavm21LfhFyRzfo+r/hP8TxWPBihIupLV5gFPWg0tyaeQDXMQRhP0qD6qm7G59nG6Lt/4o1VdZlHr+WrxUlnA/6S/p5HystNAwtZUe9gBAexkQJTHqeZkXZAiPVOne11vd+kN+nykRteCR1mjqlP5M0vlIWtdnK8vuFbKJXWxD0OisT7yoZP3BjSQlh5p7svIdpJmph0nepl2xbXD7h3p7DkhY24M490OvF68atdcJVUJrBCd0/2hz1qBy1/LcC/WtWMd9wtR9LjYrLcZlnpoVw+LUr/wUvwT9wnGfMzjJRvOwi8TL2PXMyntVC5vtl871Q0myg2bFB1skD2ml3IPQC5AeQIW3/63EjcZuvPinksVFAxvosv3GDCAhkb1a/zN0ldTmfVTkOITprhA+iqD0UNqA/1Wu4QWKq9KBJ+OKYPjjGzw8keG/gWYHgSaVKQHXS/PvqGJMCnzPzyRFD/M64ZSBCa0Q4i6Xz6KWwBpPbCB5M5sz4KzB2qV0NZ7I+S/EN4eREvmzi1roM6FtHXlkng=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenWidth" Value="{{$HIDDEN1.ScreenWidth}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenHeight" Value="{{$HIDDEN1.ScreenHeight}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnUpdate" Value="修改" RecordedValue="修改" CorrelationBinding="{{FormPostParam29.btnUpdate}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOrgAndFlow" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlQueryConditions" Value="0" RecordedValue="0" CorrelationBinding="{{FormPostParam31.ddlQueryConditions}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{FormPostParam30.txtOTEmpID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpName" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTFormNO" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTStatus" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam32.ddlOTStatus}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateBegin$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateEnd$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="gvMain$ctl02$chkChoose" Value="on" RecordedValue="on" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Guid="b602b97a-46a0-4969-b7a6-7c668f42b9cf" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder_Modify.aspx" ThinkTime="1" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam15.OTTxnID" DisplayName="擷取文字" Description="從回應中擷取文字，並將它放入測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTTxnID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam9.OTCompID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="?OTCompID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam10.OTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEmpID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam11.OTStartDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam12.OTEndDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam13.OTStartTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam14.OTEndTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam16.OTFormNO" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTFormNO=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam13.btnTempSaveInvisible" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnTempSaveInvisible" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam14.ucDateStart$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateStart_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam15.ucDateEnd$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateEnd_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam16.OTTimeStart$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam17.OTTimeStart$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam18.OTTimeEnd$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;01&lt;" />
+            <RuleParameter Name="Index" Value="24" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam19.OTTimeEnd$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam20.ddlOTTypeID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <QueryStringParameters>
+        <QueryStringParameter Name="OTCompID" Value="SPHBK1" RecordedValue="SPHBK1" CorrelationBinding="{{QueryStringParam17.OTCompID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{QueryStringParam18.OTEmpID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam19.OTStartDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam20.OTEndDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartTime" Value="0000" RecordedValue="0000" CorrelationBinding="{{QueryStringParam21.OTStartTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndTime" Value="0100" RecordedValue="0100" CorrelationBinding="{{QueryStringParam22.OTEndTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTTxnID" Value="{{QueryStringParam23.OTTxnID}}" RecordedValue="SPHBK11021192017051195" CorrelationBinding="{{QueryStringParam23.OTTxnID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTFormNO" Value="2017051160102119" RecordedValue="2017051160102119" CorrelationBinding="{{QueryStringParam24.OTFormNO}}" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:8ad18101:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" RecordedValue=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:8ad18101:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnTempSave" Value="暫存" RecordedValue="暫存" CorrelationBinding="{{FormPostParam21.btnTempSave}}" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewStartTime" Value="{{$HIDDEN1.hidGridViewStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucDateStart$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam22.ucDateStart$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="ucDateEnd$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam23.ucDateEnd$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlHH" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam24.OTTimeStart$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam25.OTTimeStart$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlHH" Value="01" RecordedValue="01" CorrelationBinding="{{FormPostParam26.OTTimeEnd$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam27.OTTimeEnd$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTTypeID" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam28.ddlOTTypeID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTReasonMemo$txtData" Value="test" RecordedValue="test" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchStartTime" Value="{{$HIDDEN1.hidGridViewSearchStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchEndTime" Value="{{$HIDDEN1.hidGridViewSearchEndTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="frameAttach" Value="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test102119bf3725d2-8c3d-4792-b423-664a535f0031&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" RecordedValue="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test102119bf3725d2-8c3d-4792-b423-664a535f0031&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Guid="8df3d24b-2809-40bb-bd5a-19dd6425494b" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder_Modify.aspx" ThinkTime="5" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam7.OTTxnID" DisplayName="擷取文字" Description="從回應中擷取文字，並將它放入測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTTxnID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam1.OTCompID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="?OTCompID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam2.OTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEmpID=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam3.OTStartDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam4.OTEndDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndDate=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam5.OTStartTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTStartTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam6.OTEndTime" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTEndTime=" />
+            <RuleParameter Name="EndsWith" Value="&amp;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="QueryStringParam8.OTFormNO" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&amp;amp;OTFormNO=" />
+            <RuleParameter Name="EndsWith" Value="&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam5.btnExit" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnExit" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam6.ucDateStart$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateStart_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam7.ucDateEnd$txtDate" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="ucDateEnd_txtDate" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam8.OTTimeStart$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam9.OTTimeStart$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam10.OTTimeEnd$ddlHH" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;01&lt;" />
+            <RuleParameter Name="Index" Value="24" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam11.OTTimeEnd$ddlMM" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="lue=&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;&gt;00&lt;" />
+            <RuleParameter Name="Index" Value="23" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam12.ddlOTTypeID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <QueryStringParameters>
+        <QueryStringParameter Name="OTCompID" Value="SPHBK1" RecordedValue="SPHBK1" CorrelationBinding="{{QueryStringParam9.OTCompID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{QueryStringParam10.OTEmpID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam11.OTStartDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam12.OTEndDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartTime" Value="0000" RecordedValue="0000" CorrelationBinding="{{QueryStringParam13.OTStartTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndTime" Value="0100" RecordedValue="0100" CorrelationBinding="{{QueryStringParam14.OTEndTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTTxnID" Value="{{QueryStringParam15.OTTxnID}}" RecordedValue="SPHBK11021192017051195" CorrelationBinding="{{QueryStringParam15.OTTxnID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTFormNO" Value="2017051160102119" RecordedValue="2017051160102119" CorrelationBinding="{{QueryStringParam16.OTFormNO}}" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value="{{$HIDDEN1.ToolkitScriptManager1_HiddenField}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="/wEdANoBr1Vw9aGBC3r3jK9LxwpmD6V7831qFo9RG0Yq8WbfA+eh4+emZ4+p+HYfm77L9J7oD/hpvuXnN7NloN2tD05aCjzmltaUM7aEAN+g9cP/m10zz75POEcvCk9FpcrSqG/E+WKeiXRVjDQRq36YN4VzTXXcdo0KYo9fC1Igwm+WnCrJ4Y4s+X3i7bpWZJKqlej1lMXyWGiMf/dstsd+zdytIhqMvZ1EyXMAlz2wCmysw7ffXhNiXDsAxQcLGsVg0Df4Zvgy7626jpKH51ckauKSX6QPBaUe36UEuWjwyprY7YQnhXouGBKuAhmvXh3eDsqSzD/cuwWc31M2bSoIUf1Eq1JDO7cJAGurtjksOSidBftVIUVq5JVd7gcr6gEoANHPfZJm/Hj8Ud6TXp1UGJmZ7tvpxwVkKUF6vPxjSIXFn/vik8wq7t+NhT8DPyATJgvFD3K5U+vxoCxLiUqc7nhVUWtjkv7BfAebJgilEENpEnLq5gr892neRaMhu6Up48OdYPDqLRSXXjgJq6eRLSFwZHjC1PjA+0RWqt8dlXHclXWDQYMrS7O/aNduxLUe7xphT/yxAeD2U+VjrLkp2mFSIaaCeBw9HFtCxPP1Py4CDQtKOma0NZfWQdwVKqC/kxTKAlQKSwn60Ww7zdAYnOOVDdGHN/Tr5bgKP6ZwZ/8MQcFeDsdCJGdewyk5GsHOq02Lt4TErGC29HByKVP1S1pp00IC6f/6/yOzTZAExIc00trNhFRX1n8OHSKRGH3Kh6K1Ks2xH8Oc/4QwblhZbNYxjbRYR6LiDfJtYvInWXTnAGZpJY4zTJi1g6S11M4AyVPioftxMf1NI8cPClKJIv36hlaPhUuk7ynLqJI1NTqnVJFbYIZRQ1WEAgclhfjYa3nD/iUmpRqVDmksz7eL9Y/zgBH4gHLe8Y2ZyCp6ZmuwErSL6bOxnVJ2x7KvaXcU2vX3SsJLdP/ffxWTIFtcrtDa67strfk74bKLPShgjws9Kf2/TQMsCD5jYSDEa92n0ajg1WbEDZDzVG/0w/UnspIoVme6MF5L7E+APBTQHCJqzHuB+WG2zJJfAVqgpUjM1eFtxHP0eQXaOf6z03jVgHOVclbcYJ0dZQ/fAb2LhNZJjkfyoCrjinvRX+c9v7SbAIQD/nd5h6sOQ83Umfhf6bMpt54ainLlLc6SM+3d5jHYrnwKTmNxPPaWsvLmfhx0LhwnCXGlBoLsKpguDpLzQhf+l/mL1+yfjUSzqFux7kHjKwXBzEhxxf0kdZ3nXrRpVVYJJG5Lus4F8WbVtIuksqwlE/wnOy2YyhwyMNesQ64K3S4UmcTRogdpO1ArOi3SzUEZh7uzVuqYjr1d3zkgtHjpTzhAoYZiVO5WYt93ZnhuVXLYgTmPBNm79Is7w1X5Tq60LjsbVvb8CPNMPCBlNyGg5tlviTPlpGeRNslBKW+4LBXE6AE6EoW1LDwluIV9qz5JKPZeJGwYNDa5TVXupuzEvrVDblDbu71BgdGvQwq+p11ScYMMLgkoV05OXlvolktjLSEGrIS6W8yVHGjSsh4GOuja7xThSXAVvAr7CI0cCcYJJ+y45uGKp2xMHECsMqdUBTVKQsAniC9sZCByEyAhA+kysU96HC8IITMdjtQnhpgRBGzkR+Ds1UyWenfpq/45ihHQnUjR2Pa+FoqJPluHJXYAcL5dif4r6qQZDGyW7BK9O3LvcbfzjwMBf2qx99TYkJanxhldn5RHqsdJBTlFTCeIqJillNP9X+aJ77tz5n5u/8w06NLxci8Q47vUzcbY//oj/PfoLBh78Eh/frCiqVNNm3aGSwwpmECvwEoTEDYgLvCS9GvllD3VoyQUcPJ+IvNbN131gVBFAfaYaWqxV+AkKxJ7pRZfjYtomzylK9ECsjAdS4O5nj4xZibfGmOoRLjlLe8ZKvyRdiiHvYUjtuKOwPKQOKcYlEFj9f6hQEVwd8p4o8YfrAtQc2Iz+PKXGuCmWEYtuzoggIPOv2GiO3pMjGoJLaNATUOguy4nphF7H7SSwKSjE+2OD2En5HPilZUrD9gkXvGigeXiE5aYGxcjdR+mLdCP8vK+SSNRE4sCmYuqYOt4iQpjAP60kwa8avDddV0ilRbp6s25DHzscfaAJJBl4dJsG2ilz/TfQcxr+LWajfukxMSd9OmKPwEKj1Pb2Db4tHvUmjOSzdCQ3vEke9ankR6/rrLhf21xSWb8iykIuJGx+vU9IqNTb5CnQVSw2MmMPOon7BhZHORPEDDksDxd+iWG6vU+CtI5UZCrTVTqsCVSjUahNQR+pJh1zH9Rcx5u9bzKu7suxrVYQNQ97am/PO5rdnUaln16Hs3GpewxDkMnEoq+Hc7zoeg2i87tgpDy/v/MuQ6oEqbwA+9VMD2URpvKIQ8lIzi8QuP3jWfCC8kSaqa/jc+EELpNomnkxPkY2EzHR5Fs791orloVGhu0TXhC3yiQC+X/anfaWDBlwnK4L1aBd7rK0BkkuO8gc5AUmhuXQQMkSVhHkiHS6ma0sjz1Ko/o5LA17RacfXa7n21gmUwCKKZ/uycnVbN9Q76HubD1AqvqYdQ7+8fF0pehCP4YCnE8AC3D2Y39UHf841mEU/ze2pRnKPpZFTpNp5aXPbVZ5f+4G0GKa20QqIldVVGpPDhWpzLEarA5dvioOeBhYA7YQwaAhm8ulJOM2hRcqLC9+2Vn4Cbzpk8TmfI3jc8x7xCo0NXa7dG+GT9feRUyLuYzz4GaDXyeSScTHg7kK1s7xytKMUbnvrEm4WggfGonNtNLgyqUvuoghVNu+2maoTf5eZl0qeSNjIfHvc7hErYRGq1LjVcOlziKXhqe5wHBT4ucigRqC6jBlw9i8FYo7Qz20BadsDksj8+JqfgvKt16IzJwsp+7aRL6KTJgDAnj7zW7JD4Hwir5W874fctjNj+ztWeNmGNNt9J405W/xhyGyCXtZtTqMd4X2opoypVVw+Tj/BTWjep2HKcJaEDxr23Acr/C4Lhs3up9ES2NJLaP7+ZjnYAvKxpdsOp/S6SqzGS7fj/sY881lRRi0KsS9pW3GAbPCT9LYR4gBHz1uCjqkXjJv7H9Nivg1nC69qtSjSc79PUun4Ppy9JJA+lZxDR/106ADGqQKu5aA+uKWlBrUF19xTsHfdgYqrKNXsfqmwnNbna8lrQS8Ap9IjRLEUilYNQgCISeUfgCX80gUjmQxXraiGt60pO074LsQL+ixORy/pxFYajrfMvT0U1WC8cJcRELorx0/gJSj+1S4Ebzdsts4Nrtk5kGOXlKktyew+kNqSdjv0UFebeThB5Wi6JVutPI2qbLuP0CMDhCwrvVWfIslzRZMiypOl2s7gMd90K4IET9viqOPdFhpCoLtnG4i2ukf+2SJ6NUEFupJ6qo5Inz7IclQ6fkf5jCpa5f9619g8Bq1b5mF7eia5sld10hkgMq5u/UMM9duXvfUQbpWpIgw3fmyhFryPMWWtw+odCqM/LnYAJGHYV/euiVpbGhjLETGsBaE7IlJBW8ls3KuAO5tN8b+nSKg45QgoZ6lqDUYUjvIwltbHBang72PMx1Usou51j8tl+yjDev7s+ahY2QGmEMk7J7RihCwwcrSSEgmftlASoFceHTEJmyvRkyaIqerxTQ9OjGYGbMHTeOpl863lBQOKAeVgNQL3Sv2g9EL+B17tW3EA5besAPqSgEJbnQ8U22dpe/zgqs0JGu56sWpkgR2LXHzBEZxm6GnjJizMgO48Urpp4NfaRgsQISL6pqF6b0eiERTtTRWTwH1ikynw1avBILrOCY5hwMrIGMPwzCf98puyuiZeTFMnkaHkiluxiPrteSyei6k9jd7be19nsm3M3o/peETFGWX8R+6tCI7m4ox5wPhl6htWVNjgQsDVbxfFQkPTdd+yz5MsJO0a9lIjXuaIT/HrxoePLC20JMHqgXHlH0oe+sWnrv1HUa8kOlFyM9v40PRW8gg25jjMEZeOIlfUzthIFUbPqYcoB3R9Vn38+AVn9Wx+utW+D6NZehdHbRTbeXZX00FI+DMwBy0SN49cA6t9POVw2vxqELFt+Zdxhu1NRwmcfLzJ+yp0hI7VndXrHZE3whKOUhiZaLwPWSGxqw6TGs3VFPor6pOHXDWPl37yUoWb07HAsTkOmAYj3Joaj4EWfXG9HUcxMlMQxbsl1OMqnFDFCcPqmuseXHIXLnBXmTi5nsAZJLjEQuWxhv8ufLqbWvYc2wyRO51acn1sk63BnehUPQOswoQMSU0gWZE1RjqRCzBPZ8kFRVDWWUNXsNzuEAJhLndtAPa2sUGgqiPgskzMf5cdsi0cGDcguz4OtLI8Z+wEz0ZB2LLF7ejzrMeq39ezOXiCy98M1zAEJS9/TbmG7oziqQkNnj3GirCKHFCmBn0pN4qnUb1umh7MdWSOy2I1g6FnJAMhfR0nCyDmz+eK/PyQmJTAMd1Dn5dvnecopAS80woAwfiNCbO6YkesXLcVhnX9U14lBnwHddXRdzl6iwMYi4rKTTk8RnoV/mH+v5fduwD8maVtudnEEPBcCCPEushgjcD7NsYVxSEBcp27sXp8NZCloz2o6PbFhXv/HCUGxtXo2YwumMDlWkn5f5EQkw6+HKhRobQBUCcxH1jedfzUkzG4RxllrTUlkeDdb9ulU9ZZYaNdO/ow==" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnTempSaveInvisible" Value="暫存" RecordedValue="暫存" CorrelationBinding="{{FormPostParam13.btnTempSaveInvisible}}" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewStartTime" Value="{{$HIDDEN1.hidGridViewStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucDateStart$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam14.ucDateStart$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="ucDateEnd$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam15.ucDateEnd$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlHH" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam16.OTTimeStart$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam17.OTTimeStart$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlHH" Value="01" RecordedValue="01" CorrelationBinding="{{FormPostParam18.OTTimeEnd$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam19.OTTimeEnd$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTTypeID" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam20.ddlOTTypeID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTReasonMemo$txtData" Value="test" RecordedValue="test" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchStartTime" Value="{{$HIDDEN1.hidGridViewSearchStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchEndTime" Value="{{$HIDDEN1.hidGridViewSearchEndTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="frameAttach" Value="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test102119bf3725d2-8c3d-4792-b423-664a535f0031&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" RecordedValue="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test102119bf3725d2-8c3d-4792-b423-664a535f0031&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Guid="dcf1fc98-ecdd-4ce3-ad07-abdfefb1026c" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder_Modify.aspx" ThinkTime="4" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="http://10.11.36.114:8007/OverTime/OvertimePreOrder.aspx" ReportingName="" IgnoreHttpStatusCode="False">
+      <ExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractHiddenFields, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="1" DisplayName="擷取隱藏欄位" Description="擷取回應中的所有隱藏欄位，並將它們放在測試內容中。">
+          <RuleParameters>
+            <RuleParameter Name="Required" Value="True" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+          </RuleParameters>
+        </ExtractionRule>
+      </ExtractionRules>
+      <CorrelationExtractionRules>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam1.btnQuery" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="btnQuery" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractFormField, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam2.txtOTEmpID" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="Name" Value="txtOTEmpID" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+            <RuleParameter Name="Index" Value="0" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam3.ddlQueryConditions" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="s&quot;:[&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;1&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+        <ExtractionRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ExtractText, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" VariableName="FormPostParam4.ddlOTStatus" DisplayName="" Description="">
+          <RuleParameters>
+            <RuleParameter Name="StartsWith" Value="&quot;0&quot;,&quot;" />
+            <RuleParameter Name="EndsWith" Value="&quot;,&quot;2&quot;" />
+            <RuleParameter Name="Index" Value="0" />
+            <RuleParameter Name="IgnoreCase" Value="False" />
+            <RuleParameter Name="UseRegularExpression" Value="False" />
+            <RuleParameter Name="HtmlDecode" Value="True" />
+            <RuleParameter Name="Required" Value="False" />
+          </RuleParameters>
+        </ExtractionRule>
+      </CorrelationExtractionRules>
+      <QueryStringParameters>
+        <QueryStringParameter Name="OTCompID" Value="SPHBK1" RecordedValue="SPHBK1" CorrelationBinding="{{QueryStringParam1.OTCompID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{QueryStringParam2.OTEmpID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam3.OTStartDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndDate" Value="2017%2f05%2f11" RecordedValue="2017%2f05%2f11" CorrelationBinding="{{QueryStringParam4.OTEndDate}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTStartTime" Value="0000" RecordedValue="0000" CorrelationBinding="{{QueryStringParam5.OTStartTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTEndTime" Value="0100" RecordedValue="0100" CorrelationBinding="{{QueryStringParam6.OTEndTime}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTTxnID" Value="{{QueryStringParam7.OTTxnID}}" RecordedValue="SPHBK11021192017051195" CorrelationBinding="{{QueryStringParam7.OTTxnID}}" UrlEncode="False" UseToGroupResults="False" />
+        <QueryStringParameter Name="OTFormNO" Value="2017051160102119" RecordedValue="2017051160102119" CorrelationBinding="{{QueryStringParam8.OTFormNO}}" UrlEncode="False" UseToGroupResults="False" />
+      </QueryStringParameters>
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:8ad18101:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" RecordedValue=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:8ad18101:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="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" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnExit" Value="返回" RecordedValue="返回" CorrelationBinding="{{FormPostParam5.btnExit}}" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewStartTime" Value="{{$HIDDEN1.hidGridViewStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucDateStart$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam6.ucDateStart$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="ucDateEnd$txtDate" Value="2017/05/11" RecordedValue="2017/05/11" CorrelationBinding="{{FormPostParam7.ucDateEnd$txtDate}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlHH" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam8.OTTimeStart$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeStart$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam9.OTTimeStart$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlHH" Value="01" RecordedValue="01" CorrelationBinding="{{FormPostParam10.OTTimeEnd$ddlHH}}" UrlEncode="True" />
+        <FormPostParameter Name="OTTimeEnd$ddlMM" Value="00" RecordedValue="00" CorrelationBinding="{{FormPostParam11.OTTimeEnd$ddlMM}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTTypeID" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam12.ddlOTTypeID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTReasonMemo$txtData" Value="test" RecordedValue="test" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchStartTime" Value="{{$HIDDEN1.hidGridViewSearchStartTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="hidGridViewSearchEndTime" Value="{{$HIDDEN1.hidGridViewSearchEndTime}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="frameAttach" Value="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test1021193128a4b5-6408-42a8-857a-e5a1398ce4a3&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" RecordedValue="/Util/AttachAdmin.aspx?AttachDB=AattendantDB_ITRD&amp;AttachID=test1021193128a4b5-6408-42a8-857a-e5a1398ce4a3&amp;AttachFileMaxQty=1&amp;AttachFileMaxKB=3072&amp;AttachFileTotKB=3072&amp;AttachFileExtList=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+    <Request Method="POST" Guid="858f26b7-5562-4df0-a149-5925792cb287" Version="1.1" Url="http://10.11.36.114:8007/OverTime/OvertimePreOrder.aspx" ThinkTime="0" Timeout="300" ParseDependentRequests="True" FollowRedirects="True" RecordResult="True" Cache="False" ResponseTimeGoal="0" Encoding="utf-8" ExpectedHttpStatusCode="0" ExpectedResponseUrl="" ReportingName="" IgnoreHttpStatusCode="False">
+      <FormPostHttpBody>
+        <FormPostParameter Name="ToolkitScriptManager1_HiddenField" Value=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" RecordedValue=";;AjaxControlToolkit, Version=4.1.7.607, Culture=neutral, PublicKeyToken=28f01b0e84b6d53e:zh-Hant:7b95ed1a-6a3f-41dd-bc5b-63f39edbc4b4:de1feab2:fcf0e993:f2c8e708:720a52bf:f9cec9bc:589eaa30:698129cf:fb9b4c57:ccb96cf9:a67c2700:8613aea7:3202a5a2:ab09e3fe:87104b7c:be6fb298" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTTARGET" Value="{{$HIDDEN1.__EVENTTARGET}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTARGUMENT" Value="{{$HIDDEN1.__EVENTARGUMENT}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__LASTFOCUS" Value="{{$HIDDEN1.__LASTFOCUS}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VSTATE" Value="{{$HIDDEN1.__VSTATE}}" RecordedValue="AR+LCAAAAAAABACtV91zE1UUT5ZuGtKPFGxiRd1dHpxtp6Rkk6gDtQ8kKTYjJdgGHixMZpt7u1m73c1kb0vjEz4UFHGAoehgZ5xxRgFBHB1fKjKOf4IPPvjMkLR98k/Ae/cj2SZLBkq30+TmnHPP73zfvU+9wQEv7ZOWJkVZDb437OmmfKGAP5tLaQulTLozmxsn375sLi0iiL9y8gLszuamkYgW9ZPiAuzCNA2JCmFg8dyymkn7bQG8OK6VF05mA8cV7XxK1CFmUk/xEwRBOiAciccE4Z23E4lgOMz40rCEMmn6AB+NRt8XovwhYxF1LJj92bJEVJ2QdYSXIgajKZ5nevOnRAlmdIJ2QpOKTMgifLgIy5VpVJZVyaD7TMdo3/SpieQHAnPQkju2iLRjpZJSGV+YhYDQUrqeUkRdlxjekiExQvh/ulDWFOWUpstI1tSsilcoKRbmJSZgukAshEyXw1b6Xq8OFVhAXDozncucTOW4Ao4Gx50vQpXLJqIjp0uWP5ysc6qGOHVRUTjUyoYK3sfzHFQBJ+qEWecdknWya5BssEk8P2SJ2RQncLw9cLwdcNwFON4KHHcFjrUHjrUDjrkAx1qBY67AQntgoQV40Nhtbm67d9DKcENkrqwtcHBianI6ncxnclPpkRkwq50bmTEE5E9EUj+kRM4R/WXIWRvHnEBDhhmm+0P1GAiOGDjcIyY+27kW3+zoCduj1wB5BkS7CLbLXGviHAbbicOkNkIuJrvUgEs9uvcGeQhoWjuvNqMaTjsCarjf8NRYmR4+Xl19vHqB54Yb0sN8hK//JIOSBMHFelNOcAi6+GMKxdyE4k1CcTehRJNQwinkFgXD4Bco3yynwDnEfazJ6vPuSEQ5jVQTtmVKU2BKA3CMT0R5TsTF4rCYG8vWly8MErdA4k6QuA0S3x2QmAUSc4LEbJDY7oAIFojgBBFsEGF3QCwMJ0SUNwBc9VtDqzFx8BAkTZwtA1jmZivOU8dxDjgms2PE1LueYzrxyjg1/farABO0z2CIxJwo6VKYovYEQbgffwbDFD7vT8hSESW15WQZivPjqjirQFAEYWoOS3VQXkOq84ysy5hRBICiDUpHDi4jemDz1s2NaxefrD/479GVzftfbNz9svrnyuMLt7HcW0SO7aG7a7+sb/56bevyhc3vrmD6kEUPPnn4sHp5bfO3S7WH17AezIpYrBBmEfrN9dqNb2qXPt9Yvbtx5zoWOBy0DCNO9AEQ9s4BSrCJPkIMhv1ML37pEs+IyiI8LkMF0B0kJUwPoRKzTaKfEEm/Ml35g4SV1BZVIDGd9Rj0hah9Efxgx7Y+xaZcIj/C5itVpMn6EOXxmZz+4T2UJBmW0YY5bK9pABtsYLJ9ErtvFxA6d44gRCObX93bWvlp4/bV6mc/4gDbCIITIW5H129FF4MFGvWJIXu2Tb86rrcVN+T1YM3epuAEGiW+c22dDW2xl9e219bW5Tjfdq7uXaNiKaOhSNsFcMmRewF56xYR3V3Bz9nDk5NnDwPABPL4DlBGxr3B85d8Ze2fv/2MPz+uAouU7GAf/OvHKjL6FBRBVlUqRSyQ0zR8mSjRkZmtP76t3bh8jqtef1S9er/29Q+1tYu4P2e21m4Z9Nr6ytat76srd6o//272ODHPi30GpNc1taDIhXn6o9NIVvKp4jweDjlNkhRoTAFZkVFlkEfLyLzcJKEkq/lCcb7B5Q9xzXwgL5EeO4aHDD80CnAvU2SM0DqqKJBml2AZyQVRiYiKLKlHkVYaXaqrOzraGEQ78xLvDGgqmFVMz3pRUdZHlsiAGOP5UYCTEvYxPtd07G3JxgQZEduSMUHqD6eV3b99M/tKPYNsfz1zbKjIhl82Teyr9Jnnyw+2tU12CNc9N+zAc6eFfe2F88EecM8C+3pTCN+oh5190xHvI+TSvY/y9oU95K+7f9jjAdSoEaKOoBGhAboHyHpJEStHVU2Fo+B/O7Wn9LUPAAA=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATE" Value="{{$HIDDEN1.__VIEWSTATE}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONX" Value="{{$HIDDEN1.__SCROLLPOSITIONX}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__SCROLLPOSITIONY" Value="{{$HIDDEN1.__SCROLLPOSITIONY}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__VIEWSTATEENCRYPTED" Value="{{$HIDDEN1.__VIEWSTATEENCRYPTED}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="__EVENTVALIDATION" Value="{{$HIDDEN1.__EVENTVALIDATION}}" RecordedValue="0pExHnUeuPV2sYJiDcBuuJohx6N7AoqeD2qVMriUEJMAB5CKmQNEljLsJX+LpQQhJCjcRNAUx5txEVLZ8rXPHjPHpXvKwyqWhmTBJN8TMhfjuGMiuH8reIjdLolwrQbu6xlxsqYY6by5B0hI3roF0NPl13JKQjMF4PLVM7nA5j3L4kHqGtTesem/nrM5sbe13RWH5DvQYP6dpxkVjJ5I1J+eQPpiTIuqRX40rJUPgc6x0gmb7XHM1Fo3W+e07T5Hj4rfzHgJo3B6REwQaXAYEN/FE9YYNmI6kZ6exVDm2uQVHr0VIDPumPVr0xJt+MasPHnQqVYF8oj5qzvSRBJ3Q/8hL711LBqIvr4OWVCnDYHcJBBFamgGZgX3nAHg1aKEHIUl8PHdjcRlmkblTF+U6UFAmk77bzl+/+rAm8V9el1X4fHY/Ti7KLHOx/DPdkHZPhkAA9n2wHz5lScAWsalxztKesRKRD7Y+cDQTFdiXmPg4gz9M1+Xb4Z7TGKqm46U0SOEpgCaA9gMiQi4gpNlLBpgG7AVJuDWA0yAXs9EDBU8h//JVzdAa9Q3G5VPy8gUOBQ/f4dYtMx7X7XctdZvgWOBUDkAgslAuZv2w2bq2NrkoIHqKxMamP9gjB8nhHmrLZeABP7q54JvXN+vqLokaQkSXZgs8sUkrx5YxVqxsp0KhB2j5/NT7saX0SI8xgOhCnZ36PWF7U9GBGxphvttxQrt/TuxtSaQozqaxKZXaR2W58hCwU+pJ8DA19V6WG4+LgHIbU8Pnma0DCaZhU8eYy0xTcmJODAEpDT1cTK7SysUC3WuRfFj+A5R/3xUs94SqwCETW4RZwSZFrfqiWnJ4wT9VyzlC7XXCBJb4TTwU/mYrY+1QisFLqi7CswUBLCQobqxsB1lZ7+pJ7cMoY7o+erpv5AwTWF0pnPO1NHbVyx+n9wll7g7XomrHZ22Ah1z+6FIzxGXepgrniCsBT55g9VWHvTMW6JcVIfsu88Pp7ozO5J623hCdYjTF3OisW5eiDhICqt3NdiffF2zyGd/wdjpE3Fh8G0tmb8rXw8I72Q/Fl1YQrQrG3SwgjqjVleDJmptvkO3Ovau19xvJDwVAbPj/fuvssbNUn42Di2L/OILCWQZED2VvIkrnZgBHP+7Y6/mGdt9RUzVaVrIslj06G6c1WY=" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenWidth" Value="{{$HIDDEN1.ScreenWidth}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ScreenHeight" Value="{{$HIDDEN1.ScreenHeight}}" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="btnQuery" Value="查詢" RecordedValue="查詢" CorrelationBinding="{{FormPostParam1.btnQuery}}" UrlEncode="True" />
+        <FormPostParameter Name="ddlOrgAndFlow" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlQueryConditions" Value="0" RecordedValue="0" CorrelationBinding="{{FormPostParam3.ddlQueryConditions}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpID" Value="102119" RecordedValue="102119" CorrelationBinding="{{FormPostParam2.txtOTEmpID}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTEmpName" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTFormNO" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ddlOTStatus" Value="1" RecordedValue="1" CorrelationBinding="{{FormPostParam4.ddlOTStatus}}" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateBegin$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="txtOTDateEnd$txtDate" Value="" RecordedValue="" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientWidth" Value="{{$HIDDEN1.ucModalPopup1$ClientWidth}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+        <FormPostParameter Name="ucModalPopup1$ClientHeight" Value="{{$HIDDEN1.ucModalPopup1$ClientHeight}}" RecordedValue="0" CorrelationBinding="" UrlEncode="True" />
+      </FormPostHttpBody>
+    </Request>
+  </Items>
+  <ValidationRules>
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidateResponseUrl, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="回應 URL" Description="驗證回應 URL 在套用重新導向之後是否和記錄的回應 URL 相同。已忽略 QueryString 參數。" Level="Low" ExectuionOrder="BeforeDependents" />
+    <ValidationRule Classname="Microsoft.VisualStudio.TestTools.WebTesting.Rules.ValidationRuleResponseTimeGoal, Microsoft.VisualStudio.QualityTools.WebTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" DisplayName="回應時間目標" Description="驗證此要求的回應時間是否小於或等於此要求所指定的回應時間目標。回應時間目標為零將被忽略。" Level="Low" ExectuionOrder="AfterDependents">
+      <RuleParameters>
+        <RuleParameter Name="Tolerance" Value="0" />
+      </RuleParameters>
+    </ValidationRule>
+  </ValidationRules>
+</WebTest>

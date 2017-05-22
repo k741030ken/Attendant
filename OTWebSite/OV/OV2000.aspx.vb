@@ -68,24 +68,26 @@ Partial Class OV2000
             Dim dt As DataTable = OV2.getOV2000_Detial_DB()
 
             If dt.Rows.Count > 0 Then
-                dt = (From cust In dt.AsEnumerable() _
-                Order By cust.Field(Of String)("OVADate") Ascending, cust.Field(Of String)("OVATime") Ascending, cust.Field(Of String)("EmpID") Ascending).CopyToDataTable()
+                'dt = (From cust In dt.AsEnumerable() _
+                'Order By cust.Field(Of String)("OVADate") Ascending, cust.Field(Of String)("OVATime") Ascending, cust.Field(Of String)("EmpID") Ascending).CopyToDataTable()
 
                 '***************************' 201702/17Rebecca modify
-                Dim reMoveRowForOVDDBList As DataTable = dt.Clone
-                '移除中
-                For i = dt.Rows.Count - 1 To 0 Step -1
+                'Dim reMoveRowForOVDDBList As DataTable = dt.Clone
+                ''移除中
+                'For i = dt.Rows.Count - 1 To 0 Step -1
 
-                    If dt.Rows(i)("OVADate").ToString() = "" Then
-                        reMoveRowForOVDDBList.ImportRow(dt.Rows(i))
-                        dt.Rows.Remove(dt.Rows(i))
-                    End If
-                Next
-                '加回去
-                For i = 0 To reMoveRowForOVDDBList.Rows.Count - 1 Step 1
-                    dt.ImportRow(reMoveRowForOVDDBList.Rows(i))
-                Next
+                '    If dt.Rows(i)("OVADate").ToString() = "" Then
+                '        reMoveRowForOVDDBList.ImportRow(dt.Rows(i))
+                '        dt.Rows.Remove(dt.Rows(i))
+                '    End If
+                'Next
+                ''加回去
+                'For i = 0 To reMoveRowForOVDDBList.Rows.Count - 1 Step 1
+                '    dt.ImportRow(reMoveRowForOVDDBList.Rows(i))
+                'Next
                 '***************************'
+
+
                 pcMain.DataTable = dt
                 gvMain.DataBind()
             End If
@@ -96,6 +98,9 @@ Partial Class OV2000
             div_tb1.Style.Add("display", "none")
         ElseIf ddlType.SelectedValue.Equals("statistics") And funCheckData() Then
             Dim dt As DataTable = OV2.getOV2000_Statistics_DB()
+
+            dt = (From cust In dt.AsEnumerable() _
+            Order By cust.Field(Of String)("EmpID") Ascending).CopyToDataTable()
 
             pcMain1.DataTable = dt
             gvMain1.DataBind()

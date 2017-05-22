@@ -15,7 +15,7 @@ using SinoPac.WebExpress.Work;
 public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
 {
     #region "全域變數"
-    private string _overtimeDBName =Util.getAppSetting("app://AattendantDB_OverTime/");// "AattendantDB";
+    private string _overtimeDBName = Util.getAppSetting("app://AattendantDB_OverTime/");// "AattendantDB";
     private Aattendant at = new Aattendant();
     public string _AttachID
     {
@@ -302,7 +302,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             //_OTTxnID = (Request["OTTxnID"] != null) ? Request["OTTxnID"].ToString() : "";
             _OTTxnID = (ViewState["_OTTxnID"] != null && ViewState["_OTTxnID"].ToString().Trim() != string.Empty) ? ViewState["_OTTxnID"].ToString() : Request["OTTxnID"] != null ? Request["OTTxnID"].ToString() : string.Empty;
             //--------------------------------
-            
+
             LoadData();
             //加班類型
             DataTable dtType = at.QueryData("Code,CodeCName", "AT_CodeMap", " AND TabName='OverTime' AND FldName='OverTimeType'");
@@ -701,7 +701,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         if (_dtPara == null)
         {
             Util.MsgBox("請聯絡HR確認是否有設定參數值");
-            return ;
+            return;
         }
         else
         {
@@ -764,7 +764,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         if (_dtPara == null)
         {
             Util.MsgBox("請聯絡HR確認是否有設定參數值");
-            return ;
+            return;
         }
         else
         {
@@ -856,7 +856,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 //從凌晨開始到六點
                 else if (Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) >= 0 && Convert.ToInt32(OTTimeStart.ucDefaultSelectedHH) < 6)
                 {
-                    lblStartSex.Visible = true; 
+                    lblStartSex.Visible = true;
                 }
                 else
                 {
@@ -1103,7 +1103,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                         }
                         #endregion "計算時段"
                     }
-                    
+
                 }
             }
             else //跨日
@@ -1211,7 +1211,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                         }
                         #endregion "計算時段"
                     }
-                    
+
                 }
             }
         }
@@ -1471,7 +1471,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 if (txtMealTime.Text != "" && Convert.ToInt32(txtMealTime.Text) >= (cntEnd + cntStart))
                 {
                     txtMealTime.Focus();
-                    Util.MsgBox("用餐時數超過加班時數");  
+                    Util.MsgBox("用餐時數超過加班時數");
                 }
                 else
                 {
@@ -1570,7 +1570,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                 }
             }
         }
-        
+
     }
     /// <summary>
     /// 依照RankID階級與加班起迄日來控制 加班轉換方式的下拉選項
@@ -1588,12 +1588,24 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         if (!string.IsNullOrEmpty(sRankID) && !string.IsNullOrEmpty(startDate) && !string.IsNullOrEmpty(endDate))
         {
             bool bRankIDisNumeric = at.IsNumeric(sRankID);
-            var dRankID = Aattendant.GetDecimal(sRankID);
+            decimal dRankID = Aattendant.GetDecimal(sRankID);       //將加班人的RankID轉為Decimal
+            bool bRankIDMapisNumeric = at.IsNumeric(sRankID);      //判斷參數設定的轉補休職等設定有設定(也就是參數必需是數字!)
+            bool datesIsDifferent = at.CompareDate(startDate, endDate) != 0 ? true : false;     //判斷加班起訖日是否是同一天,false為同一天,true為不同天
+            bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
+            bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
+
+            //先回到預設值並Enable
+            ddlSalaryOrAdjust.Enabled = true;
+            ddlSalaryOrAdjust.SelectedIndex = 0;
+
             if (!string.IsNullOrEmpty(_dtPara.Rows[0]["AdjustRankID"].ToString()))
             {
+                //取得轉補休職等設定之職等數值
                 var dRankIDMap = Aattendant.GetDecimal(Aattendant.GetRankIDFormMapping(_OTCompID, _dtPara.Rows[0]["AdjustRankID"].ToString()));
+
+                //如果加班人職等大於等於參數設定的職等，僅能選擇轉補休
                 if (dRankID >= dRankIDMap)
-                { //RankID大於等於19 : 只能轉補休
+                {
                     if (ddlSalaryOrAdjust.Items.Count >= 1)
                     {
                         ddlSalaryOrAdjust.Items[0].Selected = false;
@@ -1609,13 +1621,117 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                         ddlSalaryOrAdjust.Items[2].Selected = true;
                     }
                 }
+                //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資，反之則看參數設定
                 else if (dRankID < dRankIDMap)
                 {
-                    //bool datesIsDifferent = at.CompareDate(startDate, endDate) != 0;
-                    bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
-                    bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
+                    //是跨日單
+                    if (datesIsDifferent)
+                    {
+                        //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資
+                        if (dateStartIsHoliday && dateEndIsHoliday)
+                        {
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                //ddlSalaryOrAdjust.Items[0].Selected = true;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[1].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //假日預設選項為轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
+                        }
+                        else
+                        { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = false;
+                                ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //重新再指向預設選項
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"));
+                        }
+                    }
+                    else    //是單日單
+                    {
+                        if (dateStartIsHoliday)     //加班日為假日
+                        {
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[1].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                //ddlSalaryOrAdjust.Items[2].Selected = false;
+                            }
+                            //假日預設選項為轉補休
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
+                        }
+                        else        //加班日為平日
+                        {
+                            //RankID小於19且加班日為平日 : 看參數設定且要將選項disable
+                            if (ddlSalaryOrAdjust.Items.Count >= 1)
+                            {
+                                ddlSalaryOrAdjust.Items[0].Selected = false;
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 2)
+                            {
+                                if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                                {
+                                    ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[1].Selected = true;
+                                }
+                            }
+                            if (ddlSalaryOrAdjust.Items.Count >= 3)
+                            {
+                                if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                                {
+                                    ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[1].Selected = true;
+                                }
+                                else
+                                {
+                                    ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                    ddlSalaryOrAdjust.Items[2].Selected = true;
+                                }
+                            }
+
+                            //將選項鎖住
+                            ddlSalaryOrAdjust.Enabled = false;
+                        }
+                    }
+                }
+            }
+            //當轉補休職等設定為請選擇的時候，必須依據參數檔的加班轉換方式預設值(SalaryOrAjust) 
+            else
+            {
+                //是跨日單
+                if (datesIsDifferent)
+                {
+                    //如果加班人職小於於參數設定的職等且加班起訖日都是假日，可選擇轉補休或轉薪資
                     if (dateStartIsHoliday && dateEndIsHoliday)
-                    { //RankID小於19且兩天皆為假日 : 可轉補休或轉薪資
+                    {
                         if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
                             //ddlSalaryOrAdjust.Items[0].Selected = true;
@@ -1630,10 +1746,11 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                             ddlSalaryOrAdjust.Items[2].Enabled = true;
                             //ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
-
+                        //假日預設選項為轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
                     }
                     else
-                    { //RankID小於19且除了跨日時兩天皆為假日以外 : 只能轉薪資
+                    { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
                         if (ddlSalaryOrAdjust.Items.Count >= 1)
                         {
                             ddlSalaryOrAdjust.Items[0].Selected = false;
@@ -1648,57 +1765,62 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                             ddlSalaryOrAdjust.Items[2].Enabled = false;
                             ddlSalaryOrAdjust.Items[2].Selected = false;
                         }
+                        //重新再指向預設選項
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"));
                     }
                 }
-            }
-            //當轉補休職等設定為請選擇的時候，必須依據參數檔的加班轉換方式預設值(SalaryOrAjust) 
-            else
-            {
-                bool dateStartIsHoliday = at.CheckHolidayOrNot(startDate);
-                bool dateEndIsHoliday = at.CheckHolidayOrNot(endDate);
-                if (dateStartIsHoliday && dateEndIsHoliday)
-                { //RankID小於19且兩天皆為假日 : 可轉補休或轉薪資
-                    if (ddlSalaryOrAdjust.Items.Count >= 1)
+                else    //是單日單
+                {
+                    if (dateStartIsHoliday)     //加班日為假日
                     {
-                        //ddlSalaryOrAdjust.Items[0].Selected = true;
+                        if (ddlSalaryOrAdjust.Items.Count >= 1)
+                        {
+                            ddlSalaryOrAdjust.Items[0].Selected = false;
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        {
+                            ddlSalaryOrAdjust.Items[1].Enabled = true;
+                            //ddlSalaryOrAdjust.Items[1].Selected = false;
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        {
+                            ddlSalaryOrAdjust.Items[2].Enabled = true;
+                            //ddlSalaryOrAdjust.Items[2].Selected = false;
+                        }
+                        //假日預設選項為轉補休
+                        ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"));
                     }
-                    if (ddlSalaryOrAdjust.Items.Count >= 2)
+                    else        //加班日為平日
                     {
-                        ddlSalaryOrAdjust.Items[1].Enabled = true;
-                        //ddlSalaryOrAdjust.Items[1].Selected = false;
-                    }
-                    if (ddlSalaryOrAdjust.Items.Count >= 3)
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = true;
-                        //ddlSalaryOrAdjust.Items[2].Selected = false;
-                    }
-                }
-                else
-                { //RankID小於19且除了兩天皆為假日以外 : 只能轉薪資
-                    if (ddlSalaryOrAdjust.Items.Count >= 1)
-                    {
-                        ddlSalaryOrAdjust.Items[0].Selected = false;
-                    }
-                    if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 2)
-                    {
-                        ddlSalaryOrAdjust.Items[1].Enabled = true;
-                        ddlSalaryOrAdjust.Items[1].Selected = true;
-                    }
-                    else
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = true;
-                        ddlSalaryOrAdjust.Items[2].Selected = true;
-                    }
+                        //RankID小於19且加班日為平日 : 看參數設定且要將選項disable
+                        if (ddlSalaryOrAdjust.Items.Count >= 1)
+                        {
+                            ddlSalaryOrAdjust.Items[0].Selected = false;
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 2)
+                        {
+                            if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                        }
+                        if (ddlSalaryOrAdjust.Items.Count >= 3)
+                        {
+                            if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1")
+                            {
+                                ddlSalaryOrAdjust.Items[1].Enabled = true;
+                                ddlSalaryOrAdjust.Items[1].Selected = true;
+                            }
+                            else
+                            {
+                                ddlSalaryOrAdjust.Items[2].Enabled = true;
+                                ddlSalaryOrAdjust.Items[2].Selected = true;
+                            }
+                        }
 
-                    if (_dtPara.Rows[0]["SalaryOrAjust"].ToString() == "1" && ddlSalaryOrAdjust.Items.Count >= 3)
-                    {
-                        ddlSalaryOrAdjust.Items[2].Enabled = false;
-                        ddlSalaryOrAdjust.Items[2].Selected = false;
-                    }
-                    else
-                    {
-                        ddlSalaryOrAdjust.Items[1].Enabled = false;
-                        ddlSalaryOrAdjust.Items[1].Selected = false;
+                        //將選項鎖住
+                        ddlSalaryOrAdjust.Enabled = false;
                     }
                 }
             }
@@ -1913,158 +2035,158 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         }
         //if (flag == "2")
         //{
-            //檢查加班時數(含已核准)申請時數是否超過上限
-            string message = "";
-            ViewState["message"] = message;
-            if (!checkOverTimeIsOver(out message))
+        //檢查加班時數(含已核准)申請時數是否超過上限
+        string message = "";
+        ViewState["message"] = message;
+        if (!checkOverTimeIsOver(out message))
+        {
+            if (_dtPara.Rows[0]["DayLimitFlag"].ToString() == "1")
             {
-                if (_dtPara.Rows[0]["DayLimitFlag"].ToString() == "1")
+                Util.MsgBox(message);
+                return false;
+            }
+            else
+            {
+                ViewState["message"] = message;
+            }
+        }
+        //檢查每個月的上限
+        if ((ucDateStart.ucSelectedDate).ToString().Substring(5, 2) == ucDateEnd.ucSelectedDate.ToString().Substring(5, 2))
+        {
+            if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntTotal, Convert.ToDouble(txtMealTime.Text), cntStart, cntEnd, _OTFromAdvanceTxnId))
+            {
+                if (_dtPara == null)
                 {
-                    Util.MsgBox(message);
+                    Util.MsgBox("請聯絡HR確認是否有設定參數值");
                     return false;
                 }
                 else
                 {
-                    ViewState["message"] = message;
-                }
-            }
-            //檢查每個月的上限
-            if ((ucDateStart.ucSelectedDate).ToString().Substring(5, 2) == ucDateEnd.ucSelectedDate.ToString().Substring(5, 2))
-            {
-                if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntTotal, Convert.ToDouble(txtMealTime.Text), cntStart, cntEnd, _OTFromAdvanceTxnId))
-                {
-                    if (_dtPara == null)
+                    //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
+                    message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
+                    if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
                     {
-                        Util.MsgBox("請聯絡HR確認是否有設定參數值");
+                        Util.MsgBox(message);
                         return false;
                     }
                     else
                     {
-                        //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
-                        message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
-                        if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
-                        {
-                            Util.MsgBox(message);
-                            return false;
-                        }
-                        else
-                        {
-                            ViewState["message"] = message;
-                        }
+                        ViewState["message"] = message;
                     }
                 }
             }
-            else
+        }
+        else
+        {
+            string mealOver = at.MealJudge(cntStart, Convert.ToDouble(txtMealTime.Text));
+            getCntStartAndCntEnd(out cntStart, out cntEnd);
+            if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateStart.ucSelectedDate, ucDateStart.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntStart, Convert.ToDouble(mealOver.Split(',')[1]), cntStart, 0, _OTFromAdvanceTxnId))
             {
-                string mealOver = at.MealJudge(cntStart, Convert.ToDouble(txtMealTime.Text));
-                getCntStartAndCntEnd(out cntStart, out cntEnd);
-                if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateStart.ucSelectedDate, ucDateStart.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntStart, Convert.ToDouble(mealOver.Split(',')[1]), cntStart, 0, _OTFromAdvanceTxnId))
+                if (_dtPara == null)
                 {
-                    if (_dtPara == null)
+                    Util.MsgBox("請聯絡HR確認是否有設定參數值");
+                    return false;
+                }
+                else
+                {
+                    //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
+                    message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
+                    if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
                     {
-                        Util.MsgBox("請聯絡HR確認是否有設定參數值");
+                        Util.MsgBox(message);
                         return false;
                     }
                     else
                     {
-                        //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
-                        message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
-                        if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
-                        {
-                            Util.MsgBox(message);
-                            return false;
-                        }
-                        else
-                        {
-                            ViewState["message"] = message;
-                        }
+                        ViewState["message"] = message;
                     }
                 }
+            }
 
-                if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateEnd.ucSelectedDate, ucDateEnd.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntEnd, Convert.ToDouble(mealOver.Split(',')[3]), cntEnd, 0, _OTFromAdvanceTxnId))
+            if (!at.checkMonthTime("OverTimeDeclaration", _OTCompID, _EmpID, ucDateEnd.ucSelectedDate, ucDateEnd.ucSelectedDate, Convert.ToDouble(_dtPara.Rows[0]["MonthLimitHour"].ToString()), cntEnd, Convert.ToDouble(mealOver.Split(',')[3]), cntEnd, 0, _OTFromAdvanceTxnId))
+            {
+                if (_dtPara == null)
                 {
-                    if (_dtPara == null)
+                    Util.MsgBox("請聯絡HR確認是否有設定參數值");
+                    return false;
+                }
+                else
+                {
+                    //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
+                    message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
+                    if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
                     {
-                        Util.MsgBox("請聯絡HR確認是否有設定參數值");
+                        Util.MsgBox(message);
                         return false;
                     }
                     else
                     {
-                        //Util.MsgBox("每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時");
-                        message = "每月上限加班申請時數為" + _dtPara.Rows[0]["MonthLimitHour"] + "小時";
-                        if (_dtPara.Rows[0]["MonthLimitFlag"].ToString() == "1")
-                        {
-                            Util.MsgBox(message);
-                            return false;
-                        }
-                        else
-                        {
-                            ViewState["message"] = message;
-                        }
+                        ViewState["message"] = message;
                     }
                 }
             }
+        }
 
         //}
-            int cnt = 0;
-            //檢查連續上班日
-            if (_dtPara.Rows[0]["OTMustCheck"].ToString() == "0")
-            {
-                int OTLimitDay = Convert.ToInt32(_dtPara.Rows[0]["OTLimitDay"].ToString());
-                sb.Reset();
-                sb.Append("SELECT Convert(varchar,C.SysDate,111) as SysDate,ISNULL(O.OTStartDate,'') AS OTStartDate,C.Week,C.HolidayOrNot FROM (");
-                sb.Append(" SELECT DISTINCT OTStartDate FROM OverTimeAdvance WHERE  OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTStartDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  OTStartDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')");
-                sb.Append(" AND OTTxnID NOT IN('" + _OTFromAdvanceTxnId + "')");
-                sb.Append(" AND OTTxnID NOT IN");
-                sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
-                sb.Append(" UNION");
-                sb.Append(" SELECT DISTINCT OTStartDate FROM OverTimeDeclaration WHERE  OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTStartDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  OTStartDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')) O");
-                sb.Append(" FULL OUTER JOIN(");
-                sb.Append(" SELECT * FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Calendar] WHERE  CompID='" + _OTCompID + "' AND SysDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  SysDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')) C ON O.OTStartDate=C.SysDate");
-                sb.Append(" ORDER BY C.SysDate ASC");
+        int cnt = 0;
+        //檢查連續上班日
+        if (_dtPara.Rows[0]["OTMustCheck"].ToString() == "0")
+        {
+            int OTLimitDay = Convert.ToInt32(_dtPara.Rows[0]["OTLimitDay"].ToString());
+            sb.Reset();
+            sb.Append("SELECT Convert(varchar,C.SysDate,111) as SysDate,ISNULL(O.OTStartDate,'') AS OTStartDate,C.Week,C.HolidayOrNot FROM (");
+            sb.Append(" SELECT DISTINCT OTStartDate FROM OverTimeAdvance WHERE  OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTStartDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  OTStartDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')");
+            sb.Append(" AND OTTxnID NOT IN('" + _OTFromAdvanceTxnId + "')");
+            sb.Append(" AND OTTxnID NOT IN");
+            sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
+            sb.Append(" UNION");
+            sb.Append(" SELECT DISTINCT OTStartDate FROM OverTimeDeclaration WHERE  OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTStartDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  OTStartDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')) O");
+            sb.Append(" FULL OUTER JOIN(");
+            sb.Append(" SELECT * FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Calendar] WHERE  CompID='" + _OTCompID + "' AND SysDate>= DATEADD(DAY,-" + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "') AND  SysDate<= DATEADD(DAY," + (OTLimitDay - 1).ToString() + ",'" + ucDateStart.ucSelectedDate + "')) C ON O.OTStartDate=C.SysDate");
+            sb.Append(" ORDER BY C.SysDate ASC");
 
-                dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
-                for (int i = 0; i < dt.Rows.Count; i++)
+            dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                if (dt.Rows[i]["SysDate"].ToString() == ucDateStart.ucSelectedDate || dt.Rows[i]["SysDate"].ToString() == ucDateEnd.ucSelectedDate)//本單
                 {
-                    if (dt.Rows[i]["SysDate"].ToString() == ucDateStart.ucSelectedDate || dt.Rows[i]["SysDate"].ToString() == ucDateEnd.ucSelectedDate)//本單
+                    cnt += 1;
+                }
+                else
+                {
+                    if (dt.Rows[i]["HolidayOrNot"].ToString() == "0")
                     {
                         cnt += 1;
                     }
                     else
                     {
-                        if (dt.Rows[i]["HolidayOrNot"].ToString() == "0")
+                        if (!string.IsNullOrEmpty(dt.Rows[i]["OTStartDate"].ToString()))
                         {
                             cnt += 1;
                         }
                         else
                         {
-                            if (!string.IsNullOrEmpty(dt.Rows[i]["OTStartDate"].ToString()))
-                            {
-                                cnt += 1;
-                            }
-                            else
-                            {
-                                cnt = 0;
-                            }
+                            cnt = 0;
                         }
-                    }
-                    if (cnt >= OTLimitDay)
-                    {
-                        //Util.MsgBox("不得連續上班超過" + OTLimitDay.ToString() + "天");
-                        message = "不得連續上班超過" + OTLimitDay.ToString() + "天";
-                        if (_dtPara.Rows[0]["OTLimitFlag"].ToString() == "1")
-                        {
-                            Util.MsgBox(message);
-                            return false;
-                        }
-                        else
-                        {
-                            ViewState["message"] = message;
-                        }
-                        break;
                     }
                 }
+                if (cnt >= OTLimitDay)
+                {
+                    //Util.MsgBox("不得連續上班超過" + OTLimitDay.ToString() + "天");
+                    message = "不得連續上班超過" + OTLimitDay.ToString() + "天";
+                    if (_dtPara.Rows[0]["OTLimitFlag"].ToString() == "1")
+                    {
+                        Util.MsgBox(message);
+                        return false;
+                    }
+                    else
+                    {
+                        ViewState["message"] = message;
+                    }
+                    break;
+                }
             }
+        }
 
 
         //畫面上的時間
@@ -2885,12 +3007,12 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             sb.Reset();
             sb.Append(" SELECT ISNULL(SUM(A.OTTotalTime),0) AS TotalTime FROM(");
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeAdvance WHERE OTCompID='" + _OTCompID + "' AND OTStatus in('2','3') AND OTEmpID='" + _EmpID + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "'");
-            sb.Append(" AND OTTxnID NOT IN ('"+_OTFromAdvanceTxnId+"')");
+            sb.Append(" AND OTTxnID NOT IN ('" + _OTFromAdvanceTxnId + "')");
             sb.Append(" AND OTTxnID NOT IN");
             sb.Append(" (SELECT OTFromAdvanceTxnId FROM OverTimeDeclaration WHERE OTCompID='" + _OTCompID + "' AND OTEmpID='" + _EmpID + "' AND OTStatus in ('2','3') AND OTFromAdvanceTxnId<>'')");
             sb.Append(" UNION ALL");
             sb.Append(" SELECT SUM(OTTotalTime)-SUM(MealTime) AS OTTotalTime FROM OverTimeDeclaration WHERE OTCompID='" + _OTCompID + "' AND OTStatus in('2','3') AND OTEmpID='" + _EmpID + "' AND OTStartDate='" + ucDateStart.ucSelectedDate + "' AND OTEndDate='" + ucDateEnd.ucSelectedDate + "') A ");
-            
+
             dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
             if (dt.Rows.Count > 0)
             {
@@ -2901,7 +3023,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
             bool blHo = at.CheckHolidayOrNot(ucDateStart.ucSelectedDate);
             if (!blHo)//平日檢查
             {
-                if (cntTotal + hr > (dayNLimit*60))
+                if (cntTotal + hr > (dayNLimit * 60))
                 {
                     message = "加班時數(含已核准)申請時數已超過上限" + _dtPara.Rows[0]["DayLimitHourN"].ToString() + "小時";
                     result = false;
@@ -3054,7 +3176,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         }
         return result;
     }
-    
+
     //暫存按鈕
     protected void btnTempSave_Click(object sender, EventArgs e)
     {
@@ -3146,7 +3268,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         //-------2017/04/20-進行修改後要同步更新OTTxnID
         string strOTTxnID = string.Empty;
         //--------------------------------
-        string attach = at.QueryAtt(_AttachID, _OTCompID,_EmpID);
+        string attach = at.QueryAtt(_AttachID, _OTCompID, _EmpID);
         if (string.IsNullOrEmpty(attach))
         {
             ViewState["attch"] = "test" + UserInfo.getUserInfo().UserID + Guid.NewGuid();
@@ -3168,7 +3290,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         int OTSeq_1 = 0;
         if (flag == "2")
         {
-            string strDirectSubmit = DirectSubmit(_OTCompID,ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate, _EmpID, OTTimeStart.ucDefaultSelectedHH + OTTimeStart.ucDefaultSelectedMM, OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM, _OTFromAdvanceTxnId, txtOTTotalTime.Text);
+            string strDirectSubmit = DirectSubmit(_OTCompID, ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate, _EmpID, OTTimeStart.ucDefaultSelectedHH + OTTimeStart.ucDefaultSelectedMM, OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM, _OTFromAdvanceTxnId, txtOTTotalTime.Text);
             if (strDirectSubmit == "Y")//判斷是否直接送簽
             {
                 flag = "3";
@@ -3194,7 +3316,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         {
             if (ucDateStart.ucSelectedDate == ucDateEnd.ucSelectedDate) //不跨日
             {
-                string strHo = at.QueryColumn("HolidayOrNot", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Calendar] ", " AND CompID = '" + _OTCompID+ "' AND CONVERT(CHAR(10),SysDate, 111) ='" + ucDateStart.ucSelectedDate + "'");
+                string strHo = at.QueryColumn("HolidayOrNot", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Calendar] ", " AND CompID = '" + _OTCompID + "' AND CONVERT(CHAR(10),SysDate, 111) ='" + ucDateStart.ucSelectedDate + "'");
                 getCntTotal(out cntTotal);
                 OTSeq = at.QuerySeq("OverTimeDeclaration", _OTCompID, _EmpID, ucDateStart.ucSelectedDate);
                 sb.AppendStatement("UPDATE OverTimeDeclaration SET OTStartDate='" + ucDateStart.ucSelectedDate + "',OTEndDate='" + ucDateEnd.ucSelectedDate + "',OTStartTime='" + OTTimeStart.ucDefaultSelectedHH + OTTimeStart.ucDefaultSelectedMM + "', OTEndTime='" + OTTimeEnd.ucDefaultSelectedHH + OTTimeEnd.ucDefaultSelectedMM + "',");
@@ -3681,7 +3803,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
     {
         getAttachName();
     }
-    
+
     protected void btnClear_Click(object sender, EventArgs e) //清除
     {
         LoadData();
@@ -3706,6 +3828,6 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         strAttachDownloadURL = string.Format(strAttachDownloadBaseURL, _overtimeDBName, ViewState["attch"].ToString());
         frameAttach.Value = strAttachAdminURL;
         getAttachName();
-       
+
     }
 }
