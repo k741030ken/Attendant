@@ -16,3 +16,4 @@ D:\Git\Attendant\LoadTesting\LoadTesting\bin\Debug\WebTestUpdateCase03.webtest
 D:\Git\Attendant\LoadTesting\LoadTesting\bin\Debug\LoadTest1.loadtest
 D:\Git\Attendant\LoadTesting\LoadTesting\bin\Debug\WebTestUpdateCase04.webtest
 D:\Git\Attendant\LoadTesting\LoadTesting\bin\Debug\WebTestInsertDeleteCase01.webtest
+D:\Git\Attendant\LoadTesting\LoadTesting\bin\Debug\LoadTest2.loadtest
