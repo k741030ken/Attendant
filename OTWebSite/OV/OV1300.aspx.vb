@@ -85,7 +85,7 @@ Partial Class OV_OV1300
 
     Public Function validation() As Boolean
         Dim result As Boolean = True
-        If ForOverTime.selectToOverTimeFlag <> "1" Then
+        If ForOverTime.selectToOverTimeFlag <> "1" And ForOverTime.selectToOverTimeFlag <> "" Then
             Bsp.Utility.ShowMessage(Me, "拋轉還在執行中...")
             result = False
         End If
