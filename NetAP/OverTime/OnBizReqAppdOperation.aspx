@@ -72,7 +72,7 @@
                         <Columns>
                             <%--加班單預先申請--%>
                             <asp:TemplateField HeaderText="選取">
-                                <HeaderStyle CssClass="td_header" Width="3%" />
+                                <HeaderStyle CssClass="td_header" Width="50px" />
                                 <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center" />
                                 <ItemTemplate>
                                     <asp:CheckBox ID="chkChoiced" runat="server" />
@@ -83,7 +83,7 @@
                                     <asp:Label ID="lblGridNo" runat="server" 
                                         Text="<%# Container.DataItemIndex+1 %>"></asp:Label>
                                 </ItemTemplate>
-                                <HeaderStyle Width="4%" Height="15px" CssClass="td_header" />
+                                <HeaderStyle Width="50px" Height="15px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center"/>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="內容" ShowHeader="False" ControlStyle-Font-Underline="true">
@@ -91,50 +91,50 @@
                                     <asp:LinkButton ID="lbtnDetail" runat="server" CausesValidation="false" CommandName="Detail" Text="明細" ></asp:LinkButton>
                                 </ItemTemplate>
                                 <HeaderStyle CssClass="td_header" />
-                                <ItemStyle CssClass="td_detail" Width="3%" HorizontalAlign="Center" />
+                                <ItemStyle CssClass="td_detail" Width="50px" HorizontalAlign="Center" />
                             </asp:TemplateField>
                             <asp:BoundField DataField="EmpID_NameN" HeaderText="公出人員">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="110px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="DeputyID_Name" HeaderText="代理人員">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="110px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>               
                             <asp:BoundField DataField="VisitBeginDate" HeaderText="開始日期">
-                                <HeaderStyle Width="10%" CssClass="td_header" />
+                                <HeaderStyle Width="190px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="BeginTime" HeaderText="開始時間">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="90px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="VisitEndDate" HeaderText="結束日期">
-                                <HeaderStyle Width="10%" CssClass="td_header" />
+                                <HeaderStyle Width="190px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="EndTime" HeaderText="結束時間">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="90px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="VisitReasonCN" HeaderText="洽辦事由">
                                 <HeaderStyle Width="5%" CssClass="td_header" />
-                                <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
+                                <ItemStyle CssClass="td_detail" HorizontalAlign="Left" />
                             </asp:BoundField>
                             <asp:BoundField DataField="CompID" HeaderText="公出人員公司" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="50px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="EmpID" HeaderText="公出人員編號" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="50px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField DataField="WriteDate" HeaderText="登錄日期" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="50px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField> 
                             <asp:BoundField DataField="FormSeq" HeaderText="打卡紀錄確認序號" Visible="false">
-                                <HeaderStyle Width="5%" CssClass="td_header" />
+                                <HeaderStyle Width="50px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:TemplateField HeaderText="核准/駁回" >
@@ -142,14 +142,14 @@
                                     <asp:RadioButton ID="rbnApproved" GroupName="rbnCheckType" runat="server" Text="核准" AutoPostBack="true" Font-Names="微軟正黑體" />
                                     <asp:RadioButton ID="rbnReject" GroupName="rbnCheckType" runat="server" Text="駁回" AutoPostBack="true" Font-Names="微軟正黑體" />
                                 </ItemTemplate>
-                                <HeaderStyle Width="8%" Height="15px" CssClass="td_header" />
+                                <HeaderStyle Width="150px" Height="15px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center"/>
                             </asp:TemplateField>
                             <asp:TemplateField HeaderText="審核意見" >
                                 <ItemTemplate>
                                     <asp:TextBox id="txtReson" rows="2" runat="server" class="InputTextStyle_Thin" TextMode="MultiLine" Width="95%" Height="60px" ></asp:TextBox>
                                 </ItemTemplate>
-                                <HeaderStyle Width="15%" Height="15px" CssClass="td_header" />
+                                <HeaderStyle Width="250px" Height="15px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" Height="15px" HorizontalAlign="Center"/>
                             </asp:TemplateField>
                         </Columns>

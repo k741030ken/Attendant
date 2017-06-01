@@ -186,11 +186,11 @@ Partial Class OV4000
                 Bsp.Utility.ShowMessage(Me, "無資料下傳！")
             Else
                 Try
-                    Dim objOV_1 = Me.SetTableProperty()
+                    Dim objOV_3 = Me.SetTableProperty()
                     Dim strFileName As String = ""
 
 
-                    If objOV_1.Type.Equals("bef") Then
+                    If objOV_3.Type.Equals("bef") Then
                         '產出檔頭
                         strFileName = Bsp.Utility.GetNewFileName("加班單預先申請列表-") & ".xls"
                     Else
@@ -209,10 +209,10 @@ Partial Class OV4000
                     gvExport.AlternatingRowStyle.CssClass = "tr_oddline"
                     gvExport.EmptyDataRowStyle.CssClass = "GridView_EmptyRowStyle"
 
-                    Dim dt As DataTable = objOV_1.getDownLoadTable()
+                    Dim dt As DataTable = objOV_3.getDownLoadTable()
                     Dim Array As ArrayList = New ArrayList()
                     If dt.Rows.Count > 0 Then
-                        If "1".Equals(objOV_1.Time) Then
+                        If "1".Equals(objOV_3.Time) Then
 
                             For Each item As DataRow In dt.Rows
                                 If (item("時段一").ToString()).Equals("0") Or (item("時段一").ToString()).Equals("_") Then
@@ -223,7 +223,7 @@ Partial Class OV4000
                                 dt.Rows.Remove(item)
                             Next
 
-                        ElseIf "2".Equals(objOV_1.Time) Then
+                        ElseIf "2".Equals(objOV_3.Time) Then
                             For Each item As DataRow In dt.Rows
                                 If (item("時段二").ToString()).Equals("0") Or (item("時段二").ToString()).Equals("_") Then
                                     Array.Add(item)
@@ -233,7 +233,7 @@ Partial Class OV4000
                                 dt.Rows.Remove(item)
                             Next
 
-                        ElseIf "3".Equals(objOV_1.Time) Then
+                        ElseIf "3".Equals(objOV_3.Time) Then
                             For Each item As DataRow In dt.Rows
                                 If (item("時段三").ToString()).Equals("0") Or (item("時段三").ToString()).Equals("_") Then
                                     Array.Add(item)
@@ -242,7 +242,7 @@ Partial Class OV4000
                             For Each item As DataRow In Array
                                 dt.Rows.Remove(item)
                             Next
-                        ElseIf "4".Equals(objOV_1.Time) Then
+                        ElseIf "4".Equals(objOV_3.Time) Then
                             For Each item As DataRow In dt.Rows
                                 If (item("留守時段").ToString()).Equals("0") Or (item("時段三").ToString()).Equals("_") Then
                                     Array.Add(item)
@@ -271,7 +271,7 @@ Partial Class OV4000
 
 
                     gvExport.Attributes.Add("style", "vnd.ms-excel.numberformat:@")
-                    If objOV_1.Type.Equals("bef") Then
+                    If objOV_3.Type.Equals("bef") Then
                         For i = 0 To gvExport.Rows.Count - 1
                             '20170219 Beatrice mod
                             gvExport.Rows(i).Cells(25).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
@@ -405,12 +405,12 @@ Partial Class OV4000
             Bsp.Utility.ShowMessage(Me, "只有事後申報表單才可計薪後收回")
         ElseIf hiddenType.Value.Equals("after") And gvMain1.Rows.Count > 0 Then
             Dim errorMsg As String = checkData()
-            Dim OV_1 As OV_1 = SetTableProperty()
+            Dim OV_3 As OV_3 = SetTableProperty()
             If errorMsg.Count = 0 And (Not selectedRow(gvMain1) = -1) Then
                 Dim compID = gvMain1.DataKeys(selectedRow(gvMain1))("OTCompID").ToString()
                 Dim empID = gvMain1.DataKeys(selectedRow(gvMain1))("OTEmpID").ToString()
                 Dim TxnID = gvMain1.DataKeys(selectedRow(gvMain1))("OTTxnID").ToString()
-                Dim flag As Boolean = OV_1.changeOTStatusTo9(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
+                Dim flag As Boolean = OV_3.changeOTStatusTo9(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
                 If flag Then
                     Bsp.Utility.ShowMessage(Me, "修改成功")
                     If funCheckData() Then
@@ -445,7 +445,7 @@ Partial Class OV4000
             Bsp.Utility.ShowMessage(Me, "只有事後申報表單才可作廢")
         ElseIf hiddenType.Value.Equals("after") And gvMain1.Rows.Count > 0 Then
             Dim errorMsg As String = checkData1()
-            Dim OV_1 As OV_1 = SetTableProperty()
+            Dim OV_3 As OV_3 = SetTableProperty()
             If errorMsg.Count = 0 And (Not selectedRow(gvMain1) = -1) Then
 
                 '若未拋轉至OverTime，則直接更新此筆狀態為作廢(OTStatus ->7)；
@@ -459,9 +459,9 @@ Partial Class OV4000
                     Dim TxnID = gvMain1.DataKeys(selectedRow(gvMain1))("OTTxnID").ToString()
                     Dim OTFromAdvanceTxnId = gvMain1.DataKeys(selectedRow(gvMain1))("OTFromAdvanceTxnId").ToString()
                     Dim FlowCaseID = gvMain1.DataKeys(selectedRow(gvMain1))("FlowCaseID").ToString().Trim
-                    Dim flag As Boolean = OV_1.changeOTStatusTo7(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
+                    Dim flag As Boolean = OV_3.changeOTStatusTo7(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
                     If flag Then
-                        OV_1.UPdateAattendantDBFlowCase(UserProfile.ActDeptID, UserProfile.ActDeptName, UserProfile.ActUserID, UserProfile.ActUserName, FlowCaseID, OTFromAdvanceTxnId)
+                        OV_3.UPdateAattendantDBFlowCase(UserProfile.ActDeptID, UserProfile.ActDeptName, UserProfile.ActUserID, UserProfile.ActUserName, FlowCaseID, OTFromAdvanceTxnId)
 
                         Bsp.Utility.ShowMessage(Me, "作廢成功")
                         If funCheckData() Then
@@ -476,19 +476,19 @@ Partial Class OV4000
                     Dim empID = gvMain1.DataKeys(selectedRow(gvMain1))("OTEmpID").ToString()
                     Dim OTDate = gvMain1.DataKeys(selectedRow(gvMain1))("OTDate").ToString().Split("~")(0)
                     Dim OTStartTime = gvMain1.DataKeys(selectedRow(gvMain1))("OTStartTime").ToString()
-                    Dim isSalaryPaid As Boolean = OV_1.checkSalaryPaid(compID, empID, OTDate, OTStartTime)
+                    Dim isSalaryPaid As Boolean = OV_3.checkSalaryPaid(compID, empID, OTDate, OTStartTime)
                     Dim FlowCaseID = gvMain1.DataKeys(selectedRow(gvMain1))("FlowCaseID").ToString().Trim
                     Dim TxnID As String = gvMain1.DataKeys(selectedRow(gvMain1))("OTTxnID").ToString()
                     Dim OTFromAdvanceTxnId = gvMain1.DataKeys(selectedRow(gvMain1))("OTFromAdvanceTxnId").ToString()
 
-                    Dim OVDDB As DataTable = OV_1.QuiryOldDataTableArrForOTTxnID(TxnID, "after")
+                    Dim OVDDB As DataTable = OV_3.QuiryOldDataTableArrForOTTxnID(TxnID, "after")
                     If isSalaryPaid Then
                         Bsp.Utility.ShowMessage(Me, "此資料已計薪不可作廢")
                     Else
-                        If OV_1.deleteOverTimeTable(OVDDB) Then
-                            Dim flag As Boolean = OV_1.changeOTStatusTo7(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
+                        If OV_3.deleteOverTimeTable(OVDDB) Then
+                            Dim flag As Boolean = OV_3.changeOTStatusTo7(compID, empID, TxnID, Bsp.Utility.Quote(UserProfile.CompID), Bsp.Utility.Quote(UserProfile.UserID))
                             If flag Then
-                                OV_1.UPdateAattendantDBFlowCase(UserProfile.ActDeptID, UserProfile.ActDeptName, UserProfile.ActUserID, UserProfile.ActUserName, FlowCaseID, OTFromAdvanceTxnId)
+                                OV_3.UPdateAattendantDBFlowCase(UserProfile.ActDeptID, UserProfile.ActDeptName, UserProfile.ActUserID, UserProfile.ActUserName, FlowCaseID, OTFromAdvanceTxnId)
                                 Bsp.Utility.ShowMessage(Me, "作廢成功")
                                 If funCheckData() Then
                                     setDataForGridView()
@@ -854,84 +854,84 @@ Partial Class OV4000
 #Region "功能"
 
     ''' <summary>
-    ''' ' 裝入頁面資料 到OV_1
+    ''' ' 裝入頁面資料 到OV_3
     ''' </summary>
-    ''' <returns>OV_1</returns>
+    ''' <returns>OV_3</returns>
     ''' <remarks></remarks>
-    Private Function SetTableProperty() As OV_1
-        Dim OV_1 As New OV_1
-        OV_1.ProcessDate = ddlIsProcessDate.SelectedValue
-        OV_1.Type = ddlType.SelectedValue
-        OV_1.CompID = UserProfile.SelectCompRoleID
-        OV_1.OrgType = ddlOrgType.SelectedValue
-        OV_1.DeptID = ddlDeptID.SelectedValue
+    Private Function SetTableProperty() As OV_3
+        Dim OV_3 As New OV_3
+        OV_3.ProcessDate = ddlIsProcessDate.SelectedValue
+        OV_3.Type = ddlType.SelectedValue
+        OV_3.CompID = UserProfile.SelectCompRoleID
+        OV_3.OrgType = ddlOrgType.SelectedValue
+        OV_3.DeptID = ddlDeptID.SelectedValue
 
 
 
         If Not IsNumeric(OTStartTimeH.SelectedValue) And IsNumeric(OTStartTimeM.SelectedValue) Then
-            OV_1.OTStartTime = "00" + OTStartTimeM.SelectedValue
+            OV_3.OTStartTime = "00" + OTStartTimeM.SelectedValue
         ElseIf IsNumeric(OTStartTimeH.SelectedValue) And Not IsNumeric(OTStartTimeM.SelectedValue) Then
-            OV_1.OTStartTime = OTStartTimeH.SelectedValue + "00"
+            OV_3.OTStartTime = OTStartTimeH.SelectedValue + "00"
         Else
-            OV_1.OTStartTime = OTStartTimeH.SelectedValue + OTStartTimeM.SelectedValue
+            OV_3.OTStartTime = OTStartTimeH.SelectedValue + OTStartTimeM.SelectedValue
         End If
 
-        OV_1.Time = ddlTime.SelectedValue
+        OV_3.Time = ddlTime.SelectedValue
 
 
 
         If Not IsNumeric(OTEndTimeH.SelectedValue) And IsNumeric(OTEndTimeM.SelectedValue) Then
-            OV_1.OTEndTime = "23" + OTStartTimeM.SelectedValue
+            OV_3.OTEndTime = "23" + OTStartTimeM.SelectedValue
         ElseIf IsNumeric(OTEndTimeH.SelectedValue) And Not IsNumeric(OTEndTimeM.SelectedValue) Then
-            OV_1.OTEndTime = OTEndTimeH.SelectedValue + "59"
+            OV_3.OTEndTime = OTEndTimeH.SelectedValue + "59"
         Else
-            OV_1.OTEndTime = OTEndTimeH.SelectedValue + OTEndTimeM.SelectedValue
+            OV_3.OTEndTime = OTEndTimeH.SelectedValue + OTEndTimeM.SelectedValue
         End If
 
-        OV_1.OrganID = ddlOrganID.SelectedValue
-        OV_1.RankIDMIN = ddlRankIDMIN.SelectedValue
-        OV_1.RankIDMAX = ddlRankIDMAX.SelectedValue
+        OV_3.OrganID = ddlOrganID.SelectedValue
+        OV_3.RankIDMIN = ddlRankIDMIN.SelectedValue
+        OV_3.RankIDMAX = ddlRankIDMAX.SelectedValue
         '20170219 Beatrice mod
-        OV_1.TitleIDMIN = ddlTitleIDMIN.SelectedValue
-        OV_1.TitleIDMAX = ddlTitleIDMAX.SelectedValue
+        OV_3.TitleIDMIN = ddlTitleIDMIN.SelectedValue
+        OV_3.TitleIDMAX = ddlTitleIDMAX.SelectedValue
         'Dim ddlTitleNameItem = ddlTitleName.SelectedIndex
         'If ddlTitleName.SelectedValue.Equals("") Then
-        '    OV_1.TitleID = ""
-        '    OV_1.TitleName = ""
+        '    OV_3.TitleID = ""
+        '    OV_3.TitleName = ""
         'Else
-        '    OV_1.TitleID = ddlTitleName.SelectedItem.Text.Split("-")(0).ToString
-        '    OV_1.TitleName = ddlTitleName.SelectedItem.Text.Split("-")(1).ToString
+        '    OV_3.TitleID = ddlTitleName.SelectedItem.Text.Split("-")(0).ToString
+        '    OV_3.TitleName = ddlTitleName.SelectedItem.Text.Split("-")(1).ToString
         'End If
 
-        OV_1.Sex = ddlSex.SelectedValue
-        OV_1.PositionID = ddlPositionID.SelectedValue
-        OV_1.WorkType = ddlWorkType.SelectedValue
-        OV_1.OTTypeID = ddlOTTypeID.SelectedValue
-        OV_1.HolidayOrNot = ddlHolidayOrNot.SelectedValue
-        OV_1.OTStatus = ddlOTStatus.SelectedValue
+        OV_3.Sex = ddlSex.SelectedValue
+        OV_3.PositionID = ddlPositionID.SelectedValue
+        OV_3.WorkType = ddlWorkType.SelectedValue
+        OV_3.OTTypeID = ddlOTTypeID.SelectedValue
+        OV_3.HolidayOrNot = ddlHolidayOrNot.SelectedValue
+        OV_3.OTStatus = ddlOTStatus.SelectedValue
 
-        OV_1.WorkStatus = ddlWorkStatus.SelectedValue
-        OV_1.OTEmpID = tbOTEmpID.Text
-        OV_1.OTEmpName = tbOTEmpName.Text
-        OV_1.OTFormNO = tbOTFormNO.Text
-        OV_1.OTPayDate = tbOTPayDate.Text
-        OV_1.OvertimeDateB = txtOvertimeDateB.DateText
-        OV_1.OvertimeDateE = txtOvertimeDateE.DateText
-        OV_1.TakeOfficeDateB = txtTakeOfficeDateB.DateText
-        OV_1.TakeOfficeDateE = txtTakeOfficeDateE.DateText
-        OV_1.LeaveOfficeDateB = txtLeaveOfficeDateB.DateText
-        OV_1.LeaveOfficeDateE = txtLeaveOfficeDateE.DateText
-        OV_1.DateOfApprovalB = txtDateOfApprovalB.DateText
-        OV_1.DateOfApprovalE = txtDateOfApprovalE.DateText
-        OV_1.DateOfApplicationB = txtDateOfApplicationB.DateText
-        OV_1.DateOfApplicationE = txtDateOfApplicationE.DateText
-        OV_1.OTSalaryOrAdjust = ddlSalaryOrAdjust.SelectedValue
+        OV_3.WorkStatus = ddlWorkStatus.SelectedValue
+        OV_3.OTEmpID = tbOTEmpID.Text
+        OV_3.OTEmpName = tbOTEmpName.Text
+        OV_3.OTFormNO = tbOTFormNO.Text
+        OV_3.OTPayDate = tbOTPayDate.Text
+        OV_3.OvertimeDateB = txtOvertimeDateB.DateText
+        OV_3.OvertimeDateE = txtOvertimeDateE.DateText
+        OV_3.TakeOfficeDateB = txtTakeOfficeDateB.DateText
+        OV_3.TakeOfficeDateE = txtTakeOfficeDateE.DateText
+        OV_3.LeaveOfficeDateB = txtLeaveOfficeDateB.DateText
+        OV_3.LeaveOfficeDateE = txtLeaveOfficeDateE.DateText
+        OV_3.DateOfApprovalB = txtDateOfApprovalB.DateText
+        OV_3.DateOfApprovalE = txtDateOfApprovalE.DateText
+        OV_3.DateOfApplicationB = txtDateOfApplicationB.DateText
+        OV_3.DateOfApplicationE = txtDateOfApplicationE.DateText
+        OV_3.OTSalaryOrAdjust = ddlSalaryOrAdjust.SelectedValue
         If ckOTSalaryPaid.Checked Then
-            OV_1.OTSalaryPaid = "1"
+            OV_3.OTSalaryPaid = "1"
         Else
-            OV_1.OTSalaryPaid = ""
+            OV_3.OTSalaryPaid = ""
         End If
-        Return OV_1
+        Return OV_3
     End Function
 
 #Region "資料檢核"
@@ -1081,12 +1081,12 @@ Partial Class OV4000
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub setDataForGridView()
-        Dim OV_1 = SetTableProperty()
-        Dim dt As DataTable = OV_1.getTable()
+        Dim OV_3 = SetTableProperty()
+        Dim dt As DataTable = OV_3.getTable()
 
 
         ViewState.Item("DoQuery") = "Y"
-        If OV_1.Type.Equals("bef") Then
+        If OV_3.Type.Equals("bef") Then
             div_tb.Style.Add("display", "block")
             div_tb1.Style.Add("display", "none")
             pcMain.DataTable = dt
@@ -1100,7 +1100,7 @@ Partial Class OV4000
 
             '時段ddl  ddlTime
             If dt.Rows.Count > 0 Then
-                If "1".Equals(OV_1.Time) Then
+                If "1".Equals(OV_3.Time) Then
 
                     For Each item As DataRow In dt.Rows
                         If (item("Time_one").ToString()).Equals("0") Or (item("Time_one").ToString()).Equals("_") Then
@@ -1111,7 +1111,7 @@ Partial Class OV4000
                         dt.Rows.Remove(item)
                     Next
 
-                ElseIf "2".Equals(OV_1.Time) Then
+                ElseIf "2".Equals(OV_3.Time) Then
                     For Each item As DataRow In dt.Rows
                         If (item("Time_two").ToString()).Equals("0") Or (item("Time_two").ToString()).Equals("_") Then
                             array.Add(item)
@@ -1121,7 +1121,7 @@ Partial Class OV4000
                         dt.Rows.Remove(item)
                     Next
 
-                ElseIf "3".Equals(OV_1.Time) Then
+                ElseIf "3".Equals(OV_3.Time) Then
                     For Each item As DataRow In dt.Rows
                         If (item("Time_three").ToString()).Equals("0") Or (item("Time_three").ToString()).Equals("_") Then
                             array.Add(item)
@@ -1348,14 +1348,14 @@ Partial Class OV4000
     End Sub
 
     Protected Sub ddlRankIDMIN_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ddlRankIDMIN.SelectedIndexChanged
-        Dim OV_1Obj As OV_1 = New OV_1
+        Dim OV_3Obj As OV_3 = New OV_3
         Dim CompID_RankID As String = UserProfile.SelectCompRoleID
-        Dim sRankID_S = OV_1Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
+        Dim sRankID_S = OV_3Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
         Dim bRankID_S = Not String.IsNullOrEmpty(sRankID_S)
         If bRankID_S Then
             sRankID_S = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_S)
         End If
-        Dim sRankID_E = OV_1Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
+        Dim sRankID_E = OV_3Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
         Dim bRankID_E = Not String.IsNullOrEmpty(sRankID_E)
         If bRankID_E Then
             sRankID_E = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_E)
@@ -1389,14 +1389,14 @@ Partial Class OV4000
     End Sub
 
     Protected Sub ddlRankIDMAX_SelectedIndexChanged(sender As Object, e As System.EventArgs) Handles ddlRankIDMAX.SelectedIndexChanged
-        Dim OV_1Obj As OV_1 = New OV_1
+        Dim OV_3Obj As OV_3 = New OV_3
         Dim CompID_RankID As String = UserProfile.SelectCompRoleID
-        Dim sRankID_S = OV_1Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
+        Dim sRankID_S = OV_3Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
         Dim bRankID_S = Not String.IsNullOrEmpty(sRankID_S)
         If bRankID_S Then
             sRankID_S = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_S)
         End If
-        Dim sRankID_E = OV_1Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
+        Dim sRankID_E = OV_3Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
         Dim bRankID_E = Not String.IsNullOrEmpty(sRankID_E)
         If bRankID_E Then
             sRankID_E = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_E)

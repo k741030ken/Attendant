@@ -473,7 +473,7 @@ Partial Class OV_OV4200
     ''' <remarks></remarks>
     Public Function Query(ParamArray Params() As String) As DataTable
         Dim ht As Hashtable = Bsp.Utility.getHashTableFromParam(Params)
-        Dim objOV As New OV5
+        Dim objOV As New AT1
         Dim objOM As New OM1()      'For Date Cehck
         Dim beManageOTDec As New beManageOTDec.Row()
         Dim bsManageOTDec As New beManageOTDec.Service()

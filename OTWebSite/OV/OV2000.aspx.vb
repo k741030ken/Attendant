@@ -781,14 +781,14 @@ Partial Class OV2000
         '    ddlTitleName.Items.Insert(0, New ListItem("　- -請選擇- -", ""))
         'End If
         '20170304kevin
-        Dim OV_1Obj As OV_1 = New OV_1
+        Dim OV_3Obj As OV_3 = New OV_3
         Dim CompID_RankID As String = UserProfile.SelectCompRoleID
-        Dim sRankID_S = OV_1Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
+        Dim sRankID_S = OV_3Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
         Dim bRankID_S = Not String.IsNullOrEmpty(sRankID_S)
         If bRankID_S Then
             sRankID_S = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_S)
         End If
-        Dim sRankID_E = OV_1Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
+        Dim sRankID_E = OV_3Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
         Dim bRankID_E = Not String.IsNullOrEmpty(sRankID_E)
         If bRankID_E Then
             sRankID_E = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_E)
@@ -852,14 +852,14 @@ Partial Class OV2000
 
 
         '20170304kevin
-        Dim OV_1Obj As OV_1 = New OV_1
+        Dim OV_3Obj As OV_3 = New OV_3
         Dim CompID_RankID As String = UserProfile.SelectCompRoleID
-        Dim sRankID_S = OV_1Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
+        Dim sRankID_S = OV_3Obj.StringIIF(ddlRankIDMIN.SelectedValue) '職等(起)
         Dim bRankID_S = Not String.IsNullOrEmpty(sRankID_S)
         If bRankID_S Then
             sRankID_S = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_S)
         End If
-        Dim sRankID_E = OV_1Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
+        Dim sRankID_E = OV_3Obj.StringIIF(ddlRankIDMAX.SelectedValue) '職等(迄)
         Dim bRankID_E = Not String.IsNullOrEmpty(sRankID_E)
         If bRankID_E Then
             sRankID_E = OVBusinessCommon.GetRankID(CompID_RankID, sRankID_E)

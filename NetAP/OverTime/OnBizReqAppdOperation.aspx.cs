@@ -252,21 +252,43 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
 
     private bool CheckData()
     {
+        int DataCount = 0;
         for (int introw = 0; introw < gvCheckVisitForm.Rows.Count; introw++)
         {
             CheckBox objchk = (CheckBox)gvCheckVisitForm.Rows[introw].FindControl("chkChoiced");
             RadioButton rdoApp = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnApproved");
             RadioButton rdoRej = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnReject");
             TextBox txtReson = (TextBox)gvCheckVisitForm.Rows[introw].FindControl("txtReson");
-            if (objchk.Checked == true) { 
+            if (objchk.Checked == true) {
+                DataCount = DataCount + 1;
                 if (rdoApp.Checked == true || rdoRej.Checked == true) {
                     if (txtReson.Text.Length > 200) {
                         Util.MsgBox("審核意見大於200字");
                         return false;
                     }
                 }
+                if (rdoApp.Checked == false && rdoRej.Checked == false)
+                {
+                    Util.MsgBox("請選擇核准或駁回");
+                    return false;
+                }
+                if (rdoRej.Checked == true)
+                {
+                    if (txtReson.Text.Length <= 0)
+                    {
+                        Util.MsgBox("請輸入審核意見");
+                        return false;
+                    }
+                }
             }
         }
+
+        if (DataCount == 0)
+        {
+            Util.MsgBox("未選取任何資料");
+            return false;
+        }
+
         return true;
     }
 
@@ -302,24 +324,21 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
     /// </summary>
     private void DoRelease()
     {
-        DbHelper db = new DbHelper(_attendantDBName);
-        CommandHelper sb = db.CreateCommandHelper();
-        DbConnection cn = db.OpenConnection();
-        DbTransaction tx = cn.BeginTransaction();
+        
         FlowExpress oFlow = new FlowExpress("OnBizReqAppd_ITRD");
         string FlowCustDB = oFlow.FlowID;
         Dictionary<string, string> oAssDic = CustVerify.getEmpID_Name_Dictionary(UserInfo.getUserInfo().UserID, UserInfo.getUserInfo().CompID);
-
-        try
+        for (int introw = 0; introw < gvCheckVisitForm.Rows.Count; introw++)
         {
-            for (int introw = 0; introw < gvCheckVisitForm.Rows.Count; introw++)
+            DbHelper db = new DbHelper(_attendantDBName);
+            CommandHelper sb = db.CreateCommandHelper();
+            DbConnection cn = db.OpenConnection();
+            DbTransaction tx = cn.BeginTransaction();
+            CheckBox objchk = (CheckBox)gvCheckVisitForm.Rows[introw].FindControl("chkChoiced");
+            try
             {
-                CheckBox objchk = (CheckBox)gvCheckVisitForm.Rows[introw].FindControl("chkChoiced");
-            
-
                 if (objchk.Checked == true)
                 {
-
                     RadioButton rdoApp = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnApproved");
                     RadioButton rdoRej = (RadioButton)gvCheckVisitForm.Rows[introw].FindControl("rbnReject");
                     TextBox txtReson = (TextBox)gvCheckVisitForm.Rows[introw].FindControl("txtReson");
@@ -358,13 +377,12 @@ public partial class OverTime_OnBizReqAppdOperation : BasePage
 
                 }
             }
+            catch (Exception ex)
+            {
+                tx.Rollback();
+                Util.MsgBox(ex.Message);
+            }
         }
-        catch (Exception ex)
-        {
-            tx.Rollback();
-            Util.MsgBox(ex.Message);
-        }
-        
     }
     #endregion
 }

@@ -7,7 +7,7 @@ Imports Microsoft.Practices.EnterpriseLibrary.Common
 Imports Microsoft.Practices.EnterpriseLibrary.Data
 
 
-Partial Class OV_1_OV4002
+Partial Class OV_OV4002
     Inherits PageBase
 #Region "全域變數"
     Private _overtimeDBName As String = "AattendantDB"
@@ -44,7 +44,7 @@ Partial Class OV_1_OV4002
 
         End Set
     End Property
-    Dim OV_1 As OV_1
+    Dim OV_3 As OV_3
     Dim AttachmentID As String
 
 #End Region
@@ -113,16 +113,16 @@ Partial Class OV_1_OV4002
         If errorMsg.ToString.Count = 0 Then
             '有跨日請拆單
             If OTStartDate.Equals(OTEndDate) Then '改成無跨日
-                Dim OV_1 As OV_1 = setPropertyForUpData(OTStartDate, OTEndDate, OTStartTime, OTEndTime, MealFlag, MealTime, SalaryOrAdjust, AdjustInvalidDate, OTTypeID, OTReasonMemo, Attachment)
+                Dim OV_3 As OV_3 = setPropertyForUpData(OTStartDate, OTEndDate, OTStartTime, OTEndTime, MealFlag, MealTime, SalaryOrAdjust, AdjustInvalidDate, OTTypeID, OTReasonMemo, Attachment)
                 If ViewState("Type").Equals("bef") Then
                     ' 無跨->無跨 直接upDate
                     If labOverTimeDate.Value.ToString.Split("~")(0).Equals(labOverTimeDate.Value.ToString.Split("~")(1)) Then
-                        Dim Flag As Boolean = OV_1.UpDateFor4002Single(OV_1)
+                        Dim Flag As Boolean = OV_3.UpDateFor4002Single(OV_3)
                         showMagAndGoBackFromflag(Flag)
                     Else ' 有跨->無跨 upDate seqNO 1 remove seqNO 2
-                        Dim Flag As Boolean = OV_1.DeleteFor4002(OV_1, "2")
+                        Dim Flag As Boolean = OV_3.DeleteFor4002(OV_3, "2")
                         If Flag Then
-                            Flag = OV_1.UpDateFor4002Single(OV_1)
+                            Flag = OV_3.UpDateFor4002Single(OV_3)
                         End If
                         showMagAndGoBackFromflag(Flag)
                     End If
@@ -146,21 +146,21 @@ Partial Class OV_1_OV4002
                     'OTEndTimeH.SelectedValue = labOTEndDate.Value.ToString().Split(":")(0) '要做什麼?
                     'OTEndTimeM.SelectedValue = labOTEndDate.Value.ToString().Split(":")(1)
 
-                    '20170308 用來紀錄是否要跟改ToOverTimeFlag 在 OV_1.UpDateFor4002Single(OV_1) 及OV_1.InsertFor4002 用到
+                    '20170308 用來紀錄是否要跟改ToOverTimeFlag 在 OV_3.UpDateFor4002Single(OV_3) 及OV_3.InsertFor4002 用到
 
-                    ' OV_1.isSalaryPaid 無計薪
-                    OV_1.isSalaryPaid = Not OV_1.checkSalaryPaid(OV_1.CompID, OV_1.OTEmpID, befSData, befSTime)
+                    ' OV_3.isSalaryPaid 無計薪
+                    OV_3.isSalaryPaid = Not OV_3.checkSalaryPaid(OV_3.CompID, OV_3.OTEmpID, befSData, befSTime)
 
-                    If OV_1.isToOverTime() And OV_1.isSalaryPaid Then
+                    If OV_3.isToOverTime() And OV_3.isSalaryPaid Then
                         Dim Flag As Boolean = False
-                        Dim oldDataTable As DataTable = OV_1.QuiryOldDataTableArrForOTTxnID(OV_1.OTTxnID, OV_1.Type)
+                        Dim oldDataTable As DataTable = OV_3.QuiryOldDataTableArrForOTTxnID(OV_3.OTTxnID, OV_3.Type)
                         '無跨->無跨 直接upDate
                         If labOverTimeDate.Value.ToString.Split("~")(0).Equals(labOverTimeDate.Value.ToString.Split("~")(1)) Then
-                            Flag = OV_1.UpDateFor4002Single(OV_1)
+                            Flag = OV_3.UpDateFor4002Single(OV_3)
                         Else '有跨->無跨 upDate seqNO 1 remove seqNO 2
-                            Flag = OV_1.DeleteFor4002(OV_1, "2")
+                            Flag = OV_3.DeleteFor4002(OV_3, "2")
                             If Flag Then
-                                Flag = OV_1.UpDateFor4002Single(OV_1)
+                                Flag = OV_3.UpDateFor4002Single(OV_3)
                             End If
                         End If
                         If Flag Then '改overtime 先刪除舊的 在裝新的 如果轉補修就不裝新的
@@ -170,7 +170,7 @@ Partial Class OV_1_OV4002
                                 Flag = deleteOverTimeTable(oldDataTable, data_Period)
                                 '如果轉補修就不裝新的
                                 If Flag And ddlSalaryOrAdjust.SelectedValue.Equals("1") Then
-                                    doThrow(OV_1.CompID, OV_1.OTEmpID, OV_1.OTTxnID)
+                                    doThrow(OV_3.CompID, OV_3.OTEmpID, OV_3.OTTxnID)
                                 End If
                             End If
                         End If
@@ -178,26 +178,26 @@ Partial Class OV_1_OV4002
                     Else '只改我們db()
                         Dim Flag As Boolean = False
                         If labOverTimeDate.Value.ToString.Split("~")(0).Equals(labOverTimeDate.Value.ToString.Split("~")(1)) Then
-                            Flag = OV_1.UpDateFor4002Single(OV_1)
+                            Flag = OV_3.UpDateFor4002Single(OV_3)
                         Else '有跨->無跨 upDate seqNO 1 remove seqNO 2
-                            Flag = OV_1.DeleteFor4002(OV_1, "2")
+                            Flag = OV_3.DeleteFor4002(OV_3, "2")
                             If Flag Then
-                                Flag = OV_1.UpDateFor4002Single(OV_1)
+                                Flag = OV_3.UpDateFor4002Single(OV_3)
                             End If
                         End If
                         showMagAndGoBackFromflag(Flag)
                     End If
                 End If
             Else '改成有跨日
-                Dim OV_1 As OV_1 = setPropertyForUpData(OTStartDate, OTEndDate, OTStartTime, OTEndTime, MealFlag, MealTime, SalaryOrAdjust, AdjustInvalidDate, OTTypeID, OTReasonMemo, Attachment)
+                Dim OV_3 As OV_3 = setPropertyForUpData(OTStartDate, OTEndDate, OTStartTime, OTEndTime, MealFlag, MealTime, SalaryOrAdjust, AdjustInvalidDate, OTTypeID, OTReasonMemo, Attachment)
                 If ViewState("Type").Equals("bef") Then
-                    Dim DataTable As DataTable = OV_1.QuiryOldDataTableArrForOTTxnID(OV_1.OTTxnID, OV_1.Type)
+                    Dim DataTable As DataTable = OV_3.QuiryOldDataTableArrForOTTxnID(OV_3.OTTxnID, OV_3.Type)
                     '不管有無跨日我都 先查 舊資料 抓取他到Server 然刪除舊資料 新增兩筆
                     If DataTable.Rows.Count > 0 Then
                         Dim oldOVA As OV4_OVA = setProperTyForOV4_OVA(DataTable)
-                        Dim Flag As Boolean = OV_1.DeleteFor4002(OV_1, "")
+                        Dim Flag As Boolean = OV_3.DeleteFor4002(OV_3, "")
                         If Flag Then
-                            Flag = OV_1.InsertFor4002OVA(OV_1, oldOVA)
+                            Flag = OV_3.InsertFor4002OVA(OV_3, oldOVA)
                         End If
                         showMagAndGoBackFromflag(Flag)
                     End If
@@ -210,37 +210,37 @@ Partial Class OV_1_OV4002
                     'OTEndTimeH.SelectedValue = labOTEndDate.Value.ToString().Split(":")(0)
                     'OTEndTimeM.SelectedValue = labOTEndDate.Value.ToString().Split(":")(1)
 
-                    '20170308 用來紀錄是否要跟改ToOverTimeFlag 在 OV_1.UpDateFor4002Single(OV_1) 及OV_1.InsertFor4002 用到
-                    OV_1.isSalaryPaid = Not OV_1.checkSalaryPaid(OV_1.CompID, OV_1.OTEmpID, befSData, befSTime)
+                    '20170308 用來紀錄是否要跟改ToOverTimeFlag 在 OV_3.UpDateFor4002Single(OV_3) 及OV_3.InsertFor4002 用到
+                    OV_3.isSalaryPaid = Not OV_3.checkSalaryPaid(OV_3.CompID, OV_3.OTEmpID, befSData, befSTime)
 
-                    If OV_1.isToOverTime() And OV_1.isSalaryPaid Then
-                        Dim oldDataTable As DataTable = OV_1.QuiryOldDataTableArrForOTTxnID(OV_1.OTTxnID, OV_1.Type)
+                    If OV_3.isToOverTime() And OV_3.isSalaryPaid Then
+                        Dim oldDataTable As DataTable = OV_3.QuiryOldDataTableArrForOTTxnID(OV_3.OTTxnID, OV_3.Type)
                         Dim data_Period As DataTable = getTable_Period() '存放時段的Table
                         '不管有無跨日我都 先查 舊資料 抓取他到Server 然刪除舊資料 新增兩筆
                         If oldDataTable.Rows.Count > 0 Then
                             Dim oldOVD As OV4_OVD = setProperTyForOV4_OVD(oldDataTable)
-                            Dim Flag As Boolean = OV_1.DeleteFor4002(OV_1, "")
+                            Dim Flag As Boolean = OV_3.DeleteFor4002(OV_3, "")
                             If Flag Then
-                                Flag = OV_1.InsertFor4002OVD(OV_1, oldOVD)
+                                Flag = OV_3.InsertFor4002OVD(OV_3, oldOVD)
                             End If
                             If Flag Then '改overtime 先刪除舊的 在裝新的
                                 Flag = False
                                 Flag = deleteOverTimeTable(oldDataTable, data_Period)
 
                                 If Flag And ddlSalaryOrAdjust.SelectedValue.Equals("1") Then
-                                    doThrow(OV_1.CompID, OV_1.OTEmpID, OV_1.OTTxnID)
+                                    doThrow(OV_3.CompID, OV_3.OTEmpID, OV_3.OTTxnID)
                                 End If
                             End If
                             showMagAndGoBackFromflag(Flag)
                         End If
                     Else
-                        Dim oldDataTable As DataTable = OV_1.QuiryOldDataTableArrForOTTxnID(OV_1.OTTxnID, OV_1.Type)
+                        Dim oldDataTable As DataTable = OV_3.QuiryOldDataTableArrForOTTxnID(OV_3.OTTxnID, OV_3.Type)
                         '不管有無跨日我都 先查 舊資料 抓取他到Server 然刪除舊資料 新增兩筆
                         If oldDataTable.Rows.Count > 0 Then
                             Dim oldOVD As OV4_OVD = setProperTyForOV4_OVD(oldDataTable)
-                            Dim Flag As Boolean = OV_1.DeleteFor4002(OV_1, "")
+                            Dim Flag As Boolean = OV_3.DeleteFor4002(OV_3, "")
                             If Flag Then
-                                Flag = OV_1.InsertFor4002OVD(OV_1, oldOVD)
+                                Flag = OV_3.InsertFor4002OVD(OV_3, oldOVD)
                             End If
                             showMagAndGoBackFromflag(Flag)
                         End If
@@ -270,16 +270,16 @@ Partial Class OV_1_OV4002
     Protected Overrides Sub BaseOnPageTransfer(ByVal ti As TransferInfo)
         If Not IsPostBack() Then
             Dim ht As Hashtable = Bsp.Utility.getHashTableFromParam(ti.Args)
-            OV_1 = New OV_1()
+            OV_3 = New OV_3()
             Dim dt As DataTable
             Dim OTCompID As String = ht("OTCompID").ToString()
             Dim OTEmpID As String = ht("OTEmpID").ToString()
             Dim OTStartDate As String = ht("OTStartDate").ToString()
             Dim OTEndDate As String = ht("OTEndDate").ToString()
             Dim OTSeq As String = ht("OTSeq").ToString()
-            OV_1.Type = ht("hiddenType").ToString()
+            OV_3.Type = ht("hiddenType").ToString()
             Dim OTTxnID As String = ht("OTTxnID").ToString()
-            Dim dt2 As DataTable = OV_1.getOV4001SumDataTable(OTCompID, OTEmpID, OTStartDate)
+            Dim dt2 As DataTable = OV_3.getOV4001SumDataTable(OTCompID, OTEmpID, OTStartDate)
             ViewState("Type") = ht("hiddenType").ToString()
             ViewState("OTSeq") = OTSeq
             ViewState("OTCompID") = OTCompID
@@ -287,7 +287,7 @@ Partial Class OV_1_OV4002
             ViewState("OTTxnID") = OTTxnID
             ViewState("Type") = ht("hiddenType").ToString()
 
-            dt = OV_1.getOV4001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
+            dt = OV_3.getOV4001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
             OTStartDate = dt.Rows(0).Item("labOverTimeDate").ToString().Split("~")(0)
             LoanData(dt, dt2)
         End If
@@ -300,7 +300,7 @@ Partial Class OV_1_OV4002
     ''' <param name="dt2"></param>
     ''' <remarks></remarks>
     Public Sub LoanData(ByVal dt As DataTable, ByVal dt2 As DataTable)
-        Dim objOV_1 As OV_1 = New OV_1
+        Dim objOV_3 As OV_3 = New OV_3
         '開始日期 結束日期 開始時間 結束時間
         Dim mStartDate As String
         Dim mEndDate As String
@@ -430,7 +430,7 @@ Partial Class OV_1_OV4002
             labDateOfApplication.Text = Format(item("labDateOfApplication"), "yyyy/MM/dd HH:mm:ss").ToString
 
             If item("labLastChgID").ToString.Trim <> "" Then
-                Dim UserName As String = objOV_1.GetPersonName(item("LastChgComp").ToString, item("labLastChgID").ToString)
+                Dim UserName As String = objOV_3.GetPersonName(item("LastChgComp").ToString, item("labLastChgID").ToString)
                 labLastChgID.Text = item("labLastChgID").ToString + IIf(UserName <> "", "-" + UserName, "")
             Else
                 labLastChgID.Text = ""
@@ -462,7 +462,7 @@ Partial Class OV_1_OV4002
             End If
 
 
-            If "after".Equals(OV_1.Type) Then
+            If "after".Equals(OV_3.Type) Then
                 labOTPayDate.Text = item("labOTPayDate").ToString
                 If labOTPayDate.Text.Equals("0") Then
                     labOTPayDate.Text = ""
@@ -538,7 +538,7 @@ Partial Class OV_1_OV4002
 
         If dt2.Rows.Count > 0 Then
             For Each item As DataRow In dt2.Rows
-                Dim OverTimeSumObject As OV_1 = New OV_1()
+                Dim OverTimeSumObject As OV_3 = New OV_3()
                 OverTimeSumObject.OvertimeDateB = item("OTStartDate").ToString()
                 OverTimeSumObject.OvertimeDateE = item("OTEndDate").ToString()
                 OverTimeSumObject.OTStartTime = item("OTStartTime").ToString()
@@ -563,9 +563,9 @@ Partial Class OV_1_OV4002
         Else
             labSum.Text = "月份已申請時數合計 : 送簽"
         End If
-        labSum1.Text = objOV_1.getSumOTTime(OverTimeSumObjectList1).ToString()
-        labSum2.Text = objOV_1.getSumOTTime(OverTimeSumObjectList2).ToString()
-        labSum3.Text = objOV_1.getSumOTTime(OverTimeSumObjectList3).ToString()
+        labSum1.Text = objOV_3.getSumOTTime(OverTimeSumObjectList1).ToString()
+        labSum2.Text = objOV_3.getSumOTTime(OverTimeSumObjectList2).ToString()
+        labSum3.Text = objOV_3.getSumOTTime(OverTimeSumObjectList3).ToString()
 
 
         For i = 0 To ddlOTTypeID.Items.Count - 1
@@ -590,11 +590,11 @@ Partial Class OV_1_OV4002
         Dim OTEndDate As String = txtOvertimeDateE.DateText
         Dim OTStartTime As String = OTStartTimeH.SelectedValue + OTStartTimeM.SelectedValue
         Dim OTEndTime As String = OTEndTimeH.SelectedValue + OTEndTimeM.SelectedValue
-        Dim OV_1 As OV_1 = New OV_1
+        Dim OV_3 As OV_3 = New OV_3
         Dim objOV42 As OV4_2 = New OV4_2
         Dim OTTotalTime As String = "0"
         Dim CompID As String = ViewState("OTCompID")
-        Dim selectDT As OV_1 = New OV_1
+        Dim selectDT As OV_3 = New OV_3
         Dim OVA As DataTable
         Dim OVD As DataTable
         Dim OVAOTTxnID As String = ""
@@ -634,7 +634,7 @@ Partial Class OV_1_OV4002
 
 
         Try
-            OTTotalTime = OV_1.getOverTime(OTStartDate, OTEndDate, OTStartTime, OTEndTime, "M")
+            OTTotalTime = OV_3.getOverTime(OTStartDate, OTEndDate, OTStartTime, OTEndTime, "M")
         Catch ex As Exception
             ErrorMsg = "請確認時間日期格式"
             Return ErrorMsg
@@ -854,8 +854,8 @@ Partial Class OV_1_OV4002
         '20170304kevin
         If "bef".Equals(ViewState("Type")) Then
             '檢核時間重疊(預先申請)
-            Using dt As DataTable = OV_1.CheckOverTimeAdvance(OTStartDate, OTEndDate, EmpID, ViewState("OTTxnID"))
-                Dim bTimeCover As Boolean = OV_1.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
+            Using dt As DataTable = OV_3.CheckOverTimeAdvance(OTStartDate, OTEndDate, EmpID, ViewState("OTTxnID"))
+                Dim bTimeCover As Boolean = OV_3.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
                 If bTimeCover Then
                     ErrorMsg = "您欲修改的加班時間區間已有申請紀錄"
                     Return ErrorMsg
@@ -863,8 +863,8 @@ Partial Class OV_1_OV4002
             End Using
 
             '檢核時間重疊(事後申報)
-            Using dt As DataTable = OV_1.CheckOverTimeDeclaration(OTStartDate, OTEndDate, EmpID, OVDOTTxnID)
-                Dim bTimeCover As Boolean = OV_1.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
+            Using dt As DataTable = OV_3.CheckOverTimeDeclaration(OTStartDate, OTEndDate, EmpID, OVDOTTxnID)
+                Dim bTimeCover As Boolean = OV_3.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
                 If bTimeCover Then
                     ErrorMsg = "您欲修改的加班時間區間已有申報紀錄"
                     Return ErrorMsg
@@ -873,8 +873,8 @@ Partial Class OV_1_OV4002
         Else
 
             '檢核時間重疊(預先申請)
-            Using dt As DataTable = OV_1.CheckOverTimeAdvance(OTStartDate, OTEndDate, EmpID, OVAOTTxnID)
-                Dim bTimeCover As Boolean = OV_1.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
+            Using dt As DataTable = OV_3.CheckOverTimeAdvance(OTStartDate, OTEndDate, EmpID, OVAOTTxnID)
+                Dim bTimeCover As Boolean = OV_3.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
                 If bTimeCover Then
                     ErrorMsg = "您欲修改的加班時間區間已有申請紀錄"
                     Return ErrorMsg
@@ -882,8 +882,8 @@ Partial Class OV_1_OV4002
             End Using
 
             '檢核時間重疊(事後申報)
-            Using dt As DataTable = OV_1.CheckOverTimeDeclaration(OTStartDate, OTEndDate, EmpID, ViewState("OTTxnID"))
-                Dim bTimeCover As Boolean = OV_1.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
+            Using dt As DataTable = OV_3.CheckOverTimeDeclaration(OTStartDate, OTEndDate, EmpID, ViewState("OTTxnID"))
+                Dim bTimeCover As Boolean = OV_3.isTimeCover(dt, CompID, EmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, "OTCompID", "OTEmpID", "OTStartDate", "OTEndDate", "OTStartTime", "OTEndTime")
                 If bTimeCover Then
                     ErrorMsg = "您欲修改的加班時間區間已有申報紀錄"
                     Return ErrorMsg
@@ -896,7 +896,7 @@ Partial Class OV_1_OV4002
 
     Private Function isRightTime() As Boolean
         Try
-            Dim OV_1 = New OV_1()
+            Dim OV_3 = New OV_3()
             Dim StartDate As String = txtOvertimeDateB.DateText
             Dim EndDate As String = txtOvertimeDateE.DateText
             Dim StartTime As String = OTStartTimeH.SelectedValue + OTStartTimeM.SelectedValue
@@ -907,7 +907,7 @@ Partial Class OV_1_OV4002
             If Not IsNumeric(meatTime) Then
                 meatTime = "0"
             End If
-            Dim OverTime As String = Convert.ToInt32(OV_1.getOverTime(StartDate, EndDate, StartTime, EndTime, "M")) - Convert.ToInt32(meatTime)
+            Dim OverTime As String = Convert.ToInt32(OV_3.getOverTime(StartDate, EndDate, StartTime, EndTime, "M")) - Convert.ToInt32(meatTime)
             If Convert.ToInt32(OverTime) < 0 Then
                 Return False
             End If
@@ -967,7 +967,7 @@ Partial Class OV_1_OV4002
 #End Region
 
     ''' <summary>
-    ''' 載入頁面資料到OV_1
+    ''' 載入頁面資料到OV_3
     ''' </summary>
     ''' <param name="OTStartDate"></param>
     ''' <param name="OTEndDate"></param>
@@ -982,27 +982,27 @@ Partial Class OV_1_OV4002
     ''' <param name="Attachment"></param>
     ''' <returns></returns>
     ''' <remarks></remarks>
-    Private Function setPropertyForUpData(ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal MealFlag As String, ByVal MealTime As String, ByVal SalaryOrAdjust As String, ByVal AdjustInvalidDate As String, ByVal OTTypeID As String, ByVal OTReasonMemo As String, ByVal Attachment As String) As OV_1
-        Dim OV_1 = New OV_1()
-        OV_1.Type = ViewState("Type")
-        OV_1.OvertimeDateB = OTStartDate
-        OV_1.OvertimeDateE = OTEndDate
-        OV_1.OTStartTime = OTStartTime
-        OV_1.OTEndTime = OTEndTime
-        OV_1.mealFlag = MealFlag
-        OV_1.mealTime = MealTime
-        OV_1.SalaryOrAdjust = SalaryOrAdjust
-        OV_1.AdjustInvalidDate = AdjustInvalidDate
-        OV_1.Time = OV_1.getOverTime(OTStartDate, OTEndDate, OTStartTime, OTEndTime, "M")
-        OV_1.OTTypeID = OTTypeID
-        OV_1.OTReasonMemo = OTReasonMemo
-        OV_1.OTAttachment = labOTAttachment.Value
-        OV_1.LastChgComp = UserProfile.CompID
-        OV_1.LastChgID = UserProfile.UserID
-        OV_1.CompID = ViewState("OTCompID")
-        OV_1.OTEmpID = ViewState("OTEmpID")
-        OV_1.OTTxnID = ViewState("OTTxnID")
-        Return OV_1
+    Private Function setPropertyForUpData(ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal MealFlag As String, ByVal MealTime As String, ByVal SalaryOrAdjust As String, ByVal AdjustInvalidDate As String, ByVal OTTypeID As String, ByVal OTReasonMemo As String, ByVal Attachment As String) As OV_3
+        Dim OV_3 = New OV_3()
+        OV_3.Type = ViewState("Type")
+        OV_3.OvertimeDateB = OTStartDate
+        OV_3.OvertimeDateE = OTEndDate
+        OV_3.OTStartTime = OTStartTime
+        OV_3.OTEndTime = OTEndTime
+        OV_3.mealFlag = MealFlag
+        OV_3.mealTime = MealTime
+        OV_3.SalaryOrAdjust = SalaryOrAdjust
+        OV_3.AdjustInvalidDate = AdjustInvalidDate
+        OV_3.Time = OV_3.getOverTime(OTStartDate, OTEndDate, OTStartTime, OTEndTime, "M")
+        OV_3.OTTypeID = OTTypeID
+        OV_3.OTReasonMemo = OTReasonMemo
+        OV_3.OTAttachment = labOTAttachment.Value
+        OV_3.LastChgComp = UserProfile.CompID
+        OV_3.LastChgID = UserProfile.UserID
+        OV_3.CompID = ViewState("OTCompID")
+        OV_3.OTEmpID = ViewState("OTEmpID")
+        OV_3.OTTxnID = ViewState("OTTxnID")
+        Return OV_3
     End Function
 
     ''' <summary>
@@ -1181,9 +1181,9 @@ Partial Class OV_1_OV4002
     Private Function LoadTime(ByVal OTEndTimeH As String, ByVal OTEndTimeM As String, ByVal OTStartTimeH As String, ByVal OTStartTimeM As String, ByVal txtOvertimeDateB As String, ByVal txtOvertimeDateE As String, ByVal MealFlag As Boolean) As Double
         Dim OTEndTime As String = OTEndTimeH + OTEndTimeM
         Dim OTStartTime As String = OTStartTimeH + OTStartTimeM
-        Dim OV_1 = New OV_1
+        Dim OV_3 = New OV_3
         '開始日期 結束日期 開始時間 結束時間
-        Dim overTimeM As String = OV_1.getOverTime(txtOvertimeDateB, txtOvertimeDateE, OTStartTime, OTEndTime, "M")
+        Dim overTimeM As String = OV_3.getOverTime(txtOvertimeDateB, txtOvertimeDateE, OTStartTime, OTEndTime, "M")
         Dim overTimeH = CDbl(FormatNumber((Convert.ToDouble(overTimeM) / 60), 1)).ToString()
         Dim str As String = "加班時數：" + overTimeH + "小時"
         Dim mealTime = 0
@@ -1233,7 +1233,7 @@ Partial Class OV_1_OV4002
     ''' </summary>
     ''' <remarks></remarks>
     Private Sub controlTimeText()
-        Dim OV_1 = New OV_1()
+        Dim OV_3 = New OV_3()
         Dim StartDate As String = txtOvertimeDateB.DateText
         Dim EndDate As String = txtOvertimeDateE.DateText
         Dim OTCompID As String = ViewState("OTCompID")
@@ -1249,14 +1249,14 @@ Partial Class OV_1_OV4002
         If Not IsNumeric(meatTime) Then
             meatTime = "0"
         End If
-        Dim OverTime As String = Convert.ToInt32(OV_1.getOverTime(StartDate, EndDate, StartTime, EndTime, "M")) - Convert.ToInt32(meatTime)
-        OV_1.Type = ViewState("Type").ToString
+        Dim OverTime As String = Convert.ToInt32(OV_3.getOverTime(StartDate, EndDate, StartTime, EndTime, "M")) - Convert.ToInt32(meatTime)
+        OV_3.Type = ViewState("Type").ToString
 
 
         LoadTime(OTEndTimeH.SelectedValue.ToString, OTEndTimeM.SelectedValue.ToString, OTStartTimeH.SelectedValue.ToString, OTStartTimeM.SelectedValue.ToString, txtOvertimeDateB.DateText.ToString, txtOvertimeDateE.DateText.ToString, cbMealFlag.Checked)
 
 
-        labAdjustInvalidDate.Text = OV_1.getOV4002labAdjustInvalidDate(OTCompID)
+        labAdjustInvalidDate.Text = OV_3.getOV4002labAdjustInvalidDate(OTCompID)
 
 
         If "".Equals(meatTime) Or Not IsNumeric(meatTime) Then
@@ -1275,7 +1275,7 @@ Partial Class OV_1_OV4002
 
         '****時段計算**************************************************************************************
         If (labOTStatus.Text.Equals("核准") Or (labOTStatus.Text.Equals("送簽"))) Then
-            Dim dt As DataTable = OV_1.getOV4002ForTimeDataTable(ViewState("OTCompID").ToString(), ViewState("OTEmpID").ToString, StartDate, EndDate, StartTime, EndTime, "", ViewState("OTTxnID").ToString, meatFlag, meatTime)
+            Dim dt As DataTable = OV_3.getOV4002ForTimeDataTable(ViewState("OTCompID").ToString(), ViewState("OTEmpID").ToString, StartDate, EndDate, StartTime, EndTime, "", ViewState("OTTxnID").ToString, meatFlag, meatTime)
             If dt.Rows.Count > 0 Then
                 Dim item As DataRow = dt.Rows(0)
 

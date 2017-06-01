@@ -47,7 +47,7 @@ Partial Class OV2001
     Protected Overrides Sub BaseOnPageTransfer(ByVal ti As TransferInfo)
         If Not IsPostBack() Then
             Dim ht As Hashtable = Bsp.Utility.getHashTableFromParam(ti.Args)
-            Dim objOV_1 As OV_1 = New OV_1()
+            Dim objOV_3 As OV_3 = New OV_3()
             OV2 = New OV2()
             Dim dt As DataTable
             Dim OTCompID As String = ht("OTCompID").ToString()
@@ -56,14 +56,14 @@ Partial Class OV2001
             Dim OTEndDate As String = ht("OTEndDate").ToString()
             'Dim OTSeq As String = ht("OTSeq").ToString()
             OV2.Type = ht("hiddenType").ToString()
-            objOV_1.Type = ht("hiddenType").ToString()
+            objOV_3.Type = ht("hiddenType").ToString()
             ViewState("Type") = ht("hiddenType").ToString()
             Dim OTTxnID As String = ht("OTTxnID").ToString()
             '20170320 因為明細與4001一樣所以呼叫4001
-            dt = objOV_1.getOV4001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
+            dt = objOV_3.getOV4001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
             'dt = OV2.getOV2001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
             OTStartDate = dt.Rows(0).Item("labOverTimeDate").ToString().Split("~")(0)
-            Dim dt2 As DataTable = objOV_1.getOV4001SumDataTable(OTCompID, OTEmpID, OTStartDate)
+            Dim dt2 As DataTable = objOV_3.getOV4001SumDataTable(OTCompID, OTEmpID, OTStartDate)
             LoanData(dt, dt2)
         End If
     End Sub
@@ -81,7 +81,7 @@ Partial Class OV2001
         Dim mEndDate As String
         Dim mStartTime As String
         Dim mEndTime As String
-        Dim objOV_1 As OV_1 = New OV_1()
+        Dim objOV_3 As OV_3 = New OV_3()
 
         If dt.Rows.Count > 0 Then
             Dim item As DataRow = dt.Rows(0)
@@ -117,7 +117,7 @@ Partial Class OV2001
 
             Button1.Visible = False
             If labOTAttachment.Value.Count > 0 Then
-                Dim mFileName As String = objOV_1.getFileName(labOTAttachment.Value)
+                Dim mFileName As String = objOV_3.getFileName(labOTAttachment.Value)
                 If mFileName.Count > 0 Then
                     Button1.Visible = True
                     fileName.Text = "附件檔名：" + mFileName
@@ -140,7 +140,7 @@ Partial Class OV2001
             'labLastChgID.Text = item("LastChgIDandName").ToString.Trim
 
             If item("labLastChgID").ToString.Trim <> "" Then
-                Dim UserName As String = objOV_1.GetPersonName(item("LastChgComp").ToString, item("labLastChgID").ToString)
+                Dim UserName As String = objOV_3.GetPersonName(item("LastChgComp").ToString, item("labLastChgID").ToString)
                 labLastChgID.Text = item("labLastChgID").ToString + IIf(UserName <> "", "-" + UserName, "")
             Else
                 labLastChgID.Text = ""
@@ -189,10 +189,10 @@ Partial Class OV2001
             'Dim dateStr As String = item("labOverTimeDate").ToString
             'Dim arrScore() As String = dateStr.Split("~")
             '開始日期 結束日期 開始時間 結束時間
-            Dim OV_1obj As OV_1 = New OV_1
-            Dim overTimeM As String = OV_1obj.getOverTime(mStartDate, mEndDate, mStartTime, mEndTime, "M")
+            Dim OV_3obj As OV_3 = New OV_3
+            Dim overTimeM As String = OV_3obj.getOverTime(mStartDate, mEndDate, mStartTime, mEndTime, "M")
             Dim overTimeH = CDbl(FormatNumber((Convert.ToDouble(overTimeM) / 60), 1)).ToString()
-            'Dim overTimeH As String = OV_1obj.getOverTime(mStartDate, mEndDate, mStartTime, mEndTime, "H")
+            'Dim overTimeH As String = OV_3obj.getOverTime(mStartDate, mEndDate, mStartTime, mEndTime, "H")
             Dim str As String = "加班時數：" + overTimeH + "小時"
 
             Dim mealTime = 0
@@ -232,7 +232,7 @@ Partial Class OV2001
 
         If dt2.Rows.Count > 0 Then
             For Each item As DataRow In dt2.Rows
-                Dim OverTimeSumObject As OV_1 = New OV_1()
+                Dim OverTimeSumObject As OV_3 = New OV_3()
                 OverTimeSumObject.OvertimeDateB = item("OTStartDate").ToString()
                 OverTimeSumObject.OvertimeDateE = item("OTEndDate").ToString()
                 OverTimeSumObject.OTStartTime = item("OTStartTime").ToString()
@@ -258,9 +258,9 @@ Partial Class OV2001
         Else
             labSum.Text = "月份已申請時數合計 : 送簽"
         End If
-        labSum1.Text = objOV_1.getSumOTTime(OverTimeSumObjectList1).ToString()
-        labSum2.Text = objOV_1.getSumOTTime(OverTimeSumObjectList2).ToString()
-        labSum3.Text = objOV_1.getSumOTTime(OverTimeSumObjectList3).ToString()
+        labSum1.Text = objOV_3.getSumOTTime(OverTimeSumObjectList1).ToString()
+        labSum2.Text = objOV_3.getSumOTTime(OverTimeSumObjectList2).ToString()
+        labSum3.Text = objOV_3.getSumOTTime(OverTimeSumObjectList3).ToString()
 
 
     End Sub
