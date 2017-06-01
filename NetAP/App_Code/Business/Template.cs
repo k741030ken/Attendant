@@ -35,6 +35,8 @@ public class Template //與交易同名
         using (FileStream stream = File.Open(filePath, FileMode.Open, FileAccess.Read))
         {
             // 創建讀取 Excel檔
+            //ExcelReaderFactory.CreateOpenXmlReader(stream) //XLSXA
+            //ExcelReaderFactory.CreateBinaryReader(stream) //XLS
             using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
             {
                 //excelRead.IsFirstRowAsColumnNames = true;
@@ -62,6 +64,8 @@ public class Template //與交易同名
     {
         // 你要抓取 Excel檔裡的工作表名稱
         string set = "Sheet1";
+        //ExcelReaderFactory.CreateOpenXmlReader(stream) //XLSXA
+        //ExcelReaderFactory.CreateBinaryReader(stream) //XLS
         using (IExcelDataReader excelRead = ExcelReaderFactory.CreateOpenXmlReader(stream))
         {
             //excelRead.IsFirstRowAsColumnNames = true;

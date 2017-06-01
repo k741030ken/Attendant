@@ -28,7 +28,7 @@
         "theme": "light",
 		"mouseWheelScrollEnabled": true,
 		"rotate": true,
-        "marginRight": 60,            
+        "marginRight": 60,           
         "columnWidth": 0.8,
 	    "startDuration": 0, //動畫效果
 		"brightnessStep": 7,
@@ -120,7 +120,7 @@
 		    ]
         },      
         "dataProvider": [ { //塞值
-            "category": "北祥0",
+            "category": "bicycle",
             "segments": [ {
                 "start": "2017/03/20 09:33",
                 "end": "2017/03/20 23:33",
@@ -128,7 +128,7 @@
                 "task": "Gathering requirements"
             }]
         }, {
-            "category": "北祥1",
+            "category": "car",
             "segments": [ {
                 "start": "2017/03/20 07:00",
                 "end": "2017/03/20 13:00",
@@ -146,7 +146,7 @@
                 "task": "Development"
             } ]
         }, {
-            "category": "北祥2",
+            "category": "motorcycle",
             "segments": [ {
                 "start": "2017/03/20 09:33",
                 "end": "2017/03/20 10:33",
@@ -164,7 +164,7 @@
                 "task": "Development"
             } ]
         }, {
-            "category": "北祥3",
+            "category": "John",
             "segments": [ {
                 "start": "2017/03/20 07:00",
                 "end": "2017/03/20 08:00",
@@ -180,7 +180,7 @@
                 "task": "Development"
             } ]
         }, {
-            "category": "北祥4",
+            "category": "Smith",
             "segments": [ {
                 "start": "2017/03/20 09:33",
                 "end": "2017/03/20 10:33",
@@ -202,6 +202,9 @@
 	    chart.chartCursor.addListener( "moved", AmCharts.myHandleMove );
         chart.chartDiv.onclick = AmCharts.myHandleClick;
     });
+	
+	//chart.addListener("drawn", modifyAxis);
+    chart.addListener("zoomed", modifyAxis);
 
     AmCharts.myCurrentPosition;
     AmCharts.myHandleMove = function( event ) { //滑鼠取得X值後暫存
@@ -236,6 +239,8 @@
         chart.validateData();	
     }
 	
+	
+	
 	function getAmChartsFormatDate(d){ //日期格式化
 	    var dformat = [ d.getUTCFullYear(),(d.getUTCMonth()+1).padLeft(),d.getUTCDate().padLeft()].join('/')+ ' ' +
                       [ d.getUTCHours().padLeft(),d.getUTCMinutes().padLeft()].join(':');  
@@ -269,12 +274,42 @@
         //console.log("zzzzzz::::::::::: "+chartData[2].date);
         return chartData;
     }
+	
+	function modifyAxis(e) {
+        var axes = e.chart.categoryAxis;
+	    var labels = axes.allLabels;
+        var parent = labels[0].node.parentNode;
+        for (i2 in labels) {
+            var label = labels[i2].node;
+            var group = document.createElementNS('http://www.w3.org/2000/svg', "g");
+            var img = document.createElementNS('http://www.w3.org/2000/svg', "image");
+            
+            // Setup image
+	        var href = "./images/" + label.childNodes[0].innerHTML + ".png";
+            img.setAttribute('href', href);
+            img.setAttribute('x', '-77');
+            img.setAttribute('y', '-17'); // half the height
+            img.setAttribute('width', '34');
+            img.setAttribute('height', '34');
+            
+            // Swap position to group; remove from label
+            group.setAttribute('transform', label.getAttribute('transform'));
+            label.setAttribute('transform', '');
+            
+            // Group axis labels
+            group.appendChild(label);
+            group.appendChild(img);
+            parent.appendChild(group);
+        }    
+  }
 		
     </script>
     </head>
 
     <body>
-        <div id="chartdiv" style="width: 100%; height: 400px;"></div>
+        <div style="width: 100%; height: 600px;text-align:center;">
+		    <div id="chartdiv" style="width: 80%; height: 400px;margin:0 auto;"></div>
+		</div>
     </body>
 
 </html>

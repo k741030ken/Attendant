@@ -53,6 +53,9 @@
     <None Include="LoadTest1.loadtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="LoadTest2.loadtest">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="WebTestInsertDeleteCase01.webtest">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
