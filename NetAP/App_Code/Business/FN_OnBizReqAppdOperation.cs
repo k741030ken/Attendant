@@ -154,7 +154,7 @@ public class FN_OnBizReqAppdOperation
         result.LastChgComp_Name = Detaildatas.LastChgComp_Name;
         result.LastChgID_Nanme = Detaildatas.LastChgID_Nanme;
         result.LastChgDate = Detaildatas.LastChgDate;
-
+        result.FlowCaseID = Detaildatas.FlowCaseID;
         return result;
     }
 }

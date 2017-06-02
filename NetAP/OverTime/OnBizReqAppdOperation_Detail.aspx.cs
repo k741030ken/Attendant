@@ -25,7 +25,8 @@ using SinoPac.WebExpress.Work;
 public partial class OverTime_OnBizReqAppdOperation_Detail : BasePage
 {
     #region "1. 全域變數"
-
+    private static string _attendantFlowID = Aattendant._AattendantFlowID;
+    private static string _OnBizReqAppdFlowID = Util.getAppSetting("app://OnBizReqAppd/");
     #endregion
     /// <summary>
     /// _SessionCheckVisitGridDataModel
@@ -60,8 +61,16 @@ public partial class OverTime_OnBizReqAppdOperation_Detail : BasePage
     protected void Page_Load(object sender, EventArgs e)
     {
         subGetData();
+        subGetFlowData();
     }
-
+    private void subGetFlowData()
+    {
+                string strFlowLogDisplayURL = string.Format("{0}?FlowID={1}&FlowCaseID={2}", FlowExpress._FlowLogDisplayURL, _OnBizReqAppdFlowID, ViewState["FlowCaseID"]);
+                //string strFlowLogDisplayURL = string.Format("{0}?FlowID={1}&FlowCaseID={2}", FlowExpress._FlowLogDisplayURL, "OnBizReqAppd_ITRD", ViewState["FlowCaseID"]);
+                FlowLogFrame.Attributes["src"] = strFlowLogDisplayURL;
+                FlowLogFrame.Attributes["width"] = "100%";
+                FlowLogFrame.Attributes["height"] = "400";
+    }
     protected void subGetData()
     {
         var isSuccess = false;
@@ -115,6 +124,7 @@ public partial class OverTime_OnBizReqAppdOperation_Detail : BasePage
             lblLastChgComptxt.Text = ViewData.LastChgComp_Name;
             lblLastChgIDtxt.Text = ViewData.LastChgID_Nanme;
             lblLastChgDatetxt.Text = ViewData.LastChgDate;
+            ViewState["FlowCaseID"] = ViewData.FlowCaseID;
 
         }
         

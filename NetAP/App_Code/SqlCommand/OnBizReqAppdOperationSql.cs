@@ -59,7 +59,8 @@ public partial class OnBizReqAppdOperationSql
         sb.Append(" ,CONVERT(NVARCHAR (5),VF.BeginTime) + '~' + CONVERT(NVARCHAR (5),VF.EndTime) AS VisitTime");
         sb.Append(" ,VF.DeputyID + '-' + VF.DeputyName AS DeputyID_Name,VF.LocationType,VF.InterLocationName,VF.ExterLocationName,VF.VisiterName,VF.VisiterTel");
         sb.Append(" ,VF.VisitReasonID + '-' + VF.VisitReasonCN AS VisitReason,VF.VisitReasonDesc,VF.LastChgComp + '-' + Co.CompName AS LastChgComp_Name");
-        sb.Append(" ,VF.LastChgID + '-' + P.NameN AS LastChgID_Nanme,REPLACE(CONVERT(NVARCHAR(19),VF.LastChgDate),'-','/') AS LastChgDate");
+        sb.Append(" ,VF.LastChgID + '-' + P.NameN AS LastChgID_Nanme,REPLACE(CONVERT(NVARCHAR(19),VF.LastChgDate,111),'-','/') AS LastChgDate");
+        sb.Append(" ,FlowCaseID ");
         sb.Append(" FROM VisitForm VF");
         sb.Append(" LEFT JOIN " + _eHRMSDB_ITRD + ".dbo.Company C ON VF.CompID = C.CompID");
         sb.Append(" LEFT JOIN " + _eHRMSDB_ITRD + ".dbo.Company Co ON VF.CompID = Co.CompID");
