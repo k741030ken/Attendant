@@ -481,7 +481,7 @@ Partial Class OV_OV1300
             Dim TipMsg As New StringBuilder
             ViewState.Item("errorDT") = errorDt
             If data_Period.Rows.Count > 0 Then
-                'InsertDB(data_Period) '新增到資料庫
+                InsertDB(data_Period) '新增到資料庫
 
                 Dim allCount As Integer = ViewState.Item("OverTotalCount") - ViewState.Item("exOverTotalCount")
 

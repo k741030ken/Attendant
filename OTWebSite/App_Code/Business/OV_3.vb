@@ -821,7 +821,7 @@ Public Class OV_3
         Return strSQL.ToString
 
     End Function
-    Private Function getOV4001DataTableSql(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTSeq As String, ByVal OTTxnID As String) As String
+    Private Function getOV1001DataTableSql(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTSeq As String, ByVal OTTxnID As String) As String
         Dim strSQL As New StringBuilder
 
         If Type.Equals("bef") Then
@@ -973,7 +973,7 @@ Public Class OV_3
 
 #Region "取DataTable function"
 
-    Public Function getOV4001SumDataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String) As DataTable
+    Public Function getOV1001SumDataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String) As DataTable
         Dim yyyy As String = OTStartDate.Split("/")(0)
         Dim MM As String = OTStartDate.Split("/")(1)
         Dim dateTime As DateTime = New DateTime
@@ -1005,10 +1005,10 @@ Public Class OV_3
         Return dt3
     End Function
 
-    Public Function getOV4001DataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTSeq As String, ByVal OTTxnID As String) As DataTable
-        Dim strSQL = getOV4001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
+    Public Function getOV1001DataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTSeq As String, ByVal OTTxnID As String) As DataTable
+        Dim strSQL = getOV1001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
         Dim dt As DataTable = Bsp.DB.ExecuteDataSet(CommandType.Text, strSQL, "AattendantDB").Tables(0)
-        dt = getTimeIntervalAdapterFor4001(dt, getBefColumnName4001List())
+        dt = getTimeIntervalAdapterFor1001(dt, getBefColumnName1001List())
         dt = changeTableNimToNameForDetial(dt)
         '目前得到時段
         Return dt
@@ -1067,8 +1067,8 @@ Public Class OV_3
         Return FileName
     End Function
 
-    Public Function getOV4002ForTimeDataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mealFlag As String, ByVal mealTime As String) As DataTable
-        Dim strSQL = getOV4001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
+    Public Function getOV1002ForTimeDataTable(ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mealFlag As String, ByVal mealTime As String) As DataTable
+        Dim strSQL = getOV1001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
         Dim dt As DataTable = Bsp.DB.ExecuteDataSet(CommandType.Text, strSQL, "AattendantDB").Tables(0)
         Dim rows As DataRow() = getSameDataForOTTxnID(dt, OTTxnID)
         Dim row1 As DataRow = dt.NewRow()
@@ -1111,7 +1111,7 @@ Public Class OV_3
        Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTStartDate"), cust.Field(Of String)("labOTStartDate")).CopyToDataTable()
 
 
-            dt = getTimeIntervalAdapterFor4002Time(dt, getBefColumnName4001List(), OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime)
+            dt = getTimeIntervalAdapterFor1002Time(dt, getBefColumnName1001List(), OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime)
             'dt = changeTableNimToNameForDetial(dt)
 
         Else
@@ -1153,7 +1153,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
             End If
 
-            dt = getTimeIntervalAdapterFor4002Time(dt, getBefColumnName4001List(), OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime)
+            dt = getTimeIntervalAdapterFor1002Time(dt, getBefColumnName1001List(), OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime)
             'dt = changeTableNimToNameForDetial(dt)
 
         End If
@@ -1164,7 +1164,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
 
 
-    Public Function getOV4002labAdjustInvalidDate(ByVal OTCompID As String) As String
+    Public Function getOV1002labAdjustInvalidDate(ByVal OTCompID As String) As String
 
         Dim strSQL = "  Select Para FROM [dbo].[OverTimePara] where CompID='" + OTCompID + "'"
         Dim dt As DataTable = Bsp.DB.ExecuteDataSet(CommandType.Text, strSQL, "AattendantDB").Tables(0)
@@ -1173,9 +1173,9 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
         Dim jsontb As DataTable = Json2DataTable(jsonStr)
 
-        'Dim strSQL = getOV4001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
+        'Dim strSQL = getOV1001DataTableSql(OTCompID, OTEmpID, OTStartDate, OTEndDate, OTSeq, OTTxnID)
         'Dim dt As DataTable = Bsp.DB.ExecuteDataSet(CommandType.Text, strSQL, "AattendantDB").Tables(0)
-        'dt = getTimeIntervalAdapterFor4001(dt, getBefColumnName4001List())
+        'dt = getTimeIntervalAdapterFor1001(dt, getBefColumnName1001List())
         'dt = changeTableNimToNameForDetial(dt)
         '目前得到時段
 
@@ -1265,7 +1265,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
 
 
-    Public Function getBefColumnName4001List() As ArrayList
+    Public Function getBefColumnName1001List() As ArrayList
 
         '    strSQL.AppendLine(",ORT2.OrganName +'/'+ORT1.OrganName AS 'labDeptID',ORT.OrganName AS 'labOrganID',P.Name AS 'labOTEmpName'")
         'strSQL.AppendLine(",OVD.SalaryOrAdjust AS 'labSalaryOrAdjust'")
@@ -1814,7 +1814,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     ''' 然後查出要查的資料 
     ''' 
     ''' </remarks>
-    Public Function doThrowFor4002Time(ByVal type As String, ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mmealFlag As String, ByVal mmealTime As String) As DataTable
+    Public Function doThrowFor1002Time(ByVal type As String, ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mmealFlag As String, ByVal mmealTime As String) As DataTable
         '變數宣告
         Dim strSQL_Declaration As New StringBuilder()
         Dim data_Declaration As DataTable                '原生資料
@@ -2311,9 +2311,9 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     ''' 時段Adapter 有三種
     ''' 一.給予一般的以單來算 getTimeIntervalAdapter
     ''' 
-    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor4001,getTimeIntervalAdapterFor2001
+    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor1001,getTimeIntervalAdapterFor2001
     ''' 
-    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor4002
+    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor1002
     ''' </remarks>
     Public Function getTimeIntervalAdapter(ByVal dt As DataTable, ByVal BefColumnNameList As ArrayList) As DataTable
         Dim checkEmpID As String = ""
@@ -2379,11 +2379,11 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     ''' 時段Adapter 有三種
     ''' 一.給予一般的以單來算 getTimeIntervalAdapter
     ''' 
-    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor4001,getTimeIntervalAdapterFor2001
+    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor1001,getTimeIntervalAdapterFor2001
     ''' 
-    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor4002
+    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor1002
     ''' </remarks>
-    Public Function getTimeIntervalAdapterFor4001(ByVal dt As DataTable, ByVal BefColumnNameList As ArrayList) As DataTable
+    Public Function getTimeIntervalAdapterFor1001(ByVal dt As DataTable, ByVal BefColumnNameList As ArrayList) As DataTable
         Dim checkEmpID As String = ""
         Dim data_Period As DataTable = doThrow(Type) '存放時段的Table
         Dim AftColumnNameList As ArrayList = getAftColumnNameList()
@@ -2455,13 +2455,13 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     ''' 時段Adapter 有三種
     ''' 一.給予一般的以單來算 getTimeIntervalAdapter
     ''' 
-    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor4001,getTimeIntervalAdapterFor2001
+    ''' 二.以日來算累加時段 getTimeIntervalAdapterFor1001,getTimeIntervalAdapterFor2001
     ''' 
-    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor4002
+    ''' 三.即時傳入時間並以日來算  getTimeIntervalAdapterFor1002
     ''' </remarks>
-    Public Function getTimeIntervalAdapterFor4002Time(ByVal dt As DataTable, ByVal BefColumnNameList As ArrayList, ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mealFlag As String, ByVal mealTime As String) As DataTable
+    Public Function getTimeIntervalAdapterFor1002Time(ByVal dt As DataTable, ByVal BefColumnNameList As ArrayList, ByVal OTCompID As String, ByVal OTEmpID As String, ByVal OTStartDate As String, ByVal OTEndDate As String, ByVal OTStartTime As String, ByVal OTEndTime As String, ByVal OTSeq As String, ByVal OTTxnID As String, ByVal mealFlag As String, ByVal mealTime As String) As DataTable
         Dim checkEmpID As String = ""
-        Dim data_Period As DataTable = doThrowFor4002Time(Type, OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime) '存放時段的Table
+        Dim data_Period As DataTable = doThrowFor1002Time(Type, OTCompID, OTEmpID, OTStartDate, OTEndDate, OTStartTime, OTEndTime, OTSeq, OTTxnID, mealFlag, mealTime) '存放時段的Table
         Dim AftColumnNameList As ArrayList = getAftColumnNameList()
         For i = 0 To BefColumnNameList.Count - 1
             If Not (dt.Columns((BefColumnNameList.Item(i)).ToString).ColumnName.Equals(AftColumnNameList.Item(i).ToString)) Then
@@ -3280,8 +3280,8 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
         End Using
         Return Flag
     End Function
-#Region "4002資料更新"
-    Public Function DeleteFor4002(ByVal OV_3 As OV_3, ByVal OTSeqNo As String) As Boolean
+#Region "1002資料更新"
+    Public Function DeleteFor1002(ByVal OV_3 As OV_3, ByVal OTSeqNo As String) As Boolean
         Dim SQLString As StringBuilder = New StringBuilder
         Dim DataTable As String
         If "bef".Equals(Type) Then
@@ -3319,7 +3319,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
         End Using
         Return Flag
     End Function
-    Public Function InsertFor4002OVA(ByVal OV_3 As OV_3, ByVal oldOVAData As OV4_OVA) As Boolean
+    Public Function InsertFor1002OVA(ByVal OV_3 As OV_3, ByVal oldOVAData As OV1_OVA) As Boolean
         Dim SQLString As StringBuilder = New StringBuilder
         '拆單
         Dim StartDate1 As String = OV_3.OvertimeDateB
@@ -3409,7 +3409,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     End Function
 
 
-    Public Function InsertFor4002OVD(ByVal OV_3 As OV_3, ByVal oldOVDData As OV4_OVD) As Boolean
+    Public Function InsertFor1002OVD(ByVal OV_3 As OV_3, ByVal oldOVDData As OV1_OVD) As Boolean
         Dim SQLString As StringBuilder = New StringBuilder
         '拆單
         Dim StartDate1 As String = OV_3.OvertimeDateB
@@ -3514,7 +3514,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
     End Function
 
 
-    Public Function UpDateFor4002Single(ByVal OV_3 As OV_3) As Boolean
+    Public Function UpDateFor1002Single(ByVal OV_3 As OV_3) As Boolean
         Dim SQLString As StringBuilder = New StringBuilder
         Dim Flag As Boolean = False
         Dim DataTable As String
@@ -3799,11 +3799,11 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
 
 #End Region
-#Region "4002資料更新"
+#Region "1002資料更新"
 
 
 #End Region
-#Region "檢查時間重複 同OV4_2 但須排除自己 且屬性全抓"
+#Region "檢查時間重複 同OV1_2 但須排除自己 且屬性全抓"
     ''' <summary>
     ''' 檢核時間重疊(事後申報)
     ''' </summary>
@@ -3871,7 +3871,7 @@ Order By cust.Field(Of String)("OTEmpID") Descending, cust.Field(Of String)("OTS
 
     ''' <summary>
     ''' 刪除OverTimeTable裡的資料
-    ''' 與OV4002不同這邊不對OverTime 另外再做時間的更新
+    ''' 與OV1002不同這邊不對OverTime 另外再做時間的更新
     ''' </summary>
     ''' <param name="DataTable"></param>
     ''' <returns></returns>
