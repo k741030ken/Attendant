@@ -115,7 +115,7 @@ Partial Class OV_OV2103
         End If
         cbMealFlag.Enabled = False
 
-        Dim dt As DataTable = OV_3.getOV4001DataTable(ovCompID, ovEmpID, ovSDate, ovEDate, ovSeq, ovTxnID)
+        Dim dt As DataTable = OV_3.getOV1001DataTable(ovCompID, ovEmpID, ovSDate, ovEDate, ovSeq, ovTxnID)
         Dim item As DataRow = dt.Rows(0)
         If dt.Rows.Count > 1 Then
             Dim item2 As DataRow = dt.Rows(1)

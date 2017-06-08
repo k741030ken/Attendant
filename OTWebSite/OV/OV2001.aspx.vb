@@ -59,11 +59,11 @@ Partial Class OV2001
             objOV_3.Type = ht("hiddenType").ToString()
             ViewState("Type") = ht("hiddenType").ToString()
             Dim OTTxnID As String = ht("OTTxnID").ToString()
-            '20170320 因為明細與4001一樣所以呼叫4001
-            dt = objOV_3.getOV4001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
+            '20170320 因為明細與1001一樣所以呼叫1001
+            dt = objOV_3.getOV1001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
             'dt = OV2.getOV2001DataTable(OTCompID, OTEmpID, OTStartDate, OTEndDate, "", OTTxnID)
             OTStartDate = dt.Rows(0).Item("labOverTimeDate").ToString().Split("~")(0)
-            Dim dt2 As DataTable = objOV_3.getOV4001SumDataTable(OTCompID, OTEmpID, OTStartDate)
+            Dim dt2 As DataTable = objOV_3.getOV1001SumDataTable(OTCompID, OTEmpID, OTStartDate)
             LoanData(dt, dt2)
         End If
     End Sub
