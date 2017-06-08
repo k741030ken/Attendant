@@ -109,7 +109,7 @@
                                 <HeaderStyle Width="90px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>
-                            <asp:BoundField DataField="VisitEndDate" HeaderText="結束日期">
+                            <asp:BoundField DataField="VisitEndDate" HeaderText="結束日期" Visible="false">
                                 <HeaderStyle Width="190px" CssClass="td_header" />
                                 <ItemStyle CssClass="td_detail" HorizontalAlign="Center" />
                             </asp:BoundField>

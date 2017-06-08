@@ -117,7 +117,7 @@ Partial Class OV_OV3100
         Dim btnX As New ButtonState(ButtonState.emButtonType.Exit)
         Dim btnC As New ButtonState(ButtonState.emButtonType.Cancel)
 
-        btnA.Caption = "存檔"
+        btnA.Caption = "存檔返回"
         btnX.Caption = "返回"
         btnC.Caption = "清除"
 
@@ -145,7 +145,7 @@ Partial Class OV_OV3100
                 Dim CityVEmp As String = ddlPersonOrCity.SelectedValue
 
 
-                btnA.Caption = "存檔"
+                btnA.Caption = "存檔返回"
                 btnX.Caption = "返回"
                 btnC.Caption = "清除"
 
