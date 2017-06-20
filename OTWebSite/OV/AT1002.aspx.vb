@@ -2,7 +2,7 @@
 '功能說明：其他代碼設定-修改
 '建立人員：Jason Lu
 '建立日期：2016.12.27
-'修改日期：2017.02.15
+'修改日期：2017.06.19
 '****************************************************
 
 Imports System.Data
@@ -40,6 +40,7 @@ Partial Class AT_AT1002
                 If ht("DoUpdate").ToString() = "Y" Then
                     '是修改
                     ViewState.Item("DoUpdate") = "Y"
+                    ddlTabFldName.Enabled = False
                 ElseIf ht("DoUpdate").ToString() = "N" Then
                     '是明細
                     ViewState.Item("DoUpdate") = "N"
@@ -154,7 +155,7 @@ Partial Class AT_AT1002
 
     Private Sub ClearData()
         '代碼類別
-        ddlTabFldName.SelectedIndex = ddlTabFldName.Items.IndexOf(ddlTabFldName.Items.FindByText((hidTabName.Value.ToString() + "\" + hidFldName.ToString())))
+        ddlTabFldName.SelectedIndex = ddlTabFldName.Items.IndexOf(ddlTabFldName.Items.FindByValue((hidTabName.Value.ToString() + "\" + hidFldName.Value.ToString())))
 
         '代碼
         txtCode.Text = hidCode.Value.ToString()
@@ -287,6 +288,7 @@ Partial Class AT_AT1002
         beManageCodeSet.LastChgComp.Value = UserProfile.ActCompID
         beManageCodeSet.LastChgID.Value = UserProfile.ActUserID
         beManageCodeSet.LastChgDate.Value = Now
+        beManageCodeSet.Code.OldValue = hidCode.Value.ToString
 
         '檢查不顯示註記是否有勾選 0=顯示,１=不顯示
         If chkNotShowingFlag.Checked = True Then

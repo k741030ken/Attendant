@@ -130,9 +130,9 @@ Public Class AT1
 
         Try
             strSQL.AppendLine(" AND ")
-            If beManageCodeSet.TabName.Value <> "" Then strSQL.AppendLine(" TabName = '" + beManageCodeSet.TabName.Value + "'")
-            If beManageCodeSet.FldName.Value <> "" Then strSQL.AppendLine(" AND FldName = '" + beManageCodeSet.FldName.Value + "'")
-            If beManageCodeSet.Code.Value <> "" Then strSQL.AppendLine(" AND Code = '" + beManageCodeSet.Code.Value + "'")
+            If beManageCodeSet.TabName.Value <> "" Then strSQL.AppendLine(" H.TabName = '" + beManageCodeSet.TabName.Value + "'")
+            If beManageCodeSet.FldName.Value <> "" Then strSQL.AppendLine(" AND H.FldName = '" + beManageCodeSet.FldName.Value + "'")
+            If beManageCodeSet.Code.Value <> "" Then strSQL.AppendLine(" AND H.Code = '" + beManageCodeSet.Code.Value + "'")
             strSQL.AppendLine(" ORDER BY TabName, FldName, SortFld ")
             Return bsManageCodeSet.QuerybyWhere(strSQL.ToString()).Tables(0)
         Catch ex As Exception
