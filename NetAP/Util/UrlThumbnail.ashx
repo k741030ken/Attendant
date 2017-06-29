@@ -92,6 +92,8 @@ public class UrlThumbnail : IHttpHandler
                     context.Response.ContentType = string.Format("image/{0}", strExtName);
                     MemStream.WriteTo(HttpContext.Current.Response.OutputStream);
 
+                    bmpIn.Dispose();
+                    bmpOut.Dispose();
                 } //wRS.ContentLength > 0
             }
         }

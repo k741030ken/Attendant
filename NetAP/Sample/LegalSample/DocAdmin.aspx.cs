@@ -69,14 +69,14 @@ public partial class LegalSample_DocAdmin : SecurePage
     {
         get
         {
-            if (ViewState["_DicKeyword"] != null)
+            if (PageViewState["_DicKeyword"] != null)
             {
-                return (Dictionary<string, string>)ViewState["_DicKeyword"];
+                return (Dictionary<string, string>)PageViewState["_DicKeyword"];
             }
             else
             {
-                ViewState["_DicKeyword"] = Util.getCodeMap(LegalSample._LegalSysDBName, "LegalDoc", "Keyword");
-                return (Dictionary<string, string>)ViewState["_DicKeyword"];
+                PageViewState["_DicKeyword"] = Util.getCodeMap(LegalSample._LegalSysDBName, "LegalDoc", "Keyword");
+                return (Dictionary<string, string>)PageViewState["_DicKeyword"];
             }
         }
     }

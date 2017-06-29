@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 
@@ -60,11 +61,31 @@ public partial class Util_ucProcessButton : BaseUserControl
             {
                 PageViewState["_BtnCaption"] = RS.Resources.Msg_ProcessStart;
             }
-            return (string)(PageViewState["_BtnCaption"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_BtnCaption"]));
         }
         set
         {
             PageViewState["_BtnCaption"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕提示訊息
+    /// </summary>
+    public string ucBtnToolTip
+    {
+        //2017.05.19 新增
+        get
+        {
+            if (PageViewState["_BtnToolTip"] == null)
+            {
+                PageViewState["_BtnToolTip"] = string.Empty;
+            }
+            return PageViewState["_BtnToolTip"].ToString();
+        }
+        set
+        {
+            PageViewState["_BtnToolTip"] = value;
         }
     }
 
@@ -79,7 +100,7 @@ public partial class Util_ucProcessButton : BaseUserControl
             {
                 PageViewState["_BtnStyle"] = "Util_clsBtnGray";
             }
-            return (string)(PageViewState["_BtnStyle"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_BtnStyle"]));
         }
         set
         {
@@ -117,7 +138,7 @@ public partial class Util_ucProcessButton : BaseUserControl
             {
                 PageViewState["_ConfirmMsg"] = RS.Resources.Msg_Confirm;
             }
-            return PageViewState["_ConfirmMsg"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_ConfirmMsg"].ToString());
         }
         set
         {
@@ -136,8 +157,8 @@ public partial class Util_ucProcessButton : BaseUserControl
             {
                 PageViewState["_ProcessLightboxMsg"] = RS.Resources.Msg_ExportDataPreparing;
             }
-            ucLightBox.ucLightBoxMsg = PageViewState["_ProcessLightboxMsg"].ToString();
-            return PageViewState["_ProcessLightboxMsg"].ToString();
+            ucLightBox.ucLightBoxMsg = HttpUtility.HtmlEncode(PageViewState["_ProcessLightboxMsg"].ToString());
+            return HttpUtility.HtmlEncode(PageViewState["_ProcessLightboxMsg"].ToString());
         }
         set
         {
@@ -229,6 +250,9 @@ public partial class Util_ucProcessButton : BaseUserControl
         btnStart.CssClass = ucBtnCssClass;
         btnStart.Width = ucBtnWidth;
         ucLightBox.ucLightBoxBreakEnabled = ucProcessBreakEnabled;
+
+        if (!string.IsNullOrEmpty(ucBtnToolTip)) //2017.05.19
+            btnStart.ToolTip = ucBtnToolTip;
 
         if (string.IsNullOrEmpty(ucConfirmMsg))
             btnStart.OnClientClick = _defPopDisplayClientJS;

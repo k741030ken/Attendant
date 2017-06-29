@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Collections.Generic;
 using SinoPac.WebExpress.Common;
 using SinoPac.WebExpress.DAO;
@@ -19,7 +20,7 @@ public partial class Util_AppLogQry : SecurePage
             {
                 PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(PageViewState["_DBName"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DBName"]));
         }
         set
         {
@@ -35,7 +36,7 @@ public partial class Util_AppLogQry : SecurePage
             {
                 PageViewState["_AllowPurgeYN"] = Util.getRequestQueryStringKey("AllowPurgeYN","N",true);
             }
-            return (string)(PageViewState["_AllowPurgeYN"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AllowPurgeYN"]));
         }
         set
         {
@@ -97,7 +98,7 @@ public partial class Util_AppLogQry : SecurePage
             DivQryCondition.Visible = false;
             DivQryResult.Visible = false;
             labErrMsg.Visible = true;
-            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(SinoPac.WebExpress.Common.Properties.Resources.Msg_ParaNotFoundList, "DBName"));
+            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(SinoPac.WebExpress.Common.Properties.Resources.Msg_ParaNotFound1, "DBName"));
             return;
         }
 

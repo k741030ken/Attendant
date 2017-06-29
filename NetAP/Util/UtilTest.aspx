@@ -28,8 +28,9 @@
         </asp:ToolkitScriptManager>
         <fieldset class="Util_Fieldset">
             <legend class="Util_Legend">System Tools</legend>
-            <asp:Button ID="btnAppClear" CssClass="Util_clsBtn" Width="150" runat="server" Text="清除目前 Application" OnClick="btnAppClear_Click" />
-            <asp:Button ID="btnSessClear" CssClass="Util_clsBtn" Width="150" runat="server" Text="清除目前 Session" OnClick="btnSessClear_Click" />
+            <asp:Button ID="btnAppClear" CssClass="Util_clsBtn" Width="150" runat="server"   Text="清除 Application 變數" OnClick="btnAppClear_Click" />
+            <asp:Button ID="btnSessClear" CssClass="Util_clsBtn" Width="150" runat="server"  Text="清除 Session 變數" OnClick="btnSessClear_Click" />
+            <asp:Button ID="btnReStartApp" CssClass="Util_clsBtn" Width="150" runat="server" Text="重新啟動系統" OnClick="btnReStartApp_Click" />
             <br />
             <br />
             Cache Name:<asp:TextBox ID="txtCacheName" runat="server" Text="" Width="150px" />

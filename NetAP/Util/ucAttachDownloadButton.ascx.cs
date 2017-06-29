@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 
@@ -7,6 +8,8 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucAttachDownloadButton : BaseUserControl
 {
+    string _BtnClientJS = "Util_IsChkDirty = false;";
+
     #region 按鈕相關屬性
 
     /// <summary>
@@ -106,18 +109,14 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
     /// </summary>
     public string ucBtnClientJS
     {
-        //2016.09.22 新增
+        //配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_BtnClientJS"] == null)
-            {
-                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;"; 
-            }
-            return (string)(PageViewState["_BtnClientJS"]);
+            return _BtnClientJS;
         }
         set
         {
-            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            _BtnClientJS += value;
         }
     }
     #endregion
@@ -134,7 +133,7 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
             {
                 PageViewState["_AttachDB"] = "";
             }
-            return (string)(PageViewState["_AttachDB"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AttachDB"]));
         }
         set
         {
@@ -153,7 +152,7 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
             {
                 PageViewState["_AttachID"] = "";
             }
-            return (string)(PageViewState["_AttachID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AttachID"]));
         }
         set
         {
@@ -296,11 +295,10 @@ public partial class Util_ucAttachDownloadButton : BaseUserControl
             if (ucIsPopNewWindowCloseEvent)
             {
                 //模擬 onClose 事件
-                //模擬 onClose 事件
                 strJS += "AttachTimer=setInterval(function(){if(AttachPopWin.closed){";
                 strJS += "clearInterval(AttachTimer);";
                 strJS += "oBtn = document.getElementById('" + ucModalPopup1.ClientID + "_btnClose');if (oBtn!=null){oBtn.click();}";
-                strJS += "}},1000);";
+                strJS += "}},500);"; //2017.05.17 反應時間由 1000 改為 500ms
             }
 
             strJS += "AttachPopWin.focus();return false;";

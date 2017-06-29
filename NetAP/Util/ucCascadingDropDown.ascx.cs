@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
@@ -9,8 +10,9 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucCascadingDropDown : BaseUserControl
 {
-    #region 屬性定義
+    string _VerticalStyleHtmlTag = "<br />";
 
+    #region 屬性定義
     /// <summary>
     /// 是否提供搜尋功能(預設 false)
     /// </summary>
@@ -97,15 +99,11 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
     {
         get
         {
-            if (PageViewState["_VerticalStyleHtmlTag"] == null)
-            {
-                PageViewState["_VerticalStyleHtmlTag"] = "<br />"; //垂直排列時的Html標籤
-            }
-            return (string)(PageViewState["_VerticalStyleHtmlTag"]);
+            return _VerticalStyleHtmlTag;
         }
         set
         {
-            PageViewState["_VerticalStyleHtmlTag"] = value;
+            _VerticalStyleHtmlTag = value;
         }
     }
 
@@ -1451,6 +1449,32 @@ public partial class Util_ucCascadingDropDown : BaseUserControl
         set
         {
             labCaption.Width = Unit.Pixel(value);
+        }
+    }
+
+
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
         }
     }
     #endregion

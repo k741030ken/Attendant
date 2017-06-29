@@ -8,12 +8,7 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucUploadButton : BaseUserControl
 {
-    //private string _defBtnClass = "Util_clsBtn";
-    //private string _defBtnClientJS = "Util_IsChkDirty = false;";
-    //private int _defBtnWidth = 80;
-
-    //protected string _ParentObjID = "";   //預設要傳回 ID 的網頁父階物件
-    //protected string _ParentObjInfo = ""; //預設要傳回 Info 的網頁父階物件
+    string _BtnClientJS = "Util_IsChkDirty = false;";
 
     #region 按鈕相關屬性
     /// <summary>
@@ -67,6 +62,26 @@ public partial class Util_ucUploadButton : BaseUserControl
         set
         {
             PageViewState["_BtnCaption"] = value;
+        }
+    }
+
+    /// <summary>
+    /// 按鈕提示訊息
+    /// </summary>
+    public string ucBtnToolTip
+    {
+        //2017.05.19 新增
+        get
+        {
+            if (PageViewState["_BtnToolTip"] == null)
+            {
+                PageViewState["_BtnToolTip"] = string.Empty;
+            }
+            return PageViewState["_BtnToolTip"].ToString();
+        }
+        set
+        {
+            PageViewState["_BtnToolTip"] = value;
         }
     }
 
@@ -132,18 +147,14 @@ public partial class Util_ucUploadButton : BaseUserControl
     /// </summary>
     public string ucBtnClientJS
     {
-        //2016.09.22 新增
+        //配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_BtnClientJS"] == null)
-            {
-                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
-            }
-            return (string)(PageViewState["_BtnClientJS"]);
+            return _BtnClientJS;
         }
         set
         {
-            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+           _BtnClientJS += value;
         }
     }
     #endregion
@@ -157,7 +168,7 @@ public partial class Util_ucUploadButton : BaseUserControl
             {
                 PageViewState["_GUID"] = Guid.NewGuid().ToString().Replace("-", "");
             }
-            return (string)(PageViewState["_GUID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_GUID"]));
         }
     }
 
@@ -191,7 +202,7 @@ public partial class Util_ucUploadButton : BaseUserControl
             {
                 PageViewState["_UploadFileExtList"] = "";
             }
-            return (string)(PageViewState["_UploadFileExtList"]);  //ex: PDF,ZIP,DOC
+            return HttpUtility.HtmlEncode((string)(PageViewState["_UploadFileExtList"]));  //ex: PDF,ZIP,DOC
         }
         set
         {
@@ -296,7 +307,7 @@ public partial class Util_ucUploadButton : BaseUserControl
     }
 
     /// <summary>
-    /// 視窗高度(預設 200)
+    /// 視窗高度(預設 220)
     /// </summary>
     public int ucPopupHeight
     {
@@ -304,7 +315,7 @@ public partial class Util_ucUploadButton : BaseUserControl
         {
             if (PageViewState["_PopupHeight"] == null)
             {
-                PageViewState["_PopupHeight"] = 200;
+                PageViewState["_PopupHeight"] = 220;
             }
             return (int)(PageViewState["_PopupHeight"]);
         }
@@ -351,6 +362,10 @@ public partial class Util_ucUploadButton : BaseUserControl
         btnLaunch.OnClientClick = ucBtnClientJS; //2016.09.22
         btnLaunch.Text = ucBtnCaption;
         btnLaunch.CssClass = ucBtnCssClass;
+
+        if (!string.IsNullOrEmpty(ucBtnToolTip)) //2017.05.19
+            btnLaunch.ToolTip = ucBtnToolTip;
+
         if (ucBtnWidth > 0)
             btnLaunch.Width = ucBtnWidth;
         else
@@ -420,7 +435,7 @@ public partial class Util_ucUploadButton : BaseUserControl
     protected string getUploadURL()
     {
         string strURL = string.Format("{0}?", Util.getFixURL("~/Util/Upload.aspx"));
-        strURL += string.Format("GUID={0}&UploadFileMaxKB={1}&UploadFileExtList={2}&Rnd={3}", _GUID, ucUploadFileMaxKB, ucUploadFileExtList, new Random().Next(10000, 99999));
+        strURL += string.Format("GUID={0}&UploadFileMaxKB={1}&UploadFileExtList={2}&Rnd={3}", _GUID, ucUploadFileMaxKB, ucUploadFileExtList, Util.getRandomNum(10000, 99999)[0]);
         //2017.01.19 新增
         if (!string.IsNullOrEmpty(ucUploadedCustMsg))
         {

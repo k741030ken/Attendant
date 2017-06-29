@@ -124,7 +124,7 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
     protected void Page_Load(object sender, EventArgs e)
     {
         if (!this.Visible) return;
-        
+
         if (ucIsAutoRefresh)  //2017.02.07 加入 ucIsAutoRefresh
         {
             if (!IsPostBack)
@@ -233,6 +233,9 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
             {
                 case "_ASSIGNTO":
                     strFldValue = oFlow.FlowCurrLogAssignTo;
+                    break;
+                case "_ASSIGNTONAME":
+                    strFldValue = oFlow.FlowCurrLogAssignToName; //2017.04.20 新增
                     break;
                 case "_FLOWID":
                     strFldValue = oFlow.FlowID;
@@ -433,8 +436,12 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
                     //結案前一關
                     if (tmpBatNo == intCurrStepBatNo)
                     {
-                        tmpWriter.Write(LogStart(strToggleID, false, ((intLevelindex > 0) && (!bolIsDisplaySubFlow)) ? true : false));
-                        tmpWriter.Write(LogHeader(intLevelindex));
+                        if (string.IsNullOrEmpty(tmpWriter.ToString()))
+                        {
+                            //修正該關卡有多筆Log時的顯示 Bug 2017.05.08
+                            tmpWriter.Write(LogStart(strToggleID, false, ((intLevelindex > 0) && (!bolIsDisplaySubFlow)) ? true : false));
+                            tmpWriter.Write(LogHeader(intLevelindex));
+                        }
                         tmpWriter.WriteLine(string.Format("<td class='{0}' {1} Title='{3}' >{2}</td>", IsRowODD == true ? strCSSRow1 : strCSSRow2, strRowCustStyle, strCurrStepName, strCurrStepInfo));
                     }
 
@@ -483,7 +490,7 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
                         string strOriAssName = dr["AssignToName"].ToString();
                         string strOriAssDeptName = UserInfo.findUser(dr["AssignTo"].ToString()).DeptName;
                         //若 AP 自訂的[AssignToName] 值內含 [部門名稱]或[-] ，將代換為空白，以免重複顯示 2017.03.21
-                        strAssInfo = string.Format("{0}-{1}<br>／{2}{3}", strOriAssDeptName, strOriAssName.Replace(strOriAssDeptName,"").Replace("-",""), strAssName, WorkRS.Resources.FlowLogMsg_IsProxy); //(代)
+                        strAssInfo = string.Format("{0}-{1}<br>／{2}{3}", strOriAssDeptName, strOriAssName.Replace(strOriAssDeptName, "").Replace("-", ""), strAssName, WorkRS.Resources.FlowLogMsg_IsProxy); //(代)
                     }
                     strAssHint = string.Format("ToUser=[{0}-{1}]", dr["ToUser"], strAssName);
                     strDateTime = string.Format("{0:yyyy\\/MM\\/dd HH:mm}", dr["LogUpdDateTime"]);
@@ -757,7 +764,7 @@ public partial class FlowExpress_ucFlowFullLogList : BaseUserControl
             }
             else
             {
-                string strFlowLogAttachUrl = string.Format("{0}?AttachDB={1}&AttachID={2}", Util._AttachDownloadUrl , strAttachDB, strAttachID);
+                string strFlowLogAttachUrl = string.Format("{0}?AttachDB={1}&AttachID={2}", Util._AttachDownloadUrl, strAttachDB, strAttachID);
                 if (ucIsPopNewWindow)
                 {
                     //開新視窗模式 2017.03.01 新增

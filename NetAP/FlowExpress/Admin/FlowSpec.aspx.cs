@@ -41,7 +41,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         {
             labMsg.Visible = true;
             pnlFlowSpec.Visible = false;
-            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFoundList + "<br><br>", "FlowID"));
+            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFound1 + "<br><br>", "FlowID"));
             return;
         }
 
@@ -326,15 +326,15 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         if (!Util.getRequestQueryString().IsNullOrEmpty("FlowID"))
         {
             ucModalPopup1.Reset();
-            ucModalPopup1.ucPopupWidth = 750;
-            ucModalPopup1.ucPopupHeight = 450;
+            ucModalPopup1.ucPopupWidth = 760;
+            ucModalPopup1.ucPopupHeight = 470;
             ucModalPopup1.ucPopupHeader = "自訂屬性維護";
             ucModalPopup1.ucFrameURL = "FlowCustProperty.aspx?FlowID=" + Util.getRequestQueryString()["FlowID"];
             ucModalPopup1.Show();
         }
         else
         {
-            Util.NotifyMsg(RS.Resources.Msg_ParaError, Util.NotifyKind.Error);
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_ParaNotEmpty1, "FlowID"), Util.NotifyKind.Error);
         }
     }
     protected void btnFlowSQL_Click(object sender, EventArgs e)
@@ -345,18 +345,25 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
             string strFilePath = Server.MapPath("./Schema.tmp");
             if (System.IO.File.Exists(strFilePath))
             {
-                string strContent = System.IO.File.ReadAllText(strFilePath);
                 if (!string.IsNullOrEmpty(oFlow.FlowLogDB))
                 {
-                    strContent = string.Format("Use {0} \nGo\n", oFlow.FlowLogDB) + strContent;
+                    string strContent = System.IO.File.ReadAllText(strFilePath);
+                    if (!string.IsNullOrEmpty(oFlow.FlowLogDB))
+                    {
+                        strContent = string.Format("Use {0} \nGo\n", oFlow.FlowLogDB) + strContent;
+                    }
+                    txtFlowSQL.ucTextData = strContent.Replace("(xxx)", oFlow.FlowID);
+                    ucModalPopup1.Reset();
+                    ucModalPopup1.ucPopupWidth = 850;
+                    ucModalPopup1.ucPopupHeight = 600;
+                    ucModalPopup1.ucPopupHeader = string.Format(" [ {0} ] 相關SQL", oFlow.FlowID);
+                    ucModalPopup1.ucPanelID = pnlFlowSQL.ID;
+                    ucModalPopup1.Show();
                 }
-                txtFlowSQL.ucTextData = strContent.Replace("(xxx)", oFlow.FlowID);
-                ucModalPopup1.Reset();
-                ucModalPopup1.ucPopupWidth = 850;
-                ucModalPopup1.ucPopupHeight = 600;
-                ucModalPopup1.ucPopupHeader = string.Format(" [ {0} ] 相關SQL", oFlow.FlowID);
-                ucModalPopup1.ucPanelID = pnlFlowSQL.ID;
-                ucModalPopup1.Show();
+                else 
+                {
+                    Util.NotifyMsg(string.Format(RS.Resources.Msg_ParaNotEmpty1, "流程LogDB"), Util.NotifyKind.Error);
+                }
             }
             else
             {
@@ -437,7 +444,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         oDisp1.Clear();
         oDisp1.Add("FlowStepID", "關卡代號");
         oDisp1.Add("FlowStepName", "關卡名稱");
-        oDisp1.Add("FlowStepBatchEnabled", "批審@M");
+        oDisp1.Add("FlowStepBatchEnabled", "批審@Y");
         oDisp1.Add("FlowStepMailToList", "發信");
         oDisp1.Add("FlowStepAttachMaxQty", "附件@N0");
         oDisp1.Add("FlowStepCustVerifyURL", "自訂審核URL");
@@ -459,8 +466,8 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         oDisp2.Clear();
         oDisp2.Add("FlowUpdCustID", "回寫組別");
         oDisp2.Add("FlowUpdCustName", "名　　稱");
-        oDisp2.Add("FlowUpdCustVarSW", "自訂變數@M");
-        oDisp2.Add("FlowUpdCustTableSW", "自訂資料表@M");
+        oDisp2.Add("FlowUpdCustVarSW", "自訂變數@Y");
+        oDisp2.Add("FlowUpdCustTableSW", "自訂資料表@Y");
         oDisp2.Add("UpdUser", "更新人員");
         oDisp2.Add("UpdDateTime", "更新日期@T");
         gvFlowUpdCustDataExp.ucDBName = FlowExpress._FlowSysDB;
@@ -521,7 +528,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         switch (e.CommandName)
         {
             case "cmdSelect":
-                Response.Redirect(string.Format("FlowStep.aspx?FlowID={0}&FlowStepID={1}", e.DataKeys[0], e.DataKeys[1]));
+                Response.Redirect(string.Format("FlowStep.aspx?FlowID={0}&FlowStepID={1}", HttpUtility.HtmlEncode(e.DataKeys[0]), HttpUtility.HtmlEncode(e.DataKeys[1])));
                 break;
             case "cmdCopy":
                 hidFlowID.Value = e.DataKeys[0];
@@ -533,7 +540,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
 
                 ucModalPopup1.Reset();
                 ucModalPopup1.ucPopupWidth = 450;
-                ucModalPopup1.ucPopupHeight = 150;
+                ucModalPopup1.ucPopupHeight = 180;
                 ucModalPopup1.ucPopupHeader = "複製流程關卡";
                 ucModalPopup1.ucPanelID = pnlNewFlowStep.ID;
                 ucModalPopup1.Show();
@@ -546,7 +553,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
 
                 ucModalPopup1.Reset();
                 ucModalPopup1.ucPopupWidth = 450;
-                ucModalPopup1.ucPopupHeight = 150;
+                ucModalPopup1.ucPopupHeight = 180;
                 ucModalPopup1.ucPopupHeader = "新增流程關卡";
                 ucModalPopup1.ucPanelID = pnlNewFlowStep.ID;
                 ucModalPopup1.Show();
@@ -641,8 +648,8 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         DbTransaction tx = cn.BeginTransaction();
 
         ucModalPopup1.Reset();
-        ucModalPopup1.ucPopupWidth = 280;
-        ucModalPopup1.ucPopupHeight = 220;
+        ucModalPopup1.ucPopupWidth = 300;
+        ucModalPopup1.ucPopupHeight = 230;
         ucModalPopup1.ucPanelID = pnlGrp.ID;
         //處理自訂命令，AP 可視需要自行增加想要的 CommandName
         switch (e.CommandName)
@@ -807,7 +814,7 @@ public partial class FlowExpress_Admin_FlowSpec : SecurePage
         DbTransaction tx = cn.BeginTransaction();
 
         ucModalPopup1.Reset();
-        ucModalPopup1.ucPopupWidth = 280;
+        ucModalPopup1.ucPopupWidth = 300;
         ucModalPopup1.ucPopupHeight = 250;
         ucModalPopup1.ucPanelID = pnlGrpDetail.ID;
         //處理自訂命令，AP 可視需要自行增加想要的 CommandName

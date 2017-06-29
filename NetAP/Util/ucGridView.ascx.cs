@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -45,6 +46,7 @@ public partial class Util_ucGridView : BaseUserControl
     private int _GroupOffset = 0;                   //群組列偏移植，每產生一個群組列就 + 1
     private int _DataEditDefinitionMaxQty = 30;  //最大可編輯欄位數量，擴充為[30]個，並在輸出網頁時，根據實際需要數量輸出 2016.03.11
     private string[] _RowQtyChgCmdNameList = "cmdAdd,cmdCopy,cmdDelete,cmdDeleteAll".Split(',');  //會改變資料筆數的命令清單 2016.11.14 加入 [cmdDeleteAll]
+    private string _EmptyDataHtmlMsg = Util.getHtmlMessage(Util.HtmlMessageKind.DataNotFound);
 
     //2016.11.24
     protected string _defPopDisplayClientJS
@@ -146,7 +148,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_doPostBackClientID"] = this.UniqueID; // 2016.06.29 調整作法
             }
-            return (string)(PageViewState["_doPostBackClientID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_doPostBackClientID"]));
         }
     }
 
@@ -264,7 +266,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Add"] = Util.Icon_Add;
             }
-            return PageViewState["_Icon_Add"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Add"].ToString());
         }
         set
         {
@@ -323,7 +325,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_DataDump"] = Util.Icon_DataDump;
             }
-            return PageViewState["_Icon_DataDump"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_DataDump"].ToString());
         }
         set
         {
@@ -383,7 +385,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_CheckEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_CheckEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_CheckEnabledDataColName"].ToString());
         }
         set
         {
@@ -447,7 +449,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_CopyEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_CopyEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_CopyEnabledDataColName"].ToString());
         }
         set
         {
@@ -485,7 +487,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Copy"] = Util.Icon_Copy;
             }
-            return PageViewState["_Icon_Copy"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Copy"].ToString());
         }
         set
         {
@@ -526,7 +528,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_DeleteEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_DeleteEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_DeleteEnabledDataColName"].ToString());
         }
         set
         {
@@ -583,7 +585,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Delete"] = Util.Icon_Delete;
             }
-            return PageViewState["_Icon_Delete"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Delete"].ToString());
         }
         set
         {
@@ -624,7 +626,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_DownloadEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_DownloadEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_DownloadEnabledDataColName"].ToString());
         }
         set
         {
@@ -662,7 +664,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Download"] = Util.Icon_Download;
             }
-            return PageViewState["_Icon_Download"].ToString();
+            return (PageViewState["_Icon_Download"].ToString());
         }
         set
         {
@@ -703,7 +705,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_EditEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_EditEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_EditEnabledDataColName"].ToString());
         }
         set
         {
@@ -741,7 +743,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Edit"] = Util.Icon_Edit;
             }
-            return PageViewState["_Icon_Edit"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Edit"].ToString());
         }
         set
         {
@@ -955,7 +957,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Export"] = Util.Icon_Excel;
             }
-            return PageViewState["_Icon_Export"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Export"].ToString());
         }
         set
         {
@@ -974,7 +976,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_ExportOpenXml"] = Util.Icon_ExcelOpenXml;
             }
-            return PageViewState["_Icon_ExportOpenXml"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_ExportOpenXml"].ToString());
         }
         set
         {
@@ -993,7 +995,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_ExportWord"] = Util.Icon_Word;
             }
-            return PageViewState["_Icon_ExportWord"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_ExportWord"].ToString());
         }
         set
         {
@@ -1012,7 +1014,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_ExportPDF"] = Util.Icon_PDF;
             }
-            return PageViewState["_Icon_ExportPDF"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_ExportPDF"].ToString());
         }
         set
         {
@@ -1185,7 +1187,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_ExportName"] = string.Format("Export_{0}.xls", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return PageViewState["_ExportName"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_ExportName"].ToString());
         }
         set
         {
@@ -1204,7 +1206,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_ExcelOpenXmlName"] = string.Format("Export2007_{0}.xlsx", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return PageViewState["_ExcelOpenXmlName"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_ExcelOpenXmlName"].ToString());
         }
         set
         {
@@ -1220,7 +1222,11 @@ public partial class Util_ucGridView : BaseUserControl
         //2016.12.13 新增
         get
         {
-            return (string)PageViewState["_ExportOpenXmlPassword"];
+            if (PageViewState["_ExportOpenXmlPassword"] == null)
+            {
+                PageViewState["_ExportOpenXmlPassword"] = "";
+            }
+            return HttpUtility.HtmlEncode(PageViewState["_ExportOpenXmlPassword"].ToString());
         }
         set
         {
@@ -1236,7 +1242,11 @@ public partial class Util_ucGridView : BaseUserControl
         //2017.03.21 新增
         get
         {
-            return (string)PageViewState["_ExportOpenXmlHeader"];
+            if (PageViewState["_ExportOpenXmlHeader"] == null)
+            {
+                PageViewState["_ExportOpenXmlHeader"] = "";
+            }
+            return HttpUtility.HtmlEncode(PageViewState["_ExportOpenXmlHeader"].ToString());
         }
         set
         {
@@ -1253,7 +1263,11 @@ public partial class Util_ucGridView : BaseUserControl
         //2017.03.21 新增
         get
         {
-            return (string)PageViewState["_ExportOpenXmlFooter"];
+            if (PageViewState["_ExportOpenXmlFooter"] == null)
+            {
+                PageViewState["_ExportOpenXmlFooter"] = "";
+            }
+            return HttpUtility.HtmlEncode(PageViewState["_ExportOpenXmlFooter"].ToString());
         }
         set
         {
@@ -1273,7 +1287,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_ExportWordName"] = string.Format("Export_{0}.doc", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return PageViewState["_ExportWordName"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_ExportWordName"].ToString());
         }
         set
         {
@@ -1292,7 +1306,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_ExportPdfName"] = string.Format("Export_{0}.pdf", DateTime.Today.ToString("yyyyMMdd"));
             }
-            return PageViewState["_ExportPdfName"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_ExportPdfName"].ToString());
         }
         set
         {
@@ -1448,7 +1462,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_MultilingualEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_MultilingualEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_MultilingualEnabledDataColName"].ToString());
         }
         set
         {
@@ -1486,7 +1500,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Multilingual"] = Util.Icon_Multilingual;
             }
-            return PageViewState["_Icon_Multilingual"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Multilingual"].ToString());
         }
         set
         {
@@ -1527,7 +1541,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_InformationEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_InformationEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_InformationEnabledDataColName"].ToString());
         }
         set
         {
@@ -1565,7 +1579,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Information"] = Util.Icon_Information;
             }
-            return PageViewState["_Icon_Information"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Information"].ToString());
         }
         set
         {
@@ -1605,7 +1619,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Print"] = Util.Icon_Print;
             }
-            return PageViewState["_Icon_Print"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Print"].ToString());
         }
         set
         {
@@ -1686,7 +1700,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_SelectEnabledDataColName"] = "";
             }
-            return (string)(PageViewState["_SelectEnabledDataColName"]);
+            return HttpUtility.HtmlEncode(PageViewState["_SelectEnabledDataColName"].ToString());
         }
         set
         {
@@ -1724,7 +1738,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_Icon_Select"] = Util.Icon_Select;
             }
-            return PageViewState["_Icon_Select"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Icon_Select"].ToString());
         }
         set
         {
@@ -1944,7 +1958,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_HeaderCssClass"] = "Util_gvHeader";
             }
-            return PageViewState["_HeaderCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_HeaderCssClass"].ToString());
         }
         set
         {
@@ -1982,7 +1996,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_FooterCssClass"] = "Util_gvFooter";
             }
-            return PageViewState["_FooterCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_FooterCssClass"].ToString());
         }
         set
         {
@@ -2001,7 +2015,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_RowCssClass"] = "Util_gvRowNormal";
             }
-            return PageViewState["_RowCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_RowCssClass"].ToString());
         }
         set
         {
@@ -2020,7 +2034,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_AlternatingRowCssClass"] = "Util_gvRowAlternate";
             }
-            return PageViewState["_AlternatingRowCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_AlternatingRowCssClass"].ToString());
         }
         set
         {
@@ -2039,7 +2053,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_SortableHeaderCssClass"] = "Util_gvHeaderSortable";
             }
-            return PageViewState["_SortableHeaderCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_SortableHeaderCssClass"].ToString());
         }
         set
         {
@@ -2058,7 +2072,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_SortedAscendingHeaderCssClass"] = "Util_gvHeaderAsc";
             }
-            return PageViewState["_SortedAscendingHeaderCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_SortedAscendingHeaderCssClass"].ToString());
         }
         set
         {
@@ -2077,7 +2091,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_SortedDescendingHeaderCssClass"] = "Util_gvHeaderDesc";
             }
-            return PageViewState["_SortedDescendingHeaderCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_SortedDescendingHeaderCssClass"].ToString());
         }
         set
         {
@@ -2096,7 +2110,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_UpdateAllCssClass"] = "Util_clsBtnGray";
             }
-            return PageViewState["_UpdateAllCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_UpdateAllCssClass"].ToString());
         }
         set
         {
@@ -2116,7 +2130,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_DeleteAllCssClass"] = "Util_clsBtnGray";
             }
-            return PageViewState["_DeleteAllCssClass"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_DeleteAllCssClass"].ToString());
         }
         set
         {
@@ -2336,7 +2350,7 @@ public partial class Util_ucGridView : BaseUserControl
         {
             if (PageViewState["_EmptyDataHtmlMsg"] == null)
             {
-                PageViewState["_EmptyDataHtmlMsg"] = Util.getHtmlMessage(Util.HtmlMessageKind.DataNotFound);
+                PageViewState["_EmptyDataHtmlMsg"] = _EmptyDataHtmlMsg;
             }
             return PageViewState["_EmptyDataHtmlMsg"].ToString();
         }
@@ -2469,7 +2483,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_DBName"] = Util.getAppSetting("app://CfgDefConnDB/");
             }
-            return PageViewState["_DBName"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_DBName"].ToString());
         }
         set
         {
@@ -2576,7 +2590,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_HeaderColSpanQtyList"] = "";
             }
-            return (string)(PageViewState["_HeaderColSpanQtyList"]);
+            return HttpUtility.HtmlEncode(PageViewState["_HeaderColSpanQtyList"].ToString());
         }
         set
         {
@@ -2597,7 +2611,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_HeaderColSpanCaptionList"] = "";
             }
-            return (string)(PageViewState["_HeaderColSpanCaptionList"]);
+            return HttpUtility.HtmlEncode(PageViewState["_HeaderColSpanCaptionList"].ToString());
         }
         set
         {
@@ -2617,7 +2631,7 @@ public partial class Util_ucGridView : BaseUserControl
             {
                 PageViewState["_DataGroupKey"] = "";
             }
-            return (string)(PageViewState["_DataGroupKey"]);
+            return PageViewState["_DataGroupKey"].ToString();
         }
         set
         {
@@ -4731,7 +4745,11 @@ public partial class Util_ucGridView : BaseUserControl
             if (!string.IsNullOrEmpty(this.ucDataGroupKey))
             {
                 //處理群組抬頭、結尾列(GroupHeader、GroupFooter)
-                strGroupValue = (e.Row.DataItem as DataRowView)[ucDataGroupKey].ToString();
+                strGroupValue = "";
+                if (e.Row.DataItem != null)
+                {
+                    strGroupValue = (e.Row.DataItem as DataRowView)[ucDataGroupKey].ToString();
+                }
 
                 switch (strGroupValue.Left(3))
                 {
@@ -4834,9 +4852,12 @@ public partial class Util_ucGridView : BaseUserControl
 
             //取得資料鍵值
             string[] DataKeyValues = new string[gvMain.DataKeyNames.Count()];
-            for (int i = 0; i < gvMain.DataKeyNames.Count(); i++)
+            if (gvMain.DataKeyNames.Count() > 0)
             {
-                DataKeyValues[i] = (e.Row.DataItem as DataRowView)[gvMain.DataKeyNames[i]].ToString();
+                for (int i = 0; i < gvMain.DataKeyNames.Count(); i++)
+                {
+                    DataKeyValues[i] = (e.Row.DataItem != null) ? (e.Row.DataItem as DataRowView)[gvMain.DataKeyNames[i]].ToString() : "";
+                }
             }
 
             //處理線上編輯的控制項 2016.09.26
@@ -5231,7 +5252,7 @@ public partial class Util_ucGridView : BaseUserControl
                 if (!string.IsNullOrEmpty(this.ucDataGroupKey) && ucDataGroupSubtotalList.Count() > 0)
                 {
                     //strGroupValue = ((DataTable)((GridView)sender).DataSource).Rows[e.Row.DataItemIndex][ucDataGroupKey].ToString();
-                    strGroupValue = (e.Row.DataItem as DataRowView)[ucDataGroupKey].ToString();
+                    strGroupValue = (tmpRow != null) ? tmpRow[ucDataGroupKey].ToString() : "";
                     //GroupHeader
                     if (strGroupValue.StartsWith("GH_")) IsGroupRow = true;
                     //GroupFooter
@@ -5776,7 +5797,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                 {
                     case "D": //DateTime (Date) 
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd}");
@@ -5785,7 +5806,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "T": //DateTime (Hour)
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd HH:mm}");
@@ -5793,7 +5814,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "S": //DateTime (Second)
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd HH:mm:ss}");
@@ -5807,7 +5828,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         {
                             // [N] or [Nx]
                             // [P] or [Px]
-                            lab1.DataBinding += delegate (object sender, EventArgs e)
+                            lab1.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5822,7 +5843,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         {
                             // [N[x[yyy]]]
                             // [P[x[yyy]]]
-                            lab1.DataBinding += delegate (object sender, EventArgs e)
+                            lab1.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5836,7 +5857,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "L": //Left
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5845,7 +5866,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "C": //Center
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5854,7 +5875,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "R": //Right
                         pnl1.HorizontalAlign = HorizontalAlign.Right;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -5864,7 +5885,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     case "I": //Image [抬頭[@I[xxx[,yyy[,zzz]]]]]    xxx為指定寬度、yyy為URL欄位、zzz為Target欄位，例: 'ProdGraph', '產品圖片@I96,SysUrl,_blank'
                         pnl1.Width = new Unit("100%");
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             string strWidth = "100%";
@@ -5879,7 +5900,11 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                     strWidth = tmpMaskWidth + "px";
                                 }
                             }
-                            lab1.Text = string.Format("<img src='{0}' width='{1}' class='Util_clsShadow' />", DataBinder.Eval(dataItem, _ColName).ToString(), strWidth);
+
+                            if (!string.IsNullOrEmpty(DataBinder.Eval(dataItem, _ColName).ToString()))
+                            {
+                                lab1.Text = string.Format("<img src='{0}' width='{1}' style='padding-top:3px;float:left;border-style:none;' />", DataBinder.Eval(dataItem, _ColName).ToString(), strWidth);
+                            }
 
                             //Check URL,Target
                             string strURL = "";
@@ -5902,7 +5927,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "A": //Anchor [抬頭[@A[xxx[,yyy[,zzz]]]]]　xxx為指定寬度、yyy為URL欄位、zzz為Target欄位
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             string strURL = _ColName;
                             string strTarget = "";
@@ -5922,10 +5947,10 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     case "Y": //[抬頭[@Y[xxx]  xxx為指定寬度
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
-                            lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString().Trim();
+                            lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
                             switch (lab1.Text.ToUpper())
                             {
                                 case "TRUE":
@@ -5946,7 +5971,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     case "M": //[抬頭[@M[xxx[,yyy[,zzz]]]]] 　 xxx為指定寬度、yyy為「是」時的顯示內容、zzz為「否」時的顯示內容，例: 'IsMail', '發送郵件@M,★,☆'
                         pnl1.HorizontalAlign = HorizontalAlign.Center;
 
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString().Trim();
@@ -5983,7 +6008,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         break;
                     default:
                         pnl1.HorizontalAlign = HorizontalAlign.Left;
-                        lab1.DataBinding += delegate (object sender, EventArgs e)
+                        lab1.DataBinding += delegate(object sender, EventArgs e)
                         {
                             object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                             lab1.Text = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -6001,7 +6026,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                         string strJSON = _DisplayFormat.Substring(_DisplayFormat.IndexOf(',', 0) + 1);
                         if (!string.IsNullOrEmpty(strJSON))
                         {
-                            lab1.DataBinding += delegate (object sender, EventArgs e)
+                            lab1.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if (!string.IsNullOrEmpty(DataBinder.Eval(dataItem, _ColName).ToString()))
@@ -6037,7 +6062,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                     {
                         if (!string.IsNullOrEmpty(_EditDataDictionary["ucSourceDictionary"]))
                         {
-                            lab1.DataBinding += delegate (object sender, EventArgs e)
+                            lab1.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if (!string.IsNullOrEmpty(DataBinder.Eval(dataItem, _ColName).ToString()))
@@ -6103,7 +6128,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 }
                             }
 
-                            oTxt.DataBinding += delegate (object sender, EventArgs e)
+                            oTxt.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 switch (tmpMask.ToUpper())
@@ -6133,7 +6158,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             CheckBox oChk = new CheckBox();
                             oChk.ID = "chk" + _ColName;
                             oChk.Checked = false;
-                            oChk.DataBinding += delegate (object sender, EventArgs e)
+                            oChk.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 if ("TRUE,Y,1".Split(',').Contains(DataBinder.Eval(dataItem, _ColName).ToString().ToUpper()))
@@ -6163,7 +6188,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             if (_EditDataDictionary != null && _EditDataDictionary.Count > 0)
                             {
 
-                                oChkList.DataBinding += delegate (object sender, EventArgs e)
+                                oChkList.DataBinding += delegate(object sender, EventArgs e)
                                 {
                                     //設定屬性
                                     foreach (var pair in this._EditDataDictionary)
@@ -6197,7 +6222,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                             if (_EditDataDictionary != null && _EditDataDictionary.Count > 0)
                             {
 
-                                oRadList.DataBinding += delegate (object sender, EventArgs e)
+                                oRadList.DataBinding += delegate(object sender, EventArgs e)
                                 {
                                     //設定屬性
                                     foreach (var pair in this._EditDataDictionary)
@@ -6222,11 +6247,17 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 if (_EditDataDictionary.ContainsKey("JSON"))
                                 {
                                     //2014.10.21 新增，DropDownList資料來源可為資料列的指定欄位
-                                    ddl.DataBound += delegate (object sender, EventArgs e)
+                                    ddl.DataBound += delegate(object sender, EventArgs e)
                                     {
-                                        object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
-                                        int rowindex = ((sender as Control).NamingContainer as GridViewRow).RowIndex;
-                                        DataTable datasource = (DataTable)((sender as Control).NamingContainer.NamingContainer as GridView).DataSource;
+                                        int rowindex = 0;
+                                        GridViewRow gvRow = ((sender as Control).NamingContainer as GridViewRow);
+                                        if (gvRow != null) 
+                                        {
+                                            rowindex = gvRow.RowIndex;
+                                        }
+
+                                        GridView gv = (sender as Control).NamingContainer.NamingContainer as GridView;
+                                        DataTable datasource = (gv != null) ? (DataTable)gv.DataSource : new DataTable();
                                         string strJSON = datasource.Rows[rowindex][_EditDataDictionary["JSON"]].ToString();
                                         if (!string.IsNullOrEmpty(strJSON))
                                         {
@@ -6235,7 +6266,6 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                             {
                                                 ddl.Items.Add(new ListItem(pair.Value, pair.Key));
                                             }
-
                                         }
 
                                         if (_EditType.ToUpper() == "DROPDOWNFIRST")
@@ -6256,6 +6286,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                             {
                                                 ddl.Items.Insert(0, new ListItem(RS.Resources.Msg_DDL_EmptyItem, ""));
                                             }
+                                            object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                             ddl.SelectedValue = DataBinder.Eval(dataItem, _ColName).ToString();
                                         }
                                     };
@@ -6274,7 +6305,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                         ddl.Items.Add(new ListItem(pair.Value, pair.Key));
                                     }
 
-                                    ddl.DataBound += delegate (object sender, EventArgs e)
+                                    ddl.DataBound += delegate(object sender, EventArgs e)
                                     {
                                         object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                         ddl.SelectedValue = DataBinder.Eval(dataItem, _ColName).ToString();
@@ -6347,7 +6378,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 }
                             }
 
-                            oCal.DataBinding += delegate (object sender, EventArgs e)
+                            oCal.DataBinding += delegate(object sender, EventArgs e)
                             {
                                 object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                 string strDate = DataBinder.Eval(dataItem, _ColName, "{0:yyyy\\/MM\\/dd}");
@@ -6380,7 +6411,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlHH.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlHH.DataBound += delegate (object sender, EventArgs e)
+                                ddlHH.DataBound += delegate(object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlHH.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:HH}");
@@ -6395,7 +6426,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlMM.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlMM.DataBound += delegate (object sender, EventArgs e)
+                                ddlMM.DataBound += delegate(object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlMM.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:mm}");
@@ -6412,7 +6443,7 @@ public partial class AddGridViewTemplete : Page, ITemplate
                                 {
                                     ddlSS.Items.Add(new ListItem(pair.Value, pair.Key));
                                 }
-                                ddlSS.DataBound += delegate (object sender, EventArgs e)
+                                ddlSS.DataBound += delegate(object sender, EventArgs e)
                                 {
                                     object dataItem = DataBinder.GetDataItem(((Control)sender).NamingContainer);
                                     ddlSS.SelectedValue = DataBinder.Eval(dataItem, _ColName, "{0:ss}");

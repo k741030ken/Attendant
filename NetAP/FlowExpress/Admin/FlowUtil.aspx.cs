@@ -309,7 +309,7 @@ public partial class FlowExpress_Admin_FlowUtil : SecurePage
         if (!string.IsNullOrEmpty(DelFlowID.ucSelectedID) && !string.IsNullOrEmpty(txtDelFlowLogID.Text))
         {
             string strSQL = "Delete {0}FlowFullLog Where FlowLogID = '{1}' ;Delete {0}FlowOpenLog Where FlowLogID = '{1}';";
-            strSQL = string.Format(strSQL, DelFlowID.ucSelectedID, txtDelFlowLogID.Text);
+            strSQL = string.Format(strSQL, DelFlowID.ucSelectedID, HttpUtility.HtmlEncode(txtDelFlowLogID.Text));
             FlowExpress oFlow = new FlowExpress(DelFlowID.ucSelectedID, txtDelFlowLogID.Text, true, false);
             DbHelper db = new DbHelper(oFlow.FlowLogDB);
             int intEffQty = db.ExecuteNonQuery(CommandType.Text, strSQL);

@@ -12,7 +12,7 @@
     </div>
     <div class="Util_ModalPopup_PopBody">
         <%--實際顯示內容，可為「ucFrameURL」或「ucHtmlContent」或「ucControlID」--%>
-        <div>
+        <div id="ModalParent" runat="server" style="-webkit-overflow-scrolling:touch;overflow:auto;" > <%--fix iPad iframe Scrolling issue 2017.05.04--%>
             <iframe id="ModalFrame" runat="server" visible="false" frameborder="0"></iframe>
             <asp:Label ID="ModalHtmlMsg" runat="server" Visible="false"></asp:Label>
             <asp:Panel ID="ModalControl" runat="server" Visible="false"></asp:Panel>

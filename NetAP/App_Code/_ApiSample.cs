@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Web.Http;
@@ -23,7 +24,8 @@ public class UserInfoController : ApiController
     /// </summary>
     public void Get()
     {
-        throw new Exception("Syntax Error !  Usage : [/api/UserInfo/{UserID}]");
+        //警告訊息 
+        throw new WarningException("Syntax Error !  Usage : [/api/UserInfo/{UserID}]");
     }
 
     /// <summary>
@@ -34,8 +36,10 @@ public class UserInfoController : ApiController
     [HttpGet]
     public UserInfo GetUserInfo(string id)
     {
+        //ex: /api/UserInfo/103980
         if (!Regex.IsMatch(id, "^.{6}$"))
         {
+            //錯誤訊息
             throw new Exception(string.Format(RS.Resources.Msg_NotValidLength1, 6)); //長度需為 6 字元
         }
         else
@@ -44,6 +48,7 @@ public class UserInfoController : ApiController
             if (oUser != null && !string.IsNullOrEmpty(oUser.UserID))
                 return oUser;
             else
+                //錯誤訊息
                 throw new Exception(string.Format(RS.Resources.Msg_DataNotFound1, id)); //無 [id] 相關資料！            
         }
     }
@@ -68,7 +73,9 @@ public class BullMsgController : ApiController
     [HttpGet]
     public DataTable GetBullMsg()
     {
-        //由於 MsgID (例：201703.00001) 資料型別會被誤判，故以 QueryString 方式判斷，例: http://localhost:55020/api/BullMsg/?MsgID=201703.00032
+        //[HttpGet]的參數來源為 QueryString 集合
+
+        //由於 MsgID (例：201703.00001) 資料型別會被誤判，故以傳統 QueryString 方式傳遞，例: http://localhost:55020/api/BullMsg/?MsgID=201703.00032
         //可用的 QueryString 選擇性參數如下：
 
         // MsgID       =>  公告ID             例: [201703.00001]
@@ -107,7 +114,9 @@ public class BullMsgController : ApiController
     [HttpDelete]
     public bool DeleteBullMsg()
     {
-        //由於 MsgID (例：201703.00001) 資料型別會被誤判，故以 QueryString 方式判斷，例: http://localhost:55020/api/BullMsg/?MsgID=201703.00032
+        //[HttpDelete]的參數來源為 QueryString 集合
+
+        //由於 MsgID (例：201703.00001) 資料型別會被誤判，故以傳統 QueryString 方式傳遞，例: http://localhost:55020/api/BullMsg/?MsgID=201703.00032
         bool oResult = false;
         Dictionary<string, string> dicQry = Util.getRequestQueryString(); //取得 QueryString 內容
         if (!dicQry.IsNullOrEmpty())
@@ -115,13 +124,15 @@ public class BullMsgController : ApiController
             string strErrMsg = null;
             if (!Util.IsDataDeleted(_DBName, _TableName, dicQry, out strErrMsg))
             {
+                //錯誤訊息
                 throw new Exception(strErrMsg); //資料更新錯誤
             }
             oResult = true;
         }
         else
         {
-            throw new Exception(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
+            //警告訊息 
+            throw new WarningException(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
         }
         return oResult;
     }
@@ -133,6 +144,8 @@ public class BullMsgController : ApiController
     [HttpPost]
     public Dictionary<string, string> InsertBullMsg()
     {
+        //[HttpPost]的參數來源為 RequestForm 集合
+
         Dictionary<string, string> dicForm = Util.getRequestForm(); //取得 Form 內容
         if (!dicForm.IsNullOrEmpty())
         {
@@ -141,13 +154,15 @@ public class BullMsgController : ApiController
             dicForm.Add("MsgID", strMsgID);
             if (!Util.IsDataInserted(_DBName, _TableName, dicForm, out strErrMsg))
             {
+                //錯誤訊息
                 throw new Exception(strErrMsg); //資料新增錯誤
             }
             return new Dictionary<string, string>() { { "MsgID", strMsgID } }; //成功時傳回 MsgID 的值
         }
         else
         {
-            throw new Exception(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
+            //警告訊息 
+            throw new WarningException(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
         }
     }
 
@@ -158,6 +173,8 @@ public class BullMsgController : ApiController
     [HttpPut]
     public bool UpdateBullMsg()
     {
+        //[HttpPut]的參數來源為 RequestForm 集合
+
         bool oResult = false;
         Dictionary<string, string> dicForm = Util.getRequestForm(); //取得 Form 內容
 
@@ -166,13 +183,15 @@ public class BullMsgController : ApiController
             string strErrMsg = null;
             if (!Util.IsDataUpdated(_DBName, _TableName, dicForm, out strErrMsg))
             {
+                //錯誤訊息 
                 throw new Exception(strErrMsg); //資料更新錯誤
             }
             oResult = true;
         }
         else
         {
-            throw new Exception(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
+            //警告訊息 
+            throw new WarningException(RS.Resources.Msg_ParaNotEmpty); //參數不可為空白
         }
 
         return oResult;

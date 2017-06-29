@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using SinoPac.WebExpress.Common;
 using System.Text;
 
@@ -60,7 +61,7 @@ public partial class Util_ucScheduler : BaseUserControl
             {
                 PageViewState["_Caption"] = "";
             }
-            return PageViewState["_Caption"].ToString();
+            return HttpUtility.HtmlEncode(PageViewState["_Caption"].ToString());
         }
         set
         {
@@ -630,7 +631,7 @@ public partial class Util_ucScheduler : BaseUserControl
             {
                 PageViewState["_CustStyle"] = "margin:auto;border: 1px solid #E0E0E0;";
             }
-            return (string)(PageViewState["_CustStyle"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_CustStyle"]));
         }
         set
         {
@@ -649,7 +650,7 @@ public partial class Util_ucScheduler : BaseUserControl
             {
                 PageViewState["_MiniCustStyle"] = "";
             }
-            return (string)(PageViewState["_MiniCustStyle"]);
+            return HttpUtility.HtmlEncode((string)PageViewState["_MiniCustStyle"]);
         }
         set
         {
@@ -738,7 +739,6 @@ public partial class Util_ucScheduler : BaseUserControl
     /// </summary>
     void SchedulerInitJS()
     {
-        Random rnd = new Random();
         string strResourceIDList = ucResourceIDList;
         string strCultureCode = ucUICultureCode;
         string strSchedSysPath = Util._SysPath + "/dhtmlxScheduler/";
@@ -896,7 +896,7 @@ public partial class Util_ucScheduler : BaseUserControl
         {
             mini_here.Style["display"] = "";
             scheduler_here.Style["display"] = "none";
-            sb.AppendFormat("    scheduler.load('{0}&Rnd={1}' ,", strDataURL, rnd.Next(10000, 99999));
+            sb.AppendFormat("    scheduler.load('{0}&Rnd={1}' ,", strDataURL, Util.getRandomNum(10000, 99999)[0]);
             sb.Append("    function(){  scheduler.renderCalendar({\n"
                        + "    container:'mini_here',date:scheduler._date,navigation:true,handler:function(date,calendar){ \n"
                        );
@@ -933,7 +933,7 @@ public partial class Util_ucScheduler : BaseUserControl
         {
             mini_here.Style["display"] = "none";
             scheduler_here.Style["display"] = "";
-            sb.AppendFormat("    scheduler.load('{0}&Rnd={1}');\n", strDataURL, rnd.Next(10000, 99999));
+            sb.AppendFormat("    scheduler.load('{0}&Rnd={1}');\n", strDataURL, Util.getRandomNum(10000, 99999)[0]);
         }
 
         if (ucIsReadOnly == true || strResourceIDList.Split(',').Length > 1)    // 只要 ResourceID 數量大於1 即為唯讀
@@ -962,7 +962,7 @@ public partial class Util_ucScheduler : BaseUserControl
         {
             //可編輯
             //Util.setJS(Util.getFixURL(strSchedSysPath + "ext/dhtmlxscheduler_quick_info.js"), "dhtmlx_quickinfo");
-            sb.AppendFormat("    var dp = new dataProcessor('{0}&Rnd={1}');\n", strDataURL, rnd.Next(10000, 99999));
+            sb.AppendFormat("    var dp = new dataProcessor('{0}&Rnd={1}');\n", strDataURL, Util.getRandomNum(10000, 99999)[0]);
             sb.Append("    dp.init(scheduler);\n");
 
             //非既有事件 Owner 不能進行修改/刪除

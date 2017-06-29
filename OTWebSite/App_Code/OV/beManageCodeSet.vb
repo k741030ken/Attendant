@@ -433,19 +433,20 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function QueryAll(ByVal ManageCodeSetRow As Row) As DataSet
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
             strSQL.AppendLine(" SELECT ")
-            strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            'strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            strSQL.AppendLine(" H.TabName, H.FldName, ISNULL(CN2.CodeCName, '') AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
             strSQL.AppendLine(" ,Comp.CompName AS LastChgComp, Pers.NameN AS LastChgID ")
             strSQL.AppendLine(" ,LastChgDate = Case When Convert(Char(10), H.LastChgDate, 111) = '1900/01/01' Then '' ElSE Convert(Varchar, H.LastChgDate, 120) End ")
             strSQL.AppendLine(" FROM AT_CodeMap H ")
+            strSQL.AppendLine(" LEFT JOIN AT_CodeMap CN2 ON CN2.TabName = 'ATCodeMap_OpenMaintain' AND CN2.FldName = H.TabName AND CN2.Code = H.FldName AND CN2.NotShowFlag = '0' ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Company] Comp ON H.LastChgComp = Comp.CompID ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Personal] Pers ON H.LastChgComp = Pers.CompID AND H.LastChgID = Pers.EmpID ")
-            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='HRCodeMap_OpenMaintain') ")
+            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='ATCodeMap_OpenMaintain') ")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
 
@@ -461,19 +462,20 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function QueryAll(ManageCodeSetRow As Row, tran As DbTransaction) As DataSet
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
 
             strSQL.AppendLine(" SELECT ")
-            strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            'strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            strSQL.AppendLine(" H.TabName, H.FldName, ISNULL(CN2.CodeCName, '') AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
             strSQL.AppendLine(" ,Comp.CompName AS LastChgComp, Pers.NameN AS LastChgID ")
             strSQL.AppendLine(" ,LastChgDate = Case When Convert(Char(10), H.LastChgDate, 111) = '1900/01/01' Then '' ElSE Convert(Varchar, H.LastChgDate, 120) End ")
             strSQL.AppendLine(" FROM AT_CodeMap H ")
+            strSQL.AppendLine(" LEFT JOIN AT_CodeMap CN2 ON CN2.TabName = 'ATCodeMap_OpenMaintain' AND CN2.FldName = H.TabName AND CN2.Code = H.FldName AND CN2.NotShowFlag = '0' ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Company] Comp ON H.LastChgComp = Comp.CompID ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Personal] Pers ON H.LastChgComp = Pers.CompID AND H.LastChgID = Pers.EmpID ")
-            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='HRCodeMap_OpenMaintain') ")
+            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='ATCodeMap_OpenMaintain') ")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
 
@@ -516,7 +518,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function QueryByKey(ManageCodeSetRow As Row, tran As DbTransaction) As DataSet
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -543,18 +544,19 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function QuerybyWhere(WhereCondition As String) As DataSet
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim strSQL As StringBuilder = New StringBuilder()
 
             strSQL.AppendLine(" SELECT ")
-            strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            'strSQL.AppendLine(" H.TabName, H.FldName, H.CodeCName AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
+            strSQL.AppendLine(" H.TabName, H.FldName, ISNULL(CN2.CodeCName, '') AS CodeName2, H.Code, H.CodeCName, H.SortFld, H.NotShowFlag ")
             strSQL.AppendLine(" ,Comp.CompName AS LastChgComp, Pers.NameN AS LastChgID ")
             strSQL.AppendLine(" ,LastChgDate = Case When Convert(Char(10), H.LastChgDate, 111) = '1900/01/01' Then '' ElSE Convert(Varchar, H.LastChgDate, 120) End ")
             strSQL.AppendLine(" FROM AT_CodeMap H ")
+            strSQL.AppendLine(" LEFT JOIN AT_CodeMap CN2 ON CN2.TabName = 'ATCodeMap_OpenMaintain' AND CN2.FldName = H.TabName AND CN2.Code = H.FldName AND CN2.NotShowFlag = '0' ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Company] Comp ON H.LastChgComp = Comp.CompID ")
             strSQL.AppendLine(" LEFT JOIN " + _eHRMSDB_ITRD + ".[dbo].[Personal] Pers ON H.LastChgComp = Pers.CompID AND H.LastChgID = Pers.EmpID ")
-            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='HRCodeMap_OpenMaintain') ")
+            strSQL.AppendLine(" WHERE H.TabName IN (SELECT FldName FROM AT_CodeMap WHERE TabName='ATCodeMap_OpenMaintain') ")
 
             If WhereCondition <> String.Empty Then strSQL.AppendLine(WhereCondition)
 
@@ -573,7 +575,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function IsDataExists(ByVal ManageCodeSetRow As Row) As Boolean
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -601,7 +602,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function IsDataExists(ByVal ManageCodeSetRow As Row, ByVal tran As DbTransaction) As Boolean
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -628,7 +628,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function IsCodeCNameExists(ByVal ManageCodeSetRow As Row) As Boolean
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -658,7 +657,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function IsCodeCNameExists(ByVal ManageCodeSetRow As Row, ByVal tran As DbTransaction) As Boolean
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -691,7 +689,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function Insert(ByVal ManageCodeSetRow As Row) As Integer
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -728,7 +725,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function Insert(ByVal ManageCodeSetRow As Row, ByVal tran As DbTransaction) As Integer
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -764,7 +760,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function Insert(ByVal ManageCodeSetRow As Row()) As Integer
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -820,7 +815,6 @@ Namespace beManageCodeSet
         ''' <remarks></remarks>
         Public Function Insert(ByVal ManageCodeSetRow As Row(), ByVal tran As DbTransaction) As Integer
             Dim db As Database = DatabaseFactory.CreateDatabase("AattendantDB")
-            'Dim db As Database = DatabaseFactory.CreateDatabase("testConnectionString")
 
             Dim dbcmd As DbCommand
             Dim strSQL As StringBuilder = New StringBuilder()
@@ -883,8 +877,8 @@ Namespace beManageCodeSet
             strSQL.AppendLine(" AND Code = @PKCode ")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
-            If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, ManageCodeSetRow.TabName.Value)
-            If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, ManageCodeSetRow.FldName.Value)
+            If ManageCodeSetRow.TabName.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, ManageCodeSetRow.TabName.Value)
+            If ManageCodeSetRow.FldName.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, ManageCodeSetRow.FldName.Value)
             If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@Code", DbType.String, ManageCodeSetRow.Code.Value)
             If ManageCodeSetRow.CodeCName.Updated Then db.AddInParameter(dbcmd, "@CodeCName", DbType.String, ManageCodeSetRow.CodeCName.Value)
             If ManageCodeSetRow.SortFld.Updated Then db.AddInParameter(dbcmd, "@SortFld", DbType.Int32, ManageCodeSetRow.SortFld.Value)
@@ -892,7 +886,7 @@ Namespace beManageCodeSet
             If ManageCodeSetRow.LastChgComp.Updated Then db.AddInParameter(dbcmd, "@LastChgComp", DbType.String, ManageCodeSetRow.LastChgComp.Value)
             If ManageCodeSetRow.LastChgID.Updated Then db.AddInParameter(dbcmd, "@LastChgID", DbType.String, ManageCodeSetRow.LastChgID.Value)
             If ManageCodeSetRow.LastChgDate.Updated Then db.AddInParameter(dbcmd, "@LastChgDate", DbType.Date, IIf(IsDateTimeNull(ManageCodeSetRow.LastChgDate.Value), Convert.ToDateTime("1900/1/1"), ManageCodeSetRow.LastChgDate.Value))
-            db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(ManageCodeSetRow.LoadFromDataRow, ManageCodeSetRow.Code.OldValue, ManageCodeSetRow.Code.Value))
+            db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(ManageCodeSetRow.LoadFromDataRow, ManageCodeSetRow.Code.Value, ManageCodeSetRow.Code.OldValue))
 
             Return db.ExecuteNonQuery(dbcmd)
         End Function
@@ -923,8 +917,8 @@ Namespace beManageCodeSet
             strSQL.AppendLine(" AND Code = @PKCode")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
-            If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, ManageCodeSetRow.TabName.Value)
-            If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, ManageCodeSetRow.FldName.Value)
+            If ManageCodeSetRow.TabName.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, ManageCodeSetRow.TabName.Value)
+            If ManageCodeSetRow.FldName.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, ManageCodeSetRow.FldName.Value)
             If ManageCodeSetRow.Code.Updated Then db.AddInParameter(dbcmd, "@Code", DbType.String, ManageCodeSetRow.Code.Value)
             If ManageCodeSetRow.CodeCName.Updated Then db.AddInParameter(dbcmd, "@CodeCName", DbType.String, ManageCodeSetRow.CodeCName.Value)
             If ManageCodeSetRow.SortFld.Updated Then db.AddInParameter(dbcmd, "@SortFld", DbType.Int32, ManageCodeSetRow.SortFld.Value)
@@ -932,7 +926,7 @@ Namespace beManageCodeSet
             If ManageCodeSetRow.LastChgComp.Updated Then db.AddInParameter(dbcmd, "@LastChgComp", DbType.String, ManageCodeSetRow.LastChgComp.Value)
             If ManageCodeSetRow.LastChgID.Updated Then db.AddInParameter(dbcmd, "@LastChgID", DbType.String, ManageCodeSetRow.LastChgID.Value)
             If ManageCodeSetRow.LastChgDate.Updated Then db.AddInParameter(dbcmd, "@LastChgDate", DbType.Date, IIf(IsDateTimeNull(ManageCodeSetRow.LastChgDate.Value), Convert.ToDateTime("1900/1/1"), ManageCodeSetRow.LastChgDate.Value))
-            db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(ManageCodeSetRow.LoadFromDataRow, ManageCodeSetRow.Code.OldValue, ManageCodeSetRow.Code.Value))
+            db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(ManageCodeSetRow.LoadFromDataRow, ManageCodeSetRow.Code.Value, ManageCodeSetRow.Code.OldValue))
 
             Return db.ExecuteNonQuery(dbcmd, tran)
         End Function
@@ -972,8 +966,8 @@ Namespace beManageCodeSet
                         strSQL.AppendLine(" AND Code = @PKCode")
 
                         dbcmd = db.GetSqlStringCommand(strSQL.ToString())
-                        If r.Code.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, r.TabName.Value)
-                        If r.Code.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, r.FldName.Value)
+                        If r.TabName.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, r.TabName.Value)
+                        If r.FldName.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, r.FldName.Value)
                         If r.Code.Updated Then db.AddInParameter(dbcmd, "@Code", DbType.String, r.Code.Value)
                         If r.CodeCName.Updated Then db.AddInParameter(dbcmd, "@CodeCName", DbType.String, r.CodeCName.Value)
                         If r.SortFld.Updated Then db.AddInParameter(dbcmd, "@SortFld", DbType.Int32, r.SortFld.Value)
@@ -981,7 +975,7 @@ Namespace beManageCodeSet
                         If r.LastChgComp.Updated Then db.AddInParameter(dbcmd, "@LastChgComp", DbType.String, r.LastChgComp.Value)
                         If r.LastChgID.Updated Then db.AddInParameter(dbcmd, "@LastChgID", DbType.String, r.LastChgID.Value)
                         If r.LastChgDate.Updated Then db.AddInParameter(dbcmd, "@LastChgDate", DbType.Date, IIf(IsDateTimeNull(r.LastChgDate.Value), Convert.ToDateTime("1900/1/1"), r.LastChgDate.Value))
-                        db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(r.LoadFromDataRow, r.Code.OldValue, r.Code.Value))
+                        db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(r.LoadFromDataRow, r.Code.Value, r.Code.OldValue))
 
                         intRowsAffected += db.ExecuteNonQuery(dbcmd, tran)
                     Next
@@ -1027,8 +1021,8 @@ Namespace beManageCodeSet
                 strSQL.AppendLine(" AND Code = @PKCode")
 
                 dbcmd = db.GetSqlStringCommand(strSQL.ToString())
-                If r.Code.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, r.TabName.Value)
-                If r.Code.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, r.FldName.Value)
+                If r.TabName.Updated Then db.AddInParameter(dbcmd, "@TabName", DbType.String, r.TabName.Value)
+                If r.FldName.Updated Then db.AddInParameter(dbcmd, "@FldName", DbType.String, r.FldName.Value)
                 If r.Code.Updated Then db.AddInParameter(dbcmd, "@Code", DbType.String, r.Code.Value)
                 If r.CodeCName.Updated Then db.AddInParameter(dbcmd, "@CodeCName", DbType.String, r.CodeCName.Value)
                 If r.SortFld.Updated Then db.AddInParameter(dbcmd, "@SortFld", DbType.Int32, r.SortFld.Value)
@@ -1036,7 +1030,7 @@ Namespace beManageCodeSet
                 If r.LastChgComp.Updated Then db.AddInParameter(dbcmd, "@LastChgComp", DbType.String, r.LastChgComp.Value)
                 If r.LastChgID.Updated Then db.AddInParameter(dbcmd, "@LastChgID", DbType.String, r.LastChgID.Value)
                 If r.LastChgDate.Updated Then db.AddInParameter(dbcmd, "@LastChgDate", DbType.Date, IIf(IsDateTimeNull(r.LastChgDate.Value), Convert.ToDateTime("1900/1/1"), r.LastChgDate.Value))
-                db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(r.LoadFromDataRow, r.Code.OldValue, r.Code.Value))
+                db.AddInParameter(dbcmd, "@PKCode", DbType.String, IIf(r.LoadFromDataRow, r.Code.Value, r.Code.OldValue))
 
                 intRowsAffected += db.ExecuteNonQuery(dbcmd, tran)
             Next

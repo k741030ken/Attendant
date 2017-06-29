@@ -11,12 +11,6 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucUserPicker : BaseUserControl
 {
-    //private string _PopupHeader = SinoPac.WebExpress.Common.Properties.Resources.ModalPopup_Header;
-    //private string _defBtnTooltip = SinoPac.WebExpress.Common.Properties.Resources.UserPicker_btnLaunch_ToolTip;
-    //private string _ReadOnlyClass = "Util_clsReadOnly";
-    //private bool _IsRequire = false;
-    //private int _defWidth = 100;
-
     #region 相關屬性
     /// <summary>
     /// 視窗抬頭
@@ -57,6 +51,26 @@ public partial class Util_ucUserPicker : BaseUserControl
             PageViewState["_IsRequire"] = value;
             txtUserInfoList.CausesValidation = value;
             RequiredFieldValidator1.Enabled = value;
+        }
+    }
+
+    /// <summary>
+    /// 自訂Require錯誤訊息
+    /// </summary>
+    public string ucRequireErrorMessage
+    {
+        get
+        {
+            if (PageViewState["_RequireErrMsg"] == null)
+            {
+                PageViewState["_RequireErrMsg"] = "*";
+            }
+            return (string)(PageViewState["_RequireErrMsg"]);
+        }
+        set
+        {
+            PageViewState["_RequireErrMsg"] = value;
+            RequiredFieldValidator1.ErrorMessage = value;
         }
     }
 
@@ -417,6 +431,31 @@ public partial class Util_ucUserPicker : BaseUserControl
         set
         {
             labCaption.Width = Unit.Pixel(value);
+        }
+    }
+
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
         }
     }
     #endregion

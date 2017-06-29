@@ -89,7 +89,7 @@ public partial class AclExpress_ucAclInfo : BaseUserControl
         {
             divAclInfo.Visible = false;
             labErrMsg.Visible = true;
-            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(RS.Resources.Msg_ParaNotFoundList, "ucAclInfo"));
+            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(RS.Resources.Msg_ParaNotFound1, "ucAclInfo"));
         }
 
         if (!IsPostBack) 

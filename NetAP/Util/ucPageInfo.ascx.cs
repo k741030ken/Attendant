@@ -76,12 +76,12 @@ public partial class Util_ucPageInfo : BaseUserControl
             HttpBrowserCapabilities obj = Request.Browser;
             ltlEnvironment.Text += "　　<Span class='Util_Legend'>Browser Info</Span>";
             ltlEnvironment.Text += "<ul>";
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Name", obj.Browser, _txtColor, _valColor);
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Type", obj.Type, _txtColor, _valColor);
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Version", obj.Version, _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Name", HttpUtility.HtmlEncode(obj.Browser), _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Type", HttpUtility.HtmlEncode(obj.Type), _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Version", HttpUtility.HtmlEncode(obj.Version), _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.MajorVersion", obj.MajorVersion, _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.MinorVersion", obj.MinorVersion, _txtColor, _valColor);
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Platform", obj.Platform, _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Platform", HttpUtility.HtmlEncode(obj.Platform), _txtColor, _valColor);
             //ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Frames", obj.Frames, _txtColor, _valColor);
             //ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Tables", obj.Tables, _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Browser.Cookies", obj.Cookies, _txtColor, _valColor);
@@ -95,8 +95,8 @@ public partial class Util_ucPageInfo : BaseUserControl
 
             ltlEnvironment.Text += "　　<Span class='Util_Legend'>OS & Culture Info</Span>";
             ltlEnvironment.Text += "<ul>";
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Request.UserAgent", Request.UserAgent, _txtColor, _valColor);
-            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Request.UserLanguages", string.Join(",", Request.UserLanguages), _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Request.UserAgent", HttpUtility.HtmlEncode(Request.UserAgent), _txtColor, _valColor);
+            ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "Request.UserLanguages", HttpUtility.HtmlEncode(string.Join(",", Request.UserLanguages)), _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "CurrentThread.Culture", _Culture, _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "CurrentThread.Culture.Parent", _ParentCulture, _txtColor, _valColor);
             ltlEnvironment.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", "CurrentThread.UICulture", _UICulture, _txtColor, _valColor);
@@ -134,14 +134,13 @@ public partial class Util_ucPageInfo : BaseUserControl
         //QueryString
         if (_IsShowQueryString)
         {
+            Dictionary<string,string> oDic = Util.getRequestQueryString();
             DivQueryArea.Visible = true;
-            labQueryString.Text = string.Format("Request.QueryString [{0}]", Request.QueryString.Count);
+            labQueryString.Text = string.Format("Request.QueryString [{0}]", oDic.Count);
             ltlQueryString.Text = "";
-            for (int i = 0; i < Request.QueryString.Count; i++)
+            foreach (var pair in oDic) 
             {
-                string tKey = Request.QueryString.Keys[i];
-                var tValue = Request.QueryString[i];
-                ltlQueryString.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", tKey, tValue.ToString(), _txtColor, _valColor);
+                ltlQueryString.Text += string.Format("<li><font color='{2}'>{0} = <font color='{3}'>[{1}]</font></font><br/>", pair.Key, pair.Value, _txtColor, _valColor);            
             }
             ltlQueryString.Text = string.Format("<ul>{0}</ul>", ltlQueryString.Text);
         }

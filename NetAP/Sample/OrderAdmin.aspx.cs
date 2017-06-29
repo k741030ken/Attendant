@@ -1179,8 +1179,8 @@ public partial class Sample_OrderAdmin : SecurePage
             fmDetailBatch.DataBind();
 
             ucModalPopup1.Reset();
-            ucModalPopup1.ucPopupWidth = 430;
-            ucModalPopup1.ucPopupHeight = 320;
+            ucModalPopup1.ucPopupWidth = 460;
+            ucModalPopup1.ucPopupHeight = 350;
             ucModalPopup1.ucPopupHeader = "明細批次編輯";
             ucModalPopup1.ucPanelID = pnlDetailBatchForm.ID;
             ucModalPopup1.Show();

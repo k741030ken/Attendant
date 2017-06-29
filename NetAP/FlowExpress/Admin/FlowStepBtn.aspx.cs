@@ -88,13 +88,13 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        pnlFlowStepBtnHideExp.Visible = false;
+        pnlFlowStepBtnExp.Visible = false;
 
         if (string.IsNullOrEmpty(_FlowID) || string.IsNullOrEmpty(_FlowStepID) || string.IsNullOrEmpty(_FlowStepBtnID))
         {
             labMsg.Visible = true;
             pnlFlowStep.Visible = false;
-            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFoundList + "<br><br>", "FlowID/FlowStepID/FlowStepBtnID"));
+            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFound1 + "<br><br>", "FlowID/FlowStepID/FlowStepBtnID"));
             return;
         }
 
@@ -133,6 +133,7 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
         ucModalPopup1.onClose += new Util_ucModalPopup.btnCloseClick(ucModalPopup1_onClose);
         gvFlowStepBtnHideExp.RowCommand += new Util_ucGridView.GridViewRowClick(gvFlowStepBtnHideExp_RowCommand);
+        gvFlowStepBtnStopExp.RowCommand += new Util_ucGridView.GridViewRowClick(gvFlowStepBtnStopExp_RowCommand);
     }
 
     void ucModalPopup1_onClose(object sender, Util_ucModalPopup.btnCloseEventArgs e)
@@ -217,6 +218,8 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
         //「編輯」模式，即 EditItemTemplate 範本
         if (fmMain.CurrentMode == FormViewMode.Edit)
         {
+            FlowExpress oFlow = new FlowExpress(_FlowID);
+
             Util_ucTextBox oTxt;
             DropDownList oDdl;
             CheckBox oChk;
@@ -418,18 +421,11 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
             oLab = (Label)Util.FindControlEx(fmMain, "labCustClassFlowPara", true);
             if (oLab != null)
             {
-                FlowExpress oFlow = new FlowExpress(_FlowID);
                 oLab.Text = "_FlowKeyValue";
                 for (int k = 0; k < oFlow.FlowKeyFieldList.Count(); k++)
                 {
                     oLab.Text += string.Format(",_{0}", oFlow.FlowKeyFieldList[k]);
                 }
-            }
-
-            oTxt = (Util_ucTextBox)Util.FindControlEx(fmMain, "txtRemark", false, typeof(Util_ucTextBox));
-            if (oTxt != null)
-            {
-                oTxt.ucTextData = dr["Remark"].ToString();
             }
 
             oChk = (CheckBox)Util.FindControlEx(fmMain, "chkFlowStepBtnCustGrpSW", true);
@@ -485,6 +481,17 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 oTxt.ucTextData = dr["FlowStepBtnCustQrySQL"].ToString();
             }
 
+            oLab = (Label)Util.FindControlEx(fmMain, "labFlowCustDB", true);
+            if (oLab != null)
+            {
+                oLab.Text = string.Format("[{0}]", !string.IsNullOrEmpty(oFlow.FlowCustDB) ? oFlow.FlowCustDB : "[表單來源DB]");
+            }
+
+            oTxt = (Util_ucTextBox)Util.FindControlEx(fmMain, "txtRemark", false, typeof(Util_ucTextBox));
+            if (oTxt != null)
+            {
+                oTxt.ucTextData = dr["Remark"].ToString();
+            }
 
             oLab = (Label)Util.FindControlEx(fmMain, "labUpdInfo", true);
             if (oLab != null)
@@ -508,16 +515,24 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
         DbHelper db = new DbHelper(FlowExpress._FlowSysDB);
         DataRow dr;
         ucModalPopup1.Reset();
-        ucModalPopup1.ucPanelID = pnlFlowStepBtnHideExp.ID;
-        ucModalPopup1.ucPopupWidth = 600;
-        ucModalPopup1.ucPopupHeight = 480;
+        ucModalPopup1.ucPanelID = pnlFlowStepBtnExp.ID;
+        ucModalPopup1.ucPopupWidth = 650;
+        ucModalPopup1.ucPopupHeight = 520;
         txtFlowStepBtnChkGrpNo.ucRegExp = Util.getRegExp(Util.CommRegExp.Integer);
         txtFlowStepBtnChkSeqNo.ucRegExp = Util.getRegExp(Util.CommRegExp.Integer);
+
+        hidExpTable.Value = "FlowStepBtnHideExp";
+        //隱藏 StopExp 專用設定
+        string strJS = @"dom.Ready(function(){ 
+                            document.getElementById('forStopExpOnlyRow1').style.display = 'none';
+                            document.getElementById('forStopExpOnlyRow2').style.display = 'none';
+                        });";
+        Util.setJSContent(strJS, "pnlFlowStepBtnExp_Init");
         switch (e.CommandName)
         {
             case "cmdEdit":
                 ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Edit;
-                hidMode.Value = e.CommandName;
+                hidCmdName.Value = e.CommandName;
                 hidFlowID.Value = e.DataKeys[0];
                 hidFlowStepID.Value = e.DataKeys[1];
                 hidFlowStepBtnID.Value = e.DataKeys[2];
@@ -527,28 +542,28 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 txtFlowStepBtnChkSeqNo.ucTextData = e.DataKeys[4];
                 txtFlowStepBtnChkSeqNo.ucIsReadOnly = true;
                 txtFlowStepBtnChkSeqNo.Refresh();
-                dr = db.ExecuteDataSet(string.Format("Select * From FlowStepBtnHideExp Where FlowID='{0}' and FlowStepID = '{1}' and FlowStepBtnID = '{2}' and FlowStepBtnChkGrpNo = '{3}' and FlowStepBtnChkSeqNo = '{4}'", e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
+                dr = db.ExecuteDataSet(string.Format("Select * From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
 
                 chkFlowStepBtnChkSessSW.Checked = (dr["FlowStepBtnChkSessSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkSessNameObjectProperty.ucTextData = dr["FlowStepBtnChkSessNameObjectProperty"].ToString();
-                ddlFlowStepBtnChkSessExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkSessExp.SelectedValue = dr["FlowStepBtnChkSessExp"].ToString();
-                ddlFlowStepBtnChkSessExp.DataBind();
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = dr["FlowStepBtnChkSessExp"].ToString();
+                ddlFlowStepBtnChkSessExp.Refresh();
                 txtFlowStepBtnChkSessValue.ucTextData = dr["FlowStepBtnChkSessValue"].ToString();
 
                 chkFlowStepBtnChkCustVarSW.Checked = (dr["FlowStepBtnChkCustVarSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkCustVarName.ucTextData = dr["FlowStepBtnChkCustVarName"].ToString();
-                ddlFlowStepBtnChkCustVarExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustVarExp.SelectedValue = dr["FlowStepBtnChkCustVarExp"].ToString();
-                ddlFlowStepBtnChkCustVarExp.DataBind();
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = dr["FlowStepBtnChkCustVarExp"].ToString();
+                ddlFlowStepBtnChkCustVarExp.Refresh();
                 txtFlowStepBtnChkCustVarValue.ucTextData = dr["FlowStepBtnChkCustVarValue"].ToString();
 
                 chkFlowStepBtnChkCustTableSW.Checked = (dr["FlowStepBtnChkCustTableSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkCustTable.ucTextData = dr["FlowStepBtnChkCustTable"].ToString();
                 txtFlowStepBtnChkCustField.ucTextData = dr["FlowStepBtnChkCustField"].ToString();
-                ddlFlowStepBtnChkCustExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustExp.SelectedValue = dr["FlowStepBtnChkCustExp"].ToString();
-                ddlFlowStepBtnChkCustExp.DataBind();
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = dr["FlowStepBtnChkCustExp"].ToString();
+                ddlFlowStepBtnChkCustExp.Refresh();
                 txtFlowStepBtnChkCustValue.ucTextData = dr["FlowStepBtnChkCustValue"].ToString();
 
                 txtRemark.ucTextData = dr["Remark"].ToString();
@@ -557,7 +572,7 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 break;
             case "cmdCopy":
                 ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Copy;
-                hidMode.Value = e.CommandName;
+                hidCmdName.Value = e.CommandName;
                 hidFlowID.Value = e.DataKeys[0];
                 hidFlowStepID.Value = e.DataKeys[1];
                 hidFlowStepBtnID.Value = e.DataKeys[2];
@@ -567,28 +582,28 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 txtFlowStepBtnChkSeqNo.ucTextData = e.DataKeys[4];
                 txtFlowStepBtnChkSeqNo.ucIsReadOnly = false;
                 txtFlowStepBtnChkSeqNo.Refresh();
-                dr = db.ExecuteDataSet(string.Format("Select * From FlowStepBtnHideExp Where FlowID='{0}' and FlowStepID = '{1}' and FlowStepBtnID = '{2}' and FlowStepBtnChkGrpNo = '{3}' and FlowStepBtnChkSeqNo = '{4}'", e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
+                dr = db.ExecuteDataSet(string.Format("Select * From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
 
                 chkFlowStepBtnChkSessSW.Checked = (dr["FlowStepBtnChkSessSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkSessNameObjectProperty.ucTextData = dr["FlowStepBtnChkSessNameObjectProperty"].ToString();
-                ddlFlowStepBtnChkSessExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkSessExp.SelectedValue = dr["FlowStepBtnChkSessExp"].ToString();
-                ddlFlowStepBtnChkSessExp.DataBind();
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = dr["FlowStepBtnChkSessExp"].ToString();
+                ddlFlowStepBtnChkSessExp.Refresh();
                 txtFlowStepBtnChkSessValue.ucTextData = dr["FlowStepBtnChkSessValue"].ToString();
 
                 chkFlowStepBtnChkCustVarSW.Checked = (dr["FlowStepBtnChkCustVarSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkCustVarName.ucTextData = dr["FlowStepBtnChkCustVarName"].ToString();
-                ddlFlowStepBtnChkCustVarExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustVarExp.SelectedValue = dr["FlowStepBtnChkCustVarExp"].ToString();
-                ddlFlowStepBtnChkCustVarExp.DataBind();
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = dr["FlowStepBtnChkCustVarExp"].ToString();
+                ddlFlowStepBtnChkCustVarExp.Refresh();
                 txtFlowStepBtnChkCustVarValue.ucTextData = dr["FlowStepBtnChkCustVarValue"].ToString();
 
                 chkFlowStepBtnChkCustTableSW.Checked = (dr["FlowStepBtnChkCustTableSW"].ToString().ToUpper() == "Y") ? true : false;
                 txtFlowStepBtnChkCustTable.ucTextData = dr["FlowStepBtnChkCustTable"].ToString();
                 txtFlowStepBtnChkCustField.ucTextData = dr["FlowStepBtnChkCustField"].ToString();
-                ddlFlowStepBtnChkCustExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustExp.SelectedValue = dr["FlowStepBtnChkCustExp"].ToString();
-                ddlFlowStepBtnChkCustExp.DataBind();
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = dr["FlowStepBtnChkCustExp"].ToString();
+                ddlFlowStepBtnChkCustExp.Refresh();
                 txtFlowStepBtnChkCustValue.ucTextData = dr["FlowStepBtnChkCustValue"].ToString();
 
                 txtRemark.ucTextData = dr["Remark"].ToString();
@@ -596,7 +611,7 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 break;
             case "cmdAdd":
                 ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Add;
-                hidMode.Value = e.CommandName;
+                hidCmdName.Value = e.CommandName;
                 hidFlowID.Value = _FlowID;
                 hidFlowStepID.Value = _FlowStepID;
                 hidFlowStepBtnID.Value = _FlowStepBtnID;
@@ -609,24 +624,25 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
                 chkFlowStepBtnChkSessSW.Checked = false;
                 txtFlowStepBtnChkSessNameObjectProperty.ucTextData = "";
-                ddlFlowStepBtnChkSessExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkSessExp.SelectedValue = "";
-                ddlFlowStepBtnChkSessExp.DataBind();
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = "";
+                ddlFlowStepBtnChkSessExp.Refresh();
                 txtFlowStepBtnChkSessValue.ucTextData = "";
 
                 chkFlowStepBtnChkCustVarSW.Checked = false;
                 txtFlowStepBtnChkCustVarName.ucTextData = "";
-                ddlFlowStepBtnChkCustVarExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustVarExp.SelectedValue = "";
-                ddlFlowStepBtnChkCustVarExp.DataBind();
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = "";
+                ddlFlowStepBtnChkCustVarExp.Refresh();
+
                 txtFlowStepBtnChkCustVarValue.ucTextData = "";
 
                 chkFlowStepBtnChkCustTableSW.Checked = false;
                 txtFlowStepBtnChkCustTable.ucTextData = "";
                 txtFlowStepBtnChkCustField.ucTextData = "";
-                ddlFlowStepBtnChkCustExp.DataSource = Util.getDictionary(_Dic_Exp);
-                ddlFlowStepBtnChkCustExp.SelectedValue = "";
-                ddlFlowStepBtnChkCustExp.DataBind();
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = "";
+                ddlFlowStepBtnChkCustExp.Refresh();
                 txtFlowStepBtnChkCustValue.ucTextData = "";
 
                 txtRemark.ucTextData = "";
@@ -635,9 +651,188 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
             case "cmdDelete":
                 try
                 {
-                    db.ExecuteNonQuery(string.Format("Delete From FlowStepBtnHideExp Where FlowID='{0}' and FlowStepID = '{1}' and FlowStepBtnID = '{2}' and FlowStepBtnChkGrpNo = '{3}' and FlowStepBtnChkSeqNo = '{4}'", e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4]));
+                    db.ExecuteNonQuery(string.Format("Delete From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4]));
                     //[刪除]資料異動Log
-                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, "FlowStepBtnHideExp", Util.getStringJoin(e.DataKeys), LogHelper.AppDataLogType.Delete);
+                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, hidExpTable.Value, Util.getStringJoin(e.DataKeys), LogHelper.AppDataLogType.Delete);
+                    Util.NotifyMsg(RS.Resources.Msg_DeleteSucceed, Util.NotifyKind.Success);
+                }
+                catch (Exception ex)
+                {
+                    Util.MsgBox(ex.Message);
+                }
+                break;
+        }
+    }
+
+    void gvFlowStepBtnStopExp_RowCommand(object sender, Util_ucGridView.RowCommandEventArgs e)
+    {
+        //2017.05.23
+        DbHelper db = new DbHelper(FlowExpress._FlowSysDB);
+        DataRow dr;
+        ucModalPopup1.Reset();
+        ucModalPopup1.ucPanelID = pnlFlowStepBtnExp.ID;
+        ucModalPopup1.ucPopupWidth = 820;
+        ucModalPopup1.ucPopupHeight = 700;
+        txtFlowStepBtnChkGrpNo.ucRegExp = Util.getRegExp(Util.CommRegExp.Integer);
+        txtFlowStepBtnChkSeqNo.ucRegExp = Util.getRegExp(Util.CommRegExp.Integer);
+
+        hidExpTable.Value = "FlowStepBtnStopExp";
+
+        //顯示 StopExp 專用設定
+        string strJS = @"dom.Ready(function(){ 
+                            document.getElementById('forStopExpOnlyRow1').style.display = '';
+                            document.getElementById('forStopExpOnlyRow2').style.display = '';
+                        });";
+        Util.setJSContent(strJS, "pnlFlowStepBtnExp_Init");
+
+        //處理 [labCustClassChkFlowPara] 顯示
+        FlowExpress oFlow = new FlowExpress(_FlowID);
+        labCustClassChkFlowPara.Text = "_FlowKeyValue";
+        for (int k = 0; k < oFlow.FlowKeyFieldList.Count(); k++)
+        {
+            labCustClassChkFlowPara.Text += string.Format(",_{0}", oFlow.FlowKeyFieldList[k]);
+        }
+
+        switch (e.CommandName)
+        {
+            case "cmdEdit":
+                ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Edit;
+                hidCmdName.Value = e.CommandName;
+                hidFlowID.Value = e.DataKeys[0];
+                hidFlowStepID.Value = e.DataKeys[1];
+                hidFlowStepBtnID.Value = e.DataKeys[2];
+                txtFlowStepBtnChkGrpNo.ucTextData = e.DataKeys[3];
+                txtFlowStepBtnChkGrpNo.ucIsReadOnly = true;
+                txtFlowStepBtnChkGrpNo.Refresh();
+                txtFlowStepBtnChkSeqNo.ucTextData = e.DataKeys[4];
+                txtFlowStepBtnChkSeqNo.ucIsReadOnly = true;
+                txtFlowStepBtnChkSeqNo.Refresh();
+                dr = db.ExecuteDataSet(string.Format("Select * From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
+
+                txtFlowStepBtnChkReason.ucTextData = dr["FlowStepBtnChkReason"].ToString();
+                chkFlowStepBtnChkCustClassSW.Checked = (dr["FlowStepBtnChkCustClassSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustClassMethod.ucTextData = dr["FlowStepBtnChkCustClassMethod"].ToString();
+                txtFlowStepBtnChkCustParaList.ucTextData = dr["FlowStepBtnChkCustParaList"].ToString();
+
+                chkFlowStepBtnChkSessSW.Checked = (dr["FlowStepBtnChkSessSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkSessNameObjectProperty.ucTextData = dr["FlowStepBtnChkSessNameObjectProperty"].ToString();
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = dr["FlowStepBtnChkSessExp"].ToString();
+                ddlFlowStepBtnChkSessExp.Refresh();
+                txtFlowStepBtnChkSessValue.ucTextData = dr["FlowStepBtnChkSessValue"].ToString();
+
+                chkFlowStepBtnChkCustVarSW.Checked = (dr["FlowStepBtnChkCustVarSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustVarName.ucTextData = dr["FlowStepBtnChkCustVarName"].ToString();
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = dr["FlowStepBtnChkCustVarExp"].ToString();
+                ddlFlowStepBtnChkCustVarExp.Refresh();
+                txtFlowStepBtnChkCustVarValue.ucTextData = dr["FlowStepBtnChkCustVarValue"].ToString();
+
+                chkFlowStepBtnChkCustTableSW.Checked = (dr["FlowStepBtnChkCustTableSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustTable.ucTextData = dr["FlowStepBtnChkCustTable"].ToString();
+                txtFlowStepBtnChkCustField.ucTextData = dr["FlowStepBtnChkCustField"].ToString();
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = dr["FlowStepBtnChkCustExp"].ToString();
+                ddlFlowStepBtnChkCustExp.Refresh();
+                txtFlowStepBtnChkCustValue.ucTextData = dr["FlowStepBtnChkCustValue"].ToString();
+
+                txtRemark.ucTextData = dr["Remark"].ToString();
+
+                ucModalPopup1.Show();
+                break;
+            case "cmdCopy":
+                ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Copy;
+                hidCmdName.Value = e.CommandName;
+                hidFlowID.Value = e.DataKeys[0];
+                hidFlowStepID.Value = e.DataKeys[1];
+                hidFlowStepBtnID.Value = e.DataKeys[2];
+                txtFlowStepBtnChkGrpNo.ucTextData = e.DataKeys[3];
+                txtFlowStepBtnChkGrpNo.ucIsReadOnly = false;
+                txtFlowStepBtnChkGrpNo.Refresh();
+                txtFlowStepBtnChkSeqNo.ucTextData = e.DataKeys[4];
+                txtFlowStepBtnChkSeqNo.ucIsReadOnly = false;
+                txtFlowStepBtnChkSeqNo.Refresh();
+                dr = db.ExecuteDataSet(string.Format("Select * From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4])).Tables[0].Rows[0];
+
+                txtFlowStepBtnChkReason.ucTextData = dr["FlowStepBtnChkReason"].ToString();
+                chkFlowStepBtnChkCustClassSW.Checked = (dr["FlowStepBtnChkCustClassSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustClassMethod.ucTextData = dr["FlowStepBtnChkCustClassMethod"].ToString();
+                txtFlowStepBtnChkCustParaList.ucTextData = dr["FlowStepBtnChkCustParaList"].ToString();
+
+                chkFlowStepBtnChkSessSW.Checked = (dr["FlowStepBtnChkSessSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkSessNameObjectProperty.ucTextData = dr["FlowStepBtnChkSessNameObjectProperty"].ToString();
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = dr["FlowStepBtnChkSessExp"].ToString();
+                ddlFlowStepBtnChkSessExp.Refresh();
+                txtFlowStepBtnChkSessValue.ucTextData = dr["FlowStepBtnChkSessValue"].ToString();
+
+                chkFlowStepBtnChkCustVarSW.Checked = (dr["FlowStepBtnChkCustVarSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustVarName.ucTextData = dr["FlowStepBtnChkCustVarName"].ToString();
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = dr["FlowStepBtnChkCustVarExp"].ToString();
+                ddlFlowStepBtnChkCustVarExp.Refresh();
+                txtFlowStepBtnChkCustVarValue.ucTextData = dr["FlowStepBtnChkCustVarValue"].ToString();
+
+                chkFlowStepBtnChkCustTableSW.Checked = (dr["FlowStepBtnChkCustTableSW"].ToString().ToUpper() == "Y") ? true : false;
+                txtFlowStepBtnChkCustTable.ucTextData = dr["FlowStepBtnChkCustTable"].ToString();
+                txtFlowStepBtnChkCustField.ucTextData = dr["FlowStepBtnChkCustField"].ToString();
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = dr["FlowStepBtnChkCustExp"].ToString();
+                ddlFlowStepBtnChkCustExp.Refresh();
+                txtFlowStepBtnChkCustValue.ucTextData = dr["FlowStepBtnChkCustValue"].ToString();
+
+                txtRemark.ucTextData = dr["Remark"].ToString();
+                ucModalPopup1.Show();
+                break;
+            case "cmdAdd":
+                ucModalPopup1.ucPopupHeader = RS.Resources.Msg_Add;
+                hidCmdName.Value = e.CommandName;
+                hidFlowID.Value = _FlowID;
+                hidFlowStepID.Value = _FlowStepID;
+                hidFlowStepBtnID.Value = _FlowStepBtnID;
+                txtFlowStepBtnChkGrpNo.ucTextData = "9";
+                txtFlowStepBtnChkGrpNo.ucIsReadOnly = false;
+                txtFlowStepBtnChkGrpNo.Refresh();
+                txtFlowStepBtnChkSeqNo.ucTextData = "9";
+                txtFlowStepBtnChkSeqNo.ucIsReadOnly = false;
+                txtFlowStepBtnChkSeqNo.Refresh();
+
+                txtFlowStepBtnChkReason.ucTextData = "";
+                chkFlowStepBtnChkCustClassSW.Checked = false;
+                txtFlowStepBtnChkCustClassMethod.ucTextData = "";
+                txtFlowStepBtnChkCustParaList.ucTextData = "";
+
+                chkFlowStepBtnChkSessSW.Checked = false;
+                txtFlowStepBtnChkSessNameObjectProperty.ucTextData = "";
+                ddlFlowStepBtnChkSessExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkSessExp.ucSelectedID = "";
+                ddlFlowStepBtnChkSessExp.Refresh();
+                txtFlowStepBtnChkSessValue.ucTextData = "";
+
+                chkFlowStepBtnChkCustVarSW.Checked = false;
+                txtFlowStepBtnChkCustVarName.ucTextData = "";
+                ddlFlowStepBtnChkCustVarExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustVarExp.ucSelectedID = "";
+                ddlFlowStepBtnChkCustVarExp.Refresh();
+                txtFlowStepBtnChkCustVarValue.ucTextData = "";
+
+                chkFlowStepBtnChkCustTableSW.Checked = false;
+                txtFlowStepBtnChkCustTable.ucTextData = "";
+                txtFlowStepBtnChkCustField.ucTextData = "";
+                ddlFlowStepBtnChkCustExp.ucSourceDictionary = Util.getDictionary(_Dic_Exp);
+                ddlFlowStepBtnChkCustExp.ucSelectedID = "";
+                ddlFlowStepBtnChkCustExp.Refresh();
+                txtFlowStepBtnChkCustValue.ucTextData = "";
+
+                txtRemark.ucTextData = "";
+                ucModalPopup1.Show();
+                break;
+            case "cmdDelete":
+                try
+                {
+                    db.ExecuteNonQuery(string.Format("Delete From {0} Where FlowID='{1}' and FlowStepID = '{2}' and FlowStepBtnID = '{3}' and FlowStepBtnChkGrpNo = '{4}' and FlowStepBtnChkSeqNo = '{5}'", hidExpTable.Value, e.DataKeys[0], e.DataKeys[1], e.DataKeys[2], e.DataKeys[3], e.DataKeys[4]));
+                    //[刪除]資料異動Log
+                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, hidExpTable.Value, Util.getStringJoin(e.DataKeys), LogHelper.AppDataLogType.Delete);
                     Util.NotifyMsg(RS.Resources.Msg_DeleteSucceed, Util.NotifyKind.Success);
                 }
                 catch (Exception ex)
@@ -650,15 +845,17 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
     protected void btnComplete_Click(object sender, EventArgs e)
     {
-        Dictionary<string, string> oDic = Util.getControlEditResult(pnlFlowStepBtnHideExp);
+        //bool ss = forStopExpOnlyRow1.Visible;
+        //forStopExpOnlyRow1.Visible = true;
+        Dictionary<string, string> oDic = Util.getControlEditResult(pnlFlowStepBtnExp);
         DbHelper db = new DbHelper(FlowExpress._FlowSysDB);
         CommandHelper sb = db.CreateCommandHelper();
-
-        switch (hidMode.Value)
+        switch (hidCmdName.Value)
         {
             case "cmdEdit":
                 sb.Reset();
-                sb.AppendStatement("Update FlowStepBtnHideExp Set ");
+                sb.AppendStatement(string.Format("Update {0} Set ", oDic["hidExpTable"]));
+
                 sb.Append("  FlowStepBtnChkSessSW        = ").AppendParameter("chkFlowStepBtnChkSessSW", oDic["chkFlowStepBtnChkSessSW"]);
                 sb.Append(", FlowStepBtnChkSessNameObjectProperty      = ").AppendParameter("txtFlowStepBtnChkSessNameObjectProperty", oDic["txtFlowStepBtnChkSessNameObjectProperty"]);
                 sb.Append(", FlowStepBtnChkSessExp       = ").AppendParameter("ddlFlowStepBtnChkSessExp", oDic["ddlFlowStepBtnChkSessExp"]);
@@ -666,18 +863,26 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
                 sb.Append(", FlowStepBtnChkCustVarSW     = ").AppendParameter("chkFlowStepBtnChkCustVarSW", oDic["chkFlowStepBtnChkCustVarSW"]);
                 sb.Append(", FlowStepBtnChkCustVarName   = ").AppendParameter("txtFlowStepBtnChkCustVarName", oDic["txtFlowStepBtnChkCustVarName"]);
-                sb.Append(", FlowStepBtnChkCustVarExp      = ").AppendParameter("ddlFlowStepBtnChkCustVarExp", oDic["ddlFlowStepBtnChkCustVarExp"]);
-                sb.Append(", FlowStepBtnChkCustVarValue      = ").AppendParameter("txtFlowStepBtnChkCustVarValue", oDic["txtFlowStepBtnChkCustVarValue"]);
+                sb.Append(", FlowStepBtnChkCustVarExp    = ").AppendParameter("ddlFlowStepBtnChkCustVarExp", oDic["ddlFlowStepBtnChkCustVarExp"]);
+                sb.Append(", FlowStepBtnChkCustVarValue  = ").AppendParameter("txtFlowStepBtnChkCustVarValue", oDic["txtFlowStepBtnChkCustVarValue"]);
 
-                sb.Append(", FlowStepBtnChkCustTableSW      = ").AppendParameter("chkFlowStepBtnChkCustTableSW", oDic["chkFlowStepBtnChkCustTableSW"]);
-                sb.Append(", FlowStepBtnChkCustTable      = ").AppendParameter("txtFlowStepBtnChkCustTable", oDic["txtFlowStepBtnChkCustTable"]);
-                sb.Append(", FlowStepBtnChkCustField      = ").AppendParameter("txtFlowStepBtnChkCustField", oDic["txtFlowStepBtnChkCustField"]);
-                sb.Append(", FlowStepBtnChkCustExp      = ").AppendParameter("ddlFlowStepBtnChkCustExp", oDic["ddlFlowStepBtnChkCustExp"]);
-                sb.Append(", FlowStepBtnChkCustValue      = ").AppendParameter("txtFlowStepBtnChkCustValue", oDic["txtFlowStepBtnChkCustValue"]);
+                sb.Append(", FlowStepBtnChkCustTableSW   = ").AppendParameter("chkFlowStepBtnChkCustTableSW", oDic["chkFlowStepBtnChkCustTableSW"]);
+                sb.Append(", FlowStepBtnChkCustTable     = ").AppendParameter("txtFlowStepBtnChkCustTable", oDic["txtFlowStepBtnChkCustTable"]);
+                sb.Append(", FlowStepBtnChkCustField     = ").AppendParameter("txtFlowStepBtnChkCustField", oDic["txtFlowStepBtnChkCustField"]);
+                sb.Append(", FlowStepBtnChkCustExp       = ").AppendParameter("ddlFlowStepBtnChkCustExp", oDic["ddlFlowStepBtnChkCustExp"]);
+                sb.Append(", FlowStepBtnChkCustValue     = ").AppendParameter("txtFlowStepBtnChkCustValue", oDic["txtFlowStepBtnChkCustValue"]);
 
                 sb.Append(", Remark      = ").AppendParameter("txtRemark", oDic["txtRemark"]);
                 sb.Append(", UpdUser = ").AppendParameter("UpdUser", UserInfo.getUserInfo().UserID);
                 sb.Append(", UpdDateTime = ").AppendDbDateTime();
+
+                if (oDic["hidExpTable"] == "FlowStepBtnStopExp")
+                {
+                    sb.Append(", FlowStepBtnChkReason        = ").AppendParameter("txtFlowStepBtnChkReason", oDic["txtFlowStepBtnChkReason"]);
+                    sb.Append(", FlowStepBtnChkCustClassSW   = ").AppendParameter("chkFlowStepBtnChkCustClassSW", oDic["chkFlowStepBtnChkCustClassSW"]);
+                    sb.Append(", FlowStepBtnChkCustClassMethod  = ").AppendParameter("txtFlowStepBtnChkCustClassMethod", oDic["txtFlowStepBtnChkCustClassMethod"]);
+                    sb.Append(", FlowStepBtnChkCustParaList     = ").AppendParameter("txtFlowStepBtnChkCustParaList", oDic["txtFlowStepBtnChkCustParaList"]);
+                }
 
                 sb.Append(" Where 0=0 ");
                 sb.Append(" And FlowID    =").AppendParameter("hidFlowID", oDic["hidFlowID"]);
@@ -690,7 +895,7 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 {
                     db.ExecuteNonQuery(sb.BuildCommand());
                     //[更新]資料異動Log
-                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, "FlowStepBtnHideExp", string.Format("{0},{1},{2},{3},{4}", oDic["hidFlowID"], oDic["hidFlowStepID"], oDic["hidFlowStepBtnID"], oDic["txtFlowStepBtnChkGrpNo"], oDic["txtFlowStepBtnChkSeqNo"]), LogHelper.AppDataLogType.Update, oDic);
+                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, oDic["hidExpTable"], string.Format("{0},{1},{2},{3},{4}", oDic["hidFlowID"], oDic["hidFlowStepID"], oDic["hidFlowStepBtnID"], oDic["txtFlowStepBtnChkGrpNo"], oDic["txtFlowStepBtnChkSeqNo"]), LogHelper.AppDataLogType.Update, oDic);
                     Util.NotifyMsg(RS.Resources.Msg_EditSucceed, Util.NotifyKind.Success);
                 }
                 catch
@@ -700,8 +905,12 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 break;
             case "cmdAdd":
             case "cmdCopy":
-                sb.AppendStatement("Insert FlowStepBtnHideExp (");
+                sb.AppendStatement(string.Format("Insert {0} (", oDic["hidExpTable"]));
                 sb.Append(" FlowID,FlowStepID,FlowStepBtnID,FlowStepBtnChkGrpNo,FlowStepBtnChkSeqNo");
+                if (oDic["hidExpTable"] == "FlowStepBtnStopExp")
+                {
+                    sb.Append(",FlowStepBtnChkReason,FlowStepBtnChkCustClassSW,FlowStepBtnChkCustClassMethod,FlowStepBtnChkCustParaList");
+                }
                 sb.Append(",FlowStepBtnChkSessSW,FlowStepBtnChkSessNameObjectProperty,FlowStepBtnChkSessExp,FlowStepBtnChkSessValue");
                 sb.Append(",FlowStepBtnChkCustVarSW,FlowStepBtnChkCustVarName,FlowStepBtnChkCustVarExp,FlowStepBtnChkCustVarValue");
                 sb.Append(",FlowStepBtnChkCustTableSW,FlowStepBtnChkCustTable,FlowStepBtnChkCustField,FlowStepBtnChkCustExp,FlowStepBtnChkCustValue");
@@ -712,6 +921,14 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                 sb.Append("        ,").AppendParameter("hidFlowStepBtnID", oDic["hidFlowStepBtnID"]);
                 sb.Append("        ,").AppendParameter("txtFlowStepBtnChkGrpNo", oDic["txtFlowStepBtnChkGrpNo"]);
                 sb.Append("        ,").AppendParameter("txtFlowStepBtnChkSeqNo", oDic["txtFlowStepBtnChkSeqNo"]);
+
+                if (oDic["hidExpTable"] == "FlowStepBtnStopExp")
+                {
+                    sb.Append("        ,").AppendParameter("txtFlowStepBtnChkReason", oDic["txtFlowStepBtnChkReason"]);
+                    sb.Append("        ,").AppendParameter("chkFlowStepBtnChkCustClassSW", oDic["chkFlowStepBtnChkCustClassSW"]);
+                    sb.Append("        ,").AppendParameter("txtFlowStepBtnChkCustClassMethod", oDic["txtFlowStepBtnChkCustClassMethod"]);
+                    sb.Append("        ,").AppendParameter("txtFlowStepBtnChkCustParaList", oDic["txtFlowStepBtnChkCustParaList"]);
+                }
 
                 sb.Append("        ,").AppendParameter("chkFlowStepBtnChkSessSW", oDic["chkFlowStepBtnChkSessSW"]);
                 sb.Append("        ,").AppendParameter("txtFlowStepBtnChkSessNameObjectProperty", oDic["txtFlowStepBtnChkSessNameObjectProperty"]);
@@ -740,7 +957,7 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
                     //[新增/複製]資料異動Log
                     //因為會先編修後才儲存，故LogType = [Create]
                     string strNewKey = string.Format("{0},{1},{2},{3},{4}", oDic["hidFlowID"], oDic["hidFlowStepID"], oDic["hidFlowStepBtnID"], oDic["txtFlowStepBtnChkGrpNo"], oDic["txtFlowStepBtnChkSeqNo"]);
-                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, "FlowStepBtnHideExp", strNewKey, LogHelper.AppDataLogType.Create, oDic);
+                    LogHelper.WriteAppDataLog(FlowExpress._FlowSysDB, oDic["hidExpTable"], strNewKey, LogHelper.AppDataLogType.Create, oDic);
                     Util.NotifyMsg(RS.Resources.Msg_Succeed, Util.NotifyKind.Success);
                 }
                 catch
@@ -756,27 +973,54 @@ public partial class FlowExpress_Admin_FlowStepBtn : SecurePage
 
     protected void RefreshGridView(bool IsInit = false)
     {
-        Dictionary<string, string> oDisp1 = new Dictionary<string, string>();
-
         //FlowStepBtnHideExp
-        oDisp1.Clear();
-        oDisp1.Add("FlowStepBtnChkGrpNo", "群別@C");
-        oDisp1.Add("FlowStepBtnChkSeqNo", "順序@C");
-        oDisp1.Add("FlowStepBtnChkSessSW", "Sess@M");
-        oDisp1.Add("FlowStepBtnChkCustVarSW", "自訂變數@M");
-        oDisp1.Add("FlowStepBtnChkCustTableSW", "資料表@M");
-        oDisp1.Add("Remark", "備　　註@L180");
-        oDisp1.Add("UpdUser", "更新人員");
-        oDisp1.Add("UpdDateTime", "更新日期@T");
+        Dictionary<string, string> oHideExpDisp = new Dictionary<string, string>();
+        oHideExpDisp.Clear();
+        oHideExpDisp.Add("FlowStepBtnChkGrpNo", "群組@C");
+        oHideExpDisp.Add("FlowStepBtnChkSeqNo", "順序@C");
+        oHideExpDisp.Add("FlowStepBtnChkSessSW", "Sess@Y");
+        oHideExpDisp.Add("FlowStepBtnChkCustVarSW", "自訂變數@Y");
+        oHideExpDisp.Add("FlowStepBtnChkCustTableSW", "資料表@Y");
+        oHideExpDisp.Add("Remark", "備　　註@L150");
+        oHideExpDisp.Add("UpdUser", "更新人員");
+        oHideExpDisp.Add("UpdDateTime", "更新日期@T");
 
         gvFlowStepBtnHideExp.ucDBName = FlowExpress._FlowSysDB;
         gvFlowStepBtnHideExp.ucDataQrySQL = string.Format("Select * From FlowStepBtnHideExp Where FlowID = '{0}' And FlowStepID = '{1}' and FlowStepBtnID = '{2}' ", _FlowID, _FlowStepID, _FlowStepBtnID);
         gvFlowStepBtnHideExp.ucDataKeyList = "FlowID,FlowStepID,FlowStepBtnID,FlowStepBtnChkGrpNo,FlowStepBtnChkSeqNo".Split(',');
-        gvFlowStepBtnHideExp.ucDataDisplayDefinition = oDisp1;
+        gvFlowStepBtnHideExp.ucDataDisplayDefinition = oHideExpDisp;
+        gvFlowStepBtnHideExp.ucSortEnabled = false;
+        gvFlowStepBtnHideExp.ucSeqNoEnabled = false;
         gvFlowStepBtnHideExp.ucAddEnabled = true;
         gvFlowStepBtnHideExp.ucCopyEnabled = true;
         gvFlowStepBtnHideExp.ucEditEnabled = true;
         gvFlowStepBtnHideExp.ucDeleteEnabled = true;
         gvFlowStepBtnHideExp.Refresh(IsInit);
+
+
+        //FlowStepBtnStopExp  2017.05.24 新增
+        Dictionary<string, string> oStopExpDisp = new Dictionary<string, string>();
+        oStopExpDisp.Clear();
+        oStopExpDisp.Add("FlowStepBtnChkGrpNo", "群組@C");
+        oStopExpDisp.Add("FlowStepBtnChkSeqNo", "順序@C");
+        oStopExpDisp.Add("FlowStepBtnChkCustClassSW", "自訂類別@Y");
+        oStopExpDisp.Add("FlowStepBtnChkSessSW", "Sess@Y");
+        oStopExpDisp.Add("FlowStepBtnChkCustVarSW", "自訂變數@Y");
+        oStopExpDisp.Add("FlowStepBtnChkCustTableSW", "資料表@Y");
+        oStopExpDisp.Add("FlowStepBtnChkReason", "原　　因@L150");
+        oStopExpDisp.Add("UpdUser", "更新人員");
+        oStopExpDisp.Add("UpdDateTime", "更新日期@T");
+
+        gvFlowStepBtnStopExp.ucDBName = FlowExpress._FlowSysDB;
+        gvFlowStepBtnStopExp.ucDataQrySQL = string.Format("Select * From FlowStepBtnStopExp Where FlowID = '{0}' And FlowStepID = '{1}' and FlowStepBtnID = '{2}' ", _FlowID, _FlowStepID, _FlowStepBtnID);
+        gvFlowStepBtnStopExp.ucDataKeyList = "FlowID,FlowStepID,FlowStepBtnID,FlowStepBtnChkGrpNo,FlowStepBtnChkSeqNo".Split(',');
+        gvFlowStepBtnStopExp.ucDataDisplayDefinition = oStopExpDisp;
+        gvFlowStepBtnStopExp.ucSortEnabled = false;
+        gvFlowStepBtnStopExp.ucSeqNoEnabled = false;
+        gvFlowStepBtnStopExp.ucAddEnabled = true;
+        gvFlowStepBtnStopExp.ucCopyEnabled = true;
+        gvFlowStepBtnStopExp.ucEditEnabled = true;
+        gvFlowStepBtnStopExp.ucDeleteEnabled = true;
+        gvFlowStepBtnStopExp.Refresh(IsInit);
     }
 }

@@ -26,7 +26,9 @@
                 <legend class="Util_Legend">
                     <asp:Label ID="labVerifyOpinion" runat="server" Text="Opinion" />
                 </legend>
-                <uc1:ucTextBox ID="txtVerifyOpinion" runat="server" ucIsDispEnteredWords="true" ucIsReadOnly="true"></uc1:ucTextBox>
+                <div style="border: 0px solid gray; width: 620px; height: 80px; overflow: auto;">
+                    <asp:Label ID="labVerifyOpinionData" runat="server"></asp:Label>
+                </div>
             </fieldset>
             <fieldset class="Util_Fieldset">
                 <legend class="Util_Legend">

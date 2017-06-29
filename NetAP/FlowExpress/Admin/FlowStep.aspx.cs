@@ -43,7 +43,7 @@ public partial class FlowExpress_Admin_FlowStep : SecurePage
         {
             labMsg.Visible = true;
             pnlFlowStep.Visible = false;
-            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFoundList + "<br><br>", "FlowID/FlowStepID"));
+            labMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(RS.Resources.Msg_ParaNotFound1 + "<br><br>", "FlowID/FlowStepID"));
             return;
         }
 
@@ -96,7 +96,7 @@ public partial class FlowExpress_Admin_FlowStep : SecurePage
         switch (e.CommandName)
         {
             case "cmdSelect":
-                Response.Redirect(string.Format("FlowStepBtn.aspx?FlowID={0}&FlowStepID={1}&FlowStepBtnID={2}", e.DataKeys[0], e.DataKeys[1], e.DataKeys[2]));
+                Response.Redirect(string.Format("FlowStepBtn.aspx?FlowID={0}&FlowStepID={1}&FlowStepBtnID={2}", HttpUtility.HtmlEncode(e.DataKeys[0]), HttpUtility.HtmlEncode(e.DataKeys[1]), HttpUtility.HtmlEncode(e.DataKeys[2])));
                 break;
             case "cmdCopy":
                 hidFlowID.Value = e.DataKeys[0];
@@ -334,8 +334,8 @@ public partial class FlowExpress_Admin_FlowStep : SecurePage
         oDisp1.Add("FlowStepBtnID", "代號");
         oDisp1.Add("FlowStepBtnSeqNo", "順序");
         oDisp1.Add("FlowStepBtnCaption", "抬頭");
-        oDisp1.Add("FlowStepBtnIsMultiSelect", "多選@M");
-        oDisp1.Add("FlowStepBtnIsSendMail", "發信@M");
+        oDisp1.Add("FlowStepBtnIsMultiSelect", "多選@Y");
+        oDisp1.Add("FlowStepBtnIsSendMail", "發信@Y");
         oDisp1.Add("FlowStepBtnNextStepDealCondition", "成立條件");
         //oDisp1.Add("FlowStepBtnNextStepID", "下一關");
         //oDisp1.Add("FlowStepBtnNextStepName", "下一關名稱");
@@ -393,7 +393,7 @@ public partial class FlowExpress_Admin_FlowStep : SecurePage
             arNewPKey.Add(hidFlowID.Value);
             arNewPKey.Add(hidFlowStepID.Value);
             arNewPKey.Add(txtNewFlowStepBtnID.ucTextData);
-            
+
             string strCopySQL = Util.getDataCopySQL(FlowExpress._FlowSysDB, "FlowID,FlowStepID,FlowStepBtnID".Split(','), Util.getArray(arOldPKey), Util.getArray(arNewPKey), Util.getArray(arTable));
             strCopySQL += string.Format("Update FlowStepBtn Set FlowStepBtnSeqNo = '{3}' , FlowStepBtnCaption = N'{4}' Where FlowID = '{0}' And FlowStepID = '{1}' And FlowStepBtnID = '{2}';", hidFlowID.Value, hidFlowStepID.Value, txtNewFlowStepBtnID.ucTextData, txtNewFlowStepBtnSeqNo.ucTextData, txtNewFlowStepBtnCaption.ucTextData);
             try

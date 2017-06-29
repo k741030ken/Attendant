@@ -44,7 +44,8 @@
                                         <asp:Label ID="lblFldName" ForeColor="Blue" runat="server" Text="*代碼類別"></asp:Label>
                                     </td>
                                     <td class="td_Edit" style="width: 35%" align="left" colspan="3">
-                                        <asp:DropDownList ID="ddlTabFldName" runat="server" Font-Names="微軟正黑體">
+                                        <asp:DropDownList ID="ddlTabFldName" runat="server" Font-Names="微軟正黑體" 
+                                            Enabled="False">
                                         </asp:DropDownList>
                                         <asp:HiddenField ID="hidTabName" runat="server"></asp:HiddenField>
                                         <asp:HiddenField ID="hidFldName" runat="server"></asp:HiddenField>

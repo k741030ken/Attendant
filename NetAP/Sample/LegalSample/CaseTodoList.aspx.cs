@@ -51,9 +51,7 @@ public partial class LegalSample_CaseTodoList : SecurePage
             ucFlowTodoList1.ucFlowIDList = "LegalMain,LegalSub".Split(',');
 
             //ucFlowTodoList1.ucIsUsingCheckBoxListWhenMultiSelect = true;                      //複選指派對象時使用 ChkBoxLis
-            //ucFlowTodoList1.ucChkMaxKeyLen = 5;                                               //若指派清單鍵值超出此長度，則顯示時不合併顯示鍵值
-            //ucFlowTodoList1.ucIsPopupVerifyEnabled = false;                                   //將彈出式審核，強制改用轉址式審核
-            //ucFlowTodoList1.ucPopupBtnCompleteEnabled = true;                                 //彈出的審核視窗，要顯示[關閉]按鈕
+            //ucFlowTodoList1.ucIsPopupVerifyEnabled = true;                                    //使用彈出式審核
             //ucFlowTodoList1.ucIsEnabledProxyTodoList = false;                                 //隱藏代理待辦清單
             //ucFlowTodoList1.ucProxyFullFilter = "ProxyType='Full' and ProxyCompID = 'TW' ";   //從UserInfo.ProxyInfoTable過濾出指定代理人員
             //ucFlowTodoList1.ucProxySemiFilter = "ProxyType='Semi' and ProxyCompID = 'TW' ";   //從UserInfo.ProxyInfoTable過濾出指定助理人員

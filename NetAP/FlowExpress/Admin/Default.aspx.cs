@@ -40,7 +40,7 @@ public partial class FlowExpress_Admin_Default : SecurePage
         switch (e.CommandName)
         {
             case "cmdSelect":
-                Response.Redirect(string.Format("FlowSpec.aspx?FlowID={0}", e.DataKeys[0]));
+                Response.Redirect(string.Format("FlowSpec.aspx?FlowID={0}", HttpUtility.HtmlEncode(e.DataKeys[0])));
                 break;
             case "cmdCopy":
                 hidFlowID.Value = e.DataKeys[0];
@@ -57,7 +57,7 @@ public partial class FlowExpress_Admin_Default : SecurePage
 
                 ucModalPopup1.Reset();
                 ucModalPopup1.ucPopupWidth = 450;
-                ucModalPopup1.ucPopupHeight = 150;
+                ucModalPopup1.ucPopupHeight = 180;
                 ucModalPopup1.ucPopupHeader = "複製流程";
                 ucModalPopup1.ucPanelID = pnlNewFlow.ID;
                 ucModalPopup1.Show();
@@ -76,7 +76,7 @@ public partial class FlowExpress_Admin_Default : SecurePage
 
                 ucModalPopup1.Reset();
                 ucModalPopup1.ucPopupWidth = 450;
-                ucModalPopup1.ucPopupHeight = 150;
+                ucModalPopup1.ucPopupHeight = 180;
                 ucModalPopup1.ucPopupHeader = "新增流程";
                 ucModalPopup1.ucPanelID = pnlNewFlow.ID;
                 ucModalPopup1.Show();

@@ -69,6 +69,30 @@ Partial Class OV_OV3000
             txtAdjustInvalidDate.Focus()
             Return False
         End If
+
+        If Not String.IsNullOrEmpty(txtStayBehind.Text.Trim) Then
+            Dim numStayBehind As Integer = 0
+            If Not Integer.TryParse(txtStayBehind.Text.Trim, numStayBehind) Then
+                Bsp.Utility.ShowFormatMessage(Me, "W_00075", "[留守時數上限]", "正整數")
+                txtStayBehind.Focus()
+                Return False
+            Else
+                If Not IsNumeric(numStayBehind) OrElse numStayBehind <= 0 Then
+                    Bsp.Utility.ShowFormatMessage(Me, "W_20720", "[留守時數上限]", "0")
+                    txtStayBehind.Focus()
+                    Return False
+                ElseIf numStayBehind > 24 Then
+                    Bsp.Utility.ShowFormatMessage(Me, "W_20710", "[留守時數上限]", "1", "24")
+                    txtStayBehind.Focus()
+                    Return False
+                End If
+            End If
+        Else
+            Bsp.Utility.ShowFormatMessage(Me, "W_00050", "留守時數上限")
+            txtStayBehind.Focus()
+            Return False
+        End If
+
         Return True
     End Function
 #End Region
@@ -162,6 +186,10 @@ Partial Class OV_OV3000
                 Else
                     rbtnTurnSalary.Checked = True
                 End If
+
+                '留守時數上限
+                txtStayBehind.Text = getRealValue(jsStr, oriData, "StayBehindLimit") : ViewState.Item("StayBehindLimit") = txtStayBehind.Text
+
             End If
 
         End If
@@ -209,6 +237,8 @@ Partial Class OV_OV3000
             Dim Salary As String = IIf(rbtnTurnAdjust.Checked = True, "2", "1")
             jsObj.Add("SalaryOrAjust", Salary)
             jsObj.Add("AdjustInvalidDate", txtAdjustInvalidDate.DateText)
+            '留守時數上限
+            jsObj.Add("StayBehindLimit", txtStayBehind.Text)
 
             jsAry.Add(jsObj)
 
@@ -277,6 +307,8 @@ Partial Class OV_OV3000
             txtLastChgComp.Text = ViewState.Item("LastChgComp")
             txtLastChgDate.Text = ViewState.Item("LastChgDate")
             txtLastChgID.Text = ViewState.Item("LastChgID")
+            '留守時數上限
+            txtStayBehind.Text = ViewState.Item("StayBehindLimit")
         Else
             txtAdvaceBegin.Text = ""
             txtAdvanceEnd.Text = ""
@@ -303,6 +335,8 @@ Partial Class OV_OV3000
             txtLastChgComp.Text = ""
             txtLastChgDate.Text = ""
             txtLastChgID.Text = ""
+            '留守時數上限
+            txtStayBehind.Text = String.Empty
         End If
     End Sub
 

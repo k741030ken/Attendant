@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
@@ -15,23 +16,7 @@ public partial class Util_ucCommMultiSelect : BaseUserControl
     /// <summary>
     /// 指定候選資料來源
     /// </summary>
-    public Dictionary<string, string> ucSourceDictionary
-    {
-        get
-        {
-            if (PageViewState["_SourceDictionary"] == null)
-            {
-                return null;
-            }
-            return (Dictionary<string, string>)(PageViewState["_SourceDictionary"]);
-        }
-        set
-        {
-            PageViewState["_SourceDictionary"] = value;
-        }
-    }
-
-
+    public Dictionary<string, string> ucSourceDictionary { get; set; }
 
     /// <summary>
     /// [全選]前的提示訊息(若為空白則直接執行)
@@ -364,6 +349,31 @@ public partial class Util_ucCommMultiSelect : BaseUserControl
         set
         {
             labCaption.Width = Unit.Pixel(value);
+        }
+    }
+
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
         }
     }
 

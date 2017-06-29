@@ -105,7 +105,7 @@
                                     <asp:Label ID="dispFlowOpinion" runat="server" /></legend>
                                 <uc1:ucTextBox ID="txtFlowOpinion" runat="server" ucIsDispEnteredWords="true" ucIsRequire="true"></uc1:ucTextBox>
                                 <br />
-                                <div style="width: 100%; text-align: center;">
+                                <div style="width: 100%; text-align: center;margin-top:5px;">
                                     <asp:Button ID="btnSaveTempOpinion" runat="server" CssClass="Util_clsBtnGray" OnClick="btnSaveTempOpinion_Click"
                                         CausesValidation="true" Text="Save Temp Opinion" Width="200px"></asp:Button>
                                 </div>

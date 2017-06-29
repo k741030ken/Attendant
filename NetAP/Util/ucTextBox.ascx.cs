@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
@@ -268,6 +269,31 @@ public partial class Util_ucTextBox : BaseUserControl
     }
 
     /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
+        }
+    }
+
+    /// <summary>
     /// 浮水印內容
     /// </summary>
     public string ucWaterMark
@@ -413,7 +439,7 @@ public partial class Util_ucTextBox : BaseUserControl
         set
         {
             txtData.Rows = value;
-            txtData.TextMode = (value > 1) ? TextBoxMode.MultiLine : TextBoxMode.SingleLine;
+            txtData.TextMode = (ucRows > 1) ? TextBoxMode.MultiLine : TextBoxMode.SingleLine;
             //修正 IE 多行模式顯示 Bug 2016.09.06 / 2016.09.14
             if (ucRows > 1 && Util.getIEVersion() > 0)
                 txtData.Style["white-space"] = "pre-wrap";
@@ -794,7 +820,7 @@ public partial class Util_ucTextBox : BaseUserControl
             if (!ucIsPassword)
             {
                 //非密碼輸入
-                
+
                 //自動大寫
                 if (ucIsAutoToUpperCase)
                 {
@@ -882,7 +908,7 @@ public partial class Util_ucTextBox : BaseUserControl
                     //onfocus 時不清除浮水印 2015.06.16
                     System.Text.StringBuilder sb = new System.Text.StringBuilder();
                     sb.Append("if (this.value=='') {"
-                            //若為空值，將游標移至最前面
+                        //若為空值，將游標移至最前面
                             + "  this.value = '" + ucWaterMark + "';"
                             + "  if(this.createTextRange) {"
                             + "     var range = elem.createTextRange();"
