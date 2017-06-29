@@ -10,20 +10,165 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// <remarks>2015.07.14 新增</remarks>
 public partial class Util_AttachAdminLite : SecurePage
 {
-    private string _AttachDB = "";
-    private string _AttachID = "";
-    private string _AttachFileExtList = ""; //ex: PDF,DOC,ZIP
-    private string _AnonymousYN = "N";
+    public string _AttachDB
+    {
+        get
+        {
+            if (PageViewState["_AttachDB"] == null)
+            {
+                PageViewState["_AttachDB"] = "";
+            }
+            return (string)(PageViewState["_AttachDB"]);
+        }
+        set
+        {
+            PageViewState["_AttachDB"] = value;
+        }
+    }
 
-    private int _AttachFileDefKB = 1024;
-    private int _AttachFileDefMaxQty = 1;
+    public string _AttachID
+    {
+        get
+        {
+            if (PageViewState["_AttachID"] == null)
+            {
+                PageViewState["_AttachID"] = "";
+            }
+            return (string)(PageViewState["_AttachID"]);
+        }
+        set
+        {
+            PageViewState["_AttachID"] = value;
+        }
+    }
 
-    private int _AttachFileMaxQty = 1;
-    private int _AttachFileMaxKB = 0;
-    private int _AttachFileTotKB = 0;
+    public string _AttachFileExtList
+    {
+        get
+        {
+            if (PageViewState["_AttachFileExtList"] == null)
+            {
+                PageViewState["_AttachFileExtList"] = "";  //ex: PDF,DOC,ZIP
+            }
+            return (string)(PageViewState["_AttachFileExtList"]);
+        }
+        set
+        {
+            PageViewState["_AttachFileExtList"] = value;
+        }
+    }
 
-    private int _AttachCurrQty = 0;     //目前已上傳數量
-    private int _AttachCurrTotKB = 0;   //目前已使用配額
+    public string _AnonymousYN
+    {
+        get
+        {
+            if (PageViewState["_AnonymousYN"] == null)
+            {
+                PageViewState["_AnonymousYN"] = "N";
+            }
+            return (string)(PageViewState["_AnonymousYN"]);
+        }
+        set
+        {
+            PageViewState["_AnonymousYN"] = value;
+        }
+    }
+
+    public int _AttachFileDefKB
+    {
+        get
+        {
+            if (PageViewState["_AttachFileDefKB"] == null)
+            {
+                PageViewState["_AttachFileDefKB"] = 1024;
+            }
+            return (int)(PageViewState["_AttachFileDefKB"]);
+        }
+        set
+        {
+            PageViewState["_AttachFileDefKB"] = value;
+        }
+    }
+
+    public int _AttachFileMaxQty
+    {
+        get
+        {
+            if (PageViewState["_AttachFileMaxQty"] == null)
+            {
+                PageViewState["_AttachFileMaxQty"] = 1;
+            }
+            return (int)(PageViewState["_AttachFileMaxQty"]);
+        }
+        set
+        {
+            PageViewState["_AttachFileMaxQty"] = value;
+        }
+    }
+
+    public int _AttachFileMaxKB
+    {
+        get
+        {
+            if (PageViewState["_AttachFileMaxKB"] == null)
+            {
+                PageViewState["_AttachFileMaxKB"] = 0;
+            }
+            return (int)(PageViewState["_AttachFileMaxKB"]);
+        }
+        set
+        {
+            PageViewState["_AttachFileMaxKB"] = value;
+        }
+    }
+
+    public int _AttachFileTotKB
+    {
+        get
+        {
+            if (PageViewState["_AttachFileTotKB"] == null)
+            {
+                PageViewState["_AttachFileTotKB"] = 0;
+            }
+            return (int)(PageViewState["_AttachFileTotKB"]);
+        }
+        set
+        {
+            PageViewState["_AttachFileTotKB"] = value;
+        }
+    }
+
+    public int _AttachCurrQty  //目前已上傳數量
+    {
+        get
+        {
+            if (PageViewState["_AttachCurrQty"] == null)
+            {
+                PageViewState["_AttachCurrQty"] = 0;
+            }
+            return (int)(PageViewState["_AttachCurrQty"]);
+        }
+        set
+        {
+            PageViewState["_AttachCurrQty"] = value;
+        }
+    }
+
+    public int _AttachCurrTotKB  //目前已使用配額
+    {
+        get
+        {
+            if (PageViewState["_AttachCurrTotKB"] == null)
+            {
+                PageViewState["_AttachCurrTotKB"] = 0;
+            }
+            return (int)(PageViewState["_AttachCurrTotKB"]);
+        }
+        set
+        {
+            PageViewState["_AttachCurrTotKB"] = value;
+        }
+    }
 
     //自訂[附件清單]的 Width/Height 功能
     private int intWidth = 0;
@@ -73,7 +218,7 @@ public partial class Util_AttachAdminLite : SecurePage
         _AttachFileMaxKB = int.Parse(Util.getRequestQueryStringKey("AttachFileMaxKB", "0"));
         _AttachFileTotKB = int.Parse(Util.getRequestQueryStringKey("AttachFileTotKB", "0"));
 
-        if (_AttachFileMaxQty <= 0) _AttachFileMaxQty = _AttachFileDefMaxQty;
+        if (_AttachFileMaxQty <= 0) _AttachFileMaxQty = 1;
         if (_AttachFileMaxKB <= 0) _AttachFileMaxKB = _AttachFileDefKB;
         if (_AttachFileTotKB <= 0) _AttachFileTotKB = _AttachFileMaxQty * _AttachFileMaxKB;
 

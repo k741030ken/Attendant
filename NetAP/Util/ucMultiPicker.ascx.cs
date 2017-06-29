@@ -54,6 +54,26 @@ public partial class Util_ucMultiPicker : BaseUserControl
     }
 
     /// <summary>
+    /// 自訂Require錯誤訊息
+    /// </summary>
+    public string ucRequireErrorMessage
+    {
+        get
+        {
+            if (PageViewState["_RequireErrMsg"] == null)
+            {
+                PageViewState["_RequireErrMsg"] = "*";
+            }
+            return (string)(PageViewState["_RequireErrMsg"]);
+        }
+        set
+        {
+            PageViewState["_RequireErrMsg"] = value;
+            RequiredFieldValidator1.ErrorMessage = value;
+        }
+    }
+
+    /// <summary>
     /// ReadOnly 時的 CSSClass(預設 Util_clsReadOnly)
     /// </summary>
     public string ucReadOnlyCSS
@@ -145,21 +165,7 @@ public partial class Util_ucMultiPicker : BaseUserControl
     /// <summary>
     /// 候選資料來源
     /// </summary>
-    public Dictionary<string, string> ucSourceDictionary
-    {
-        get
-        {
-            if (PageViewState["_SourceDictionary"] == null)
-            {
-                return null;
-            }
-            return (Dictionary<string, string>)(PageViewState["_SourceDictionary"]);
-        }
-        set
-        {
-            PageViewState["_SourceDictionary"] = value;
-        }
-    }
+    public Dictionary<string, string> ucSourceDictionary { get; set; }
 
     /// <summary>
     /// 預設 SelectedIDList
@@ -282,6 +288,31 @@ public partial class Util_ucMultiPicker : BaseUserControl
         set
         {
             labCaption.Width = Unit.Pixel(value);
+        }
+    }
+
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
         }
     }
     #endregion

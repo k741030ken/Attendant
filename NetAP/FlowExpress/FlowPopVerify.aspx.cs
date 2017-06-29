@@ -11,6 +11,7 @@ using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using SinoPac.WebExpress.DAO;
 using SinoPac.WebExpress.Work;
+using RS = SinoPac.WebExpress.Common.Properties;
 using WorkRS = SinoPac.WebExpress.Work.Properties;
 
 /// <summary>
@@ -94,9 +95,9 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
         strJS += "if (isStartVerify) {";
         strJS += "   this.style.display = 'none';";
         strJS += ucLightBox.ucShowClientJS;
-        strJS += "   var oClose = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
+        strJS += "   var oClose = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
         strJS += "   if (oClose != null){oClose.style.display='none';}";
-        strJS += "   var oComplete = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
+        strJS += "   var oComplete = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
         strJS += "   if (oComplete != null){oComplete.style.display='none';}";
         strJS += "}";
 
@@ -149,7 +150,7 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                 string strFlowVerifyCustFormURL = string.Format("{0}?FlowID={1}&FlowLogID={2}", Util.getFixURL(oFlow.FlowVerifyCustFormURL), oFlow.FlowID, oFlow.FlowLogID);
                 for (int i = 0; i < oFlow.FlowKeyFieldList.Count(); i++)
                 {
-                    if (oFlow.FlowKeyFieldList[i].ToUpper() != "AUTONO")
+                    if (oFlow.FlowKeyFieldList[i].ToUpper() != "_AUTONO")
                     {
                         strFlowVerifyCustFormURL += string.Format("&{0}={1}", oFlow.FlowKeyFieldList[i], oFlow.FlowKeyValueList[i]);
                     }
@@ -165,18 +166,19 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                     tabFlowAttach.Visible = true;
                     string strFlowAttachID = string.Format(FlowExpress._FlowAttachIDFormat, oFlow.FlowID, oFlow.FlowLogID);
                     string strFlowAttachURL = Util._AttachAdminUrl;
-                    strFlowAttachURL += string.Format("?AttachDB={0}&AttachID={1}&AttachFileMaxQty={2}&AttachFileMaxKB={3}&AttachFileTotKB={4}&AttachFileExtList={5}&Width={6}&Height={7}", oFlow.FlowAttachDB, strFlowAttachID, oFlow.FlowCurrStepAttachMaxQty, oFlow.FlowCurrStepAttachMaxKB, oFlow.FlowCurrStepAttachTotKB, Util.getStringJoin(oFlow.FlowCurrStepAttachExtList), intTabAreaWidth - 60, intTabAreaHeight - 260);
+                    strFlowAttachURL += string.Format("?AttachDB={0}&AttachID={1}&AttachFileMaxQty={2}&AttachFileMaxKB={3}&AttachFileTotKB={4}&AttachFileExtList={5}", oFlow.FlowAttachDB, strFlowAttachID, oFlow.FlowCurrStepAttachMaxQty, oFlow.FlowCurrStepAttachMaxKB, oFlow.FlowCurrStepAttachTotKB, Util.getStringJoin(oFlow.FlowCurrStepAttachExtList));
                     FlowAttachFrame.Attributes["src"] = strFlowAttachURL;
-                    FlowAttachFrame.Attributes["width"] = (intTabAreaWidth - 10).ToString();
-                    FlowAttachFrame.Attributes["height"] = (intTabAreaHeight - 5).ToString();
+                    FlowAttachFrame.Attributes["width"] = (intTabAreaWidth - 20).ToString();
+                    FlowAttachFrame.Attributes["height"] = (intTabAreaHeight - 10).ToString();
                 }
 
-                //載入 FlowLogFrame 並設定顯示範圍
+                //流程記錄
                 //新增 FlowLogID 2016.10.14
                 string strFlowLogDisplayURL = string.Format("{0}?FlowID={1}&FlowCaseID={2}&FlowLogID={3}", FlowExpress._FlowLogDisplayURL, oFlow.FlowID, oFlow.FlowCaseID, oFlow.FlowLogID);
                 FlowLogFrame.Attributes["src"] = strFlowLogDisplayURL;
-                FlowLogFrame.Attributes["width"] = (intTabAreaWidth - 10).ToString();
-                FlowLogFrame.Attributes["height"] = (intTabAreaHeight - 5).ToString();
+                FlowLogFrame.Attributes["width"] = (intTabAreaWidth - 20).ToString();
+                FlowLogFrame.Attributes["height"] = (intTabAreaHeight - 10).ToString();
+                Util.setJS_SetFrameHeight(FlowLogFrame.ID);
 
                 //流程意見
                 labFlowOpinion.Text = WorkRS.Resources.FlowVerifyTab_FlowOpinion;
@@ -465,11 +467,11 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
         string strUpdSQL = string.Format("Update {0}FlowOpenLog Set FlowStepOpinion = N'{2}' Where FlowLogID = '{1}'", oFlow.FlowID, oFlow.FlowLogID, txtFlowOpinion.ucTextData);
         if (dblog.ExecuteNonQuery(CommandType.Text, strUpdSQL) > 0)
         {
-            Util.setJSContent("alert('" + SinoPac.WebExpress.Common.Properties.Resources.Msg_Succeed + "');");
+            Util.NotifyMsg(RS.Resources.Msg_Succeed, Util.NotifyKind.Success);
         }
         else
         {
-            Util.setJSContent("alert('" + SinoPac.WebExpress.Common.Properties.Resources.Msg_Error + "');");
+            Util.NotifyMsg(RS.Resources.Msg_Error, Util.NotifyKind.Error);
         }
     }
 
@@ -477,15 +479,9 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
     {
         FlowExpress oFlow = new FlowExpress();
         labFlowVerifyMsg.Text = "";
-        string strJS = "";
+        string strShowPopBtnJS = "";
 
-        //彈出式
-        strJS += "var oClose = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
-        strJS += "if (oClose != null){oClose.style.display='';}";
-        strJS += "var oComplete = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
-        strJS += "if (oComplete != null){oComplete.style.display='';}";
-
-        //取的流程意見，若為空白則補上預設值
+        //取得流程意見，若為空白則補上預設值
         if (string.IsNullOrEmpty(txtFlowOpinion.ucTextData)) { txtFlowOpinion.ucTextData = oFlow.FlowDefOpinion; }
         //取得指派對象，需將 value 中包含的項目Key移除
         AjaxControlToolkit.TabPanel TabVerify = TabVerifyContainer.ActiveTab;
@@ -532,21 +528,23 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
             oAssDic.AddRange(Util.getDictionary(Util.getDictionary(allVerify.GetAllItems()), false));
         }
 
+        //只顯示 [tabFlowVerify] 頁籤 2017.02.07
+        tabCustForm.Visible = false;
+        tabFlowAttach.Visible = false;
+        tabFlowFullLog.Visible = false;
+        DivVerifyBtnArea.Visible = false;
+        DivVerifyMsgArea.Visible = true;
+
+        strShowPopBtnJS += "var oClose = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
+        strShowPopBtnJS += "if (oClose != null){oClose.style.display='';}";
+        strShowPopBtnJS += "var oComplete = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
+        strShowPopBtnJS += "if (oComplete != null){oComplete.style.display='';}";
+        Util.setJSContent(strShowPopBtnJS);
+
         if (oAssDic.Count > 0)
         {
             //指派對象有值，可進行審核
-
-            //只顯示 [tabFlowVerify] 頁籤 2017.02.07
-            tabCustForm.Visible = false;
-            tabFlowAttach.Visible = false;
-            tabFlowFullLog.Visible = false;
-
-            DivVerifyBtnArea.Visible = false;
-            DivVerifyMsgArea.Visible = true;
-            //處理顯示訊息
-            //labFlowVerifyMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.Default, string.Format(Resources.FlowVerifyMsg_FlowVerifyProcessing, oFlow.FlowID, oFlow.FlowLogID));
             labFlowVerifyMsg.Text = "";
-
             Dictionary<string, string> dicBtnContext = Util.getDictionary(TabVerify.DynamicContextKey);  //取出btn參數
             string strFlowStepBtnID = dicBtnContext["FlowStepBtnID"].ToString().Trim();
             string strFlowStepBtnIsAddMultiSubFlow = dicBtnContext["FlowStepBtnIsAddMultiSubFlow"].ToString().Trim().ToUpper();
@@ -557,6 +555,25 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
             bool IsNeedAddSubFlow = false;
             bool IsAddSubFlowSucceed = false;
 
+            //檢查是否有按鈕停止條件 2017.05.25 新增
+            string[] oStopReasonList;
+            string strStopResonMsg;
+            if (FlowExpress.IsFlowStepButtonStop(oFlow, strFlowStepBtnID, out oStopReasonList))
+            {
+                strStopResonMsg = string.Format(WorkRS.Resources.FlowVerifyMsg_StopVerify1, oFlow.FlowCaseHtmlInfo);
+                if (!oStopReasonList.IsNullOrEmpty())
+                {
+                    string strStopReasonTip = string.Format(" {0} \n", WorkRS.Resources.FlowVerifyMsg_StopReasonTipTitle);
+                    for (int i = 0; i < oStopReasonList.Length; i++)
+                    {
+                        strStopReasonTip += string.Format(" ● {0}\n", oStopReasonList[i]);
+                    }
+                    strStopResonMsg = string.Format("<span title=\"{0}\">{1}</span>", strStopReasonTip, strStopResonMsg);
+                }
+                labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, strStopResonMsg);
+                return;
+            }
+
             //檢查是否有自訂審核URL
             if (!string.IsNullOrEmpty(oFlow.FlowCurrStepCustVerifyURL))
             {
@@ -566,14 +583,14 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                     //設定Session傳遞參數[FlowVerifyInfo]
                     dicBtnContext.Add("FlowStepAssignToList", Util.getJSON(oAssDic));
                     dicBtnContext.Add("FlowStepOpinion", strFlowStepOpinion);
-                    dicBtnContext.Add("FlowVerifyJS", strJS);
+                    dicBtnContext.Add("FlowVerifyJS", strShowPopBtnJS);
                     Session["FlowVerifyInfo"] = dicBtnContext;
                     //因為 Ajax Page 無法使用Server.Transfer，故 CustVerifyURL 改用 Response.Redirect()執行
                     //設定 CustVerifyURL
                     string strVerifyURL = string.Format("{0}?FlowID={1}&FlowLogID={2}", oFlow.FlowCurrStepCustVerifyURL, oFlow.FlowID, oFlow.FlowLogID);
                     for (int i = 0; i < oFlow.FlowKeyFieldList.Count(); i++)
                     {
-                        if (oFlow.FlowKeyFieldList[i].ToUpper() != "AUTONO")
+                        if (oFlow.FlowKeyFieldList[i].ToUpper() != "_AUTONO")
                         {
                             strVerifyURL += string.Format("&{0}={1}", oFlow.FlowKeyFieldList[i], oFlow.FlowKeyValueList[i]);
                         }
@@ -582,9 +599,8 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                 }
                 else
                 {
-                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(SinoPac.WebExpress.Common.Properties.Resources.Msg_NotExist1, oFlow.FlowCurrStepCustVerifyURL));
+                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(RS.Resources.Msg_NotExist1, oFlow.FlowCurrStepCustVerifyURL));
                 }
-                Util.setJSContent(strJS);
                 return;
             }
 
@@ -719,11 +735,11 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                     {
                         if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinion))
                         {
-                            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                         }
                         else
                         {
-                            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                             //2014.11.27 顯示審核錯誤原因
                             DataTable dtError = FlowExpressTraceLog.getFlowExpressErrorLogData(oFlow.FlowID, oFlow.FlowCaseID, oFlow.FlowLogID);
                             if (dtError != null && dtError.Rows.Count > 0)
@@ -744,11 +760,11 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                 //一般審核
                 if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinion))
                 {
-                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                 }
                 else
                 {
-                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                     //2014.11.27 顯示審核錯誤原因
                     DataTable dtError = FlowExpressTraceLog.getFlowExpressErrorLogData(oFlow.FlowID, oFlow.FlowCaseID, oFlow.FlowLogID);
                     if (dtError != null && dtError.Rows.Count > 0)
@@ -762,15 +778,10 @@ public partial class FlowExpress_FlowPopVerify : SecurePage
                     }
                 }
             }
-
-            if (!string.IsNullOrEmpty(strJS))
-            {
-                Util.setJSContent(strJS);
-            }
         }
         else
         {
-            Util.setJSContent("alert('" + WorkRS.Resources.FlowVerifyMsg_AssignToNotFound + "');" + strJS);
+            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, WorkRS.Resources.FlowVerifyMsg_AssignToNotFound);
         }
     }
 

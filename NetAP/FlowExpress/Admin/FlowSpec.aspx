@@ -22,20 +22,20 @@
                     <%--[編輯]用範本--%>
                     <table class="Util_Frame">
                         <tr class="Util_clsRow1">
-                            <td style="width: 150px;">流程代號：
+                            <td style="width: 150px;">流程代號
                             </td>
                             <td>
                                 <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="150" />
-                                流程名稱：
-                                <uc1:ucTextBox ID="txtFlowName" runat="server" ucWidth="150" />
+                                流程名稱
+                                <uc1:ucTextBox ID="txtFlowName" runat="server" ucWidth="180" />
                                 <asp:CheckBox ID="chkFlowTraceEnabled" runat="server" />
-                                啟用審核追蹤
+                                流程追蹤
                                 <asp:CheckBox ID="chkFlowBatchEnabled" runat="server" />
                                 啟用批次審核
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>鍵值欄位清單：
+                            <td>鍵值欄位清單
                             </td>
                             <td>
                                 <uc1:ucTextBox ID="txtFlowKeyFieldList" runat="server" ucWidth="200" />
@@ -43,116 +43,93 @@
                             </td>
                         </tr>
                         <tr class="Util_clsRow1">
-                            <td>鍵值抬頭清單：
+                            <td>鍵值抬頭清單
                             </td>
                             <td>
                                 <uc1:ucTextBox ID="txtFlowKeyCaptionList" runat="server" ucWidth="500" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>顯示欄位清單：
+                            <td style="vertical-align: top;">顯示欄位清單
                             </td>
                             <td>
                                 <uc1:ucTextBox ID="txtFlowShowFieldList" runat="server" ucWidth="500" />
                                 <div>**可使用以下的系統變數**</div>
-                                <li style="color: Gray;"><b>_AssignTo,_ProxyType,_FlowID,_FlowCaseID,_FlowLogID,_FlowKey</b></li>
+                                <li style="color: Gray;"><b>_AssignTo,_AssignToName,_ProxyType,_FlowID,_FlowCaseID,_FlowLogID,_FlowKey</b></li>
                                 <li style="color: Gray;"><b>_LogDate,_LogDateTime,_CurrStepID,_CurrStepName</b></li>
                             </td>
                         </tr>
                         <tr class="Util_clsRow1">
-                            <td>顯示抬頭清單：
+                            <td style="vertical-align: top;">顯示抬頭清單
                             </td>
                             <td>
                                 <uc1:ucTextBox ID="txtFlowShowCaptionList" runat="server" ucWidth="500" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>表單來源DB：
+                            <td>自訂來源資料庫
                             </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtFlowCustDB" runat="server" />
-                                流程Log來源DB：
-                                <uc1:ucTextBox ID="txtFlowLogDB" runat="server" />
-                                流程附件來源DB：
-                                <uc1:ucTextBox ID="txtFlowAttachDB" runat="server" />
+                            <td>電子表單DB
+                                <uc1:ucTextBox ID="txtFlowCustDB" runat="server" ucWidth="100" />
+                                流程LogDB
+                                <uc1:ucTextBox ID="txtFlowLogDB" runat="server" ucWidth="100" />
+                                流程附件DB
+                                <uc1:ucTextBox ID="txtFlowAttachDB" runat="server" ucWidth="100" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow1">
-                            <td>自訂表單URL：
+                            <td>自訂審核表單
                             </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtFlowVerifyCustFormURL" runat="server" ucWidth="220" />
-                                意見最多字元：
-                                <uc1:ucTextBox ID="txtFlowOpinionMaxLength" runat="server" ucWidth="40" />
-                                審核彈出視窗寬度：
-                                <uc1:ucTextBox ID="txtFlowVerifyPopupWidth" runat="server" ucWidth="40" />
-                                px&nbsp;&nbsp;高度：
-                                <uc1:ucTextBox ID="txtFlowVerifyPopupHeight" runat="server" ucWidth="40" />
+                            <td>網　址
+                                <uc1:ucTextBox ID="txtFlowVerifyCustFormURL" runat="server" ucWidth="334" />
+                                寬度
+                                <uc1:ucTextBox ID="txtFlowVerifyPopupWidth" runat="server" ucWidth="35" />
+                                px&nbsp;&nbsp;高度
+                                <uc1:ucTextBox ID="txtFlowVerifyPopupHeight" runat="server" ucWidth="35" />
                                 px
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>自訂變數名稱清單：
+                            <td>自訂變數清單
                             </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtFlowCustVarNameList" runat="server" ucWidth="500" />
-                            </td>
-                        </tr>
-                        <tr class="Util_clsRow1">
-                            <td>自訂變數預設值清單：
-                            </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtFlowDefCustVarValueList" runat="server" ucWidth="500" />
-                            </td>
-                        </tr>
-                        <tr class="Util_clsRow2">
-                            <td>需隱藏意見的關卡清單：
-                            </td>
-                            <td>
-                                <uc1:ucCheckBoxList ID="chkFlowHideOpinionStepList" runat="server" ucWidth="500" />
+                            <td>名　稱<uc1:ucTextBox ID="txtFlowCustVarNameList" runat="server" ucWidth="516" />
+                                <br />
+                                預設值<uc1:ucTextBox ID="txtFlowDefCustVarValueList" runat="server" ucWidth="516" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow1">
-                            <td>隱藏關卡例外成員清單：
+                            <td style="vertical-align: top;">關卡相關設定
                             </td>
-                            <td>
+                            <td>意見最大字數
+                                <uc1:ucTextBox ID="txtFlowOpinionMaxLength" runat="server" ucWidth="35" />
+                                <br />
+                                隱藏意見<uc1:ucCheckBoxList ID="chkFlowHideOpinionStepList" runat="server" ucWidth="500" />
+                                <br />
+                                例外成員                               
                                 <uc1:ucTextBox ID="txtFlowHideOpinionIgnoreList" runat="server" ucWidth="500" />
                                 <br />
-                                **可填入DeptID,UserID...等UserInfo的屬性，ex: [L01000,100479]**
+                                **例外成員可填入 DeptID 或 UserID 等相關資料，ex: [L01000,100479]**
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>郵件變數清單：
+                            <td style="vertical-align: top;">郵件相關設定
                             </td>
-                            <td>
-                                <uc1:ucCheckBoxList ID="chkFlowSendMailNewValueList" runat="server" ucWidth="500" />
+                            <td>郵件變數<uc1:ucCheckBoxList ID="chkFlowSendMailNewValueList" runat="server" ucWidth="500" />
+                                <br />
+                                主旨格式<uc1:ucTextBox ID="txtFlowSendMailSubjectFormat" runat="server" ucWidth="500" />
+                                <br />
+                                本文格式<uc1:ucTextBox ID="txtFlowSendMailBodyFormat" runat="server" ucWidth="496" ucRows="5" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow1">
-                            <td>郵件主旨格式：
+                            <td style="vertical-align: top;">備　　註
                             </td>
                             <td>
-                                <uc1:ucTextBox ID="txtFlowSendMailSubjectFormat" runat="server" ucWidth="500" />
-                                <br />
+                                <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="564" ucRows="3" />
                             </td>
                         </tr>
                         <tr class="Util_clsRow2">
-                            <td>郵件本文格式：
-                            </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtFlowSendMailBodyFormat" runat="server" ucWidth="500" ucRows="5" />
-                                <br />
-                            </td>
-                        </tr>
-                        <tr class="Util_clsRow1">
-                            <td>備 註：
-                            </td>
-                            <td>
-                                <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="500" ucRows="5" />
-                            </td>
-                        </tr>
-                        <tr class="Util_clsRow2">
-                            <td>最近更新：
+                            <td>最近更新
                             </td>
                             <td>
                                 <asp:Label ID="labUpdInfo" runat="server" />
@@ -163,22 +140,16 @@
                                 <hr class="Util_clsHR" />
                                 <asp:Button runat="server" ID="btnMainUpdate" Text="更　　新" CssClass="Util_clsBtn"
                                     OnClick="btnMainUpdate_Click" />
+                                <asp:Button runat="server" ID="btnCustProperty" Text="自訂屬性" CssClass="Util_clsBtn"
+                                    OnClick="btnCustProperty_Click" />
                                 <uc1:ucMuiAdminButton ID="ucMuiAdminButton1" runat="server" />
+                                <asp:Button runat="server" ID="btnFlowSQL" Text="LogDB SQL" CssClass="Util_clsBtn"
+                                    OnClick="btnFlowSQL_Click" />
                             </td>
                         </tr>
                     </table>
                 </EditItemTemplate>
             </asp:FormView>
-        </fieldset>
-        <br />
-        <fieldset class="Util_Fieldset">
-            <legend class="Util_Legend">流程輔助工具</legend>
-            <div style="padding-left: 20px;">
-                <asp:Button runat="server" ID="btnCustProperty" Text="自訂屬性" CssClass="Util_clsBtn" Width="150px"
-                    OnClick="btnCustProperty_Click" />
-                <asp:Button runat="server" ID="btnFlowSQL" Text="LogDB Script" CssClass="Util_clsBtn" Width="150px"
-                    OnClick="btnFlowSQL_Click" />
-            </div>
         </fieldset>
         <br />
         <fieldset class="Util_Fieldset">
@@ -210,12 +181,12 @@
                         <%--[新增]用範本--%>
                         <table style="border: 0px none #FFFFFF; width: 820px;" cellspacing="0">
                             <tr class="Util_clsRow1" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap; width: 100px;">流程代號：
+                                <td style="text-align: right; white-space: nowrap; width: 100px;">流程代號
                                 </td>
                                 <td style="width: 20px;"></td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" ucIsRequire="true" />
-                                    組別代號：
+                                    組別代號
                                     <uc1:ucTextBox ID="txtFlowUpdCustID" runat="server" ucWidth="100" ucMaxLength="20"
                                         ucIsRequire="true" ucIsDispEnteredWords="true" />
                                     <uc1:ucTextBox ID="txtFlowUpdCustName" runat="server" ucWidth="250" ucMaxLength="50"
@@ -223,7 +194,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">自訂變數：
+                                <td style="text-align: right; white-space: nowrap;">自訂變數
                                 </td>
                                 <td style="width: 20px;">
                                     <asp:CheckBox ID="chkFlowUpdCustVarSW" runat="server" />
@@ -231,7 +202,7 @@
                                 <td style="text-align: left;">FlowUpdCustVarNameList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustVarNameList" runat="server" ucWidth="500" ucMaxLength="200"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
-                                    <li style="color: Gray;">從流程：<b><asp:Label ID="labFlowCustVarNameList" runat="server"></asp:Label></b></li>
+                                    <li style="color: Gray;">從流程<b><asp:Label ID="labFlowCustVarNameList" runat="server"></asp:Label></b></li>
                                     FlowUpdCustVarNewValueList<br />
                                     <uc1:ucTextBox ID="txtFlowUpdCustVarNewValueList" runat="server" ucWidth="500" ucMaxLength="200"
                                         ucIsRequire="false" ucIsDispEnteredWords="true" />
@@ -239,7 +210,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">自訂資料表：
+                                <td style="text-align: right; white-space: nowrap;">自訂資料表
                                 </td>
                                 <td style="width: 20px;">
                                     <asp:CheckBox ID="chkFlowUpdCustTableSW" runat="server" />
@@ -263,14 +234,14 @@
                                     <uc1:ucTextBox ID="txtFlowUpdCustTableNewValueList" runat="server" ucWidth="500"
                                         ucMaxLength="100" ucIsRequire="false" ucIsDispEnteredWords="true" />
                                     <li style="color: Gray;">從表單：<b><asp:Label ID="labFlowKeyFieldList2" runat="server"></asp:Label></b></li>
-                                    <li style="color: Gray; padding-left: 1em; text-indent: -1em;">從流程：<b>_FlowID,_FlowCaseID,_FlowLogID,_CurrDate,_CurrDateTime<br />
+                                    <li style="color: Gray; padding-left: 1em; text-indent: -1em;">從流程<b>_FlowID,_FlowCaseID,_FlowLogID,_CurrDate,_CurrDateTime<br />
                                         ,_CurrStepID,_CurrStepName,_CurrLogStepID,_CurrLogStepName</b></li>
                                     <li style="color: Gray;">運算式：以 [ __ ] 開頭的內容，ex: [<b> __Fld01 + 1 </b>]</li>
                                     <li style="color: Gray;">固定值：上述以外的內容，則視為固定內容，ex: <b>Open , Close , Y , N ...</b></li>
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td></td>
                                 <td style="text-align: left;">
@@ -290,13 +261,13 @@
                         <%--[編輯]用範本--%>
                         <table style="border: 0px none #FFFFFF; width: 820px;" cellspacing="0">
                             <tr class="Util_clsRow1" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap; width: 100px;">流程代號：
+                                <td style="text-align: right; white-space: nowrap; width: 100px;">流程代號
                                 </td>
                                 <td style="width: 20px;"></td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" ucIsRequire="true"
                                         ucIsDispEnteredWords="true" />
-                                    組別代號：
+                                    組別代號
                                     <uc1:ucTextBox ID="txtFlowUpdCustID" runat="server" ucWidth="100" ucMaxLength="20"
                                         ucIsRequire="true" ucIsDispEnteredWords="true" />
                                     <uc1:ucTextBox ID="txtFlowUpdCustName" runat="server" ucWidth="250" ucMaxLength="50"
@@ -304,7 +275,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">自訂變數：
+                                <td style="text-align: right; white-space: nowrap;">自訂變數
                                 </td>
                                 <td style="width: 20px;">
                                     <asp:CheckBox ID="chkFlowUpdCustVarSW" runat="server" />
@@ -320,7 +291,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">自訂資料表：
+                                <td style="text-align: right; white-space: nowrap;">自訂資料表
                                 </td>
                                 <td style="width: 20px;">
                                     <asp:CheckBox ID="chkFlowUpdCustTableSW" runat="server" />
@@ -351,7 +322,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2" style="vertical-align: top;">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td></td>
                                 <td style="text-align: left;">
@@ -378,14 +349,14 @@
                         <%--[新增]用範本--%>
                         <table style="border: 0px none #FFFFFF;" cellspacing="0">
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">流程代號：
+                                <td style="text-align: right; white-space: nowrap;">流程代號
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" ucIsRequire="true" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">群組代號：
+                                <td style="text-align: right; white-space: nowrap;">群組代號
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtFlowCustGrpID" runat="server" ucWidth="100" ucMaxLength="30"
@@ -393,7 +364,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">群組名稱：
+                                <td style="text-align: right; white-space: nowrap;">群組名稱
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowCustGrpName" runat="server" ucWidth="150" ucMaxLength="50"
@@ -401,7 +372,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="150" ucMaxLength="100" />
@@ -419,14 +390,14 @@
                         <%--[編輯]用範本--%>
                         <table style="border: 0px none #FFFFFF;" cellspacing="0">
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">流程代號：
+                                <td style="text-align: right; white-space: nowrap;">流程代號
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" ucIsRequire="true" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">群組代號：
+                                <td style="text-align: right; white-space: nowrap;">群組代號
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtFlowCustGrpID" runat="server" ucWidth="100" ucMaxLength="30"
@@ -434,7 +405,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">群組名稱：
+                                <td style="text-align: right; white-space: nowrap;">群組名稱
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowCustGrpName" runat="server" ucWidth="150" ucMaxLength="50"
@@ -442,7 +413,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="150" ucMaxLength="100" />
@@ -467,14 +438,14 @@
                         <%--[新增]用範本--%>
                         <table style="border: 0px none #FFFFFF;" cellspacing="0">
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">流程代號：
+                                <td style="text-align: right; white-space: nowrap;">流程代號
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">群組代號：
+                                <td style="text-align: right; white-space: nowrap;">群組代號
                                 </td>
                                 <td style="text-align: left;">
                                     <asp:DropDownList ID="ddlFlowCustGrpID" runat="server">
@@ -482,14 +453,14 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">項 目 值：
+                                <td style="text-align: right; white-space: nowrap;">項 目 值
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtValue" runat="server" ucWidth="150" ucMaxLength="50" ucIsRequire="true" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">項目內容：
+                                <td style="text-align: right; white-space: nowrap;">項目內容
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtDescription" runat="server" ucWidth="150" ucMaxLength="50"
@@ -497,7 +468,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="150" ucMaxLength="100" />
@@ -516,14 +487,14 @@
                         <%--[編輯]用範本--%>
                         <table style="border: 0px none #FFFFFF;" cellspacing="0">
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">流程代號：
+                                <td style="text-align: right; white-space: nowrap;">流程代號
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtFlowID" runat="server" ucWidth="100" ucMaxLength="20" ucIsRequire="true" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">群組代號：
+                                <td style="text-align: right; white-space: nowrap;">群組代號
                                 </td>
                                 <td style="text-align: left;">
                                     <asp:DropDownList ID="ddlFlowCustGrpID" runat="server">
@@ -531,14 +502,14 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">項 目 值：
+                                <td style="text-align: right; white-space: nowrap;">項 目 值
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtValue" runat="server" ucWidth="150" ucMaxLength="50" ucIsRequire="true" />
                                 </td>
                             </tr>
                             <tr class="Util_clsRow2">
-                                <td style="text-align: right; white-space: nowrap;">項目內容：
+                                <td style="text-align: right; white-space: nowrap;">項目內容
                                 </td>
                                 <td style="text-align: left; white-space: nowrap;">
                                     <uc1:ucTextBox ID="txtDescription" runat="server" ucWidth="150" ucMaxLength="50"
@@ -546,7 +517,7 @@
                                 </td>
                             </tr>
                             <tr class="Util_clsRow1">
-                                <td style="text-align: right; white-space: nowrap;">備 註：
+                                <td style="text-align: right; white-space: nowrap;">備　　註
                                 </td>
                                 <td style="text-align: left;">
                                     <uc1:ucTextBox ID="txtRemark" runat="server" ucWidth="150" ucMaxLength="100" />
@@ -570,7 +541,7 @@
             <asp:HiddenField ID="hidFlowStepID" runat="server" />
             <table style="border: 0px none #FFFFFF;" cellspacing="0" width="100%">
                 <tr class="Util_clsRow2">
-                    <td style="text-align: right; white-space: nowrap; width: 80px;">關卡代號：
+                    <td style="text-align: right; white-space: nowrap; width: 80px;">關卡代號
                     </td>
                     <td style="text-align: left;">
                         <uc1:ucTextBox ID="txtNewFlowStepID" runat="server" ucIsRequire="true" ucWidth="250"
@@ -578,7 +549,7 @@
                     </td>
                 </tr>
                 <tr class="Util_clsRow1">
-                    <td style="text-align: right; white-space: nowrap;">關卡名稱：
+                    <td style="text-align: right; white-space: nowrap;">關卡名稱
                     </td>
                     <td style="text-align: left;">
                         <uc1:ucTextBox ID="txtNewFlowStepName" runat="server" ucIsRequire="true" ucWidth="250"

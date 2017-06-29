@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 
@@ -139,7 +140,7 @@ public partial class Util_ucCommPhrase : BaseUserControl
             {
                 PageViewState["_TargetClientID"] = "";
             }
-            return (string)(PageViewState["_TargetClientID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_TargetClientID"]));
         }
         set
         {
@@ -205,78 +206,26 @@ public partial class Util_ucCommPhrase : BaseUserControl
     }
 
     /// <summary>
-    /// 按鈕寬度(預設 25)
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
     /// </summary>
-    public int ucBtnWidth
+    public HorizontalAlign ucCaptionHorizontalAlign
     {
+        //2017.06.03 新增
         get
         {
-            if (PageViewState["_BtnWidth"] == null)
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
             {
-                PageViewState["_BtnWidth"] = 25;
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
             }
-            return (int)(PageViewState["_BtnWidth"]);
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
         }
         set
         {
-            PageViewState["_BtnWidth"] = value;
-        }
-    }
-
-    /// <summary>
-    /// 按鈕高度(預設 19)
-    /// </summary>
-    public int ucBtnHeight
-    {
-        get
-        {
-            if (PageViewState["_BtnHeight"] == null)
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
             {
-                PageViewState["_BtnHeight"] = 19;
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
             }
-            return (int)(PageViewState["_BtnHeight"]);
-        }
-        set
-        {
-            PageViewState["_BtnHeight"] = value;
-        }
-    }
-
-    /// <summary>
-    /// 按鈕抬頭
-    /// </summary>
-    public string ucBtnCaption
-    {
-        get
-        {
-            if (PageViewState["_BtnCaption"] == null)
-            {
-                PageViewState["_BtnCaption"] = "▼";
-            }
-            return (string)(PageViewState["_BtnCaption"]);
-        }
-        set
-        {
-            PageViewState["_BtnCaption"] = value;
-        }
-    }
-
-    /// <summary>
-    /// 按鈕提示訊息
-    /// </summary>
-    public string ucBtnToolTip
-    {
-        get
-        {
-            if (PageViewState["_BtnToolTip"] == null)
-            {
-                PageViewState["_BtnToolTip"] = RS.Resources.CommPhrase_btnAppend; //添加片語
-            }
-            return (string)(PageViewState["_BtnToolTip"]);
-        }
-        set
-        {
-            PageViewState["_BtnToolTip"] = value;
         }
     }
 
@@ -320,7 +269,7 @@ public partial class Util_ucCommPhrase : BaseUserControl
     }
 
     /// <summary>
-    /// 搜尋文字框寬度(預設 100)
+    /// 搜尋文字框寬度(預設 80)
     /// </summary>
     public int ucSearchBoxWidth
     {
@@ -328,7 +277,7 @@ public partial class Util_ucCommPhrase : BaseUserControl
         {
             if (PageViewState["_SearchBoxWidth"] == null)
             {
-                PageViewState["_SearchBoxWidth"] = 100;
+                PageViewState["_SearchBoxWidth"] = 80;
             }
             return (int)(PageViewState["_SearchBoxWidth"]);
         }
@@ -386,15 +335,18 @@ public partial class Util_ucCommPhrase : BaseUserControl
 
         //btnAppend
         btnAppend.CssClass = ucBtnCssClass;
-        btnAppend.Text = ucBtnCaption;
-        btnAppend.Width = ucBtnWidth;
-        btnAppend.Height = ucBtnHeight;
-        btnAppend.ToolTip = ucBtnToolTip;
+        btnAppend.Text = RS.Resources.CommPhrase_btnAppend;
         btnAppend.OnClientClick = string.Format("Util_DropDownListItemToTextBox('{0}','{1}','{2}','N');return false;", ddlPhrase.ClientID + "_ddlSourceList", ucTargetClientID, (ucIsParentTarget) ? "Y" : "N");
+
+        //btnReplace 2017.06.09
+        btnReplace.CssClass = ucBtnCssClass;
+        btnReplace.Text = RS.Resources.CommPhrase_btnReplace;
+        btnReplace.OnClientClick = string.Format("Util_DropDownListItemToTextBox('{0}','{1}','{2}','Y');return false;", ddlPhrase.ClientID + "_ddlSourceList", ucTargetClientID, (ucIsParentTarget) ? "Y" : "N");
 
         //ddlPhrase
         ddlPhrase.ucCaption = ucCaption;
         ddlPhrase.ucCaptionWidth = ucCaptionWidth;
+        ddlPhrase.ucCaptionHorizontalAlign = ucCaptionHorizontalAlign;
         ddlPhrase.ucDropDownSourceListWidth = ucDropDownSourceListWidth;
         ddlPhrase.ucIsSearchEnabled = ucIsSearchEnabled;
         ddlPhrase.ucSearchBoxWidth = ucSearchBoxWidth;

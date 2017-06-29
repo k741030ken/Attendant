@@ -26,8 +26,8 @@ public partial class Sample_Excel_GrpCellMerge : BasePage
                 dt.Rows.Add("台灣電力", 35000, "授信", 5000);
                 dt.Rows.Add("台灣電力", 35000, "有價證券", 18000);
                 dt.Rows.Add("台灣電力", 35000, "衍生商品", 12000);
-                dt.Rows.Add("中華票券", 25000, "債券", 15000);
-                dt.Rows.Add("中華票券", 25000, "投資", 10000);
+                dt.Rows.Add("ABC Inc'L", 25000, "債券", 15000);
+                dt.Rows.Add("ABC Inc'L", 25000, "投資", 10000);
                 dt.Rows.Add("陳X天", 5000, "授信", 1500);
                 dt.Rows.Add("陳X天", 5000, "有價證券", 3500);
                 dt.Rows.Add("王X明", 2000, "衍生商品", 2000);
@@ -71,7 +71,7 @@ public partial class Sample_Excel_GrpCellMerge : BasePage
             {
                 //資料群組分類
                 Dictionary<string, string> dic = new Dictionary<string, string>();
-                dic.Add("A.法　人", "台灣電力,中華票券");
+                dic.Add("A.法　人", "台灣電力,ABC Inc'L");
                 dic.Add("B.自然人", "陳X天,王X明");
                 dic.Add("C.集　團", "鴻海集團,工商銀行,統一超商");
 
@@ -145,7 +145,9 @@ public partial class Sample_Excel_GrpCellMerge : BasePage
                 //群組明細
                 for (int g = 0; g < CustGrpList.Count(); g++)
                 {
-                    GrpQty = dt.Select(string.Format("CustName = '{0}' ", CustGrpList[g])).Length; //例：CustName = [台灣電力] 的資料筆數
+                    string strCustName = CustGrpList[g];
+                    strCustName = strCustName.Replace("'", "''"); //預防 CustName 包含單引號 2017.04.24
+                    GrpQty = dt.Select(string.Format("CustName = '{0}' ", strCustName)).Length; //例：CustName = [台灣電力] 的資料筆數
                     if (GrpQty > 0)
                     {
                         //欄一：客戶名稱

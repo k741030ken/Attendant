@@ -2,6 +2,7 @@
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
@@ -71,7 +72,7 @@ public partial class Util_ucTreeView : BaseUserControl
             {
                 PageViewState["_DataNotFoundMsg"] = RS.Resources.Msg_DataNotFound;
             }
-            return (string)(PageViewState["_DataNotFoundMsg"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DataNotFoundMsg"]));
         }
         set
         {

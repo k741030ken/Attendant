@@ -14,11 +14,11 @@ public partial class Sample_Captcha_Default : BasePage
             txtChkCode.ucMaxLength = intChkLen;
             txtChkCode.ucWidth = intChkLen * 10;
 
-            imgCaptcha.ImageUrl = string.Format("{0}?ChkLen={1}&Dummy={2}", Util._CaptchaUrl, intChkLen, new Random((int)DateTime.Now.Ticks).Next(10000, 99999));
+            imgCaptcha.ImageUrl = string.Format("{0}?ChkLen={1}&Dummy={2}", Util._CaptchaUrl, intChkLen, Util.getRandomNum(10000, 99999)[0]);
             imgCaptcha.ToolTip = RS.Resources.Msg_Refresh;
             imgCaptcha.CssClass = "Util_Pointer";
             //重新產生圖形碼 JS
-            string strJS = string.Format("var oImg = document.getElementById('{0}');oImg.src='{1}?ChkLen={2}&Dummy=' + Util_GetRandom(10000,99999);", imgCaptcha.ClientID, Util._CaptchaUrl, intChkLen);
+            string strJS = string.Format("var oImg = document.getElementById('{0}');oImg.src='{1}?ChkLen={2}&Dummy=' + Util_GetRandom();", imgCaptcha.ClientID, Util._CaptchaUrl, intChkLen);
             imgCaptcha.Attributes.Add("onclick", strJS);
         }
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 
@@ -7,6 +8,8 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucCommCascadeSelectButton : BaseUserControl
 {
+    string _BtnClientJS = "Util_IsChkDirty = false;";
+
     #region 按鈕相關屬性
     /// <summary>
     /// 視窗抬頭
@@ -63,6 +66,26 @@ public partial class Util_ucCommCascadeSelectButton : BaseUserControl
     }
 
     /// <summary>
+    /// 按鈕提示訊息
+    /// </summary>
+    public string ucBtnToolTip
+    {
+        //2017.05.19 新增
+        get
+        {
+            if (PageViewState["_BtnToolTip"] == null)
+            {
+                PageViewState["_BtnToolTip"] = string.Empty;
+            }
+            return PageViewState["_BtnToolTip"].ToString();
+        }
+        set
+        {
+            PageViewState["_BtnToolTip"] = value;
+        }
+    }
+
+    /// <summary>
     /// 按鈕樣式
     /// </summary>
     public string ucBtnCssClass
@@ -105,18 +128,14 @@ public partial class Util_ucCommCascadeSelectButton : BaseUserControl
     /// </summary>
     public string ucBtnClientJS
     {
-        //2016.09.22 新增
+        //配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_BtnClientJS"] == null)
-            {
-                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
-            }
-            return (string)(PageViewState["_BtnClientJS"]);
+            return _BtnClientJS;
         }
         set
         {
-            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+           _BtnClientJS += value;
         }
     }
     #endregion
@@ -504,6 +523,10 @@ public partial class Util_ucCommCascadeSelectButton : BaseUserControl
         btnLaunch.Text = ucBtnCaption;
         btnLaunch.CssClass = ucBtnCssClass;
         btnLaunch.Style.Remove("width");
+
+        if (!string.IsNullOrEmpty(ucBtnToolTip)) //2017.05.19
+            btnLaunch.ToolTip = ucBtnToolTip;
+
         if (ucBtnWidth > 0)
             btnLaunch.Width = ucBtnWidth;
         else

@@ -5,8 +5,9 @@
     <div style="float: left;">
         <uc1:ucCommSingleSelect runat="server" ID="ddlPhrase" />
     </div>
-    <div style="padding-top: 3px; padding-left: 3px; float: left;">
-        <asp:Button ID="btnAppend" runat="server" Text="Append" />
+    <div style="padding-top: 2px; padding-left: 3px; float: left;">
+        <asp:Button ID="btnAppend" runat="server" Text="Add" Width="40" Height="19" />
+        <asp:Button ID="btnReplace" runat="server" Text="Repl" Width="40" Height="19" />
     </div>
 </div>
 

@@ -28,7 +28,7 @@ public partial class FlowExpress_Admin_FlowCustProperty : SecurePage
         {
             divMain.Visible = false;
             labErrMsg.Visible = true;
-            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaDataError, string.Format(RS.Resources.Msg_ParaNotFoundList, "FlowID"));
+            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaDataError, string.Format(RS.Resources.Msg_ParaNotFound1, "FlowID"));
             return;
         }
 

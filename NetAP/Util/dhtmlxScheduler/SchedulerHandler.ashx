@@ -27,12 +27,12 @@ using dhtmlxConnectors;
 /// </summary>
 public class SchedulerHandler : dhtmlxRequestHandler, IReadOnlySessionState
 {
-    string _DBName = "";
-    string _TableName = "";
-    string _NewColor = "";
-    string _NewTextColor = "";
-    string[] _ResourceIDList = "".Split(',');
-    bool _IsReadOnly = false;
+    string _DBName = Util.getRequestQueryStringKey("DBName");
+    string _TableName = Util.getRequestQueryStringKey("TableName");
+    string _NewColor = Util.getRequestQueryStringKey("NewColor", "DodgerBlue");
+    string _NewTextColor = Util.getRequestQueryStringKey("NewTextColor", "White");
+    string[] _ResourceIDList = Util.getRequestQueryStringKey("ResourceIDList").Split(',');
+    bool _IsReadOnly = (Util.getRequestQueryStringKey("IsReadOnly", "N", true) == "Y") ? true : false;
     UserInfo _User;
 
     //唯讀時的顏色 2015.03.26
@@ -41,16 +41,6 @@ public class SchedulerHandler : dhtmlxRequestHandler, IReadOnlySessionState
     //可編輯時，非Owner的顏色 2015.06.01
     string _NonOwnerColor = "#3EA9D9";
     string _NonOwnerTextColor = "#EBEBEB";
-    public override void ProcessRequest(HttpContext context)
-    {
-        string _DBName = Util.getRequestQueryStringKey("DBName");
-        string _TableName = Util.getRequestQueryStringKey("TableName");
-        string _NewColor = Util.getRequestQueryStringKey("NewColor","DodgerBlue");
-        string _NewTextColor = Util.getRequestQueryStringKey("NewTextColor","White");
-        string[] _ResourceIDList = Util.getRequestQueryStringKey("ResourceIDList").Split(',');
-        bool _IsReadOnly = (Util.getRequestQueryStringKey("IsReadOnly", "N", true) == "Y") ? true : false;
-        base.ProcessRequest(context);
-    }
 
     public override IdhtmlxConnector CreateConnector(HttpContext context)
     {

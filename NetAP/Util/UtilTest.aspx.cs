@@ -4,6 +4,7 @@ using System.Data;
 using System.IO;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
+using RS = SinoPac.WebExpress.Common.Properties;
 
 /// <summary>
 /// Util 功能展示網頁
@@ -13,7 +14,7 @@ public partial class Util_Test : BasePage
     protected void Page_Load(object sender, EventArgs e)
     {
         //Chche List
-        labCacheList.Text = string.Format("快取清單：<br><ul><li>{0}</ul>", Util.getStringJoin(CacheHelper.getCacheList(),"<li>"));
+        labCacheList.Text = string.Format("快取清單：<br><ul><li>{0}</ul>", Util.getStringJoin(CacheHelper.getCacheList(), "<li>"));
 
         //設定 ucPageInfo1
         ucPageInfo1.ucIsShowApplication = true;
@@ -165,6 +166,41 @@ public partial class Util_Test : BasePage
         }
     }
 
+    void ucModalPopup1_onClose(object sender, Util_ucModalPopup.btnCloseEventArgs e)
+    {
+        Util.MsgBox(string.Format("按下[{0}]", e.Header));
+    }
+
+    protected void ucModalPopup1_onComplete(object sender, Util_ucModalPopup.btnCompleteEventArgs e)
+    {
+        Util.MsgBox(string.Format("按下[{0}]", e.Header));
+    }
+
+    protected void ucModalPopup1_onCancel(object sender, Util_ucModalPopup.btnCancelEventArgs e)
+    {
+        Util.MsgBox(string.Format("按下[{0}]", e.Header));
+    }
+
+    protected void btnAppClear_Click(object sender, EventArgs e)
+    {
+        Application.Clear();
+        Util.NotifyMsg(string.Format(RS.Resources.Msg_Succeed1, "清除 Application 變數"), Util.NotifyKind.Success);
+    }
+
+    protected void btnSessClear_Click(object sender, EventArgs e)
+    {
+        Session.Clear();
+        Util.NotifyMsg(string.Format(RS.Resources.Msg_Succeed1, "清除 Session 變數"), Util.NotifyKind.Success);
+    }
+
+    protected void btnReStartApp_Click(object sender, EventArgs e)
+    {
+        bool IsRestart = Util.IsRestartWebApplication();
+        if (IsRestart)
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_Succeed1, "系統重啟"), Util.NotifyKind.Success);
+        else
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_Error1, "系統重啟"), Util.NotifyKind.Error);
+    }
 
     void ucUploadButton1_onClose(object sender, EventArgs e)
     {
@@ -191,7 +227,7 @@ public partial class Util_Test : BasePage
                 Util.NotifyMsg("Excel轉換失敗", Util.NotifyKind.Error);
             }
         }
-        else 
+        else
         {
             Util.NotifyMsg("未接收到檔案", Util.NotifyKind.Error);
         }
@@ -283,21 +319,6 @@ public partial class Util_Test : BasePage
         ucModalPopup1.RefreshFrame();
     }
 
-    void ucModalPopup1_onClose(object sender, Util_ucModalPopup.btnCloseEventArgs e)
-    {
-        Util.MsgBox(string.Format("按下[{0}]", e.Header));
-    }
-
-    protected void ucModalPopup1_onComplete(object sender, Util_ucModalPopup.btnCompleteEventArgs e)
-    {
-        Util.MsgBox(string.Format("按下[{0}]", e.Header));
-    }
-
-    protected void ucModalPopup1_onCancel(object sender, Util_ucModalPopup.btnCancelEventArgs e)
-    {
-        Util.MsgBox(string.Format("按下[{0}]", e.Header));
-    }
-
     protected void btnPopupCascade_Click(object sender, EventArgs e)
     {
         ucCommCascadeSelect1.ucIsSelectUserYN = ddlIsSeleUser2.SelectedValue;
@@ -317,10 +338,12 @@ public partial class Util_Test : BasePage
     {
         labStringJoin.Text = Util.getStringJoin(txtStringJoin1.Text.Split(','), txtStringJoin2.Text);
     }
+
     protected void btnHtmlMsg_Click(object sender, EventArgs e)
     {
         labHtmlMsg.Text = Util.getHtmlMessage((Util.HtmlMessageKind)int.Parse(ddlHtmlMsg.SelectedValue), txtHtmlMsg.Text);
     }
+
     protected void btnMail_Click(object sender, EventArgs e)
     {
         //附件以 FilePath 方式傳送
@@ -330,6 +353,7 @@ public partial class Util_Test : BasePage
         else
             labMailMsg.Text = strErrMsg;
     }
+
     protected void btnMail2_Click(object sender, EventArgs e)
     {
         //附件以 JSON 方式傳送
@@ -350,20 +374,24 @@ public partial class Util_Test : BasePage
 
     protected void btnCust64Encode_Click(object sender, EventArgs e)
     {
-        labCustMsg.Text = Util.getCust64EnCode(txtCustContent.Text,txtCust64Seed.Text);
+        labCustMsg.Text = Util.getCust64EnCode(txtCustContent.Text, txtCust64Seed.Text);
     }
+
     protected void btnCust64Decode_Click(object sender, EventArgs e)
     {
-        labCustMsg.Text = Util.getCust64DeCode(txtCustContent.Text,txtCust64Seed.Text);
+        labCustMsg.Text = Util.getCust64DeCode(txtCustContent.Text, txtCust64Seed.Text);
     }
+
     protected void btnMD5Hash_Click(object sender, EventArgs e)
     {
         labCustMsg.Text = Util.getMD5Hash(txtCustContent.Text);
     }
+
     protected void btnCalendar_Click(object sender, EventArgs e)
     {
         Util.ExportCalendar(dtStart.SelectedDate, dtEnd.SelectedDate, txtCalSubject.Text, txtCalLocation.Text, txtCalBody.Text);
     }
+
     protected void btnCalender2003_Click(object sender, EventArgs e)
     {
         Util.ExportCalendar2003(dtStart.SelectedDate, dtEnd.SelectedDate, txtCalSubject.Text, txtCalLocation.Text, txtCalBody.Text);
@@ -373,6 +401,7 @@ public partial class Util_Test : BasePage
     {
         labDomain.Text = Util.getDomainNameFromURL(txtDomaimURL.Text);
     }
+
     protected void btnHost_Click(object sender, EventArgs e)
     {
         string strHost = Util.getDomainNameFromURL(txtHost01.Text);
@@ -454,33 +483,24 @@ public partial class Util_Test : BasePage
         Util.NotifyMsg(txtMsg.Text, Util.NotifyKind.Error);
     }
 
-    protected void btnAppClear_Click(object sender, EventArgs e)
-    {
-        Application.Clear();
-        Util.NotifyMsg("Application 已清除!", Util.NotifyKind.Success);
-    }
-    protected void btnSessClear_Click(object sender, EventArgs e)
-    {
-        Session.Clear();
-        Util.NotifyMsg("Session 已清除!", Util.NotifyKind.Success);
-    }
     protected void btnCleanCache_Click(object sender, EventArgs e)
     {
         if (!string.IsNullOrEmpty(txtCacheName.Text))
         {
-            Util.MsgBox(SinoPac.WebExpress.Common.Properties.Resources.Msg_ParaNotFound);
+            Util.MsgBox(RS.Resources.Msg_ParaNotFound);
         }
-        else 
+        else
         {
             CacheHelper.setCacheClear(txtCacheName.Text);
             labCacheList.Text = string.Format("快取清單：<br><ul><li>{0}</ul>", Util.getStringJoin(CacheHelper.getCacheList(), "<li>"));
-            Util.NotifyMsg(SinoPac.WebExpress.Common.Properties.Resources.Msg_Succeed, Util.NotifyKind.Success);
+            Util.NotifyMsg(RS.Resources.Msg_Succeed, Util.NotifyKind.Success);
         }
     }
+    
     protected void btnCleanAllCache_Click(object sender, EventArgs e)
     {
         CacheHelper.setAllCacheClear();
         labCacheList.Text = string.Format("快取清單：<br><ul><li>{0}</ul>", Util.getStringJoin(CacheHelper.getCacheList(), "<li>"));
-        Util.NotifyMsg(SinoPac.WebExpress.Common.Properties.Resources.Msg_Succeed, Util.NotifyKind.Success);
+        Util.NotifyMsg(RS.Resources.Msg_Succeed, Util.NotifyKind.Success);
     }
 }

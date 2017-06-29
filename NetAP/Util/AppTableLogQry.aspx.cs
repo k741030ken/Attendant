@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 using SinoPac.WebExpress.DAO;
@@ -22,7 +23,7 @@ public partial class Util_AppTableLogQry : SecurePage
             {
                 PageViewState["_DBName"] = Util.getRequestQueryStringKey("DBName");
             }
-            return (string)(PageViewState["_DBName"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DBName"]));
         }
         set
         {
@@ -38,7 +39,7 @@ public partial class Util_AppTableLogQry : SecurePage
             {
                 PageViewState["_TableName"] = Util.getRequestQueryStringKey("TableName");
             }
-            return (string)(PageViewState["_TableName"]);
+            return HttpUtility.HtmlEncode((PageViewState["_TableName"]).ToString());
         }
         set
         {
@@ -111,7 +112,7 @@ public partial class Util_AppTableLogQry : SecurePage
             DivQryCondition.Visible = false;
             DivQryResult.Visible = false;
             labErrMsg.Visible = true;
-            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(SinoPac.WebExpress.Common.Properties.Resources.Msg_ParaNotFoundList, "DBName"));
+            labErrMsg.Text = Util.getHtmlMessage(Util.HtmlMessageKind.ParaError, string.Format(SinoPac.WebExpress.Common.Properties.Resources.Msg_ParaNotFound1, "DBName"));
             return;
         }
 
@@ -156,7 +157,7 @@ public partial class Util_AppTableLogQry : SecurePage
         btnPurgeTable.OnClientClick = string.Format("return confirm('確定清除[{0}]資料庫內，[{1}]資料表的所有資料？');", _DBName, _TableName);
 
         DataTable dtSchema = Util.getDataSchemaInfo(_DBName).Select(string.Format(" TABLE_NAME = '{0}' and TABLE_TYPE = 'BASE TABLE' ", _TableName)).CopyToDataTable();
-        Dictionary<string, string> dicTable = Util.getDictionary(dtSchema, 3, 6);
+        Dictionary<string, string> dicTable = Util.getDictionary(dtSchema, "COLUMN_NAME", "IS_PKEY");
         PageViewState["_TableFieldList"] = Util.getArray(dicTable);
         PageViewState["_TablePKFieldList"] = dicTable.AsEnumerable().Where(r => r.Value == "Y").Select(k => k.Key).ToArray();
 

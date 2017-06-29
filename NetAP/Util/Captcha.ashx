@@ -58,19 +58,25 @@ public class Captcha : IHttpHandler, System.Web.SessionState.IRequiresSessionSta
         Font font = new Font("Arial", imgFontSize, System.Drawing.FontStyle.Italic);
         graphics.Clear(backColor);
         graphics.DrawString(strChkCode, font, foreColor, 0, 0);
-        Random random = new Random((int)DateTime.Now.Ticks);
+
+        //加入雜點增加辨識難度 2017.04.07 改用 Util.getRandomNum()
+        int[] posX = Util.getRandomNum(0, imgWidth, dotQty);
+        int[] posY = Util.getRandomNum(0, imgHeight, dotQty);
         for (int i = 0; i < dotQty; i++)
         {
-            //加入雜點增加辨識難度
-            int posX = random.Next(0, imgWidth);
-            int posY = random.Next(0, imgHeight);
-            bitmap.SetPixel(posX, posY, dotColor);
+            bitmap.SetPixel(posX[i], posY[i], dotColor);
         }
+
         //輸出圖形
         context.Response.Clear();
         context.Response.ContentType = "image/jpeg";
         context.Response.BufferOutput = true;
         bitmap.Save(context.Response.OutputStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+        
+        
+        bitmap.Dispose();
+        font.Dispose();
+        foreColor.Dispose();
     }
 
     public bool IsReusable

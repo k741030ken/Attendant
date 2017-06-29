@@ -29,9 +29,9 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
             //顯示「關閉」按鈕，並將頁面自動捲到最下方以便看到最後訊息
             string strJS = "";
             strJS += "dom.Ready(function(){ ";
-            strJS += "var oClose = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
+            strJS += "var oClose = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
             strJS += "if (oClose != null){oClose.style.display='';}";
-            strJS += "var oComplete = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
+            strJS += "var oComplete = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
             strJS += "if (oComplete != null){oComplete.style.display='';}";
             strJS += "window.scrollTo(0, document.body.scrollHeight);";
             strJS += "});";
@@ -44,9 +44,9 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
             //顯示「處理中」訊息
             string strJS = "";
             strJS += "dom.Ready(function(){ ";
-            strJS += "var oClose = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
+            strJS += "var oClose = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnClose');";
             strJS += "if (oClose != null){oClose.style.display='none';}";
-            strJS += "var oComplete = window.parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
+            strJS += "var oComplete = parent.document.getElementById('ucFlowTodoList1_ucModalPopup1_btnComplete');";
             strJS += "if (oComplete != null){oComplete.style.display='none';}";
             strJS += "});";
             Util.setJSContent(strJS, "Init");
@@ -69,14 +69,14 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
             BatchVerifyProcess(dtVerify);
 
             //審核結束
-            labFlowVerifyMsg.Text += "<br><br>";
-            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Default, WorkRS.Resources.FlowVerifyMsg_BatchVerifyFinish); //批次審核作業完成，請關閉視窗！
+            labFlowVerifyMsg.Text += "<hr class='Util_clsHR'>";
+            labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Default, WorkRS.Resources.FlowVerifyMsg_BatchVerifyFinish);
             labFlowVerifyMsg.Text += "<br><br>";
         }
         else
         {
             //審核參數錯誤
-            labFlowVerifyMsg.Text += "<br><br>";
+            labFlowVerifyMsg.Text += "<hr class='Util_clsHR'>";
             labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.ParaDataError);
             labFlowVerifyMsg.Text += "<br><br>";
         }
@@ -102,6 +102,7 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                 string strFlowStepBtnAddSubFlowID = dr["FlowStepBtnAddSubFlowID"].ToString();
                 string strFlowStepBtnAddSubFlowStepBtnID = dr["FlowStepBtnAddSubFlowStepBtnID"].ToString();
                 string strFlowStepOpinion = dr["FlowStepOpinion"].ToString();
+                string strFlowStepOpinionForSQL = strFlowStepOpinion.Replace("'", "''");        //預防 FlowStepOpinion 含有單引號 2017.04.28
 
                 bool IsNeedAddSubFlow = false;
                 bool IsAddSubFlowSucceed = false;
@@ -112,9 +113,30 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                 if (strProxyType.ToUpper() == "SEMI")
                 {
                     //助理無權審核，跳至下一筆
-                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_AssistantNotAllowVerify1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_AssistantNotAllowVerify1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                     continue;
                 }
+
+                //檢查是否有按鈕停止條件 2017.05.25 新增
+                string[] oStopReasonList;
+                string strStopResonMsg;
+                if (FlowExpress.IsFlowStepButtonStop(oFlow, strFlowStepBtnID, out oStopReasonList))
+                {
+                    //符合停止條件，跳至下一筆
+                    strStopResonMsg = string.Format(WorkRS.Resources.FlowVerifyMsg_StopVerify1, oFlow.FlowCaseHtmlInfo);
+                    if (!oStopReasonList.IsNullOrEmpty())
+                    {
+                        string strStopReasonTip = string.Format(" {0} \n", WorkRS.Resources.FlowVerifyMsg_StopReasonTipTitle);
+                        for (int i = 0; i < oStopReasonList.Length; i++)
+                        {
+                            strStopReasonTip += string.Format(" ● {0}\n", oStopReasonList[i]);
+                        }
+                        strStopResonMsg = string.Format("<span title=\"{0}\">{1}</span>", strStopReasonTip, strStopResonMsg);
+                    }
+                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, strStopResonMsg);
+                    continue;
+                }
+
 
                 //=== BEGIN from FlowVerify 
                 //處理[新增子流程]
@@ -148,7 +170,7 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                                         oTmpAss.Add(pair.Key, pair.Value);
                                         if (IsAddSubFlowSucceed)
                                         {
-                                            if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, oFlow.FlowKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oTmpAss, strFlowStepOpinion, oFlow.FlowID, oFlow.FlowLogID))
+                                            if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, oFlow.FlowKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oTmpAss, strFlowStepOpinionForSQL, oFlow.FlowID, oFlow.FlowLogID))
                                             {
                                                 IsAddSubFlowSucceed = true;
                                                 labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, WorkRS.Resources.FlowVerifyMsg_FlowVerifyAddSubFlowSucceed);
@@ -164,7 +186,7 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                                 else
                                 {
                                     //所有指派對象只產生一個子流程
-                                    if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, oFlow.FlowKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oAssDic, strFlowStepOpinion, oFlow.FlowID, oFlow.FlowLogID))
+                                    if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, oFlow.FlowKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oAssDic, strFlowStepOpinionForSQL, oFlow.FlowID, oFlow.FlowLogID))
                                     {
                                         IsAddSubFlowSucceed = true;
                                         labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, WorkRS.Resources.FlowVerifyMsg_FlowVerifyAddSubFlowSucceed);
@@ -202,7 +224,7 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                                     oTmpAss.Add(pair.Key, pair.Value);
                                     if (IsAddSubFlowSucceed)
                                     {
-                                        if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, subKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oTmpAss, strFlowStepOpinion, oFlow.FlowID, oFlow.FlowLogID))
+                                        if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, subKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oTmpAss, strFlowStepOpinionForSQL, oFlow.FlowID, oFlow.FlowLogID))
                                         {
                                             IsAddSubFlowSucceed = true;
                                             labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, WorkRS.Resources.FlowVerifyMsg_FlowVerifyAddSubFlowSucceed);
@@ -218,7 +240,7 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                             else
                             {
                                 //所有指派對象只產生一個子流程
-                                if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, subKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oAssDic, strFlowStepOpinion, oFlow.FlowID, oFlow.FlowLogID))
+                                if (FlowExpress.IsFlowInsVerify(oSubFlow.FlowID, subKeyValueList, oFlow.FlowShowValueList, strFlowStepBtnAddSubFlowStepBtnID, oAssDic, strFlowStepOpinionForSQL, oFlow.FlowID, oFlow.FlowLogID))
                                 {
                                     IsAddSubFlowSucceed = true;
                                     labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, WorkRS.Resources.FlowVerifyMsg_FlowVerifyAddSubFlowSucceed);
@@ -247,10 +269,10 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                             oAssDic = Util.getDictionary(dr["FlowStepBtnAssignToList"].ToString());
                             if (oAssDic != null && oAssDic.Count > 0)
                             {
-                                if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinion))
-                                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                                if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinionForSQL))
+                                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                                 else
-                                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                                    labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                             }
                         }
                     }
@@ -258,10 +280,10 @@ public partial class FlowExpress_FlowBatchVerify : SecurePage
                 else
                 {
                     //一般審核
-                    if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinion))
-                        labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                    if (FlowExpress.IsFlowVerify(oFlow.FlowID, oFlow.FlowLogID, strFlowStepBtnID, oAssDic, strFlowStepOpinionForSQL))
+                        labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Succeed, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifySucceed1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                     else
-                        labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowID + "-" + oFlow.FlowLogID));
+                        labFlowVerifyMsg.Text += Util.getHtmlMessage(Util.HtmlMessageKind.Error, string.Format(WorkRS.Resources.FlowVerifyMsg_FlowVerifyError1, oFlow.FlowCaseHtmlInfo)); //2017.05.11 改顯示 FlowCaseHtmlInfo
                 }
 
                 //=== END from FlowVerify

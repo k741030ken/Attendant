@@ -88,6 +88,31 @@ public partial class Util_ucToggleControlVisibility : BaseUserControl
         }
     }
 
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Left)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Left;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Left;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
+        }
+    }
+
     protected void Page_Load(object sender, EventArgs e) { }
 
     public void Refresh()

@@ -1,4 +1,5 @@
 using System;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
@@ -11,6 +12,8 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucModalPopup : BaseUserControl
 {
+    string _HtmlContent = "";
+
     /// <summary>
     /// 自訂ContextData，方便資料傳遞
     /// </summary>
@@ -247,17 +250,14 @@ public partial class Util_ucModalPopup : BaseUserControl
     /// </summary>
     public string ucHtmlContent
     {
+		//配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_HtmlContent"] == null)
-            {
-                PageViewState["_HtmlContent"] = "";
-            }
-            return (string)(PageViewState["_HtmlContent"]);
+            return _HtmlContent;
         }
         set
         {
-            PageViewState["_HtmlContent"] = value;
+            _HtmlContent = value;
         }
     }
 
@@ -420,6 +420,12 @@ public partial class Util_ucModalPopup : BaseUserControl
         ModalPanel.Style["display"] = "";
         ModalFrame.Visible = false;
         ModalHtmlMsg.Visible = false;
+
+        int intModalHeight = (btnComplete.Visible || btnCancel.Visible) ? (ucPopupHeight - 80) : (ucPopupHeight - 50);
+
+        //fix iPad iframe Scrolling issue 2017.05.04
+        ModalParent.Style["height"] = string.Format("{0}px", intModalHeight + 5 );  //預留5px Buffer 2017.05.09
+
         if (string.IsNullOrEmpty(ucFrameURL) && string.IsNullOrEmpty(ucHtmlContent) && string.IsNullOrEmpty(ucPanelID))
         {
             Util.MsgBox(string.Format(RS.Resources.ModalPopup_AttributeError, "[ucFrameURL] or [ucHtmlContent] or [ucPanelID]"));
@@ -429,20 +435,10 @@ public partial class Util_ucModalPopup : BaseUserControl
             //子網頁
             if (!string.IsNullOrEmpty(ucFrameURL))
             {
+                //設定 ModalFrame 屬性 2017.02.07 嘗試改用 JS 進行設定，但IE9(含)以上仍會 Page_Load Twice，改回原樣
                 ModalFrame.Attributes["src"] = ucFrameURL;
                 ModalFrame.Attributes["width"] = (ucPopupWidth - 20).ToString();
-                ModalFrame.Attributes["height"] = (btnComplete.Visible || btnCancel.Visible) ? (ucPopupHeight - 80).ToString() : (ucPopupHeight - 50).ToString();
-
-                //2017.02.07 嘗試改用 JS ，但IE9(含)以上仍會 Page_Load Twice，改回原樣
-                //string strJS = string.Empty;
-                //strJS += "dom.Ready(function(){ \n\n";
-                //strJS += "  var oFrame = document.getElementById('" + ModalFrame.ClientID + "');";
-                //strJS += "  oFrame.src='" + ucFrameURL + "';";
-                //strJS += "  oFrame.width='" + (ucPopupWidth - 20).ToString() + "';";
-                //strJS += "  oFrame.height='" + ((btnComplete.Visible || btnCancel.Visible) ? (ucPopupHeight - 80).ToString() : (ucPopupHeight - 50).ToString()) + "';";
-                //strJS += "});\n\n";
-                //Util.setJSContent(strJS, this.ClientID + "_Frame_Init");
-
+                ModalFrame.Attributes["height"] = intModalHeight.ToString();
                 ModalFrame.Visible = true;
             }
 
@@ -451,7 +447,7 @@ public partial class Util_ucModalPopup : BaseUserControl
             {
                 ModalHtmlMsg.Text = ucHtmlContent;
                 ModalHtmlMsg.Width = Unit.Pixel(ucPopupWidth - 20);
-                ModalHtmlMsg.Height = Unit.Pixel((btnComplete.Visible || btnCancel.Visible) ? (ucPopupHeight - 80) : (ucPopupHeight - 50));
+                ModalHtmlMsg.Height = Unit.Pixel(intModalHeight);
                 ModalHtmlMsg.Visible = true;
             }
 
@@ -470,12 +466,12 @@ public partial class Util_ucModalPopup : BaseUserControl
                     }
 
                     ModalControl.Width = Unit.Pixel(ucPopupWidth - 20);
-                    ModalControl.Height = Unit.Pixel((btnComplete.Visible || btnCancel.Visible) ? (ucPopupHeight - 80) : (ucPopupHeight - 50));
+                    ModalControl.Height = Unit.Pixel(intModalHeight);
                     ModalControl.Visible = true;
                 }
             }
 
-            labPopupHeader.Text = ucPopupHeader;
+            labPopupHeader.Text = HttpUtility.HtmlEncode(ucPopupHeader);
 
             ModalPanel.Width = ucPopupWidth;
             ModalPanel.Height = ucPopupHeight;

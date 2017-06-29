@@ -3,6 +3,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
@@ -416,7 +417,7 @@ public partial class Util_ucMenuBar : BaseUserControl
             {
                 PageViewState["_MainMenuBackColor"] = "#FFF";
             }
-            return (string)(PageViewState["_MainMenuBackColor"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_MainMenuBackColor"]));
         }
         set
         {
@@ -814,7 +815,7 @@ public partial class Util_ucMenuBar : BaseUserControl
         }
 
         //Global
-        divMenuBar.Style.Add("background-color", ucMainMenuBackColor);
+        divMenuBar.Style["background-color"] = ucMainMenuBackColor;
         oMenuBar.Orientation = Orientation.Horizontal;
         oMenuBar.MaximumDynamicDisplayLevels = ucChildMenuMaxDisplayLevel;
         oMenuBar.StaticMenuItemStyle.HorizontalPadding = ucMenuItemHorizontalPadding;

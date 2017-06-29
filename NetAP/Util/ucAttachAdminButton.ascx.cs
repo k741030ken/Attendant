@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 /// <summary>
@@ -6,8 +7,9 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucAttachAdminButton : BaseUserControl
 {
-    #region 按鈕相關屬性
+    string _BtnClientJS = "Util_IsChkDirty = false;";
 
+    #region 按鈕相關屬性
     /// <summary>
     /// 視窗抬頭
     /// </summary>
@@ -63,6 +65,26 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     }
 
     /// <summary>
+    /// 按鈕提示訊息
+    /// </summary>
+    public string ucBtnToolTip
+    {
+        //2017.05.19 新增
+        get
+        {
+            if (PageViewState["_BtnToolTip"] == null)
+            {
+                PageViewState["_BtnToolTip"] = string.Empty;
+            }
+            return PageViewState["_BtnToolTip"].ToString();
+        }
+        set
+        {
+            PageViewState["_BtnToolTip"] = value;
+        }
+    }
+
+    /// <summary>
     /// 按鈕樣式(預設 Util_clsBtn)
     /// </summary>
     public string ucBtnCssClass
@@ -105,18 +127,14 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     /// </summary>
     public string ucBtnClientJS
     {
-        //2016.09.22 新增
+        //配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_BtnClientJS"] == null)
-            {
-                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
-            }
-            return (string)(PageViewState["_BtnClientJS"]);
+            return _BtnClientJS;
         }
         set
         {
-            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+            _BtnClientJS += value;
         }
     }
     #endregion
@@ -159,7 +177,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
             {
                 PageViewState["_AttachDB"] = "";
             }
-            return (string)(PageViewState["_AttachDB"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AttachDB"]));
         }
         set
         {
@@ -178,7 +196,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
             {
                 PageViewState["_AttachID"] = "";
             }
-            return (string)(PageViewState["_AttachID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AttachID"]));
         }
         set
         {
@@ -197,7 +215,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
             {
                 PageViewState["_AttachFileExtList"] = "";
             }
-            return (string)(PageViewState["_AttachFileExtList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_AttachFileExtList"]));
         }
         set
         {
@@ -216,7 +234,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
             {
                 PageViewState["AnonymousYN"] = "N";
             }
-            return (string)(PageViewState["AnonymousYN"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["AnonymousYN"]));
         }
         set
         {
@@ -301,7 +319,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
     }
 
     /// <summary>
-    /// 視窗高度(預設 480)
+    /// 視窗高度(預設 520)
     /// </summary>
     public int ucPopupHeight
     {
@@ -309,7 +327,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
         {
             if (PageViewState["_PopupHeight"] == null)
             {
-                PageViewState["_PopupHeight"] = 480;
+                PageViewState["_PopupHeight"] = 520;
             }
             return (int)(PageViewState["_PopupHeight"]);
         }
@@ -373,6 +391,10 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
         btnLaunch.OnClientClick = ucBtnClientJS; //2016.09.22
         btnLaunch.Text = ucBtnCaption;
         btnLaunch.CssClass = ucBtnCssClass;
+
+        if (!string.IsNullOrEmpty(ucBtnToolTip)) //2017.05.19
+            btnLaunch.ToolTip = ucBtnToolTip;
+       
         if (ucBtnWidth > 0)
             btnLaunch.Width = ucBtnWidth;
         else
@@ -391,7 +413,7 @@ public partial class Util_ucAttachAdminButton : BaseUserControl
                 strJS += "PopWinTimer=setInterval(function(){if(PopWin.closed){";
                 strJS += "clearInterval(PopWinTimer);";
                 strJS += "oBtn = document.getElementById('" + ucModalPopup1.ClientID + "_btnClose');if (oBtn!=null){oBtn.click();}";
-                strJS += "}},1000);";
+                strJS += "}},500);"; //2017.05.17 反應時間由 1000 改為 500ms
             }
 
             strJS += "PopWin.focus();return false;";

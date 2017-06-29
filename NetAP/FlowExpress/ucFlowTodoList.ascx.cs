@@ -338,14 +338,66 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public delegate void btnCloseClick(object sender, EventArgs e);
+    public event btnCloseClick onClose;
+
     /// <summary>
     /// 審核子視窗的[Complete]事件
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     public delegate void btnCompleteClick(object sender, EventArgs e);
-    public event btnCloseClick onClose;
     public event btnCompleteClick onComplete;
+
+    /// <summary>
+    /// [單筆]流程審核事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void SingleSelect(object sender, SingleSelectEventArgs e); //2017.05.22 新增
+    public event SingleSelect onSingleSelect;
+    public class SingleSelectEventArgs : EventArgs
+    {
+        string _FlowID;
+        string _FlowLogID;
+        string _ProxyType;
+
+        public string FlowID
+        {
+            set { _FlowID = value; }
+            get { return _FlowID; }
+        }
+
+        public string FlowLogID
+        {
+            set { _FlowLogID = value; }
+            get { return _FlowLogID; }
+        }
+
+        public string ProxyType
+        {
+            set { _ProxyType = value; }
+            get { return _ProxyType; }
+        }
+    }
+
+
+    /// <summary>
+    /// [批次]流程審核事件
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public delegate void BatchSelect(object sender, BatchSelectEventArgs e); //2017.05.22 新增
+    public event BatchSelect onBatchSelect;
+    public class BatchSelectEventArgs : EventArgs
+    {
+        DataTable _DataTable;
+
+        public DataTable DataTable
+        {
+            set { _DataTable = value; }
+            get { return _DataTable; }
+        }
+    }
 
     #endregion
 
@@ -433,7 +485,7 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
     /// <param name="e"></param>
     void gvSelfTodoList_RowCommand(object sender, Util_ucGridView.RowCommandEventArgs e)
     {
-        StartSingleVerify(e.DataKeys[0], e.DataKeys[1], e.DataKeys[2]);
+        StartSingleVerify(e.DataKeys[0], HttpUtility.HtmlEncode(e.DataKeys[1]), HttpUtility.HtmlEncode(e.DataKeys[2]));
     }
 
     /// <summary>
@@ -468,7 +520,7 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
     /// <param name="e"></param>
     void gvProxyTodoList_RowCommand(object sender, Util_ucGridView.RowCommandEventArgs e)
     {
-        StartSingleVerify(e.DataKeys[0], e.DataKeys[1], e.DataKeys[2]);
+        StartSingleVerify(HttpUtility.HtmlEncode(e.DataKeys[0]), HttpUtility.HtmlEncode(e.DataKeys[1]), HttpUtility.HtmlEncode(e.DataKeys[2]));
     }
 
     /// <summary>
@@ -506,7 +558,7 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
             }
             gvSelfTodoList.ucDataGroupKey = "FlowStepInfo";
             //子流程圖示
-            oSelfDispDic.Add("FlowSubCaseIcon", "<img src='" + Util.Icon_TreeNode + "' style='padding-top:3px;float:left;border-style:none;' />@L");
+            oSelfDispDic.Add("FlowSubCaseIcon", "<img src='" + Util.Icon_TreeNode + "' style='padding-top:3px;float:left;border-style:none;' />@I16"); //2017.04.27 調整
             //FlowShowFieldList
             for (int i = 0; i < oFlow.FlowShowFieldList.Count(); i++)
             {
@@ -562,7 +614,7 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
             }
             gvProxyTodoList.ucDataGroupKey = "FlowStepInfo";
             //子流程圖示
-            oProxyDispDic.Add("FlowSubCaseIcon", "<img src='" + Util.Icon_TreeNode + "' style='padding-top:3px;float:left;border-style:none;' />@L");
+            oProxyDispDic.Add("FlowSubCaseIcon", "<img src='" + Util.Icon_TreeNode + "' style='padding-top:3px;float:left;border-style:none;' />@I16"); //2017.04.27 調整
             //原處理者
             oProxyDispDic.Add("AssignToName", WorkRS.Resources.FlowTodoList_SelfAssignToName);
             //FlowShowFieldList
@@ -643,7 +695,6 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
             }
         }
 
-
     }
 
     /// <summary>
@@ -653,6 +704,16 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
     /// <param name="strFlowLogID"></param>
     protected void StartSingleVerify(string strFlowID, string strFlowLogID, string strProxyType)
     {
+        if (onSingleSelect != null)
+        {
+            //2017.05.22 新增
+            SingleSelectEventArgs oArgs = new SingleSelectEventArgs();
+            oArgs.FlowID = strFlowID;
+            oArgs.FlowLogID = strFlowLogID;
+            oArgs.ProxyType = strProxyType;
+            onSingleSelect(this, oArgs);
+        }
+
         FlowExpress oFlow = new FlowExpress(strFlowID, strFlowLogID);
         string strVerifyUrlPara = string.Format("?FlowID={0}&FlowLogID={1}&ProxyType={2}&IsShowBtnComplete={3}&IsShowCheckBoxList={4}&ChkMaxKeyLen={5}", oFlow.FlowID, oFlow.FlowLogID, strProxyType, (ucPopupBtnCompleteEnabled == true) ? "Y" : "N", (ucIsUsingCheckBoxListWhenMultiSelect == true) ? "Y" : "N", ucChkMaxKeyLen);
         //判斷操作模式是 彈出式(PopUp)審核 還是 轉址式(Redirect)審核  2015.05.22 / 2017.02.02 分拆成兩隻 url
@@ -682,11 +743,18 @@ public partial class FlowExpress_ucFlowTodoList : BaseUserControl
     /// <param name="dtVerify"></param>
     protected void StartBatchVerify(DataTable dtVerify)
     {
-        Session["BatchVerifyData"] = dtVerify;
+        if (onBatchSelect != null)
+        {
+            //2017.05.22 新增
+            BatchSelectEventArgs oArgs = new BatchSelectEventArgs();
+            oArgs.DataTable = dtVerify;
+            onBatchSelect(this, oArgs);
+        }
 
+        Session["BatchVerifyData"] = dtVerify;
         ucModalPopup1.ucPopupHeight = 450;
         ucModalPopup1.ucPopupWidth = 650;
-        ucModalPopup1.ucFrameURL = string.IsNullOrEmpty(ucCustBatchVerifyUrl)?FlowExpress._FlowBatchVerifyURL: ucCustBatchVerifyUrl; //2017.03.01 新增 ucCustBatchVerifyUrl
+        ucModalPopup1.ucFrameURL = string.IsNullOrEmpty(ucCustBatchVerifyUrl) ? FlowExpress._FlowBatchVerifyURL : ucCustBatchVerifyUrl; //2017.03.01 新增 ucCustBatchVerifyUrl
         ucModalPopup1.Show();
     }
 

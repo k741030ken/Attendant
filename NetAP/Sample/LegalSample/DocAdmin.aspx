@@ -39,7 +39,7 @@
                                             <asp:Literal ID="labCaseNo" runat="server" Text="編　　號" meta:resourcekey="labCaseNoResource1" />：
                                         </td>
                                         <td style="width: 200px;">
-                                            <asp:TextBox ID="txtDocNo" runat="server" Width="96px" Text='<%# Bind("DocNo") %>'
+                                            <asp:TextBox ID="txtDocNo" runat="server" Width="96px" Text='<%#: Bind("DocNo") %>'
                                                 meta:resourcekey="txtDocNoResource1" />
                                         </td>
                                         <td class="style1">
@@ -127,7 +127,7 @@
                                             <asp:Literal ID="lab01" runat="server" Text="編　　號" meta:resourcekey="labCaseNoResource1" />：
                                         </td>
                                         <td style="width: 200px;">
-                                            <asp:Label ID="txt01" runat="server" Width="96px" ForeColor="Black" Text='<%# Bind("DocNo") %>' />
+                                            <asp:Label ID="txt01" runat="server" Width="96px" ForeColor="Black" Text='<%#: Bind("DocNo") %>' />
                                         </td>
                                         <td >
 
@@ -138,7 +138,7 @@
                                             <asp:Literal ID="lab03" runat="server" Text="文件名稱" meta:resourcekey="labSubjectResource1" />：
                                         </td>
                                         <td colspan="2">
-                                            <asp:Label ID="txt03" runat="server" ForeColor="Black" Text='<%# Bind("Subject") %>' />
+                                            <asp:Label ID="txt03" runat="server" ForeColor="Black" Text='<%#: Bind("Subject") %>' />
                                         </td>
                                     </tr>
                                     <tr class="Util_clsRow1">
@@ -146,9 +146,9 @@
                                             <asp:Literal ID="lab04" runat="server" Text="產品類別" meta:resourcekey="labKindResource1" />：
                                         </td>
                                         <td colspan="2">
-                                            <asp:Label ID="txt041" runat="server" Width="190px" ForeColor="Black" Text='<%# Bind("Kind1Name") %>' />
-                                            <asp:Label ID="txt042" runat="server" Width="190px" ForeColor="Black" Text='<%# Bind("Kind2Name") %>' />
-                                            <asp:Label ID="txt043" runat="server" Width="190px" ForeColor="Black" Text='<%# Bind("Kind3Name") %>' />
+                                            <asp:Label ID="txt041" runat="server" Width="190px" ForeColor="Black" Text='<%#: Bind("Kind1Name") %>' />
+                                            <asp:Label ID="txt042" runat="server" Width="190px" ForeColor="Black" Text='<%#: Bind("Kind2Name") %>' />
+                                            <asp:Label ID="txt043" runat="server" Width="190px" ForeColor="Black" Text='<%#: Bind("Kind3Name") %>' />
                                         </td>
                                     </tr>
                                     <tr class="Util_clsRow2">
@@ -156,7 +156,7 @@
                                             <asp:Literal ID="lab05" runat="server" Text="文件用途" meta:resourcekey="labUsageResource1" />：
                                         </td>
                                         <td colspan="2">
-                                            <asp:Label ID="txt05" runat="server" ForeColor="Black" Text='<%# Bind("Usage") %>' />
+                                            <asp:Label ID="txt05" runat="server" ForeColor="Black" Text='<%#: Bind("Usage") %>' />
                                         </td>
                                     </tr>
                                     <tr class="Util_clsRow1">
@@ -172,7 +172,7 @@
                                             <asp:Literal ID="lab07" runat="server" Text="備　　註" meta:resourcekey="labRemarkResource1" />：
                                         </td>
                                         <td colspan="2">
-                                            <asp:Label ID="txt07" runat="server" ForeColor="Black" Text='<%# Bind("Remark") %>' />
+                                            <asp:Label ID="txt07" runat="server" ForeColor="Black" Text='<%#: Bind("Remark") %>' />
                                         </td>
                                     </tr>
                                 </table>

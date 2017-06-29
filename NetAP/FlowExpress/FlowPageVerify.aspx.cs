@@ -67,7 +67,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
             {
                 ViewState["_FlowTodoUrl"] = Util.getRequestQueryStringKey("FlowTodoUrl", Request.UrlReferrer.AbsoluteUri); //回上一頁 URL
             }
-            return (string)(ViewState["_FlowTodoUrl"]);
+            return HttpUtility.HtmlEncode((string)(ViewState["_FlowTodoUrl"]));
         }
     }
 
@@ -118,7 +118,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
                 string strFlowVerifyCustFormURL = string.Format("{0}?FlowID={1}&FlowLogID={2}", Util.getFixURL(oFlow.FlowVerifyCustFormURL), oFlow.FlowID, oFlow.FlowLogID);
                 for (int i = 0; i < oFlow.FlowKeyFieldList.Count(); i++)
                 {
-                    if (oFlow.FlowKeyFieldList[i].ToUpper() != "AUTONO")
+                    if (oFlow.FlowKeyFieldList[i].ToUpper() != "_AUTONO")
                     {
                         strFlowVerifyCustFormURL += string.Format("&{0}={1}", oFlow.FlowKeyFieldList[i], oFlow.FlowKeyValueList[i]);
                     }
@@ -156,7 +156,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
                 dicDisp.Add("AssignToName", WorkRS.Resources.FlowLogMsg_AssignTo + "@C"); //處理者
                 dicDisp.Add("FlowStepBtnCaption", WorkRS.Resources.FlowLogMsg_VerifyBtn + "@C"); //動作
                 dicDisp.Add("LogUpdDateTime", WorkRS.Resources.FlowLogMsg_UpdDateTime + "@T"); //時間
-                dicDisp.Add("FlowStepOpinion", WorkRS.Resources.FlowLogMsg_VerifyOpinion + "@C"); //意見
+                dicDisp.Add("FlowStepOpinion", WorkRS.Resources.FlowLogMsg_VerifyOpinion + "@L"); //意見
                 gvFlowPrevStepLog.ucDataDisplayDefinition = dicDisp;
                 gvFlowPrevStepLog.ucSortEnabled = false;
                 gvFlowPrevStepLog.ucSeqNoEnabled = false;
@@ -170,7 +170,6 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
                 //流程片語 2017.03.03
                 ucFlowPhrase.ucIsVisibleWhenNoData = false;
                 ucFlowPhrase.ucSearchBoxWaterMarkText = WorkRS.Resources.FlowPhrase_WaterMarkText;
-                ucFlowPhrase.ucBtnToolTip = WorkRS.Resources.FlowPhrase_btnAppend;
                 ucFlowPhrase.ucDBName = FlowExpress._FlowSysDB;
                 ucFlowPhrase.ucPKID = oFlow.FlowID;
                 ucFlowPhrase.ucPKKind = "FlowCustProperty";
@@ -187,6 +186,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
                 txtFlowOpinion.ucTextData = FlowExpress.getFlowOpenLogVerifyInfo(oFlow).Rows[0]["FlowStepOpinion"].ToString();
                 txtFlowOpinion.Refresh();
 
+                ucCommUserAdminButton.Visible = false; //預設隱藏[常用人員]維護按鈕 2017.04.28
                 //流程按鈕
                 DataTable dtBtn = Util.getDataTable(FlowExpress.getFlowOpenLogVerifyInfo(oFlow).Rows[0]["FlowStepBtnInfoJSON"].ToString());
                 string strBtnSeqNo = "";
@@ -196,6 +196,14 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
                     Button oBtn = (Button)Util.FindControlEx(TabMainContainer, "btnVerify" + strBtnSeqNo);
                     if (oBtn != null)
                     {
+                        if (!ucCommUserAdminButton.Visible)
+                        {
+                            Dictionary<string, string> oAssTo = Util.getDictionary(dtBtn.Rows[i]["FlowStepBtnAssignToList"].ToString());
+                            if (!oAssTo.IsNullOrEmpty() && oAssTo.First().Key == "*" && oAssTo.First().Value.ToUpper() == "ANY")
+                            {
+                                ucCommUserAdminButton.Visible = true;  //流程按鈕有用到[常用人員]才顯示相關維護按鈕 2017.04.28
+                            }
+                        }
                         oBtn.Text = dtBtn.Rows[i]["FlowStepBtnCaption"].ToString();
                         oBtn.CommandName = dtBtn.Rows[i]["FlowStepBtnID"].ToString();
                         oBtn.CommandArgument = (dtBtn.Rows[i]["FlowStepBtnIsNeedOpinion"].ToString().ToUpper() == "Y") ? "Y" : "N"; //是否需輸入意見
@@ -237,14 +245,19 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
         gvFlowPrevStepLog.Refresh();
         FlowExpress oFlow = new FlowExpress();
         DbHelper dblog = new DbHelper(oFlow.FlowLogDB);
-        string strUpdSQL = string.Format("Update {0}FlowOpenLog Set FlowStepOpinion = N'{2}' Where FlowLogID = '{1}'", oFlow.FlowID, oFlow.FlowLogID, txtFlowOpinion.ucTextData);
-        if (dblog.ExecuteNonQuery(CommandType.Text, strUpdSQL) > 0)
+        CommandHelper sb = dblog.CreateCommandHelper();
+        sb.Reset();
+        sb.AppendStatement(string.Format("Update {0}FlowOpenLog Set ",oFlow.FlowID));
+        sb.Append("  FlowStepOpinion = ").AppendParameter("FlowStepOpinion", txtFlowOpinion.ucTextData.Replace(",","''"));
+        sb.Append("  Where FlowLogID = ").AppendParameter("FlowLogID", oFlow.FlowLogID);
+
+        if (dblog.ExecuteNonQuery(sb.BuildCommand()) > 0)
         {
-            Util.setJSContent("alert('" + string.Format(RS.Resources.Msg_Succeed1, WorkRS.Resources.FlowVerifyTab_SaveFlowTempOpinion) + "');");
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_Succeed1, WorkRS.Resources.FlowVerifyTab_SaveFlowTempOpinion), Util.NotifyKind.Success);
         }
         else
         {
-            Util.setJSContent("alert('" + string.Format(RS.Resources.Msg_Error1, WorkRS.Resources.FlowVerifyTab_SaveFlowTempOpinion) + "');");
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_Error1, WorkRS.Resources.FlowVerifyTab_SaveFlowTempOpinion), Util.NotifyKind.Error);
         }
     }
 
@@ -257,7 +270,7 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
             if (oBtn.CommandArgument.ToUpper() == "Y")
             {
                 //必需輸入
-                Util.setJSContent("alert('" + WorkRS.Resources.FlowVerifyMsg_OpinionRequired + "');");
+                Util.NotifyMsg(WorkRS.Resources.FlowVerifyMsg_OpinionRequired, Util.NotifyKind.Error);
                 return;
             }
             else
@@ -267,63 +280,36 @@ public partial class FlowExpress_FlowPageVerify : SecurePage
             }
         }
 
+        //將意見暫存，方便審核畫面引用 2017.04.28
+        FlowExpress oFlow = new FlowExpress();
+        DbHelper dblog = new DbHelper(oFlow.FlowLogDB);
+        CommandHelper sb = dblog.CreateCommandHelper();
+        sb.Reset();
+        sb.AppendStatement(string.Format("Update {0}FlowOpenLog Set ",oFlow.FlowID));
+        sb.Append("  FlowStepOpinion = ").AppendParameter("FlowStepOpinion", txtFlowOpinion.ucTextData.Replace(",", "''"));
+        sb.Append("  Where FlowLogID = ").AppendParameter("FlowLogID", oFlow.FlowLogID);
+
+        if (dblog.ExecuteNonQuery(sb.BuildCommand()) <= 0)
+        {
+            Util.NotifyMsg(string.Format(RS.Resources.Msg_Error1, WorkRS.Resources.FlowVerifyTab_SaveFlowTempOpinion), Util.NotifyKind.Error);
+            return;
+        }
 
         Dictionary<string, string> dicPara = Util.getRequestQueryString();
         if (dicPara.IsNullOrEmpty())
         {
             //缺少流程參數
-            Util.setJSContent("alert('" + WorkRS.Resources.FlowFullLogMsg_FlowParaError + "');");
+            Util.NotifyMsg(WorkRS.Resources.FlowFullLogMsg_FlowParaError, Util.NotifyKind.Error);
             return;
         }
         else
         {
             ucModalPopup1.Reset();
-            ucModalPopup1.ucFrameURL = string.Format("{0}?FlowID={1}&FlowLogID={2}&FlowStepBtnID={3}&FlowOpinion={4}", FlowExpress._FlowPageVerifyFrameURL, dicPara["FlowID"], dicPara["FlowLogID"], oBtn.CommandName, HttpUtility.UrlEncode(txtFlowOpinion.ucTextData)); //FlowExpress._FlowPageVerifyFrameURL + "?Dummy=" + Util.getRandomCode();
+            ucModalPopup1.ucFrameURL = string.Format("{0}?FlowID={1}&FlowLogID={2}&FlowStepBtnID={3}", FlowExpress._FlowPageVerifyFrameURL, dicPara["FlowID"], dicPara["FlowLogID"], oBtn.CommandName); //FlowExpress._FlowPageVerifyFrameURL + "?Dummy=" + Util.getRandomCode();
             ucModalPopup1.ucPopupWidth = 680;
-            ucModalPopup1.ucPopupHeight = 570;
+            ucModalPopup1.ucPopupHeight = 580;
             ucModalPopup1.Show();
         }
-
-
-        //FlowExpress oFlow = new FlowExpress();
-        //DataTable dtBtn = Util.getDataTable(FlowExpress.getFlowOpenLogVerifyInfo(oFlow).Rows[0]["FlowStepBtnInfoJSON"].ToString());
-        //if (dtBtn != null && dtBtn.Select(string.Format("FlowStepBtnID = '{0}' ", oBtn.CommandName)).Count() > 0)
-        //{
-        //    DataRow drBtn = dtBtn.Select(string.Format("FlowStepBtnID = '{0}' ", oBtn.CommandName))[0];
-        //    Dictionary<string, string> dicBtnAssignToList = new Dictionary<string, string>();
-        //    Dictionary<string, string> dicBtnContext = new Dictionary<string, string>();
-
-        //    dicBtnContext.Clear();
-        //    dicBtnContext.Add("FlowID", oFlow.FlowID);
-        //    dicBtnContext.Add("FlowLogID", oFlow.FlowLogID);
-        //    dicBtnContext.Add("VerifyStepInfo", labFlowStepInfo.Text);
-
-        //    dicBtnContext.Add("VerifyOpinion", txtFlowOpinion.ucTextData);
-        //    dicBtnContext.Add("FlowStepBtnID", drBtn["FlowStepBtnID"].ToString());
-        //    dicBtnContext.Add("FlowStepBtnIsAddMultiSubFlow", drBtn["FlowStepBtnIsAddMultiSubFlow"].ToString());
-        //    dicBtnContext.Add("FlowStepBtnAddSubFlowID", drBtn["FlowStepBtnAddSubFlowID"].ToString());
-        //    dicBtnContext.Add("FlowStepBtnAddSubFlowStepBtnID", drBtn["FlowStepBtnAddSubFlowStepBtnID"].ToString());
-        //    if (!string.IsNullOrEmpty(drBtn["FlowStepBtnAddSubFlowID"].ToString()) && !string.IsNullOrEmpty(drBtn["FlowStepBtnAddSubFlowStepBtnAssignToList"].ToString()))
-        //    {
-        //        //若會新增子流程
-        //        if (oFlow.FlowCurrLogStepID != drBtn["FlowStepBtnNextStepID"].ToString())
-        //        {
-        //            //若主流程下一關不為同關卡代號，才傳遞主流程的原始指派清單備用 2015.08.26 優化
-        //            dicBtnContext.Add("FlowStepBtnAssignToList", drBtn["FlowStepBtnAssignToList"].ToString());
-        //        }
-        //        else
-        //        {
-        //            dicBtnContext.Add("FlowStepBtnAssignToList", "");
-        //        }
-        //    }
-        //    Session["PageVerifyData"] = dicBtnContext; //參數傳遞
-
-        //    ucModalPopup1.Reset();
-        //    ucModalPopup1.ucFrameURL = string.Format("{0}?FlowID={1}&FlowLogID={2}&FlowStepBtnID={3}&FlowOpinion={4}", FlowExpress._FlowPageVerifyFrameURL, oFlow.FlowID, oFlow.FlowLogID, oBtn.CommandName, HttpUtility.UrlEncode(txtFlowOpinion.ucTextData)); //FlowExpress._FlowPageVerifyFrameURL + "?Dummy=" + Util.getRandomCode();
-        //    ucModalPopup1.ucPopupWidth = 680;
-        //    ucModalPopup1.ucPopupHeight = 550;
-        //    ucModalPopup1.Show();
-        //}
     }
 
 }

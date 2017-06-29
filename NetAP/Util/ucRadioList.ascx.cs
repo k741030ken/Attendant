@@ -165,6 +165,26 @@ public partial class Util_ucRadioList : BaseUserControl
     }
 
     /// <summary>
+    /// 自訂Require錯誤訊息
+    /// </summary>
+    public string ucRequireErrorMessage
+    {
+        get
+        {
+            if (PageViewState["_RequireErrMsg"] == null)
+            {
+                PageViewState["_RequireErrMsg"] = "*";
+            }
+            return (string)(PageViewState["_RequireErrMsg"]);
+        }
+        set
+        {
+            PageViewState["_RequireErrMsg"] = value;
+            RequiredFieldValidator1.ErrorMessage = value;
+        }
+    }
+
+    /// <summary>
     /// 提示訊息
     /// </summary>
     public string ucToolTip
@@ -367,6 +387,30 @@ public partial class Util_ucRadioList : BaseUserControl
         }
     }
 
+    /// <summary>
+    /// 控制項顯示抬頭水平對齊方式(預設 Right)
+    /// </summary>
+    public HorizontalAlign ucCaptionHorizontalAlign
+    {
+        //2017.06.03 新增
+        get
+        {
+            if (PageViewState["_CaptionHorizontalAlign"] == null)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            return (HorizontalAlign)(PageViewState["_CaptionHorizontalAlign"]);
+        }
+        set
+        {
+            PageViewState["_CaptionHorizontalAlign"] = value;
+            if (value == HorizontalAlign.NotSet)
+            {
+                PageViewState["_CaptionHorizontalAlign"] = HorizontalAlign.Right;
+            }
+            labCaption.Style["text-align"] = ((HorizontalAlign)PageViewState["_CaptionHorizontalAlign"]).ToString().ToLower();
+        }
+    }
     #endregion
 
     protected void Page_Load(object sender, EventArgs e)

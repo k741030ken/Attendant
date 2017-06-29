@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Web.UI.WebControls;
 using SinoPac.WebExpress.Common;
 
@@ -42,7 +43,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_IsSelectUserYN"] = "Y";
             }
-            return (string)(PageViewState["_IsSelectUserYN"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_IsSelectUserYN"]));
         }
         set
         {
@@ -62,7 +63,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_IsSelectCommUserYN"] = "Y";
             }
-            return (string)(PageViewState["_IsSelectCommUserYN"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_IsSelectCommUserYN"]));
         }
         set
         {
@@ -81,7 +82,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_IsMultiSelectYN"] = "N";
             }
-            return (string)(PageViewState["_IsMultiSelectYN"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_IsMultiSelectYN"]));
         }
         set
         {
@@ -103,7 +104,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_CustCommCascadeServiceMethod"] = "";
             }
-            return (string)(PageViewState["_CustCommCascadeServiceMethod"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_CustCommCascadeServiceMethod"]));
         }
         set
         {
@@ -124,7 +125,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ValidCompIDList"] = "";
             }
-            return (string)(PageViewState["_ValidCompIDList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ValidCompIDList"]));
         }
         set
         {
@@ -144,7 +145,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ValidDeptIDList"] = "";
             }
-            return (string)(PageViewState["_ValidDeptIDList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ValidDeptIDList"]));
         }
         set
         {
@@ -164,7 +165,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ValidUserIDList"] = "";
             }
-            return (string)(PageViewState["_ValidUserIDList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ValidUserIDList"]));
         }
         set
         {
@@ -183,7 +184,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_DefCompID"] = "";
             }
-            return (string)(PageViewState["_DefCompID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DefCompID"]));
         }
         set
         {
@@ -202,7 +203,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_DefDeptID"] = "";
             }
-            return (string)(PageViewState["_DefDeptID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DefDeptID"]));
         }
         set
         {
@@ -221,7 +222,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_DefUserIDList"] = "";
             }
-            return (string)(PageViewState["_DefUserIDList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_DefUserIDList"]));
         }
         set
         {
@@ -270,7 +271,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentCompObjID"] = "";
             }
-            return (string)(PageViewState["_ParentCompObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentCompObjID"]));
         }
         set
         {
@@ -289,7 +290,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentDeptObjID"] = "";
             }
-            return (string)(PageViewState["_ParentDeptObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentDeptObjID"]));
         }
         set
         {
@@ -308,7 +309,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentUserListObjID"] = "";
             }
-            return (string)(PageViewState["_ParentUserListObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentUserListObjID"]));
         }
         set
         {
@@ -327,7 +328,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentCompInfoObjID"] = "";
             }
-            return (string)(PageViewState["_ParentCompInfoObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentCompInfoObjID"]));
         }
         set
         {
@@ -346,7 +347,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentDeptInfoObjID"] = "";
             }
-            return (string)(PageViewState["_ParentDeptInfoObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentDeptInfoObjID"]));
         }
         set
         {
@@ -365,7 +366,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentUserInfoListObjID"] = "";
             }
-            return (string)(PageViewState["_ParentUserInfoListObjID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentUserInfoListObjID"]));
         }
         set
         {
@@ -384,7 +385,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_ParentModalPopupCloseClientID"] = "";
             }
-            return (string)(PageViewState["_ParentModalPopupCloseClientID"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_ParentModalPopupCloseClientID"]));
         }
         set
         {
@@ -442,7 +443,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
             {
                 PageViewState["_BoxListStyle"] = "font-size:10pt;white-space:nowrap;border: 1px solid silver; overflow:auto;";
             }
-            return (string)(PageViewState["_BoxListStyle"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_BoxListStyle"]));
         }
         set
         {
@@ -485,7 +486,7 @@ public partial class Util_ucCommCascadeSelect : BaseUserControl
 
         //設定Ajax關聯式下拉選單
         ucCascadingDropDown1.SetDefault();
-        if (!string.IsNullOrEmpty(ucCustCommCascadeServiceMethod)) 
+        if (!string.IsNullOrEmpty(ucCustCommCascadeServiceMethod))
         {
             ucCascadingDropDown1.ucServiceMethod = ucCustCommCascadeServiceMethod; //2016.11.01 調整
         }

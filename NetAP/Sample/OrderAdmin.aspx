@@ -111,7 +111,7 @@
                                 <uc1:ucUserPicker ID="UserPicker" runat="server" ucCaption="下訂人員" />
                                 <uc1:ucDatePicker ID="ShipDate" runat="server" ucCaption="出貨日期" ucIsRequire="true" />
                                 訂單總額：
-                        <asp:Label runat="server" ID="labTotAmt" Width="80" Text='<%# string.Format("{0:N2}",Eval("TotAmt")) %>'
+                        <asp:Label runat="server" ID="labTotAmt" Width="80" Text='<%# string.Format("{0:N2}",HttpUtility.HtmlEncode(Eval("TotAmt"))) %>'
                             Style="text-align: right;" />
                             </div>
                             <div class="Util_clsRow1" style="padding: 3px;">
@@ -211,36 +211,38 @@
                     </div>
                 </asp:Panel>
                 <%--明細檔整批編輯表單--%>
-                <asp:Panel runat="server" ID="pnlDetailBatchForm" CssClass="Util_Frame">
+                <asp:Panel runat="server" ID="pnlDetailBatchForm">
                     <div style="text-align: left; padding: 5px;">
                         <asp:FormView ID="fmDetailBatch" runat="server" OnDataBound="fmDetailBatch_DataBound" Style="margin-left: auto; margin-right: auto;">
                             <InsertItemTemplate>
-                                <div class="Util_gvHeader">
-                                    <uc1:ucToggleControlVisibility ID="ucToggleControlVisibility1" runat="server" ucCaption="套用" />
-                                </div>
-                                <div class="Util_clsRow1" style="padding: 3px;">
-                                    <uc1:ucTextBox ID="ItemDesc" runat="server" ucCaption="項目說明" ucWidth="240" ucIsToggleVisibility="true" />
-                                </div>
-                                <div class="Util_clsRow2" style="padding: 3px;">
-                                    <uc1:ucDatePicker ID="ItemExpDate" runat="server" ucCaption="到期日期" ucIsToggleVisibility="true" />
-                                </div>
-                                <div class="Util_clsRow1" style="padding: 3px;">
-                                    <uc1:ucCommSingleSelect ID="Unit" runat="server" ucCaption="單　　位" ucIsToggleVisibility="true"
-                                        ucIsSearchEnabled="false" />
-                                </div>
-                                <div class="Util_clsRow2" style="padding: 3px;">
-                                    <uc1:ucTextBox ID="UnitPrice" runat="server" ucCaption="項目單價" ucIsToggleVisibility="true" />
-                                </div>
-                                <div class="Util_clsRow1" style="padding: 3px;">
-                                    <uc1:ucTextBox ID="Qty" runat="server" ucCaption="項目數量" ucIsToggleVisibility="true" />
-                                </div>
-                                <div style="text-align: center; height: 50px;">
-                                    <hr class="Util_clsHR" />
-                                    <asp:Button runat="server" ID="btnDetailBatchUpdate" Text="整批更新" CssClass="Util_clsBtn"
-                                        OnClick="btnDetailBatchUpdate_Click" />
-                                    <asp:Button runat="server" ID="btnDetailBatchUpdateCancel" Text="取　　消" CssClass="Util_clsBtn"
-                                        CausesValidation="false" OnClick="btnDetailBatchUpdateCancel_Click" />
-                                </div>
+                                <fieldset class="Util_Fieldset">
+                                    <legend class="Util_Legend">
+                                        <uc1:ucToggleControlVisibility ID="ucToggleControlVisibility1" runat="server" ucCaption="全部套用" />
+                                    </legend>
+                                    <div class="Util_clsRow1" style="padding: 3px;">
+                                        <uc1:ucTextBox ID="ItemDesc" runat="server" ucCaption="項目說明" ucWidth="240" ucIsToggleVisibility="true" />
+                                    </div>
+                                    <div class="Util_clsRow2" style="padding: 3px;">
+                                        <uc1:ucDatePicker ID="ItemExpDate" runat="server" ucCaption="到期日期" ucIsToggleVisibility="true" />
+                                    </div>
+                                    <div class="Util_clsRow1" style="padding: 3px;">
+                                        <uc1:ucCommSingleSelect ID="Unit" runat="server" ucCaption="單　　位" ucIsToggleVisibility="true"
+                                            ucIsSearchEnabled="false" />
+                                    </div>
+                                    <div class="Util_clsRow2" style="padding: 3px;">
+                                        <uc1:ucTextBox ID="UnitPrice" runat="server" ucCaption="項目單價" ucIsToggleVisibility="true" />
+                                    </div>
+                                    <div class="Util_clsRow1" style="padding: 3px;">
+                                        <uc1:ucTextBox ID="Qty" runat="server" ucCaption="項目數量" ucIsToggleVisibility="true" />
+                                    </div>
+                                    <div style="text-align: center; height: 50px;">
+                                        <hr class="Util_clsHR" />
+                                        <asp:Button runat="server" ID="btnDetailBatchUpdate" Text="整批更新" CssClass="Util_clsBtn"
+                                            OnClick="btnDetailBatchUpdate_Click" />
+                                        <asp:Button runat="server" ID="btnDetailBatchUpdateCancel" Text="取　　消" CssClass="Util_clsBtn"
+                                            CausesValidation="false" OnClick="btnDetailBatchUpdateCancel_Click" />
+                                    </div>
+                                </fieldset>
                             </InsertItemTemplate>
                         </asp:FormView>
                     </div>

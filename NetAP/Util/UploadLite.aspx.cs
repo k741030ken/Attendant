@@ -1,6 +1,7 @@
-﻿using SinoPac.WebExpress.Common;
-using System;
+﻿using System;
 using System.Text;
+using System.Web;
+using SinoPac.WebExpress.Common;
 using RS = SinoPac.WebExpress.Common.Properties;
 
 /// <summary>
@@ -76,7 +77,7 @@ public partial class Util_UploadLite : BasePage
             {
                 PageViewState["_UploadFileExtList"] = "";
             }
-            return (string)(PageViewState["_UploadFileExtList"]);
+            return HttpUtility.HtmlEncode((string)(PageViewState["_UploadFileExtList"]));
         }
         set
         {

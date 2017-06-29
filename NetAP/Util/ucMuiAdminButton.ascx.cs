@@ -6,6 +6,8 @@ using RS = SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public partial class Util_ucMuiAdminButton : BaseUserControl
 {
+    string _BtnClientJS = "Util_IsChkDirty = false;";
+
     #region 按鈕相關屬性
     /// <summary>
     /// 視窗抬頭
@@ -62,6 +64,26 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     }
 
     /// <summary>
+    /// 按鈕提示訊息
+    /// </summary>
+    public string ucBtnToolTip
+    {
+        //2017.05.19 新增
+        get
+        {
+            if (PageViewState["_BtnToolTip"] == null)
+            {
+                PageViewState["_BtnToolTip"] = string.Empty;
+            }
+            return PageViewState["_BtnToolTip"].ToString();
+        }
+        set
+        {
+            PageViewState["_BtnToolTip"] = value;
+        }
+    }
+
+    /// <summary>
     /// 按鈕樣式(預設 Util_clsBtn)
     /// </summary>
     public string ucBtnCssClass
@@ -104,18 +126,14 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
     /// </summary>
     public string ucBtnClientJS
     {
-        //2016.09.22 新增
+        //配合Fortify 2017.04.21
         get
         {
-            if (PageViewState["_BtnClientJS"] == null)
-            {
-                PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;";
-            }
-            return (string)(PageViewState["_BtnClientJS"]);
+            return _BtnClientJS;
         }
         set
         {
-            PageViewState["_BtnClientJS"] = "Util_IsChkDirty = false;" + value;
+           _BtnClientJS += value;
         }
     }
     #endregion
@@ -237,6 +255,10 @@ public partial class Util_ucMuiAdminButton : BaseUserControl
         btnLaunch.OnClientClick = ucBtnClientJS; //2016.09.22
         btnLaunch.Text = ucBtnCaption;
         btnLaunch.CssClass = ucBtnCssClass;
+
+        if (!string.IsNullOrEmpty(ucBtnToolTip)) //2017.05.19
+            btnLaunch.ToolTip = ucBtnToolTip;
+
         if (ucBtnWidth > 0)
             btnLaunch.Width = ucBtnWidth;
         else
