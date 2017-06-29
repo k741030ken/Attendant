@@ -32,8 +32,7 @@ public partial class OnBizReqAppdOperationSql
         sb.Append(" FROM VisitForm VF");
         sb.Append(" LEFT JOIN OnBizReqAppd_ITRDFlowOpenLog OBL ON VF.FlowCaseID = OBL.FlowCaseID ");
         sb.Append(" LEFT JOIN PS_UserProxy UP ON VF.ValidID = UP.UserID AND CONVERT(VARCHAR(8),GETDATE(),112) BETWEEN UP.ProxyStartDate AND UP.ProxyEndDate");
-        sb.Append(" WHERE CompID = @CompID");
-        sb.Append(" AND (ValidID = @ValidID");
+        sb.Append(" WHERE (ValidID = @ValidID");
         sb.Append(" OR UP.ProxyUser = @ValidID)");
         sb.Append(" AND EmpID <> @ValidID ");
         sb.Append(" AND OBFormStatus = '2'");
