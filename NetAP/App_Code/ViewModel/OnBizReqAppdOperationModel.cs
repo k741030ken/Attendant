@@ -412,6 +412,11 @@ public class CheckVisitGridDataModel //請取有意義的名稱+Model結尾
     /// </summary>
     public String FlowLogID { get; set; }
 
+    /// <summary>
+    /// ValidID
+    /// </summary>
+    public String ValidID { get; set; }
+
 }
 
 public class CheckVisitPKModel //請取有意義的名稱+Model結尾

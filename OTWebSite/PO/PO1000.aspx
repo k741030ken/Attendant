@@ -31,36 +31,33 @@
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblSpecialUnit" runat="server" Text="特殊打卡單位" Font-Names="微軟正黑體"></asp:Label>
+                                    <asp:Label ID="lblDutyInBT" runat="server" Text="*早到早退異常時間" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
-                                    <asp:RadioButton ID="rbnNotSpecialUnit" GroupName="rbnSpecialUnit" runat="server" Text="否" />&nbsp;&nbsp;&nbsp;
-                                    <asp:RadioButton ID="rbnIsSpecialUnit" GroupName="rbnSpecialUnit" runat="server" Text="是" />              
-                                </td>
-                            </tr>
-                            <tr style="height:20px">
-                                <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblDutyInBT" runat="server" Text="出勤異常時間" Font-Names="微軟正黑體"></asp:Label>
-                                </td>
-                                <td class="td_Edit" width="75%">
+                                    <asp:RadioButton ID="rbnDefaultDutyInBT" GroupName="DutyInBT" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnDutyInBT" GroupName="DutyInBT" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
                                     <asp:TextBox ID="txtDutyInBT" runat="server" Width="50px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
                                     <asp:Label ID="lblDutyInBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
                                 </td>
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblDutyOutBT" runat="server" Text="退勤異常時間" Font-Names="微軟正黑體"></asp:Label>
+                                    <asp:Label ID="lblDutyOutBT" runat="server" Text="*晚到晚退異常時間" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
+                                    <asp:RadioButton ID="rbnDefaultDutyOutBT" GroupName="DutyOutBT" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnDutyOutBT" GroupName="DutyOutBT" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
                                     <asp:TextBox ID="txtDutyOutBT" runat="server" Width="50px" AutoComplete="off" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
                                     <asp:Label ID="lblDutyOutBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
                                 </td>
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblPunchInBT" runat="server" Text="出勤打卡提醒時間" Font-Names="微軟正黑體"></asp:Label>
+                                    <asp:Label ID="lblPunchInBT" runat="server" Text="出勤打卡緩衝時間" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
+                                    <asp:RadioButton ID="rbnDefaultPunchInBT" GroupName="PunchInBT" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnPunchInBT" GroupName="PunchInBT" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
                                     <asp:TextBox ID="txtPunchInBT" runat="server" Width="50px" AutoComplete="off" AutoPostBack="true" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
                                     <asp:Label ID="lblPunchInBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
                                 </td>
@@ -70,19 +67,21 @@
                                     <asp:Label ID="lblPunchInMsg" runat="server" Text="出勤打卡提醒內容" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
-                                    <asp:RadioButton ID="rbnDefaultPunchInMsg" GroupName="rbnPunchInMsg" runat="server" AutoPostBack="true" Text="預設:" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnDefaultPunchInMsg" GroupName="PunchInMsg" runat="server" AutoPostBack="true" Text="預設:" />&nbsp;&nbsp;&nbsp;
                                     <asp:Label ID="lblDefaultPunchInMsg" runat="server" Font-Names="微軟正黑體" AutoPostBack="true" ></asp:Label>
                                     <br />
-                                    <asp:RadioButton ID="rbnCustomPunchInMsg" GroupName="rbnPunchInMsg" runat="server" AutoPostBack="true" Text="自訂:" />
+                                    <asp:RadioButton ID="rbnCustomPunchInMsg" GroupName="PunchInMsg" runat="server" AutoPostBack="true" Text="自訂:" />
                                     <br />
                                     <asp:TextBox id="txtCustomPunchInMsg" rows="2" runat="server" class="InputTextStyle_Thin" MaxLength="200" TextMode="MultiLine" Width="100%" Height="60px" ></asp:TextBox>
                                 </td>
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblPunchOutBT" runat="server" Text="退勤打卡提醒時間" Font-Names="微軟正黑體"></asp:Label>
+                                    <asp:Label ID="lblPunchOutBT" runat="server" Text="退勤打卡緩衝時間" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
+                                    <asp:RadioButton ID="rbnDefaultPunchOutBT" GroupName="rbnPunchOutBT" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnPunchOutBT" GroupName="rbnPunchOutBT" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
                                     <asp:TextBox ID="txtPunchOutBT" runat="server" Width="50px" AutoComplete="off" AutoPostBack="true" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
                                     <asp:Label ID="lblPunchOutBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
                                 </td>
@@ -141,11 +140,37 @@
                             </tr>
                             <tr style="height:20px">
                                 <td class="td_Edit" width="25%">
-                                    <asp:Label ID="lblVisitOVBT" runat="server" Text="公出超時下班時間" Font-Names="微軟正黑體"></asp:Label>
+                                    <asp:Label ID="lblExcludePara" runat="server" Text="*打卡異常排除條件" Font-Names="微軟正黑體"></asp:Label>
                                 </td>
                                 <td class="td_Edit" width="75%">
-                                    <asp:TextBox ID="txtVisitOVBT" runat="server" Width="50px" AutoComplete="off" AutoPostBack="true" Font-Names="微軟正黑體" MaxLength="4"></asp:TextBox>
-                                    <asp:Label ID="lblVisitOVBTMintxt" runat="server" Text="分鐘" Font-Names="微軟正黑體"></asp:Label><br />
+                                    <asp:Label ID="lblExcludeRank" runat="server" Text="金控職等：" Font-Names="微軟正黑體"></asp:Label>&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnNoExcludeRankID" GroupName="rbnExcludeRank" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnExcludeRankID" GroupName="rbnExcludeRank" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
+                                    <asp:DropDownList ID="ddlHoldingRankID" runat="server" AutoPostBack="True"></asp:DropDownList>
+                                    <asp:Label ID="lblRanktxt" runat="server" Text="職等(含)以上" Font-Names="微軟正黑體"></asp:Label>
+                                    <br />
+                                    <asp:Label ID="lblPosition" runat="server" Text="職位：" Font-Names="微軟正黑體"></asp:Label>&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnNoExcludePositionID" GroupName="rbnExcludePosition" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnExcludePositionID" GroupName="rbnExcludePosition" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
+                                    <asp:DropDownList ID="ddlPositionID" runat="server" AutoPostBack="True"></asp:DropDownList>
+                                    <asp:Label ID="lblSelectPositionID" runat="server" Style="display: none"></asp:Label>
+                                    <asp:Label ID="lblPositionID" runat="server" Style="display: none"></asp:Label>
+                                    <uc:ButtonPosition ID="ucSelectPosition" runat="server"  ButtonHint="選取"
+                                        WindowHeight="550" WindowWidth="1000" />
+                                    <br />
+                                    <asp:Label ID="lblWorkType" runat="server" Text="工作性質：" Font-Names="微軟正黑體"></asp:Label>&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnNoExcludeWorkTypeID" GroupName="rbnExcludeWorkType" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnExcludeWorkTypeID" GroupName="rbnExcludeWorkType" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
+                                    <asp:DropDownList ID="ddlWorkTypeID" runat="server"  AutoPostBack="true">
+                                    </asp:DropDownList>
+                                    <asp:Label ID="lblSelectWorkTypeID" runat="server" Style="display: none"></asp:Label>
+                                    <asp:Label ID="lblWorkTypeID" runat="server" Style="display: none"></asp:Label>
+                                    <uc:ButtonWorkType ID="ucSelectWorkType" runat="server"  ButtonHint="選取"
+                                WindowHeight="550" WindowWidth="1000" />
+                                    <br />
+                                    <asp:Label ID="lblRotate" runat="server" Text="24小時輪班人員：" Font-Names="微軟正黑體"></asp:Label>&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnNoRotate" GroupName="rbnRotateFlag" runat="server" AutoPostBack="true" Text="不控管" />&nbsp;&nbsp;&nbsp;
+                                    <asp:RadioButton ID="rbnRotate" GroupName="rbnRotateFlag" runat="server" AutoPostBack="true" Text="控管" />&nbsp;&nbsp;
                                 </td>
                             </tr>
                             <tr style="height:20px">

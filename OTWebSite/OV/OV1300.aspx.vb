@@ -64,8 +64,10 @@ Partial Class OV_OV1300
         Select Case Param
             Case "btnAdd"       '拋轉
                 If ViewState.Item("ChoseType") = "DateBlock" Then
-                    If validation() Then
-                        doThrow()
+                    If TossingValidation() Then
+                        If validation() Then
+                            doThrow()
+                        End If
                     End If
                 Else
                     doThrow()
@@ -85,10 +87,25 @@ Partial Class OV_OV1300
 
     Public Function validation() As Boolean
         Dim result As Boolean = True
-        If ForOverTime.selectToOverTimeFlag <> "1" And ForOverTime.selectToOverTimeFlag <> "" Then
+        Dim CompID As String = UserProfile.SelectCompRoleID
+        If ForOverTime.selectToOverTimeFlag(CompID) <> "1" And ForOverTime.selectToOverTimeFlag(CompID) <> "" Then
             Bsp.Utility.ShowMessage(Me, "拋轉還在執行中...")
             result = False
         End If
+        Return result
+    End Function
+    Public Function TossingValidation() As Boolean
+        Dim result As Boolean = False
+        Dim CompID As String = UserProfile.SelectCompRoleID
+        Try
+            Dim TossingKey = ConfigurationManager.AppSettings(CompID & "_Tossing").ToString
+            If (Not "".Equals(TossingKey)) Then
+                result = True
+            End If
+        Catch ex As Exception
+            Bsp.Utility.ShowMessage(Me, "尚未建立該公司拋轉排程，請通知資訊處換版。")
+            result = False
+        End Try
         Return result
     End Function
 #Region "下拉選單"
@@ -483,15 +500,17 @@ Partial Class OV_OV1300
             If data_Period.Rows.Count > 0 Then
                 InsertDB(data_Period) '新增到資料庫
 
-                Dim allCount As Integer = ViewState.Item("OverTotalCount") - ViewState.Item("exOverTotalCount")
+                Dim allCount As Integer = ViewState.Item("OverTotalCount") - errorDt.Rows.Count
 
-                TipMsg.AppendLine("拋轉成功" & "，成功筆數 : " & allCount & " 筆 ; 失敗筆數 : " & ViewState.Item("exOverTotalCount") & " 筆。")
+                TipMsg.AppendLine("拋轉成功" & "，成功筆數 : " & allCount & " 筆 ; 失敗筆數 : " & errorDt.Rows.Count & " 筆。")
                 If errorDt.Rows.Count > 0 Then
                     TipMsg.AppendLine("是否要下載拋轉錯誤報表?")
                 End If
                 msg.Text = TipMsg.ToString
                 If errorDt.Rows.Count > 0 Then
                     Bsp.Utility.RunClientScript(Me.Page, "DownLoad();")
+                Else
+                    Bsp.Utility.RunClientScript(Me.Page, "tipMsg();")
                 End If
             Else
                 TipMsg.AppendLine("拋轉失敗" & "，成功筆數 : 0 筆 ; 失敗筆數 : " & errorDt.Rows.Count & " 筆。")
@@ -1764,15 +1783,17 @@ Partial Class OV_OV1300
 
     Protected Sub btnMessage_Click(sender As Object, e As System.EventArgs) Handles btnMessage.Click
         Dim errorMsg As String = ""
-        Dim CompID As String = UserProfile.CompID
+        Dim CompID As String = UserProfile.SelectCompRoleID
+        Dim UserCompID As String = UserProfile.ActCompID
         Dim User As String = UserProfile.ActUserID
+        Dim TossingDate As String = ucDate.DateText
         Try
             Dim thread As New Thread(
            Sub()
                Try
-                   Dim toOverTimeFlag As Boolean = ForOverTime.InsertToOverTimeRunningStatus(CompID, User)
+                   Dim toOverTimeFlag As Boolean = ForOverTime.InsertToOverTimeRunningStatus(CompID, User, UserCompID, TossingDate)
                    If toOverTimeFlag Then
-                       ForOverTime.ExecQuitPayrollBatch()
+                       ForOverTime.ExecOverTimeTossingBatch(CompID)
                    End If
                Catch ex As Exception
                    errorMsg += ex.Message + ","

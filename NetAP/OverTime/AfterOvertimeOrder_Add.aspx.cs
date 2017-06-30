@@ -1395,7 +1395,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
 
                             //將選項鎖住
                             ddlSalaryOrAdjust.Enabled = false;
-                        }   
+                        }
                     }
                 }
             }
@@ -1579,6 +1579,8 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         dt.Columns.Add("OTTotalTime");
         dt.Columns.Add("OTTxnID");
         dt.Columns.Add("OTFromAdvanceTxnId");//從事前直接新增一筆資料到事後申報
+        dt.Columns.Add("RowIndex");
+        
         string OTSeq = "";
         foreach (GridViewRow row in gvMain.Rows)
         {
@@ -1598,6 +1600,8 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                     dr["OTFormNO"] = gvMain.DataKeys[row.RowIndex].Values["OTFormNO"].ToString();
                     dr["OTTxnID"] = gvMain.DataKeys[row.RowIndex].Values["OTTxnID"].ToString();
                     dr["OTFromAdvanceTxnId"] = gvMain.DataKeys[row.RowIndex].Values["OTFromAdvanceTxnId"].ToString();
+                    dr["RowIndex"] = row.RowIndex + 1;
+                    
                     dt.Rows.Add(dr);
                 }
                 ViewState["dt"] = dt;
@@ -1627,7 +1631,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         sb.Append(" Convert(Decimal(10,1),ROUND(Convert(Decimal(10,2),((CAST(OT.OTTotalTime AS FLOAT)-CAST(OT.MealTime AS FLOAT))/CAST(60 AS FLOAT))+((CAST(ISNULL(OT2.OTTotalTime,0) AS FLOAT)-CAST(ISNULL(OT2.MealTime,0) AS FLOAT))/CAST(60 AS FLOAT))),1)) AS OTTotalTime ");
         sb.Append(" FROM OverTimeDeclaration OT ");
         sb.Append(" LEFT JOIN OverTimeDeclaration OT2 on OT2.OTTxnID=OT.OTTxnID AND OT2.OTSeqNo=2 AND OT2.OverTimeFlag='1'");
-        sb.Append(" LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P ON P.EmpID=OT.OTEmpID AND P.CompID = OT.OTCompID ");
+        sb.Append(" LEFT JOIN [" + Util.getAppSetting("app://eHRMSDB_OverTime/") + "].[dbo].[Personal] P ON P.EmpID=OT.OTEmpID AND P.CompID = OT.OTCompID ");
         sb.Append(" LEFT JOIN AT_CodeMap AS OTT ON OT.OTTypeID = OTT.Code AND OTT.TabName='OverTime' AND OTT.FldName='OverTimeType'");
         sb.Append(" LEFT JOIN AttachInfo AI ON AI.AttachID IS NOT NULL AND AI.AttachID <> '' AND AI.AttachID = OT.OTAttachment AND FileSize>0");
         sb.Append(" WHERE OT.OTSeqNo=1 AND OT.OTCompID = '" + UserInfo.getUserInfo().CompID + "' AND OT.OTRegisterID='" + UserInfo.getUserInfo().UserID + "' AND OT.OTFormNO IN (" + b + ") AND OT.OTStatus='1' AND OT.OverTimeFlag='1'");
@@ -3763,7 +3767,7 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         sb.Append("SELECT SC.UserID,C.EMail FROM " + Util.getAppSetting("app://HRDB_OverTime/") + ".[dbo].[SC_UserGroup] SC");
         sb.Append(" LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P ON P.EmpID=SC.UserID AND P.CompID=SC.CompID");
         sb.Append(" LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Communication] C ON P.IDNo=C.IDNo");
-        sb.Append(" WHERE SC.CompID='" + UserInfo.getUserInfo().CompID + "' AND SC.GroupID='Adm-OT'");
+        sb.Append(" WHERE SC.CompID='" + UserInfo.getUserInfo().CompID + "' AND SC.GroupID='ADM-OT'");
         DataTable dt = db.ExecuteDataSet(sb.BuildCommand()).Tables[0];
         for (int i = 0; i < dt.Rows.Count; i++)
         {
@@ -3775,11 +3779,10 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
     {
         DbHelper db = new DbHelper(_overtimeDBName);
         CommandHelper sb = db.CreateCommandHelper();
-        DbConnection cn = db.OpenConnection();
-        DbTransaction tx = cn.BeginTransaction();
+        
         FlowExpress flow = new FlowExpress(Util.getAppSetting("app://AattendantDB_OverTime/"));
         string strName = "";
-        string strOTTxnID = "";
+        //string strOTTxnID = "";
         Dictionary<string, string> oAssTo = new Dictionary<string, string>();
         LoadCheckData();
         DataTable DT = (DataTable)ViewState["dt"];
@@ -3790,162 +3793,85 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
         var flowSN = "";
         var nextIsLastFlow = false;
         var meassge = "";
+        string IndexMsg = ""; //20170602-leo modify
+        bool DoIt = false; //20170602-leo modify
 
-        try
+        if (gvMain.Visible && gvMain.Rows.Count > 0)
         {
-            if (gvMain.Visible && gvMain.Rows.Count > 0)
+            //if (DT.Rows.Count <= 0)
+            //{
+            //    Util.MsgBox("尚未勾選資料");
+            //    return;
+            //}
+            if (DT.Rows.Count > 0)
             {
-                //if (DT.Rows.Count <= 0)
-                //{
-                //    Util.MsgBox("尚未勾選資料");
-                //    return;
-                //}
-                if (DT.Rows.Count > 0)
+                for (int i = 0; i < DT.Rows.Count; i++)
                 {
-                    for (int i = 0; i < DT.Rows.Count; i++)
+                    DbConnection cn = db.OpenConnection();
+                    DbTransaction tx = cn.BeginTransaction();
+                    sb.Reset();
+                    DoIt = false;
+
+                    #region"FlowUtility共用檔撈取審核人員資料"
+                    isSuccess = FlowUtility.QueryFlowDataAndToUserData_First(lblCompID.Text, "", "", DT.Rows[i]["EmpID"].ToString(), UserInfo.getUserInfo().UserID, DT.Rows[i]["OTStartDate"].ToString(), "1",
+                    out empData, out toUserData, out flowCode, out flowSN, out nextIsLastFlow, out meassge);
+                    if (!isSuccess)
                     {
-                        isSuccess = FlowUtility.QueryFlowDataAndToUserData_First(lblCompID.Text, "", "", DT.Rows[i]["EmpID"].ToString(), UserInfo.getUserInfo().UserID, DT.Rows[i]["OTStartDate"].ToString(), "1",
-                        out empData, out toUserData, out flowCode, out flowSN, out nextIsLastFlow, out meassge);
-                        if (!isSuccess)
+                        IndexMsg = IndexMsg + "第" + DT.Rows[i]["RowIndex"].ToString() + "項-查無加班人相關資料，故無法送簽。" + "\n";
+                        continue;
+                    }
+                    if ("".Equals(toUserData["SignID"]))
+                    {
+                        IndexMsg = IndexMsg + "第" + DT.Rows[i]["RowIndex"].ToString() + "項-查無審核人員，故無法送簽。" + "\n";
+                        continue;
+                    }
+                    #endregion"FlowUtility共用檔撈取審核人員資料"
+
+                        //逐筆送簽
+                        #region"流程所需資料前置"
+                        oAssTo.Clear();
+                        string name = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "'");
+                        //需加部門
+                        string organName = "";
+
+                        if (toUserData["SignLine"] == "1")
                         {
-                            Util.MsgBox(meassge);
-                            return;
+                            organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
                         }
-                        if ("".Equals(toUserData["SignID"]))
+                        else if (toUserData["SignLine"] == "2")
                         {
-                            Util.MsgBox("查無審核人員，故無法送簽。");
-                            return;
+                            organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[OrganizationFlow]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
                         }
-                        else
+                        else if (toUserData["SignLine"] == "3")
                         {
-                            //逐筆送簽
-                            oAssTo.Clear();
-                            string name = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "'");
-                            //需加部門
-                            string organName = "";
-                            //if (toUserData["SignLine"] == "1")
-                            //{
-                            //    organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization] where OrganID='" + toUserData["SignOrganID"] + "' AND CompID='" + lblCompID.Text + "')");
-                            //}
-                            //else if (toUserData["SignLine"] == "2")
-                            //{
-                            //    organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[OrganizationFlow]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[OrganizationFlow] where OrganID='" + toUserData["SignFlowOrganID"] + "')");
-                            //}
-                            //else if (toUserData["SignLine"] == "3")
-                            //{
-                            //    organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization] where OrganID='" + toUserData["SignOrganID"] + "' AND CompID='" + lblCompID.Text + "')");
-                            //}
-                            if (toUserData["SignLine"] == "1")
-                            {
-                                organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
-                            }
-                            else if (toUserData["SignLine"] == "2")
-                            {
-                                organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[OrganizationFlow]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
-                            }
-                            else if (toUserData["SignLine"] == "3")
-                            {
-                                organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
-                            }
-                            oAssTo.Add(toUserData["SignID"], organName + "-" + name);//oAssTo.Add(toUserData["SignID"], name);
+                            organName = at.QueryColumn("OrganName", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Organization]", " AND OrganID=(SELECT DeptID FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] WHERE EmpID='" + toUserData["SignID"] + "' AND CompID='" + toUserData["SignIDComp"] + "')");
+                        }
+                        oAssTo.Add(toUserData["SignID"], organName + "-" + name);//oAssTo.Add(toUserData["SignID"], name);
 
-                            string strStartTime = (DT.Rows[i]["OTStartTime"]).ToString().Substring(0, 2) + "：" + (DT.Rows[i]["OTStartTime"]).ToString().Substring(2, 2);
-                            string strEndTime = (DT.Rows[i]["OTEndTime"]).ToString().Substring(0, 2) + "：" + (DT.Rows[i]["OTEndTime"]).ToString().Substring(2, 2);
+                        string strStartTime = (DT.Rows[i]["OTStartTime"]).ToString().Substring(0, 2) + "：" + (DT.Rows[i]["OTStartTime"]).ToString().Substring(2, 2);
+                        string strEndTime = (DT.Rows[i]["OTEndTime"]).ToString().Substring(0, 2) + "：" + (DT.Rows[i]["OTEndTime"]).ToString().Substring(2, 2);
 
-                            string OTSeq = at.QueryColumn("OTSeq", " OverTimeDeclaration", " AND OTCompID='" + DT.Rows[i]["OTCompID"].ToString() + "' AND OTEmpID='" + DT.Rows[i]["EmpID"] + "' AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
-                            string FlowKeyValue = "B," + DT.Rows[i]["OTCompID"] + "," + DT.Rows[i]["EmpID"] + "," + DT.Rows[i]["OTStartDate"] + "," + DT.Rows[i]["OTEndDate"] + "," + OTSeq;
-                            strName = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + DT.Rows[i]["EmpID"] + "' AND CompID='" + DT.Rows[i]["OTCompID"].ToString() + "'");
-                            string FlowShowValue = DT.Rows[i]["EmpID"] + "," + strName + "," + DT.Rows[i]["OTStartDate"] + "," + strStartTime + "," + DT.Rows[i]["OTEndDate"] + "," + strEndTime;
-                            if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), nextIsLastFlow ? "btnAfterLast" : "btnAfter", oAssTo, ""))
-                            {
-                                //更新AssignToName(部門+員工姓名)
-                                string a = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);
-                                if (!string.IsNullOrEmpty(a))
-                                {
-                                    CommandHelper sb2 = db.CreateCommandHelper();
-                                    //加進HROverTimeLog
-                                    FlowUtility.InsertHROverTimeLogCommand(a, "1", a + ".00001",
-                                       "D", empData["EmpID"], empData["OrganID"], empData["FlowOrganID"], UserInfo.getUserInfo().UserID,
-                                       flowCode, flowSN, "1", toUserData["SignLine"],
-                                       toUserData["SignIDComp"], toUserData["SignID"], toUserData["SignOrganID"], toUserData["SignFlowOrganID"], "0",
-                                       false, ref sb2, 1, "1");
+                        string OTSeq = at.QueryColumn("OTSeq", " OverTimeDeclaration", " AND OTCompID='" + DT.Rows[i]["OTCompID"].ToString() + "' AND OTEmpID='" + DT.Rows[i]["EmpID"] + "' AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
+                        string FlowKeyValue = "B," + DT.Rows[i]["OTCompID"] + "," + DT.Rows[i]["EmpID"] + "," + DT.Rows[i]["OTStartDate"] + "," + DT.Rows[i]["OTEndDate"] + "," + int.Parse(OTSeq).ToString("00");
+                        strName = at.QueryColumn("NameN", Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal]", " AND EmpID='" + DT.Rows[i]["EmpID"] + "' AND CompID='" + DT.Rows[i]["OTCompID"].ToString() + "'");
+                        string FlowShowValue = DT.Rows[i]["EmpID"] + "," + strName + "," + DT.Rows[i]["OTStartDate"] + "," + strStartTime + "," + DT.Rows[i]["OTEndDate"] + "," + strEndTime;
+                        #endregion"(申請修改後再申報)流程所需資料前置"
+                        if (FlowExpress.IsFlowInsVerify(flow.FlowID, FlowKeyValue.Split(','), FlowShowValue.Split(','), nextIsLastFlow ? "btnAfterLast" : "btnAfter", oAssTo, ""))
+                        {
+                            //更新AssignToName(部門+員工姓名)
+                            string strFlowCaseID = FlowExpress.getFlowCaseID(flow.FlowID, FlowKeyValue);
+                            DoIt = true;
 
-                                    //加進MailLog
-                                    string Subject_1 = "";
-                                    string Content_1 = "";
-                                    string mail = "";
-                                    CommandHelper sbselect = db.CreateCommandHelper();
-                                    sbselect.Append("SELECT isnull(C.EMail,'') AS EMail FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P");
-                                    sbselect.Append(" LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Communication] C ON P.IDNo=C.IDNo");
-                                    sbselect.Append(" WHERE P.CompID='" + toUserData["SignIDComp"] + "' AND P.EmpID='" + toUserData["SignID"] + "'");
-                                    DataTable dtSelect = db.ExecuteDataSet(sbselect.BuildCommand()).Tables[0];
-                                    if (dtSelect.Rows.Count > 0)
-                                    {
-                                        if (string.IsNullOrEmpty(dtSelect.Rows[0]["EMail"].ToString()))
-                                        {
-                                            mail = HREmail();
-                                            Subject_1 = "系統查無通知者E-mail";
-                                            Content_1 = "OverTimeExpedite||BM@QuitMailContent1||系統查無通知者<br/>" + toUserData["SignID"] + "-" + name;
-                                        }
-                                        else
-                                        {
-                                            mail = dtSelect.Rows[0]["EMail"].ToString();
-                                            Subject_1 = "加班單流程待辦案件通知";
-                                            Content_1 = "OverTimeTodoList||BM@QuitMailContent1||" + name + "||BM@QuitMailContent2||" + DT.Rows[i]["OTFormNO"] + "||BM@QuitMailContent3||" + DT.Rows[i]["EmpID"] + "||BM@QuitMailContent4||" + strName + "||BM@QuitMailContent5||" + DT.Rows[i]["OTStartDate"] + "~" + DT.Rows[i]["OTEndDate"] + "||BM@QuitMailContent6||" + strStartTime + "||BM@QuitMailContent7||" + strEndTime + "||BM@QuitMailContent8||" + DT.Rows[i]["OTTotalTime"];
-                                        }
-                                    }
-                                    Aattendant.InsertMailLogCommand("人力資源處", toUserData["SignIDComp"], toUserData["SignID"], mail, "", "", Subject_1, Content_1, false, ref sb2);
-                                    try
-                                    {
-                                        db.ExecuteNonQuery(sb2.BuildCommand());
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
-                                        tx.Rollback();//資料更新失敗
-                                        Util.MsgBox("送簽失敗(6)"); //提案送審失敗
-                                        return;
-                                    }
-                                }
-                                if (DT.Rows[i]["OTStartDate"].ToString() != DT.Rows[i]["OTEndDate"].ToString())//當跨日的時候須回寫FlowCaseID到迄日
-                                {
-                                    CommandHelper sb1 = db.CreateCommandHelper();
-                                    sb1.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID=A.FlowCaseID");
-                                    sb1.Append(" FROM (SELECT FlowCaseID FROM OverTimeDeclaration");
-                                    sb1.Append(" WHERE OTCompID='" + DT.Rows[i]["OTCompID"] + "'");
-                                    sb1.Append(" AND OTEmpID='" + DT.Rows[i]["EmpID"] + "'");
-                                    sb1.Append(" AND OTStartDate='" + DT.Rows[i]["OTStartDate"] + "'");
-                                    sb1.Append(" AND OTEndDate='" + DT.Rows[i]["OTStartDate"] + "'");
-                                    sb1.Append(" AND OTStartTime='" + DT.Rows[i]["OTStartTime"] + "'");
-                                    sb1.Append(" AND OTEndTime='2359'");
-                                    sb1.Append(" AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
-                                    sb1.Append(" ) A ");
-                                    sb1.Append(" WHERE OTCompID='" + DT.Rows[i]["OTCompID"] + "'");
-                                    sb1.Append(" AND OTEmpID='" + DT.Rows[i]["EmpID"] + "'");
-                                    sb1.Append(" AND OTStartDate='" + DT.Rows[i]["OTEndDate"] + "'");
-                                    sb1.Append(" AND OTEndDate='" + DT.Rows[i]["OTEndDate"] + "'");
-                                    sb1.Append(" AND OTStartTime='0000'");
-                                    sb1.Append(" AND OTEndTime='" + DT.Rows[i]["OTEndTime"] + "'");
-                                    sb1.Append(" AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
-                                    try
-                                    {
-                                        db.ExecuteNonQuery(sb1.BuildCommand());
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
-                                        tx.Rollback();//資料更新失敗
-                                        Util.MsgBox("送簽失敗(1)");
-                                        return;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                Util.MsgBox("送簽失敗(2)");
-                                return;
-                            }
+                            #region"加進HROverTimeLog"
+                            //加進HROverTimeLog
+                            FlowUtility.InsertHROverTimeLogCommand(strFlowCaseID, "1", strFlowCaseID + ".00001",
+                               "D", empData["EmpID"], empData["OrganID"], empData["FlowOrganID"], UserInfo.getUserInfo().UserID,
+                               flowCode, flowSN, "1", toUserData["SignLine"],
+                               toUserData["SignIDComp"], toUserData["SignID"], toUserData["SignOrganID"], toUserData["SignFlowOrganID"], "0",
+                               false, ref sb, 1, "1");
+                            #endregion"加進HROverTimeLog"
 
+                            #region"組SQL字串sb:true單日、false跨日單回壓狀態"
                             if (DT.Rows[i]["OTStartDate"].ToString() == DT.Rows[i]["OTEndDate"].ToString())
                             {
                                 sb.AppendStatement("UPDATE OverTimeDeclaration SET OTStatus='2'");
@@ -3986,36 +3912,129 @@ public partial class OverTime_AfterOvertimeOrder_Add : SecurePage
                                     }
                                 }
                             }
+                            #endregion"組SQL字串sb:true單日、false跨日單回壓狀態"
+
+                            #region"組SQL字串sb:跨日單回壓FlowCaseID"
+                            if (DT.Rows[i]["OTStartDate"].ToString() != DT.Rows[i]["OTEndDate"].ToString())//當跨日的時候須回寫FlowCaseID到迄日
+                            {
+                                sb.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID=A.FlowCaseID");
+                                sb.Append(" FROM (SELECT FlowCaseID FROM OverTimeDeclaration");
+                                sb.Append(" WHERE OTCompID='" + DT.Rows[i]["OTCompID"] + "'");
+                                sb.Append(" AND OTEmpID='" + DT.Rows[i]["EmpID"] + "'");
+                                sb.Append(" AND OTStartDate='" + DT.Rows[i]["OTStartDate"] + "'");
+                                sb.Append(" AND OTEndDate='" + DT.Rows[i]["OTStartDate"] + "'");
+                                sb.Append(" AND OTStartTime='" + DT.Rows[i]["OTStartTime"] + "'");
+                                sb.Append(" AND OTEndTime='2359'");
+                                sb.Append(" AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
+                                sb.Append(" ) A ");
+                                sb.Append(" WHERE OTCompID='" + DT.Rows[i]["OTCompID"] + "'");
+                                sb.Append(" AND OTEmpID='" + DT.Rows[i]["EmpID"] + "'");
+                                sb.Append(" AND OTStartDate='" + DT.Rows[i]["OTEndDate"] + "'");
+                                sb.Append(" AND OTEndDate='" + DT.Rows[i]["OTEndDate"] + "'");
+                                sb.Append(" AND OTStartTime='0000'");
+                                sb.Append(" AND OTEndTime='" + DT.Rows[i]["OTEndTime"] + "'");
+                                sb.Append(" AND OTTxnID='" + DT.Rows[i]["OTTxnID"] + "'");
+                            }
+                            #endregion"組SQL字串sb:跨日單回壓FlowCaseID"
+
+                            #region"SQL執行sb"
+                            if (DoIt)
+                                try
+                                {
+                                    //*********************//
+                                    //sb.Append("這程式本身就是個錯誤");
+                                    //*********************//
+                                    db.ExecuteNonQuery(sb.BuildCommand(), tx);
+                                    tx.Commit();
+                                    Util.MsgBox("送簽成功");
+                                    DoIt = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
+                                    tx.Rollback();//資料更新失敗
+                                    FlowExpress.IsFlowCaseDeleted(flow.FlowID, strFlowCaseID, true); //永豐流程刪除
+                                    IndexMsg = IndexMsg + "第" + DT.Rows[i]["RowIndex"].ToString() + "項-送簽失敗" + "\n";
+                                    DoIt = false;
+                                }
+                                finally
+                                {
+                                    cn.Close();
+                                    cn.Dispose();
+                                    tx.Dispose();
+                                }
+                            #endregion"SQL執行sb"
+
+                            #region"Mail 組SQL字串sb2+執行"
+                            if (!string.IsNullOrEmpty(strFlowCaseID) && DoIt)
+                            {
+                                CommandHelper sb2 = db.CreateCommandHelper();
+
+                                //加進MailLog
+                                string Subject_1 = "";
+                                string Content_1 = "";
+                                string mail = "";
+                                CommandHelper sbselect = db.CreateCommandHelper();
+                                sbselect.Append("SELECT isnull(C.EMail,'') AS EMail FROM " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Personal] P");
+                                sbselect.Append(" LEFT JOIN " + Util.getAppSetting("app://eHRMSDB_OverTime/") + ".[dbo].[Communication] C ON P.IDNo=C.IDNo");
+                                sbselect.Append(" WHERE P.CompID='" + toUserData["SignIDComp"] + "' AND P.EmpID='" + toUserData["SignID"] + "'");
+                                DataTable dtSelect = db.ExecuteDataSet(sbselect.BuildCommand()).Tables[0];
+                                if (dtSelect.Rows.Count > 0)
+                                {
+                                    if (string.IsNullOrEmpty(dtSelect.Rows[0]["EMail"].ToString()))
+                                    {
+                                        mail = HREmail();
+                                        Subject_1 = "系統查無通知者E-mail";
+                                        Content_1 = "OverTimeExpedite||BM@QuitMailContent1||系統查無通知者<br/>" + toUserData["SignID"] + "-" + name;
+                                    }
+                                    else
+                                    {
+                                        mail = dtSelect.Rows[0]["EMail"].ToString();
+                                        Subject_1 = "加班單流程待辦案件通知";
+                                        Content_1 = "OverTimeTodoList||BM@QuitMailContent1||" + name + "||BM@QuitMailContent2||" + DT.Rows[i]["OTFormNO"] + "||BM@QuitMailContent3||" + DT.Rows[i]["EmpID"] + "||BM@QuitMailContent4||" + strName + "||BM@QuitMailContent5||" + DT.Rows[i]["OTStartDate"] + "~" + DT.Rows[i]["OTEndDate"] + "||BM@QuitMailContent6||" + strStartTime + "||BM@QuitMailContent7||" + strEndTime + "||BM@QuitMailContent8||" + DT.Rows[i]["OTTotalTime"];
+                                    }
+                                }
+                                Aattendant.InsertMailLogCommand("人力資源處", toUserData["SignIDComp"], toUserData["SignID"], mail, "", "", Subject_1, Content_1, false, ref sb2);
+                                try
+                                {
+                                    db.ExecuteNonQuery(sb2.BuildCommand());
+                                }
+                                catch (Exception ex)
+                                {
+                                    LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
+                                    //tx.Rollback();//資料更新失敗
+                                    //Util.MsgBox("送簽失敗(6)"); //提案送審失敗
+                                    //return;
+                                }
+                            }
+                            #endregion"Mail 組SQL字串sb2+執行"
                         }
-                    }
+                        else
+                        {
+                            IndexMsg = IndexMsg + "第" + DT.Rows[i]["RowIndex"].ToString() + "項-進流程失敗" + "\n"; //20170602-leo modify
+                            DoIt = false;
+                        }
+                }//for
+                #region"錯誤訊息視窗+失敗刪除FlowCaseID+gridview查詢"
+                //訊息視窗
+                if (IndexMsg.Length > 0)
+                {
+                    sb.Reset();
+                    sb.AppendStatement("UPDATE OverTimeDeclaration SET FlowCaseID='' ");
+                    sb.Append(" WHERE FlowCaseID <>'' ");
+                    sb.Append(" AND OTStatus='1' ");
+                    try { db.ExecuteNonQuery(sb.BuildCommand()); }
+                    catch (Exception) { }
+                    Util.MsgBox(IndexMsg + "共" + (IndexMsg.Split("\n").Length - 1) + "筆-送簽失敗");//提案送審失敗
                 }
-            }
-            try
-            {
-                db.ExecuteNonQuery(sb.BuildCommand(), tx);
-                tx.Commit();
-                Util.MsgBox("送簽成功");
-            }
-            catch (Exception ex)
-            {
-                LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
-                tx.Rollback();//資料更新失敗
-                Util.MsgBox("送簽失敗(3)");
-                return;
-            }
-            RefreshGrid();
-        }
-        catch (Exception ex)
-        {
-            LogHelper.WriteSysLog(ex); //將 Exception 丟給 Log 模組
-            tx.Rollback();//資料更新失敗
-            Util.MsgBox("送簽失敗(4)");
-        }
-        finally
-        {
-            cn.Close();
-            cn.Dispose();
-            tx.Dispose();
+                else
+                {
+                    Util.MsgBox("送簽成功");
+                }
+                try { RefreshGrid(); }
+                catch (Exception) { }//重新查詢
+                #endregion"錯誤訊息視窗+失敗刪除FlowCaseID+gridview查詢"
+            }//count>0
         }
     }
     protected void btnDelete_Click(object sender, EventArgs e)
