@@ -266,7 +266,7 @@ Public Class OV2
         '    strSQL.AppendLine(" and T.TitleName='" + TitleName + "'")
         'End If
 
-         '20170304kevin
+        '20170304kevin
         If isNull("RankIDMIN") Then
             If isNull("TitleIDMIN") Then
                 Dim sRankID_S = OVBusinessCommon.GetRankID(CompID, RankIDMIN)
@@ -754,7 +754,7 @@ Public Class OV2
 
         Dim reMoveRowForOVDDBList As ArrayList = New ArrayList()
 
-   
+
 
 
         '移除已結合的OVA 為防DB髒資料 導致錯誤 所以先查資料然後再移除
@@ -786,9 +786,16 @@ Public Class OV2
             'OVDDB.Rows.Remove(reMoveRowForOVDDBList.Item(i))
         Next
 
-       
+
         '加入剩下的OVA
         For j = 0 To OVADB.Rows.Count - 1
+            '20170706 - Jason 事先申請核准後轉至事後申報暫存這類單都需排掉，避免重複紀錄
+            '尋找事後申報的temp table是否有OVDOTFromAdvanceTxnId等於OVAOTTxnID的row，有則排除
+            Dim foundRow As DataRow = OVDDB.Select("OVDOTFromAdvanceTxnId = " + Bsp.Utility.Quote(OVADB.Rows(j).Item("OVAOTTxnID"))).FirstOrDefault()
+            If Not foundRow Is Nothing Then
+                Continue For
+            End If
+
             Dim dataRows As DataRow
             dataRows = detialTable.NewRow
             dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
@@ -805,6 +812,15 @@ Public Class OV2
 
         '加入剩下的OVD
         For i = 0 To OVDDB.Rows.Count - 1
+            '20170706 - Jason 事先申請核准後轉至事後申報暫存這類單都需排掉，避免重複紀錄
+            If Not String.IsNullOrEmpty(OVDDB.Rows(i).Item("OVDOTFromAdvanceTxnId")) Then
+                '尋找事先申請是否有相符的資料，有則排除
+                Dim foundRow As DataRow = OVADB.Select("OVAOTTxnID = " + Bsp.Utility.Quote(OVDDB.Rows(i).Item("OVDOTFromAdvanceTxnId"))).FirstOrDefault()
+                If Not foundRow Is Nothing Then
+                    Continue For
+                End If
+            End If
+
             Dim dataRows As DataRow
             dataRows = detialTable.NewRow
             dataRows("OTCompID") = OVDDB.Rows(i).Item("OVDOTCompID")
@@ -1165,7 +1181,7 @@ Public Class OV2
                     dataRows("OVAOTReasonMemo") = rows(0).Item("OVAOTReasonMemo")
                     dataRows("OVAOTStatus") = rows(0).Item("OVAOTStatus")
                     cloneDB.Rows.Add(dataRows)
-                    else
+                Else
 
                     dataRows = cloneDB.NewRow
                     dataRows("OVAEmpID") = rows(0).Item("OVAEmpID")
@@ -1183,7 +1199,7 @@ Public Class OV2
                     dataRows("OVAOTStatus") = rows(0).Item("OVAOTStatus")
                     cloneDB.Rows.Add(dataRows)
                 End If
-            
+
             Next
             Return cloneDB
 
@@ -1244,7 +1260,7 @@ Public Class OV2
                     cloneDB.Rows.Add(dataRows)
 
                 End If
-               
+
             Next
             Return cloneDB
         End If
@@ -1264,7 +1280,7 @@ Public Class OV2
     ''' <remarks></remarks>
     Public Function SingleDataTableForStatistics(ByVal db As DataTable, ByVal type As String) As DataTable
 
-      ' Dim detialTable As DataTable = getTableForDetial()
+        ' Dim detialTable As DataTable = getTableForDetial()
         Dim arrayList As ArrayList = New ArrayList()
         If "bef".Equals(type) Then
             '先走訪如果有兩張單的單號先記起來
@@ -1315,7 +1331,7 @@ Public Class OV2
                     dataRows("OVAOTTxnID") = rows(0).Item("OVAOTTxnID")
                     cloneDB.Rows.Add(dataRows)
                 End If
-               
+
             Next
             Return cloneDB
 

@@ -285,7 +285,8 @@ Partial Class OV1000
                             gvExport.Rows(i).Cells(26).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(30).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(31).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
-                            gvExport.Rows(i).Cells(37).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
+                            '20170706 Jason mod - 申請時間是文字不要轉成數字型態
+                            'gvExport.Rows(i).Cells(37).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                             gvExport.Rows(i).Cells(38).Attributes.Add("style", "vnd.ms-excel.numberformat:#,##0.0")
                         Next
 
