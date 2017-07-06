@@ -60,6 +60,52 @@ public class Punch //與交易同名
     }
 
     /// <summary>
+    /// 取得FlowOrgan資料
+    /// </summary>
+    /// <param name="model">畫面model</param>
+    /// <param name="datas">回傳資料</param>
+    /// <param name="msg">回傳訊息</param>
+    /// <returns>bool</returns>
+    public static bool SelectEmpFlowOrgan(PunchModel model, out PunchBean datas, out string msg)
+    {
+        bool result = false;
+        msg = "";
+        datas = new PunchBean();
+        try
+        {
+            using (var conn = new SqlConnection() { ConnectionString = DbHelper.getConnectionStrings(_eHRMSDB_ITRD).ConnectionString })
+            {
+                PunchBean dataBean = new PunchBean()
+                {
+                    CompID = model.CompID,
+                    EmpID = model.EmpID,
+                };
+                StringBuilder sb = new StringBuilder();
+                SqlCommand.SelectEmpFlowOrganSql(ref sb);
+                try
+                {
+                    datas = conn.Query<PunchBean>(sb.ToString(), dataBean).FirstOrDefault();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                if (datas == null)
+                {
+                    throw new Exception("查無資料!");
+                }
+
+            }
+            result = true;
+        }
+        catch (Exception ex)
+        {
+            msg = ex.Message;
+        }
+        return result;
+    }
+
+    /// <summary>
     /// 取得PunchSeq
     /// </summary>
     /// <param name="model">畫面model</param>
@@ -316,6 +362,8 @@ public class Punch //與交易同名
                 DeptName = StringIIF(model.DeptName),
                 OrganID = StringIIF(model.OrganID),
                 OrganName = StringIIF(model.OrganName),
+                FlowOrganID = StringIIF(model.FlowOrganID),
+                FlowOrganName = StringIIF(model.FlowOrganName),
                 Sex = StringIIF(model.Sex),
                 PunchFlag = StringIIF(model.PunchFlag),
                 WorkTypeID = StringIIF(model.WorkTypeID),
@@ -327,7 +375,14 @@ public class Punch //與交易同名
                 AbnormalDesc = StringIIF(model.AbnormalDesc),
                 BatchFlag = StringIIF("0"),
                 Source = StringIIF("B"),
+                PunchUserIP = StringIIF(""),
+                RotateFlag = StringIIF(""),
                 APPContent = StringIIF(""),
+                Lat = StringIIF(decimal.Zero),
+                Lon = StringIIF(decimal.Zero),
+                GPSType = StringIIF(""),
+                OS = StringIIF(""),
+                DeviceID = StringIIF(""),
                 LastChgComp = StringIIF(model.LastChgComp),
                 LastChgID = StringIIF(model.LastChgID)
             };
@@ -425,6 +480,44 @@ public class Punch //與交易同名
         return result;
     }
 
+    /// <summary>
+    /// SelectAT_CodeMap
+    /// 公出申請、公出修改
+    /// 取得ReasonCN下拉選單
+    /// </summary>
+    /// <param name="model">畫面model</param>
+    /// <param name="datas">回傳資料</param>
+    /// <param name="msg">回傳訊息</param>
+    /// <returns>bool</returns>
+    public static bool SelectAT_CodeMap(out List<DropDownListModel> datas, out string msg)
+    {
+        bool result = false;
+        msg = "";
+        datas = new List<DropDownListModel>();
+        try
+        {
+            using (var conn = new SqlConnection() { ConnectionString = DbHelper.getConnectionStrings(_attendantDBName).ConnectionString })
+            {
+                StringBuilder sb = new StringBuilder();
+                SqlCommand.SelectAT_CodeMapSql("Punch", "PunchSeason", ref sb);
+                try
+                {
+                    datas = conn.Query<DropDownListModel>(sb.ToString()).ToList();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            result = true;
+        }
+        catch (Exception ex)
+        {
+            msg = ex.Message;
+        }
+        return result;
+    }
+
 
     /// <summary>
     /// 將Json資料解析
@@ -439,7 +532,7 @@ public class Punch //與交易同名
         paraData.DutyOutBT = jsAry[0]["DutyOutBT"].ToString();
         paraData.PunchInBT = jsAry[0]["PunchInBT"].ToString();
         paraData.PunchOutBT = jsAry[0]["PunchOutBT"].ToString();
-        paraData.VisitOVBT = jsAry[0]["VisitOVBT"].ToString();
+        //paraData.VisitOVBT = jsAry[0]["VisitOVBT"].ToString();
         return paraData;
     }
 

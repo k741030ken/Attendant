@@ -16,7 +16,7 @@ public partial class SSORecvModeForOverTime : System.Web.UI.Page
         Session.Clear();
         var canRedirectTxmIDs = new List<string>()
         {
-            "OV1100","OV1101","OV1102"
+            "OV4200","OV4201","OV4202"
         };
         var canRedirectUrl = new List<string>()
         {

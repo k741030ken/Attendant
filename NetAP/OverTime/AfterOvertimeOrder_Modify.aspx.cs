@@ -419,7 +419,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
         _EmpDate = dt.Rows[0]["EmpDate"].ToString();
         _Sex = dt.Rows[0]["Sex"].ToString();
         _WorkSiteID = dt.Rows[0]["WorkSiteID"].ToString();
-        ddlSalaryOrAdjustChange(_rankID, ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate);
+        //ddlSalaryOrAdjustChange(_rankID, ucDateStart.ucSelectedDate, ucDateEnd.ucSelectedDate);
         ddlSalaryOrAdjust_SelectedIndexChanged(null, null);
 
         SignData();
@@ -3571,7 +3571,7 @@ public partial class OverTime_AfterOvertimeOrder_Modify : BasePage
                     strKeyValue += _EmpID + ",";
                     strKeyValue += ucDateStart.ucSelectedDate + ",";
                     strKeyValue += ucDateEnd.ucSelectedDate + ",";
-                    strKeyValue += OTSeq;
+                    strKeyValue += OTSeq.ToString("00");
 
                     string strShowValue = _EmpID + ",";
                     strShowValue += lblOTEmpName.Text + ",";

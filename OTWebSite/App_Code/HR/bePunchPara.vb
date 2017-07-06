@@ -1,6 +1,6 @@
 ﻿'****************************************************************
 ' Table:PunchPara
-' Created Date: 2017.06.20
+' Created Date: 2017.06.30
 '****************************************************************/
 Imports System
 Imports System.Collections.Generic
@@ -15,13 +15,13 @@ Namespace bePunchPara
     Public Class Table
         Private m_Rows As Rows = New Rows()
         Private m_Fields As String() = { "CompID", "Para", "DutyInFlag", "DutyInBT", "DutyOutFlag", "DutyOutBT", "PunchInFlag", "PunchInBT", "PunchOutFlag", "PunchOutBT" _
-                                    , "MsgPara", "PunchInMsgFlag", "PunchInDefaultContent", "PunchInSelfContent", "PunchOutMsgFlag", "PunchOutDefaultContent", "PunchOutSelfContent", "AffairMsgFlag", "AffairDefaultContent", "AffairSelfContent", "OVTenMsgFlag" _
-                                    , "OVTenDefaultContent", "OVTenSelfContent", "FemaleMsgFlag", "FemaleDefaultContent", "FemaleSelfContent", "ExcludePara", "HoldingRankIDFlag", "HoldingRankID", "PositionFlag", "Position", "WorkTypeFlag" _
-                                    , "WorkTypeID", "RotateFlag", "LastChgComp", "LastChgID", "LastChgDate" }
+                                    , "VacDayBeginTime", "VacAMEndTime", "VacPMBeginTime", "VacDayEndTime", "MsgPara", "PunchInMsgFlag", "PunchInDefaultContent", "PunchInSelfContent", "PunchOutMsgFlag", "PunchOutDefaultContent", "PunchOutSelfContent" _
+                                    , "AffairMsgFlag", "AffairDefaultContent", "AffairSelfContent", "OVTenMsgFlag", "OVTenDefaultContent", "OVTenSelfContent", "FemaleMsgFlag", "FemaleDefaultContent", "FemaleSelfContent", "ExcludePara", "HoldingRankIDFlag" _
+                                    , "HoldingRankID", "PositionFlag", "Position", "WorkTypeFlag", "WorkTypeID", "RotateFlag", "LastChgComp", "LastChgID", "LastChgDate" }
         Private m_Types As System.Type() = { GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String) _
                                     , GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String) _
                                     , GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String) _
-                                    , GetType(String), GetType(String), GetType(String), GetType(String), GetType(Date) }
+                                    , GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(String), GetType(Date) }
         Private m_PrimaryFields As String() = { "CompID" }
 
         Public ReadOnly Property Rows() As bePunchPara.Rows 
@@ -91,6 +91,10 @@ Namespace bePunchPara
                 dr(m_Rows(i).PunchInBT.FieldName) = m_Rows(i).PunchInBT.Value
                 dr(m_Rows(i).PunchOutFlag.FieldName) = m_Rows(i).PunchOutFlag.Value
                 dr(m_Rows(i).PunchOutBT.FieldName) = m_Rows(i).PunchOutBT.Value
+                dr(m_Rows(i).VacDayBeginTime.FieldName) = m_Rows(i).VacDayBeginTime.Value
+                dr(m_Rows(i).VacAMEndTime.FieldName) = m_Rows(i).VacAMEndTime.Value
+                dr(m_Rows(i).VacPMBeginTime.FieldName) = m_Rows(i).VacPMBeginTime.Value
+                dr(m_Rows(i).VacDayEndTime.FieldName) = m_Rows(i).VacDayEndTime.Value
                 dr(m_Rows(i).MsgPara.FieldName) = m_Rows(i).MsgPara.Value
                 dr(m_Rows(i).PunchInMsgFlag.FieldName) = m_Rows(i).PunchInMsgFlag.Value
                 dr(m_Rows(i).PunchInDefaultContent.FieldName) = m_Rows(i).PunchInDefaultContent.Value
@@ -170,6 +174,10 @@ Namespace bePunchPara
         Private FI_PunchInBT As Field(Of String) = new Field(Of String)("PunchInBT", true)
         Private FI_PunchOutFlag As Field(Of String) = new Field(Of String)("PunchOutFlag", true)
         Private FI_PunchOutBT As Field(Of String) = new Field(Of String)("PunchOutBT", true)
+        Private FI_VacDayBeginTime As Field(Of String) = new Field(Of String)("VacDayBeginTime", true)
+        Private FI_VacAMEndTime As Field(Of String) = new Field(Of String)("VacAMEndTime", true)
+        Private FI_VacPMBeginTime As Field(Of String) = new Field(Of String)("VacPMBeginTime", true)
+        Private FI_VacDayEndTime As Field(Of String) = new Field(Of String)("VacDayEndTime", true)
         Private FI_MsgPara As Field(Of String) = new Field(Of String)("MsgPara", true)
         Private FI_PunchInMsgFlag As Field(Of String) = new Field(Of String)("PunchInMsgFlag", true)
         Private FI_PunchInDefaultContent As Field(Of String) = new Field(Of String)("PunchInDefaultContent", true)
@@ -198,9 +206,9 @@ Namespace bePunchPara
         Private FI_LastChgID As Field(Of String) = new Field(Of String)("LastChgID", true)
         Private FI_LastChgDate As Field(Of Date) = new Field(Of Date)("LastChgDate", true)
         Private m_FieldNames As String() = { "CompID", "Para", "DutyInFlag", "DutyInBT", "DutyOutFlag", "DutyOutBT", "PunchInFlag", "PunchInBT", "PunchOutFlag", "PunchOutBT" _
-                                    , "MsgPara", "PunchInMsgFlag", "PunchInDefaultContent", "PunchInSelfContent", "PunchOutMsgFlag", "PunchOutDefaultContent", "PunchOutSelfContent", "AffairMsgFlag", "AffairDefaultContent", "AffairSelfContent", "OVTenMsgFlag" _
-                                    , "OVTenDefaultContent", "OVTenSelfContent", "FemaleMsgFlag", "FemaleDefaultContent", "FemaleSelfContent", "ExcludePara", "HoldingRankIDFlag", "HoldingRankID", "PositionFlag", "Position", "WorkTypeFlag" _
-                                    , "WorkTypeID", "RotateFlag", "LastChgComp", "LastChgID", "LastChgDate" }
+                                    , "VacDayBeginTime", "VacAMEndTime", "VacPMBeginTime", "VacDayEndTime", "MsgPara", "PunchInMsgFlag", "PunchInDefaultContent", "PunchInSelfContent", "PunchOutMsgFlag", "PunchOutDefaultContent", "PunchOutSelfContent" _
+                                    , "AffairMsgFlag", "AffairDefaultContent", "AffairSelfContent", "OVTenMsgFlag", "OVTenDefaultContent", "OVTenSelfContent", "FemaleMsgFlag", "FemaleDefaultContent", "FemaleSelfContent", "ExcludePara", "HoldingRankIDFlag" _
+                                    , "HoldingRankID", "PositionFlag", "Position", "WorkTypeFlag", "WorkTypeID", "RotateFlag", "LastChgComp", "LastChgID", "LastChgDate" }
         Private m_PrimaryFields As String() = { "CompID" }
         Private m_IdentityFields As String() = {  }
         Private m_LoadFromDataRow As Boolean = False
@@ -227,6 +235,14 @@ Namespace bePunchPara
                     Return FI_PunchOutFlag.Value
                 Case "PunchOutBT"
                     Return FI_PunchOutBT.Value
+                Case "VacDayBeginTime"
+                    Return FI_VacDayBeginTime.Value
+                Case "VacAMEndTime"
+                    Return FI_VacAMEndTime.Value
+                Case "VacPMBeginTime"
+                    Return FI_VacPMBeginTime.Value
+                Case "VacDayEndTime"
+                    Return FI_VacDayEndTime.Value
                 Case "MsgPara"
                     Return FI_MsgPara.Value
                 Case "PunchInMsgFlag"
@@ -308,6 +324,14 @@ Namespace bePunchPara
                     FI_PunchOutFlag.SetValue(value)
                 Case "PunchOutBT"
                     FI_PunchOutBT.SetValue(value)
+                Case "VacDayBeginTime"
+                    FI_VacDayBeginTime.SetValue(value)
+                Case "VacAMEndTime"
+                    FI_VacAMEndTime.SetValue(value)
+                Case "VacPMBeginTime"
+                    FI_VacPMBeginTime.SetValue(value)
+                Case "VacDayEndTime"
+                    FI_VacDayEndTime.SetValue(value)
                 Case "MsgPara"
                     FI_MsgPara.SetValue(value)
                 Case "PunchInMsgFlag"
@@ -417,6 +441,14 @@ Namespace bePunchPara
                     return FI_PunchOutFlag.Updated
                 Case "PunchOutBT"
                     return FI_PunchOutBT.Updated
+                Case "VacDayBeginTime"
+                    return FI_VacDayBeginTime.Updated
+                Case "VacAMEndTime"
+                    return FI_VacAMEndTime.Updated
+                Case "VacPMBeginTime"
+                    return FI_VacPMBeginTime.Updated
+                Case "VacDayEndTime"
+                    return FI_VacDayEndTime.Updated
                 Case "MsgPara"
                     return FI_MsgPara.Updated
                 Case "PunchInMsgFlag"
@@ -498,6 +530,14 @@ Namespace bePunchPara
                     return FI_PunchOutFlag.CreateUpdateSQL
                 Case "PunchOutBT"
                     return FI_PunchOutBT.CreateUpdateSQL
+                Case "VacDayBeginTime"
+                    return FI_VacDayBeginTime.CreateUpdateSQL
+                Case "VacAMEndTime"
+                    return FI_VacAMEndTime.CreateUpdateSQL
+                Case "VacPMBeginTime"
+                    return FI_VacPMBeginTime.CreateUpdateSQL
+                Case "VacDayEndTime"
+                    return FI_VacDayEndTime.CreateUpdateSQL
                 Case "MsgPara"
                     return FI_MsgPara.CreateUpdateSQL
                 Case "PunchInMsgFlag"
@@ -596,6 +636,10 @@ Namespace bePunchPara
             FI_PunchInBT.SetInitValue("")
             FI_PunchOutFlag.SetInitValue("")
             FI_PunchOutBT.SetInitValue("")
+            FI_VacDayBeginTime.SetInitValue("")
+            FI_VacAMEndTime.SetInitValue("")
+            FI_VacPMBeginTime.SetInitValue("")
+            FI_VacDayEndTime.SetInitValue("")
             FI_MsgPara.SetInitValue("")
             FI_PunchInMsgFlag.SetInitValue("")
             FI_PunchInDefaultContent.SetInitValue("")
@@ -636,6 +680,10 @@ Namespace bePunchPara
             FI_PunchInBT.SetInitValue(dr("PunchInBT"))
             FI_PunchOutFlag.SetInitValue(dr("PunchOutFlag"))
             FI_PunchOutBT.SetInitValue(dr("PunchOutBT"))
+            FI_VacDayBeginTime.SetInitValue(dr("VacDayBeginTime"))
+            FI_VacAMEndTime.SetInitValue(dr("VacAMEndTime"))
+            FI_VacPMBeginTime.SetInitValue(dr("VacPMBeginTime"))
+            FI_VacDayEndTime.SetInitValue(dr("VacDayEndTime"))
             FI_MsgPara.SetInitValue(dr("MsgPara"))
             FI_PunchInMsgFlag.SetInitValue(dr("PunchInMsgFlag"))
             FI_PunchInDefaultContent.SetInitValue(dr("PunchInDefaultContent"))
@@ -678,6 +726,10 @@ Namespace bePunchPara
             FI_PunchInBT.Updated = False
             FI_PunchOutFlag.Updated = False
             FI_PunchOutBT.Updated = False
+            FI_VacDayBeginTime.Updated = False
+            FI_VacAMEndTime.Updated = False
+            FI_VacPMBeginTime.Updated = False
+            FI_VacDayEndTime.Updated = False
             FI_MsgPara.Updated = False
             FI_PunchInMsgFlag.Updated = False
             FI_PunchInDefaultContent.Updated = False
@@ -764,6 +816,30 @@ Namespace bePunchPara
         Public ReadOnly Property PunchOutBT As Field(Of String) 
             Get
                 Return FI_PunchOutBT
+            End Get
+        End Property
+
+        Public ReadOnly Property VacDayBeginTime As Field(Of String) 
+            Get
+                Return FI_VacDayBeginTime
+            End Get
+        End Property
+
+        Public ReadOnly Property VacAMEndTime As Field(Of String) 
+            Get
+                Return FI_VacAMEndTime
+            End Get
+        End Property
+
+        Public ReadOnly Property VacPMBeginTime As Field(Of String) 
+            Get
+                Return FI_VacPMBeginTime
+            End Get
+        End Property
+
+        Public ReadOnly Property VacDayEndTime As Field(Of String) 
+            Get
+                Return FI_VacDayEndTime
             End Get
         End Property
 
@@ -1070,6 +1146,10 @@ Namespace bePunchPara
             If PunchParaRow.PunchInBT.Updated Then db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, PunchParaRow.PunchInBT.Value)
             If PunchParaRow.PunchOutFlag.Updated Then db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, PunchParaRow.PunchOutFlag.Value)
             If PunchParaRow.PunchOutBT.Updated Then db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, PunchParaRow.PunchOutBT.Value)
+            If PunchParaRow.VacDayBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, PunchParaRow.VacDayBeginTime.Value)
+            If PunchParaRow.VacAMEndTime.Updated Then db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, PunchParaRow.VacAMEndTime.Value)
+            If PunchParaRow.VacPMBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, PunchParaRow.VacPMBeginTime.Value)
+            If PunchParaRow.VacDayEndTime.Updated Then db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, PunchParaRow.VacDayEndTime.Value)
             If PunchParaRow.MsgPara.Updated Then db.AddInParameter(dbcmd, "@MsgPara", DbType.String, PunchParaRow.MsgPara.Value)
             If PunchParaRow.PunchInMsgFlag.Updated Then db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, PunchParaRow.PunchInMsgFlag.Value)
             If PunchParaRow.PunchInDefaultContent.Updated Then db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, PunchParaRow.PunchInDefaultContent.Value)
@@ -1129,6 +1209,10 @@ Namespace bePunchPara
             If PunchParaRow.PunchInBT.Updated Then db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, PunchParaRow.PunchInBT.Value)
             If PunchParaRow.PunchOutFlag.Updated Then db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, PunchParaRow.PunchOutFlag.Value)
             If PunchParaRow.PunchOutBT.Updated Then db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, PunchParaRow.PunchOutBT.Value)
+            If PunchParaRow.VacDayBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, PunchParaRow.VacDayBeginTime.Value)
+            If PunchParaRow.VacAMEndTime.Updated Then db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, PunchParaRow.VacAMEndTime.Value)
+            If PunchParaRow.VacPMBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, PunchParaRow.VacPMBeginTime.Value)
+            If PunchParaRow.VacDayEndTime.Updated Then db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, PunchParaRow.VacDayEndTime.Value)
             If PunchParaRow.MsgPara.Updated Then db.AddInParameter(dbcmd, "@MsgPara", DbType.String, PunchParaRow.MsgPara.Value)
             If PunchParaRow.PunchInMsgFlag.Updated Then db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, PunchParaRow.PunchInMsgFlag.Value)
             If PunchParaRow.PunchInDefaultContent.Updated Then db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, PunchParaRow.PunchInDefaultContent.Value)
@@ -1198,6 +1282,10 @@ Namespace bePunchPara
                         If r.PunchInBT.Updated Then db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, r.PunchInBT.Value)
                         If r.PunchOutFlag.Updated Then db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, r.PunchOutFlag.Value)
                         If r.PunchOutBT.Updated Then db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, r.PunchOutBT.Value)
+                        If r.VacDayBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, r.VacDayBeginTime.Value)
+                        If r.VacAMEndTime.Updated Then db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, r.VacAMEndTime.Value)
+                        If r.VacPMBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, r.VacPMBeginTime.Value)
+                        If r.VacDayEndTime.Updated Then db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, r.VacDayEndTime.Value)
                         If r.MsgPara.Updated Then db.AddInParameter(dbcmd, "@MsgPara", DbType.String, r.MsgPara.Value)
                         If r.PunchInMsgFlag.Updated Then db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, r.PunchInMsgFlag.Value)
                         If r.PunchInDefaultContent.Updated Then db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, r.PunchInDefaultContent.Value)
@@ -1272,6 +1360,10 @@ Namespace bePunchPara
                 If r.PunchInBT.Updated Then db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, r.PunchInBT.Value)
                 If r.PunchOutFlag.Updated Then db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, r.PunchOutFlag.Value)
                 If r.PunchOutBT.Updated Then db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, r.PunchOutBT.Value)
+                If r.VacDayBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, r.VacDayBeginTime.Value)
+                If r.VacAMEndTime.Updated Then db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, r.VacAMEndTime.Value)
+                If r.VacPMBeginTime.Updated Then db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, r.VacPMBeginTime.Value)
+                If r.VacDayEndTime.Updated Then db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, r.VacDayEndTime.Value)
                 If r.MsgPara.Updated Then db.AddInParameter(dbcmd, "@MsgPara", DbType.String, r.MsgPara.Value)
                 If r.PunchInMsgFlag.Updated Then db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, r.PunchInMsgFlag.Value)
                 If r.PunchInDefaultContent.Updated Then db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, r.PunchInDefaultContent.Value)
@@ -1356,22 +1448,22 @@ Namespace bePunchPara
             strSQL.AppendLine("Insert into PunchPara")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    CompID, Para, DutyInFlag, DutyInBT, DutyOutFlag, DutyOutBT, PunchInFlag, PunchInBT,")
-            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent,")
-            strSQL.AppendLine("    PunchOutMsgFlag, PunchOutDefaultContent, PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent,")
-            strSQL.AppendLine("    AffairSelfContent, OVTenMsgFlag, OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag,")
-            strSQL.AppendLine("    FemaleDefaultContent, FemaleSelfContent, ExcludePara, HoldingRankIDFlag, HoldingRankID,")
-            strSQL.AppendLine("    PositionFlag, Position, WorkTypeFlag, WorkTypeID, RotateFlag, LastChgComp, LastChgID,")
-            strSQL.AppendLine("    LastChgDate")
+            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, VacDayBeginTime, VacAMEndTime, VacPMBeginTime, VacDayEndTime,")
+            strSQL.AppendLine("    MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent, PunchOutMsgFlag, PunchOutDefaultContent,")
+            strSQL.AppendLine("    PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent, AffairSelfContent, OVTenMsgFlag,")
+            strSQL.AppendLine("    OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag, FemaleDefaultContent, FemaleSelfContent,")
+            strSQL.AppendLine("    ExcludePara, HoldingRankIDFlag, HoldingRankID, PositionFlag, Position, WorkTypeFlag,")
+            strSQL.AppendLine("    WorkTypeID, RotateFlag, LastChgComp, LastChgID, LastChgDate")
             strSQL.AppendLine(")")
             strSQL.AppendLine("Values")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    @CompID, @Para, @DutyInFlag, @DutyInBT, @DutyOutFlag, @DutyOutBT, @PunchInFlag, @PunchInBT,")
-            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent,")
-            strSQL.AppendLine("    @PunchOutMsgFlag, @PunchOutDefaultContent, @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent,")
-            strSQL.AppendLine("    @AffairSelfContent, @OVTenMsgFlag, @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag,")
-            strSQL.AppendLine("    @FemaleDefaultContent, @FemaleSelfContent, @ExcludePara, @HoldingRankIDFlag, @HoldingRankID,")
-            strSQL.AppendLine("    @PositionFlag, @Position, @WorkTypeFlag, @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID,")
-            strSQL.AppendLine("    @LastChgDate")
+            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @VacDayBeginTime, @VacAMEndTime, @VacPMBeginTime, @VacDayEndTime,")
+            strSQL.AppendLine("    @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent, @PunchOutMsgFlag, @PunchOutDefaultContent,")
+            strSQL.AppendLine("    @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent, @AffairSelfContent, @OVTenMsgFlag,")
+            strSQL.AppendLine("    @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag, @FemaleDefaultContent, @FemaleSelfContent,")
+            strSQL.AppendLine("    @ExcludePara, @HoldingRankIDFlag, @HoldingRankID, @PositionFlag, @Position, @WorkTypeFlag,")
+            strSQL.AppendLine("    @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID, @LastChgDate")
             strSQL.AppendLine(")")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
@@ -1385,6 +1477,10 @@ Namespace bePunchPara
             db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, PunchParaRow.PunchInBT.Value)
             db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, PunchParaRow.PunchOutFlag.Value)
             db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, PunchParaRow.PunchOutBT.Value)
+            db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, PunchParaRow.VacDayBeginTime.Value)
+            db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, PunchParaRow.VacAMEndTime.Value)
+            db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, PunchParaRow.VacPMBeginTime.Value)
+            db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, PunchParaRow.VacDayEndTime.Value)
             db.AddInParameter(dbcmd, "@MsgPara", DbType.String, PunchParaRow.MsgPara.Value)
             db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, PunchParaRow.PunchInMsgFlag.Value)
             db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, PunchParaRow.PunchInDefaultContent.Value)
@@ -1424,22 +1520,22 @@ Namespace bePunchPara
             strSQL.AppendLine("Insert into PunchPara")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    CompID, Para, DutyInFlag, DutyInBT, DutyOutFlag, DutyOutBT, PunchInFlag, PunchInBT,")
-            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent,")
-            strSQL.AppendLine("    PunchOutMsgFlag, PunchOutDefaultContent, PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent,")
-            strSQL.AppendLine("    AffairSelfContent, OVTenMsgFlag, OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag,")
-            strSQL.AppendLine("    FemaleDefaultContent, FemaleSelfContent, ExcludePara, HoldingRankIDFlag, HoldingRankID,")
-            strSQL.AppendLine("    PositionFlag, Position, WorkTypeFlag, WorkTypeID, RotateFlag, LastChgComp, LastChgID,")
-            strSQL.AppendLine("    LastChgDate")
+            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, VacDayBeginTime, VacAMEndTime, VacPMBeginTime, VacDayEndTime,")
+            strSQL.AppendLine("    MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent, PunchOutMsgFlag, PunchOutDefaultContent,")
+            strSQL.AppendLine("    PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent, AffairSelfContent, OVTenMsgFlag,")
+            strSQL.AppendLine("    OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag, FemaleDefaultContent, FemaleSelfContent,")
+            strSQL.AppendLine("    ExcludePara, HoldingRankIDFlag, HoldingRankID, PositionFlag, Position, WorkTypeFlag,")
+            strSQL.AppendLine("    WorkTypeID, RotateFlag, LastChgComp, LastChgID, LastChgDate")
             strSQL.AppendLine(")")
             strSQL.AppendLine("Values")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    @CompID, @Para, @DutyInFlag, @DutyInBT, @DutyOutFlag, @DutyOutBT, @PunchInFlag, @PunchInBT,")
-            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent,")
-            strSQL.AppendLine("    @PunchOutMsgFlag, @PunchOutDefaultContent, @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent,")
-            strSQL.AppendLine("    @AffairSelfContent, @OVTenMsgFlag, @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag,")
-            strSQL.AppendLine("    @FemaleDefaultContent, @FemaleSelfContent, @ExcludePara, @HoldingRankIDFlag, @HoldingRankID,")
-            strSQL.AppendLine("    @PositionFlag, @Position, @WorkTypeFlag, @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID,")
-            strSQL.AppendLine("    @LastChgDate")
+            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @VacDayBeginTime, @VacAMEndTime, @VacPMBeginTime, @VacDayEndTime,")
+            strSQL.AppendLine("    @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent, @PunchOutMsgFlag, @PunchOutDefaultContent,")
+            strSQL.AppendLine("    @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent, @AffairSelfContent, @OVTenMsgFlag,")
+            strSQL.AppendLine("    @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag, @FemaleDefaultContent, @FemaleSelfContent,")
+            strSQL.AppendLine("    @ExcludePara, @HoldingRankIDFlag, @HoldingRankID, @PositionFlag, @Position, @WorkTypeFlag,")
+            strSQL.AppendLine("    @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID, @LastChgDate")
             strSQL.AppendLine(")")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
@@ -1453,6 +1549,10 @@ Namespace bePunchPara
             db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, PunchParaRow.PunchInBT.Value)
             db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, PunchParaRow.PunchOutFlag.Value)
             db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, PunchParaRow.PunchOutBT.Value)
+            db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, PunchParaRow.VacDayBeginTime.Value)
+            db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, PunchParaRow.VacAMEndTime.Value)
+            db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, PunchParaRow.VacPMBeginTime.Value)
+            db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, PunchParaRow.VacDayEndTime.Value)
             db.AddInParameter(dbcmd, "@MsgPara", DbType.String, PunchParaRow.MsgPara.Value)
             db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, PunchParaRow.PunchInMsgFlag.Value)
             db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, PunchParaRow.PunchInDefaultContent.Value)
@@ -1493,22 +1593,22 @@ Namespace bePunchPara
             strSQL.AppendLine("Insert into PunchPara")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    CompID, Para, DutyInFlag, DutyInBT, DutyOutFlag, DutyOutBT, PunchInFlag, PunchInBT,")
-            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent,")
-            strSQL.AppendLine("    PunchOutMsgFlag, PunchOutDefaultContent, PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent,")
-            strSQL.AppendLine("    AffairSelfContent, OVTenMsgFlag, OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag,")
-            strSQL.AppendLine("    FemaleDefaultContent, FemaleSelfContent, ExcludePara, HoldingRankIDFlag, HoldingRankID,")
-            strSQL.AppendLine("    PositionFlag, Position, WorkTypeFlag, WorkTypeID, RotateFlag, LastChgComp, LastChgID,")
-            strSQL.AppendLine("    LastChgDate")
+            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, VacDayBeginTime, VacAMEndTime, VacPMBeginTime, VacDayEndTime,")
+            strSQL.AppendLine("    MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent, PunchOutMsgFlag, PunchOutDefaultContent,")
+            strSQL.AppendLine("    PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent, AffairSelfContent, OVTenMsgFlag,")
+            strSQL.AppendLine("    OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag, FemaleDefaultContent, FemaleSelfContent,")
+            strSQL.AppendLine("    ExcludePara, HoldingRankIDFlag, HoldingRankID, PositionFlag, Position, WorkTypeFlag,")
+            strSQL.AppendLine("    WorkTypeID, RotateFlag, LastChgComp, LastChgID, LastChgDate")
             strSQL.AppendLine(")")
             strSQL.AppendLine("Values")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    @CompID, @Para, @DutyInFlag, @DutyInBT, @DutyOutFlag, @DutyOutBT, @PunchInFlag, @PunchInBT,")
-            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent,")
-            strSQL.AppendLine("    @PunchOutMsgFlag, @PunchOutDefaultContent, @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent,")
-            strSQL.AppendLine("    @AffairSelfContent, @OVTenMsgFlag, @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag,")
-            strSQL.AppendLine("    @FemaleDefaultContent, @FemaleSelfContent, @ExcludePara, @HoldingRankIDFlag, @HoldingRankID,")
-            strSQL.AppendLine("    @PositionFlag, @Position, @WorkTypeFlag, @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID,")
-            strSQL.AppendLine("    @LastChgDate")
+            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @VacDayBeginTime, @VacAMEndTime, @VacPMBeginTime, @VacDayEndTime,")
+            strSQL.AppendLine("    @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent, @PunchOutMsgFlag, @PunchOutDefaultContent,")
+            strSQL.AppendLine("    @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent, @AffairSelfContent, @OVTenMsgFlag,")
+            strSQL.AppendLine("    @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag, @FemaleDefaultContent, @FemaleSelfContent,")
+            strSQL.AppendLine("    @ExcludePara, @HoldingRankIDFlag, @HoldingRankID, @PositionFlag, @Position, @WorkTypeFlag,")
+            strSQL.AppendLine("    @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID, @LastChgDate")
             strSQL.AppendLine(")")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
@@ -1530,6 +1630,10 @@ Namespace bePunchPara
                         db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, r.PunchInBT.Value)
                         db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, r.PunchOutFlag.Value)
                         db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, r.PunchOutBT.Value)
+                        db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, r.VacDayBeginTime.Value)
+                        db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, r.VacAMEndTime.Value)
+                        db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, r.VacPMBeginTime.Value)
+                        db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, r.VacDayEndTime.Value)
                         db.AddInParameter(dbcmd, "@MsgPara", DbType.String, r.MsgPara.Value)
                         db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, r.PunchInMsgFlag.Value)
                         db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, r.PunchInDefaultContent.Value)
@@ -1581,22 +1685,22 @@ Namespace bePunchPara
             strSQL.AppendLine("Insert into PunchPara")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    CompID, Para, DutyInFlag, DutyInBT, DutyOutFlag, DutyOutBT, PunchInFlag, PunchInBT,")
-            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent,")
-            strSQL.AppendLine("    PunchOutMsgFlag, PunchOutDefaultContent, PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent,")
-            strSQL.AppendLine("    AffairSelfContent, OVTenMsgFlag, OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag,")
-            strSQL.AppendLine("    FemaleDefaultContent, FemaleSelfContent, ExcludePara, HoldingRankIDFlag, HoldingRankID,")
-            strSQL.AppendLine("    PositionFlag, Position, WorkTypeFlag, WorkTypeID, RotateFlag, LastChgComp, LastChgID,")
-            strSQL.AppendLine("    LastChgDate")
+            strSQL.AppendLine("    PunchOutFlag, PunchOutBT, VacDayBeginTime, VacAMEndTime, VacPMBeginTime, VacDayEndTime,")
+            strSQL.AppendLine("    MsgPara, PunchInMsgFlag, PunchInDefaultContent, PunchInSelfContent, PunchOutMsgFlag, PunchOutDefaultContent,")
+            strSQL.AppendLine("    PunchOutSelfContent, AffairMsgFlag, AffairDefaultContent, AffairSelfContent, OVTenMsgFlag,")
+            strSQL.AppendLine("    OVTenDefaultContent, OVTenSelfContent, FemaleMsgFlag, FemaleDefaultContent, FemaleSelfContent,")
+            strSQL.AppendLine("    ExcludePara, HoldingRankIDFlag, HoldingRankID, PositionFlag, Position, WorkTypeFlag,")
+            strSQL.AppendLine("    WorkTypeID, RotateFlag, LastChgComp, LastChgID, LastChgDate")
             strSQL.AppendLine(")")
             strSQL.AppendLine("Values")
             strSQL.AppendLine("(")
             strSQL.AppendLine("    @CompID, @Para, @DutyInFlag, @DutyInBT, @DutyOutFlag, @DutyOutBT, @PunchInFlag, @PunchInBT,")
-            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent,")
-            strSQL.AppendLine("    @PunchOutMsgFlag, @PunchOutDefaultContent, @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent,")
-            strSQL.AppendLine("    @AffairSelfContent, @OVTenMsgFlag, @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag,")
-            strSQL.AppendLine("    @FemaleDefaultContent, @FemaleSelfContent, @ExcludePara, @HoldingRankIDFlag, @HoldingRankID,")
-            strSQL.AppendLine("    @PositionFlag, @Position, @WorkTypeFlag, @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID,")
-            strSQL.AppendLine("    @LastChgDate")
+            strSQL.AppendLine("    @PunchOutFlag, @PunchOutBT, @VacDayBeginTime, @VacAMEndTime, @VacPMBeginTime, @VacDayEndTime,")
+            strSQL.AppendLine("    @MsgPara, @PunchInMsgFlag, @PunchInDefaultContent, @PunchInSelfContent, @PunchOutMsgFlag, @PunchOutDefaultContent,")
+            strSQL.AppendLine("    @PunchOutSelfContent, @AffairMsgFlag, @AffairDefaultContent, @AffairSelfContent, @OVTenMsgFlag,")
+            strSQL.AppendLine("    @OVTenDefaultContent, @OVTenSelfContent, @FemaleMsgFlag, @FemaleDefaultContent, @FemaleSelfContent,")
+            strSQL.AppendLine("    @ExcludePara, @HoldingRankIDFlag, @HoldingRankID, @PositionFlag, @Position, @WorkTypeFlag,")
+            strSQL.AppendLine("    @WorkTypeID, @RotateFlag, @LastChgComp, @LastChgID, @LastChgDate")
             strSQL.AppendLine(")")
 
             dbcmd = db.GetSqlStringCommand(strSQL.ToString())
@@ -1613,6 +1717,10 @@ Namespace bePunchPara
                 db.AddInParameter(dbcmd, "@PunchInBT", DbType.String, r.PunchInBT.Value)
                 db.AddInParameter(dbcmd, "@PunchOutFlag", DbType.String, r.PunchOutFlag.Value)
                 db.AddInParameter(dbcmd, "@PunchOutBT", DbType.String, r.PunchOutBT.Value)
+                db.AddInParameter(dbcmd, "@VacDayBeginTime", DbType.String, r.VacDayBeginTime.Value)
+                db.AddInParameter(dbcmd, "@VacAMEndTime", DbType.String, r.VacAMEndTime.Value)
+                db.AddInParameter(dbcmd, "@VacPMBeginTime", DbType.String, r.VacPMBeginTime.Value)
+                db.AddInParameter(dbcmd, "@VacDayEndTime", DbType.String, r.VacDayEndTime.Value)
                 db.AddInParameter(dbcmd, "@MsgPara", DbType.String, r.MsgPara.Value)
                 db.AddInParameter(dbcmd, "@PunchInMsgFlag", DbType.String, r.PunchInMsgFlag.Value)
                 db.AddInParameter(dbcmd, "@PunchInDefaultContent", DbType.String, r.PunchInDefaultContent.Value)

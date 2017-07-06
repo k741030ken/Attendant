@@ -408,6 +408,10 @@ Partial Class ATWF_ATWF10
         Bsp.Utility.FillDDL(ddlRankE, "eHRMSDB", "Rank", "distinct RankID", "RankID", Bsp.Utility.DisplayType.OnlyID, "", IIf(strCompID = "0", "", "and CompID = " & Bsp.Utility.Quote(strCompID)))
         ddlRankE.Items.Insert(0, New ListItem("---請選擇---", ""))
 
+        '系統代碼
+        Bsp.Utility.FillDDL(ddlSystemCode, "AattendantDB", "AT_CodeMap", "RTrim(Code)", "CodeCName", Bsp.Utility.DisplayType.OnlyID, "", "And TabName = 'HRFlowEngine' And FldName = 'SystemID' and NotShowFlag='0'", "")
+        ddlSystemCode.Items.Insert(0, New ListItem("---請選擇---", ""))
+
         '職稱
         ddlTitleB.Items.Insert(0, New ListItem("---請先選擇職等---", ""))
         ddlTitleE.Items.Insert(0, New ListItem("---請先選擇職等---", ""))
@@ -506,7 +510,7 @@ Partial Class ATWF_ATWF10
         Dim btnA As New ButtonState(ButtonState.emButtonType.Add)
         Dim btnX As New ButtonState(ButtonState.emButtonType.Exit)
         Dim btnC As New ButtonState(ButtonState.emButtonType.Cancel)
-        btnA.Caption = "存檔"
+        btnA.Caption = "存檔返回"
         btnX.Caption = "清除"
         btnC.Caption = "返回"
         'ddlRankID.ID & "=" & ddlRankID.SelectedValue, _

@@ -96,7 +96,7 @@ public partial class OnBizReqAppdOperationSql
     }
 
 
-    private void UpdateHROverTimeLog(string FlowCaseID, string FlowStatus, ref  CommandHelper sb)
+    public static void UpdateHROverTimeLog(string FlowCaseID, string FlowStatus, ref  CommandHelper sb)
     {
         string SQL = @"	UPDATE HROtherFlowLog SET FlowStatus = '{0}' 
                         WHERE FlowCaseID = '{1}'

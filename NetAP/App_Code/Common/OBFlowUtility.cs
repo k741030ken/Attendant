@@ -242,6 +242,174 @@ public class OBFlowUtility
     }
     #endregion "處理流程使用狀態"
 
+    #region "查詢目前關卡"
+    /// <summary>
+    /// 查詢目前關卡
+    /// </summary>
+    /// <param name="compID">公司</param>
+    /// <param name="flowCaseID">流程系統ID</param>
+    /// <param name="otModel">A:預先申請 D:事後申報</param>
+    /// <param name="thisRow">DataRow</param>
+    /// <param name="message">string</param>
+    /// <returns></returns>
+    public static bool QueryHRFlowEngineDatas_Now(string compID, string flowCaseID, string otModel, out DataRow thisRow, out string message, string insystemID="OB")
+    {
+        var isSuccess = false;
+        var systemID = insystemID;
+        message = "";
+        DataTable retrunTable = new DataTable();
+        DataTable retrunTable2 = new DataTable();
+        var retrunRow = retrunTable.NewRow();
+        thisRow = retrunTable2.NewRow();
+        if (QueryHROverTimeLogLast(flowCaseID, otModel, out retrunTable, out retrunRow, out message))
+        {
+            var flowCode = retrunRow["FlowCode"].ToString();
+            var flowSN = retrunRow["FlowSN"].ToString();
+            var flowSeq = retrunRow["FlowSeq"].ToString();
+            if (QueryHRFlowEngineDatas(compID, systemID, flowCode, flowSN, out retrunTable2, out message) && retrunTable2.Rows.Count > 0)
+            {
+                thisRow = retrunTable2.Rows.Cast<DataRow>().Where(row => row.Field<string>("FlowSeq") == flowSeq).FirstOrDefault();
+                isSuccess = true;
+            }
+            else
+            {
+                thisRow = retrunTable2.NewRow();
+                message = "無流程關卡資料!!";
+            }
+        }
+        else
+        {
+            thisRow = retrunTable2.NewRow();
+            message = "無流程關卡資料!!";
+        }
+        return isSuccess;
+    }
+    #endregion "查詢目前關卡"
+
+    #region "FlowLog"
+    /// <summary>
+    /// 查詢流程最後一筆紀錄
+    /// </summary>
+    /// <param name="flowCaseID">流程系統ID</param>
+    /// <param name="otModel">A:預先申請 D:事後申報</param>
+    /// <param name="retrunTable">DataTable</param>
+    /// <param name="retrunRow">DataRow</param>
+    /// <param name="message">string</param>
+    /// <returns>bool</returns>
+    public static bool QueryHROverTimeLogLast(string flowCaseID, string otModel, out DataTable retrunTable, out DataRow retrunRow, out string message)
+    {
+        var isSuccess = false;
+        retrunTable = new DataTable();
+        message = "";
+        if (QueryHROverTimeLog(flowCaseID, otModel, out retrunTable, out message))
+        {
+            if (string.IsNullOrEmpty(message) && retrunTable.Rows.Count > 0)
+            {
+                retrunRow = retrunTable.Rows.Cast<DataRow>().LastOrDefault();
+                isSuccess = true;
+            }
+            else
+            {
+                retrunRow = retrunTable.NewRow();
+                message = "無流程最後一筆紀錄!!";
+            }
+        }
+        else
+        {
+            retrunRow = retrunTable.NewRow();
+        }
+        return isSuccess;
+    }
+
+    /// <summary>
+    /// 查詢流程log
+    /// </summary>
+    /// <param name="flowCaseID">流程ID</param>
+    /// <param name="otMode">A:預先申請 D:事後申報</param>
+    /// <param name="retrunTable">return: retrunTable</param>
+    /// <param name="message">return: message</param>
+    /// <returns>bool</returns>
+    private static bool QueryHROverTimeLog(string flowCaseID, string otMode, out DataTable retrunTable, out string message)
+    {
+        var isSuccess = false;
+        retrunTable = new DataTable();
+        message = "";
+        try
+        {
+            CommandHelper sb = db.CreateCommandHelper();
+            sb.Reset();
+            sb.AppendStatement(" SELECT ");
+            sb.Append(" FlowCaseID, Seq "); //PK
+            sb.Append(" , FlowLogBatNo, FlowLogID "); //流程系統所需key
+            sb.Append(" , Mode, EmpID, EmpOrganID, EmpFlowOrganID, ApplyID "); //申請相關資料
+            sb.Append(" , FlowCode, FlowSN, FlowSeq, SignLine "); //流程設定資料
+            sb.Append(" , SignIDComp, SignID, SignOrganID, SignFlowOrganID, SignTime "); //簽核者資料
+            sb.Append(" , ReAssignFlag, ReAssignComp, ReAssignEmpID "); //改派資料
+            sb.Append(" , FlowStatus, Remark "); //狀態與備註
+            sb.Append(" FROM HROtherFlowLog ");
+            sb.Append(" WHERE 0 = 0 ");
+            sb.Append(" AND Mode = ").AppendParameter("Mode", otMode); //A:預先申請 D:事後申報
+            sb.Append(" AND FlowCaseID = ").AppendParameter("FlowCaseID", flowCaseID); //流程ID
+            sb.Append(" ORDER BY FlowCaseID, Seq ");
+            var ds = db.ExecuteDataSet(sb.BuildCommand());
+            isSuccess = true;
+            if (ds == null || ds.Tables == null || ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
+            {
+                throw new Exception("查無資料!");
+            }
+            retrunTable = ds.Tables[0];
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+        }
+        return isSuccess;
+    }
+    #endregion "FlowLog"
+
+    #region "核准流程所需資料"
+    /// <summary>
+    /// 核准流程所需資料
+    /// </summary>
+    /// <param name="compID">公司</param>
+    /// <param name="applyID">目前簽核者</param>
+    /// <param name="queryDate">加班日期</param>
+    /// <param name="flowCaseID">流程系統ID</param>
+    /// <param name="otModle">B: 公出; P:打卡 </param>
+    /// <param name="toUserData">回傳: 下位簽核者資訊</param>
+    /// <param name="flowCode">回傳: 流程代號</param>
+    /// <param name="flowSN">回傳: 流程識別碼</param>
+    /// <param name="signLineDefine">回傳: 1=>行政線 2=>功能線 3=>特定人員</param>
+    /// <param name="isLastFlow">回傳: 下個關卡是否為最後關卡</param>
+    /// <param name="nextIsLastFlow">回傳: 下個關卡是否為最後關卡</param>
+    /// <param name="meassge">回傳: 訊息</param>
+    /// <returns>bool</returns>
+    public static bool QueryFlowDataAndToUserData(string compID, string applyID, string queryDate, string flowCaseID, string otModle,
+        out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out string signLineDefine, out bool isLastFlow, out bool nextIsLastFlow, out string meassge ,string insystemID="OB")
+    {
+        var isSuccess = false;
+        meassge = "";
+        toUserData = new Dictionary<string, string>();
+        flowCode = "";
+        flowSN = "";
+        signLineDefine = "";
+        nextIsLastFlow = false;
+        isLastFlow = false;
+        try
+        {
+            if (QueryToUserData(compID, applyID, queryDate, flowCaseID, otModle, out toUserData, out flowCode, out flowSN, out signLineDefine, out isLastFlow, out nextIsLastFlow, out meassge, insystemID))
+            {
+                isSuccess = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            meassge = ex.Message;
+        }
+        return isSuccess;
+    }
+    #endregion "核准流程所需資料"
+
     #region "第一位/下位簽核者"
     /// <summary>
     /// 第一位簽核者
@@ -257,7 +425,7 @@ public class OBFlowUtility
     /// <param name="message">訊息</param>
     /// <returns>bool</returns>
     private static bool QueryToUserDataFirst(string compID, string EmpID, string organID, string flowOrganID, string applyID, string queryDate, string flowCode, string flowSN,
-        out Dictionary<string, string> toUserData, out bool nextIsLastFlow, out string message)
+        out Dictionary<string, string> toUserData, out bool nextIsLastFlow, out string message,string insystemID="OB")
     {
         var isSuccess = false;
         nextIsLastFlow = false;
@@ -267,7 +435,7 @@ public class OBFlowUtility
         toUserData = new Dictionary<string, string>();
         try
         {
-            if (QueryFirstHRFlowEngineData(compID, flowCode, flowSN, out nextRow, out message))
+            if (QueryFirstHRFlowEngineData(compID, flowCode, flowSN, out nextRow, out message, insystemID))
             {
                 nextIsLastFlow = nextRow["FlowEndFlag"].ToString() == "1";
                 var signLine = nextRow["SignLineDefine"].ToString(); // 1:行政 2:功能 3: 特殊人員
@@ -295,7 +463,7 @@ public class OBFlowUtility
     /// <param name="message">訊息</param>
     /// <returns>bool</returns>
     private static bool QueryToUserData(string compID, string applyID, string queryDate, string flowCaseID, string Model,
-        out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out string signLineDefine, out bool isLastFlow, out bool nextIsLastFlow, out string message)
+        out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out string signLineDefine, out bool isLastFlow, out bool nextIsLastFlow, out string message,string insystemID="OB")
     {
         var isSuccess = false;
         nextIsLastFlow = false;
@@ -312,7 +480,7 @@ public class OBFlowUtility
         toUserData = new Dictionary<string, string>();
         try
         {
-            if (QueryNextHRFlowEngineData(compID, flowCaseID, Model, out thisLogRow, out logdt, out dt, out index, out nextRow, out flowCode, out flowSN, out signLineDefine, out message))
+            if (QueryNextHRFlowEngineData(compID, flowCaseID, Model, out thisLogRow, out logdt, out dt, out index, out nextRow, out flowCode, out flowSN, out signLineDefine, out message, insystemID))
             {
                 nextIsLastFlow = nextRow["FlowEndFlag"].ToString() == "1";
                 isLastFlow = dt.Rows[index]["FlowEndFlag"].ToString() == "1";
@@ -553,14 +721,15 @@ public class OBFlowUtility
     /// <param name="nextIsLastFlow">回傳: 下個關卡是否為最後關卡</param>
     /// <param name="meassge">回傳: 訊息</param>
     /// <returns>bool</returns>
-    public static bool QueryFlowDataAndToUserData_First(string compID, string sOrganID, string sFlowOrganID, string empID, string applyID, string queryDate,
-        out Dictionary<string, string> empData, out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out bool nextIsLastFlow, out string meassge)
+    public static bool QueryFlowDataAndToUserData_First( string compID, string sOrganID, string sFlowOrganID, string empID, string applyID, string queryDate,
+        out Dictionary<string, string> empData, out Dictionary<string, string> toUserData, out string flowCode, out string flowSN, out bool nextIsLastFlow, out string meassge,string inflowCode = "OB01" ,string insystemID="OB")
     {
         var isSuccess = false;
         meassge = "";
         toUserData = new Dictionary<string, string>();
         empData = new Dictionary<string, string>();
-        flowCode = "OB01";
+        //flowCode = "OB01";
+        flowCode = inflowCode;
         flowSN = "";
         nextIsLastFlow = false;
         string sNameN = "";
@@ -595,9 +764,9 @@ public class OBFlowUtility
                 {
                     flowOrganID = sFlowOrganID;
                 }
-                if (QueryOTFlowData(compID, empID, deptID, organID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out flowCode, out flowSN, out meassge))
+                if (QueryOTFlowData(compID, empID, deptID, organID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out flowCode, out flowSN, out meassge, inflowCode,insystemID))
                 {
-                    if (QueryToUserDataFirst(compID, empID, organID, flowOrganID, applyID, queryDate, flowCode, flowSN, out toUserData, out nextIsLastFlow, out meassge))
+                    if (QueryToUserDataFirst(compID, empID, organID, flowOrganID, applyID, queryDate, flowCode, flowSN, out toUserData, out nextIsLastFlow, out meassge, insystemID))
                     {
                         isSuccess = true;
                     }
@@ -642,10 +811,10 @@ public class OBFlowUtility
     /// <param name="nextRow">DataRow</param>
     /// <param name="message">string</param>
     /// <returns>bool</returns>
-    private static bool QueryFirstHRFlowEngineData(string compID, string flowCode, string flowSN, out DataRow nextRow, out string message)
+    private static bool QueryFirstHRFlowEngineData(string compID, string flowCode, string flowSN, out DataRow nextRow, out string message, string insystemID = "OB")
     {
         var isSuccess = false;
-        var systemID = "OB";
+        var systemID = insystemID;
         message = "";
         var returnTable = new DataTable();
 
@@ -676,10 +845,10 @@ public class OBFlowUtility
     /// <param name="signLineDefine">目前signLineDefine</param>
     /// <param name="message">string</param>
     /// <returns>bool</returns>
-    private static bool QueryNextHRFlowEngineData(string compID, string flowCaseID, string Model, out DataRow returnRow, out DataTable returnTable, out DataTable returnTable2, out int thisRowIndex, out DataRow nextRow, out string flowCode, out string flowSN, out string signLineDefine, out string message)
+    private static bool QueryNextHRFlowEngineData(string compID, string flowCaseID, string Model, out DataRow returnRow, out DataTable returnTable, out DataTable returnTable2, out int thisRowIndex, out DataRow nextRow, out string flowCode, out string flowSN, out string signLineDefine, out string message,string insystemID = "OB")
     {
         var isSuccess = false;
-        var systemID = "OB";
+        var systemID = insystemID;
         message = "";
         flowCode = "";
         flowSN = "";
@@ -781,19 +950,20 @@ public class OBFlowUtility
     /// <returns>bool</returns>
     private static bool QueryOTFlowData(string compID, string empID, string deptID, string organID, string businessType,
         string rankID, string titleID, string empFlowRemark, string positionID, string workTypeID, out string flowCode, out string flowSN,
-        out string meassge)
+        out string meassge, string inflowCode = "OB01",string insystemID="OB")
     {
         var isSuccess = false;
         flowSN = "";
-        flowCode = "OB01";
+        flowCode = inflowCode;
+        var systemID = insystemID;
         meassge = "";
-        flowSN = QueryEmpFlowSN(compID, empID, flowCode);
+        flowSN = QueryEmpFlowSN(compID, empID, flowCode,insystemID);
         var returnTable = new DataTable("returnTable");
         var returnTable2 = new DataTable("returnTable2");
         if (!string.IsNullOrEmpty(flowSN) &&
-            QueryHRFlowEmpDefineDatas(compID, "OB", flowCode, flowSN, out returnTable, out meassge) &&
+            QueryHRFlowEmpDefineDatas(compID, systemID, flowCode, flowSN, out returnTable, out meassge) &&
             string.IsNullOrEmpty(meassge) &&
-            QueryHRFlowEngineDatas(compID, "OB", flowCode, flowSN, out returnTable2, out meassge) &&
+            QueryHRFlowEngineDatas(compID, systemID, flowCode, flowSN, out returnTable2, out meassge) &&
             returnTable2.Rows.Count > 0 &&
             string.IsNullOrEmpty(meassge))
         {
@@ -801,7 +971,7 @@ public class OBFlowUtility
         }
         else
         {
-            isSuccess = QueryHRFlowEmpDefineDatas(flowCode, empID, compID, deptID, organID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out flowSN, out meassge);
+            isSuccess = QueryHRFlowEmpDefineDatas(flowCode, empID, compID, deptID, organID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out flowSN, out meassge,insystemID);
         }
         return isSuccess;
     }
@@ -813,12 +983,12 @@ public class OBFlowUtility
     /// <param name="empID">人員</param>
     /// <param name="flowCode">要查詢的流程代碼</param>
     /// <returns>string</returns>
-    private static string QueryEmpFlowSN(string compID, string empID, string flowCode)
+    private static string QueryEmpFlowSN(string compID, string empID, string flowCode, string insystemID = "OB")
     {
         var result = "";
         var isSuccess = false;
         var message = "";
-        var systemID = "OB";
+        var systemID = insystemID;
         var returnTable = new DataTable("returnTable");
         isSuccess = QueryEmpFlowSN(compID, empID, systemID, flowCode, out returnTable, out message);
         if (isSuccess && string.IsNullOrEmpty(message))
@@ -850,15 +1020,16 @@ public class OBFlowUtility
     /// <param name="message">return: message</param>
     /// <returns>bool</returns>
     private static bool QueryHRFlowEmpDefineDatas(string flowCode, string empID, string flowCompID, string deptID, string organID, string businessType,
-        string rankID, string titleID, string empFlowRemark, string positionID, string workTypeID, out string flowSN, out string message)
+        string rankID, string titleID, string empFlowRemark, string positionID, string workTypeID, out string flowSN, out string message, string insystemID="OB")
     {
         var isSuccess = false;
+        var systemID = insystemID;
         flowSN = "";
         message = "";
         try
         {
             var returnTable = new DataTable("returnTable");
-            if (QueryHRFlowEmpDefineDatas("OB", flowCode, flowCompID, deptID, organID, empID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out returnTable, out message))
+            if (QueryHRFlowEmpDefineDatas(systemID, flowCode, flowCompID, deptID, organID, empID, businessType, rankID, titleID, empFlowRemark, positionID, workTypeID, out returnTable, out message))
             {
                 //篩選關卡設定有誤或沒有的
                 for (var i = (returnTable.Rows.Count - 1); i >= 0; i--)
@@ -869,7 +1040,7 @@ public class OBFlowUtility
                     {
                         var sFlowSN = itemData["FlowSN"].ToString();
                         var returnTable2 = new DataTable("returnTable2");
-                        if (QueryHRFlowEngineDatas(flowCompID, "OB", flowCode, sFlowSN, out returnTable2, out message) && returnTable2.Rows.Count > 0)
+                        if (QueryHRFlowEngineDatas(flowCompID, systemID, flowCode, sFlowSN, out returnTable2, out message) && returnTable2.Rows.Count > 0)
                         {
                             int flowStartFlagCount = returnTable2.Rows.Cast<DataRow>().Where(row => row.Field<string>("FlowStartFlag") == "1").Count();
                             int flowEndFlagCount = returnTable2.Rows.Cast<DataRow>().Where(row => row.Field<string>("FlowEndFlag") == "1").Count();
@@ -942,7 +1113,7 @@ public class OBFlowUtility
             sb.AppendStatement(" SELECT ");
             sb.Append(" FlowCaseID, Seq "); //PK
             sb.Append(" , FlowLogBatNo, FlowLogID "); //流程系統所需key
-            sb.Append(" , Mode, OTEmpID, EmpOrganID, EmpFlowOrganID, ApplyID "); //申請相關資料
+            sb.Append(" , Mode, EmpID, EmpOrganID, EmpFlowOrganID, ApplyID "); //申請相關資料
             sb.Append(" , FlowCode, FlowSN, FlowSeq, SignLine "); //流程設定資料
             sb.Append(" , SignIDComp, SignID, SignOrganID, SignFlowOrganID, SignTime "); //簽核者資料
             sb.Append(" , ReAssignFlag, ReAssignComp, ReAssignEmpID "); //改派資料
@@ -1293,7 +1464,7 @@ public class OBFlowUtility
             sb.Append(" AND VisableFlag = ").AppendParameter("VisableFlag", "0"); //隱藏註記;
             sb.Append(" AND Status = ").AppendParameter("Status", "1"); //生效;
             sb.Append(" AND CompID = ").AppendParameter("CompID", compID); //公司代碼
-            sb.Append(" AND SystemID = ").AppendParameter("SystemID", systemID); //系統別 : OT=>加班 OB=>公出
+            sb.Append(" AND SystemID = ").AppendParameter("SystemID", systemID); //系統別 : OT=>加班 OB=>公出 PO=>打卡
             sb.Append(" AND FlowCode = ").AppendParameter("FlowCode", flowCode); //流程代碼
             sb.Append(" AND FlowSN = ").AppendParameter("FlowSN", flowSN); //流程識別碼
             if (!string.IsNullOrEmpty(speComp))

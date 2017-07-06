@@ -137,9 +137,7 @@
                             </td>
                             <td width="25%" >
                                 <asp:DropDownList ID="ddlSystemCode" runat="server" Font-Names="微軟正黑體">
-                                <asp:ListItem Value="" Text="---請選擇---"></asp:ListItem>
-                                <asp:ListItem Value="OT" Text="OT"></asp:ListItem>
-                                <asp:ListItem Value="OB" Text="OB"></asp:ListItem>
+                                
                                 </asp:DropDownList>
                             </td>
                             <td width="10%"></td>
