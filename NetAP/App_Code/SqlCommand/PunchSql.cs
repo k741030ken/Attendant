@@ -47,7 +47,7 @@ public partial class SqlCommand
         sb.Append(" SELECT ");
         sb.Append(" WT.BeginTime,WT.EndTime,WT.RestBeginTime,WT.RestEndTime ");
         sb.Append(" FROM EmpWorkTimeLog EL ");
-        sb.Append(" LEFT JOIN eHRMSDB_ITRD.dbo.WorkTime WT ON EL.WTCompID = WT.CompID AND EL.WTID = WT.WTID ");
+        sb.Append(" LEFT JOIN " + _eHRMSDB_ITRD + ".dbo.WorkTime WT ON EL.WTCompID = WT.CompID AND EL.WTID = WT.WTID ");
         sb.Append(" WHERE 0 = 0 ");
         sb.Append(" AND EL.CompID=@CompID ");
         sb.Append(" AND EL.EmpID=@EmpID ");

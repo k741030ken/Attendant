@@ -61,6 +61,7 @@ public partial class SqlCommand
         {
             sb.Append(" AND OBFormStatus=@OBFormStatus ");
         }
+        sb.Append(" ORDER BY V.VisitBeginDate, V.BeginTime, V.EmpID ");
         sb.Append(" ; ");
     }
 
@@ -284,28 +285,6 @@ public partial class SqlCommand
     /// </summary>
     /// <param name="sb">傳入之前組好Command</param> 
     /// <param name="isReset">StringBuilder Reset or not</param>
-    public static void SelectWorkSiteDTSql(ref StringBuilder sb,string compID, bool isReset = false)
-    {
-        if (isReset)
-        {
-            sb = new StringBuilder();
-        }
-        sb.Append(" SELECT ");
-        sb.Append(" RTRIM(WorkSiteID) AS InterLocationID, RTRIM(WorkSiteID) +' '+ Remark AS InterLocationName");
-        sb.Append(" FROM " + _eHRMSDB_ITRD + " .dbo.WorkSite ");
-        sb.Append(" WHERE 0 = 0 ");
-        sb.Append(" AND CompID= '"+ compID+"'" );
-        sb.Append(" ORDER BY WorkSiteID ");
-        sb.Append(" ; ");
-    }
-
-    /// <summary>
-    /// SelectWorkSiteSql
-    /// 公出申請
-    /// 查詢工作地點
-    /// </summary>
-    /// <param name="sb">傳入之前組好Command</param> 
-    /// <param name="isReset">StringBuilder Reset or not</param>
     public static void SelectWorkSiteSql(ref StringBuilder sb, bool isReset = false)
     {
         if (isReset)
@@ -449,7 +428,7 @@ public partial class SqlCommand
     /// <summary>
     /// SelectSupervisorSql
     /// 公出申請、公出修改
-    /// 取得主管人員
+    /// 取得主管人員姓名
     /// </summary>
     /// <param name="sb">傳入之前組好Command</param> 
     /// <param name="isReset">StringBuilder Reset or not</param>
@@ -526,7 +505,7 @@ public partial class SqlCommand
     /// <summary>
     /// SelectEmpFlowSql
     /// 公出申請、公出修改
-    /// 洽辦事由下拉選單(要做調整)
+    /// 最小簽核主管
     /// </summary>
     /// <param name="sb">傳入之前組好Command</param> 
     /// <param name="isReset">StringBuilder Reset or not</param>
@@ -756,6 +735,7 @@ public partial class SqlCommand
         {
             sb.Append(" AND V.OBFormStatus=@OBFormStatus ");
         }
+        sb.Append(" ORDER BY V.VisitBeginDate, V.BeginTime, V.EmpID ");
         sb.Append(" ; ");
     }
 

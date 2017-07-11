@@ -13,9 +13,9 @@ using System.Text;
 /// </summary>
 public class OnBizRegInquire //與交易同名
 {
-    private static string _attendantDBName = Aattendant._AattendantDBName;
-    private static string _attendantFlowID = Aattendant._AattendantFlowID;
-    private static string _eHRMSDB_ITRD = Aattendant._eHRMSDB_ITRD;
+    private static string _attendantDBName = "AattendantDB";
+    private static string _attendantFlowID = "AattendantDB";
+    private static string _eHRMSDB_ITRD = "eHRMSDB";
 
     /// <summary>
     /// 公出查詢

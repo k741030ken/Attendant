@@ -18,8 +18,8 @@ using Newtonsoft.Json;
 public class Aattendant : System.Web.SessionState.IRequiresSessionState
 {
     public static string _flag = "false";
-    public static string _AattendantDBName = Util.getAppSetting("app://AattendantDB_OverTime/");//"AattendantDB";
-    public static string _AattendantFlowID = Util.getAppSetting("app://AattendantDB_OverTime/");//"AattendantDB";
+    public static string _AattendantDBName = "AattendantDB";
+    public static string _AattendantFlowID = "AattendantDB";
     public static string _eHRMSDB_ITRD = Util.getAppSetting("app://eHRMSDB_OverTime/");
     //public static DbHelper db = new DbHelper(_AattendantDBName);
     

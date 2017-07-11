@@ -18,9 +18,9 @@ using SinoPac.WebExpress.Common.Properties;
 /// </summary>
 public class OnBizReq 
 {
-    private static string _attendantDBName = Aattendant._AattendantDBName;
-    private static string _attendantFlowID = Aattendant._AattendantFlowID;
-    private static string _eHRMSDB_ITRD = Aattendant._eHRMSDB_ITRD;
+    private static string _attendantDBName = "AattendantDB";
+    private static string _attendantFlowID = "AattendantDB";
+    private static string _eHRMSDB_ITRD = "eHRMSDB";
 
     //--------------------------------------------------------------------------------------------------------------------------For : 資料格式化
     /// <summary>
@@ -274,7 +274,7 @@ public class OnBizReq
             DbHelper db = new DbHelper(_attendantDBName);
             CommandHelper sb = db.CreateCommandHelper();
             DbConnection cn = db.OpenConnection();
-
+            string flowCaseIDForRollBack = "";
             try
             {
                 using (var trans = cn.BeginTransaction())
@@ -301,19 +301,25 @@ public class OnBizReq
 
                             if (FlowExpress.IsFlowVerify(flow.FlowID, dataBean.FlowLogID, "btnCancel", ValidUserData, "取消"))
                             {
+                                sb.Reset();
+                                flowCaseIDForRollBack += dataBean.FlowCaseID + ",";
                                 OBFlowUtility.ChangeFlowFlag(dataBean.FlowCaseID, "OB01", "0001", dataBean.CompID, dataBean.ValidID, "0", ref sb);
                                 SqlCommand.CancelVisitFormSql(dataBean, ref sb);
                                 SqlCommand.UpdateHROtherFlowLogSql(dataBean, ref sb);
-                                
-                                seccessCount = db.ExecuteNonQuery(sb.BuildCommand(), trans); //執行新增，成功筆數回傳，並做Transaction機制
-                                trans.Commit(); //成功Transaction直接Commit
                             }
                         }
+                        seccessCount = db.ExecuteNonQuery(sb.BuildCommand(), trans); //執行新增，成功筆數回傳，並做Transaction機制
+                        trans.Commit(); //成功Transaction直接Commit
 
                     }
                     catch (Exception)
                     {
                         trans.Rollback(); //失敗Transaction Rollback
+                        string[] flowCaseIDAry = flowCaseIDForRollBack.Split(",");
+                        for (int i = 0; i < flowCaseIDAry.Length - 1; i++)
+                        {
+                            FlowExpress.IsFlowRollBack(flow.FlowID, flowCaseIDAry[i]);
+                        }
                         throw;
                     }
                 }
@@ -380,7 +386,6 @@ public class OnBizReq
                                 FlowCaseID = item.FlowCaseID,
                                 LastChgComp = item.OBLastChgComp,
                                 LastChgID = item.OBLastChgID,
-                                //LastChgDate = item.OBLastChgDate
                             };
 
                             flowFlag = SelectOnBizReqAppd_ITRDFlowFullLog(dataBean.FlowCaseID, out flowLogNo, out flowMsg);
@@ -393,15 +398,14 @@ public class OnBizReq
                                 sflowLogNo = Int32.Parse(flowLogNo) + 1;
                                 flowLogNo = sflowLogNo.ToString();
                             }
-
                             SqlCommand.LogoffVisitFormSql(dataBean, ref sb);
                             SqlCommand.UpdateHROtherFlowLogSql(dataBean, ref sb);
                             SqlCommand.UpdateOnBizReqAppd_ITRDFlowFullLogSql(dataBean, ref sb);
                             SqlCommand.UpdateOnBizReqAppd_ITRDFlowCaseSql(dataBean, ref sb);
                             SqlCommand.InsertOnBizReqAppd_ITRDFlowFullLogSql(dataBean, flowLogNo, ref sb);
-                            seccessCount = db.ExecuteNonQuery(sb.BuildCommand(), trans); //執行新增，成功筆數回傳，並做Transaction機制
-                            trans.Commit(); //成功Transaction直接Commit
                         }
+                        seccessCount = db.ExecuteNonQuery(sb.BuildCommand(), trans); //執行新增，成功筆數回傳，並做Transaction機制
+                        trans.Commit(); //成功Transaction直接Commit
                     }
                     catch (Exception)
                     {
@@ -586,7 +590,7 @@ public class OnBizReq
         datas = new List<OnBizPublicOutBean>();
         try
         {
-            using (var conn = new SqlConnection() { ConnectionString = DbHelper.getConnectionStrings(_eHRMSDB_ITRD).ConnectionString })
+            using (var conn = new SqlConnection() { ConnectionString = DbHelper.getConnectionStrings("eHRMSDB").ConnectionString })
             {
                 OnBizPublicOutBean dataBean = new OnBizPublicOutBean()
                 {
@@ -914,6 +918,7 @@ public class OnBizReq
                     catch (Exception)
                     {
                         trans.Rollback(); //失敗Transaction Rollback
+                        FlowExpress.IsFlowRollBack(flow.FlowID, dataBean.FlowCaseID);
                         throw;
                     }
                 }
@@ -1047,7 +1052,7 @@ public class OnBizReq
             }
             else
             {
-                Subject_1 = "公出申請單審核通知";
+                Subject_1 = "【公出-待簽核通知】"+datas.OrganName+"(部門)-"+datas.EmpNameN+"(公出人)公出申請待簽核";
                 if ("ValidID".Equals(regArray[i]))
                 {
                     Content_1 = "OnBizForValid||BM@SenderName||" + datas.ValidID + "-" + datas.ValidName + "||BM@EmpID||" + datas.EmpID + "||BM@EmpName||" + datas.EmpNameN;
