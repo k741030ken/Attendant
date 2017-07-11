@@ -1181,8 +1181,10 @@ Partial Class OV_OV1102
                             ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉薪資"))).Enabled = True
                             ddlSalaryOrAdjust.Items(ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))).Enabled = True
                             '2017/05/08 HR 要求如前台假日預先加班申請初始帶入轉補休
-                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
+                            'ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByText("轉補休"))
 
+                            '2017/07/11 IT 要求單日假日單須看參數預設值帶入預設選項
+                            ddlSalaryOrAdjust.SelectedIndex = ddlSalaryOrAdjust.Items.IndexOf(ddlSalaryOrAdjust.Items.FindByValue(_dtPara.Rows(0)("SalaryOrAjust").ToString()))
                         Else    '單日單且加班日是平日則看參數檔預設值
                             Select Case _dtPara.Rows(0)("SalaryOrAjust").ToString()
                                 Case "1"    '參數設定預設為轉薪資

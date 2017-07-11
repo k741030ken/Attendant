@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic
 Imports System.Data
+Imports System.Data.Common
 Imports System.Reflection
 Imports System.Globalization
 
@@ -798,6 +799,8 @@ Public Class OV2
 
             Dim dataRows As DataRow
             dataRows = detialTable.NewRow
+            '20170711 - Jason 新增GroupType來排序, 1=申請,2=申報,3=合單
+            dataRows("GroupType") = "1"
             dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
             dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
             dataRows("Name") = OVADB.Rows(j).Item("OVAName")
@@ -823,6 +826,8 @@ Public Class OV2
 
             Dim dataRows As DataRow
             dataRows = detialTable.NewRow
+            '20170711 - Jason 新增GroupType來排序, 1=申請,2=申報,3=合單
+            dataRows("GroupType") = "2"
             dataRows("OTCompID") = OVDDB.Rows(i).Item("OVDOTCompID")
             dataRows("EmpID") = OVDDB.Rows(i).Item("OVDEmpID")
             dataRows("Name") = OVDDB.Rows(i).Item("OVDName")
@@ -889,6 +894,8 @@ Public Class OV2
                     ' OTCompID, EmpID, Name, OVADate, OVATime, OVAOTTypeName, OVAOTReasonMemo, OVAOTStatus, OVDDate, OVDTime, OVDOTTypeName, OVDOTReasonMemo, OVDOTStatus
                     Dim dataRows As DataRow
                     dataRows = detialTable.NewRow
+                    '20170711 - Jason 新增GroupType來排序, 1=申請,2=申報,3=合單
+                    dataRows("GroupType") = "3"
                     dataRows("OTCompID") = OVADB.Rows(j).Item("OVAOTCompID")
                     dataRows("EmpID") = OVADB.Rows(j).Item("OVAEmpID")
                     dataRows("Name") = OVADB.Rows(j).Item("OVAName")
@@ -958,7 +965,10 @@ Public Class OV2
             End If
         Next
 
-
+        '20170711 - Jason 新增GroupType來排序, 1=申請,2=申報,3=合單
+        'Table排序方式 
+        detialTable.DefaultView.Sort = "GroupType, OTCompID, EmpID, OVADate, OVDDate, OVATime, OVDTime"
+        detialTable = detialTable.DefaultView.ToTable()
 
         Return (detialTable)
     End Function
@@ -968,6 +978,13 @@ Public Class OV2
     Public Function getTableForDetial() As DataTable
         Dim myTable As New DataTable
         Dim col As DataColumn
+
+        '20170711 - Jason 新增GroupType來排序, 1=申請,2=申報,3=合單
+        col = New DataColumn
+        col.DataType = System.Type.GetType("System.String")
+        col.ColumnName = "GroupType"
+        myTable.Columns.Add(col)
+
         '公司編號
         col = New DataColumn
         col.DataType = System.Type.GetType("System.String")

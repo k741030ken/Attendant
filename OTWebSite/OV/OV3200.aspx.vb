@@ -2,10 +2,12 @@
 '功能說明：特殊人員設定與維護
 '建立人員：Judy,Jason
 '建立日期：2017.01.04
+'修改日期：2017.07.11
 '****************************************************
 
 Imports System.Data
 Imports System.Data.Common
+Imports System.Diagnostics      'For Debug.Print()
 
 Partial Class OV_OV3200
     Inherits PageBase
@@ -13,7 +15,7 @@ Partial Class OV_OV3200
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         If Not IsPostBack Then
             '公司代碼
-            If UserProfile.SelectCompRoleID = "ALL" Then
+            If UserProfile.SelectCompRoleID.Equals("ALL") Then
                 lblCompRoleID.Visible = False
                 Bsp.Utility.FillHRCompany(ddlCompID)
                 Page.SetFocus(ddlCompID)
@@ -182,7 +184,19 @@ Partial Class OV_OV3200
         IsDoQuery.Value = ""
         ViewState.Item("DoQuery") = ""
         ViewState.Item("DoUpdate") = ""
+
+        'GridView
         gvMain.Visible = False
+        '釋放GridView資源的方法
+        Try
+            Using dt As DataTable = Nothing
+                gvMain.DataSource = dt
+                gvMain.DataBind()
+            End Using
+        Catch ex As Exception
+            Debug.Print(ex.Message)
+        End Try
+
         txtEmpID.Text = ""
         txtEmpName.Text = ""
         hidEmpID.Value = ""
